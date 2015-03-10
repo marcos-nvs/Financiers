@@ -55,6 +55,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>sysglazing.ln</welcome-file>
+        <welcome-file>financiers.ln</welcome-file>
     </welcome-file-list>
 </web-app>
