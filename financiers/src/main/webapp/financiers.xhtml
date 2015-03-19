@@ -14,13 +14,6 @@
             <title>Financiers</title>         
         </h:head>
         <h:body id="idBoby">
-<!--            <h:outputText value="#{defineCaminho.retorno}" style="left: -400px"/>
-            <h:form id="idFormDialog">
-                <ui:insert id="idInsertDialog">
-                    <ui:include src="WEB-INF/templates/historico.xhtml"/>
-                </ui:insert>
-            </h:form>-->
-
             <p:layout fullPage="true">
                 <p:layoutUnit id="idLayoutTop" size="105" position="north" resizable="true" closable="true" collapsible="true" visible="false">
                     <h:form id="idFormTop">
@@ -33,9 +26,8 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="west" size="200" header="Menu" resizable="true" closable="false" collapsible="true" 
-                              visible="#{not empty glazingView.lnUsuario}" >
+                              visible="#{not empty financiersView.lnUsuario}">
                     <h:form id='idformmenu'>
-                        <!--<p:panelMenu model="#{glazingView.model}"/>-->
                     </h:form>
                 </p:layoutUnit>
 
