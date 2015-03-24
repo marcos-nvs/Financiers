@@ -116,6 +116,9 @@ public class EjbMap implements Serializable{
         List<LnMenu> listMenu = null;
         if(mapMenu.containsKey(strDbName)){
             return mapMenu.get(strDbName);
+        } else {
+            listMenu = Postgress.grabMenu('S');
+            mapMenu.put(strDbName, listMenu);
         }
         return listMenu;
     }

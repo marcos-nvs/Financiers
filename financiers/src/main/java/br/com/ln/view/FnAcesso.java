@@ -136,7 +136,6 @@ public class FnAcesso implements Serializable {
     }
 
     public void sistemaLogin() {
-        System.out.println("Banco dados : " + VarComuns.strDbName);
         if (VarComuns.strDbName != null) {
             if (usuario != null && senha != null) {
                 lnUsuario = EjbMap.grabUsuario(usuario, VarComuns.strDbName);
@@ -149,7 +148,6 @@ public class FnAcesso implements Serializable {
                         VarComuns.lnUsusario = lnUsuario;
                         LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName); 
                         model = lnMenuModel.getModel();
-                        System.out.println("model : " + model.getElements().size());
                         if (model != null && model.getElements().size() > 0) {
                             beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
                             LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), new Integer("0"), Postgress.grabDateFromDB(), usuario, "Acesso ao Sistema");
