@@ -132,5 +132,4 @@ public class FnAcesso implements Serializable {
     public void sistemaLogin() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
-
 }

@@ -9,7 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -18,11 +17,9 @@ import javax.validation.constraints.NotNull;
 @Embeddable
 public class LnMenumoduloPK implements Serializable {
     @Basic(optional = false)
-    @NotNull
     @Column(name = "men_in_codigo")
     private int menInCodigo;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mod_in_codigo")
     private int modInCodigo;
 
@@ -76,7 +73,7 @@ public class LnMenumoduloPK implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnMenumoduloPK[ menInCodigo=" + menInCodigo + ", modInCodigo=" + modInCodigo + " ]";
+        return "br.com.hibernate.entities.LnMenumoduloPK[ menInCodigo=" + menInCodigo + ", modInCodigo=" + modInCodigo + " ]";
     }
     
 }

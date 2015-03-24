@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -33,16 +31,12 @@ public class LnMenu implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "men_in_codigo")
     private Integer menInCodigo;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "men_st_descricao")
     private String menStDescricao;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "men_ch_ativo")
     private Character menChAtivo;
 
@@ -105,7 +99,7 @@ public class LnMenu implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnMenu[ menInCodigo=" + menInCodigo + " ]";
+        return "br.com.hibernate.entities.LnMenu[ menInCodigo=" + menInCodigo + " ]";
     }
     
 }

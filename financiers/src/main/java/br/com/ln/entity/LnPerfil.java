@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -34,20 +32,15 @@ public class LnPerfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "per_in_codigo")
     private Integer perInCodigo;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "per_st_descricao")
     private String perStDescricao;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "per_ch_ativo")
     private Character perChAtivo;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "per_ch_alterasenha")
     private Character perChAlterasenha;
 
@@ -119,7 +112,7 @@ public class LnPerfil implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnPerfil[ perInCodigo=" + perInCodigo + " ]";
+        return "br.com.hibernate.entities.LnPerfil[ perInCodigo=" + perInCodigo + " ]";
     }
     
 }

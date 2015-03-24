@@ -48,8 +48,6 @@ insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_inclu
 values (nextval('seq_modulo'), 'Usuário','S','S','S','S','S')
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
 values (nextval('seq_modulo'), 'Perfil','S','S','S','S','S')
-insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Cliente','S','S','S','S','S')
 
 
 -- Table: ln_usuario
@@ -124,7 +122,6 @@ COMMENT ON COLUMN ln_menu.men_ch_ativo IS 'Define se o menu está ativo ou inati
 
 
 insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (1,'Cadastros','S')
-insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (2,'Pedido','S')
 
 
 -- Table: ln_menumodulo
@@ -274,131 +271,3 @@ ALTER TABLE seq_historico
   OWNER TO postgres;
 
 
--- Table: ln_cliente
-
--- DROP TABLE ln_cliente;
-
-CREATE TABLE ln_cliente
-(
-  cli_in_codigo integer NOT NULL, -- codigo ID do cliente
-  cli_st_cpf character varying(11), -- CPF para cliente pessoa
-  cli_st_cnpj character varying(14), -- CNPJ para Empresa
-  cli_st_rg character varying(10), -- RG do cliente
-  cli_st_ie character varying(10), -- Inscrição Estadual
-  cli_st_nome character varying(60) NOT NULL, -- Nome ou Razão social do cliente
-  cli_st_email character varying(60),
-  cli_st_contato character varying(40),
-  cli_ch_tipo character(1) NOT NULL, -- Tipo 1-Cliente 2-Fornecedor
-  CONSTRAINT pk_cliente PRIMARY KEY (cli_in_codigo)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE ln_cliente
-  OWNER TO postgres;
-COMMENT ON TABLE ln_cliente
-  IS 'Cadastro de Cliente';
-COMMENT ON COLUMN ln_cliente.cli_in_codigo IS 'codigo ID do cliente';
-COMMENT ON COLUMN ln_cliente.cli_st_cpf IS 'CPF para cliente pessoa';
-COMMENT ON COLUMN ln_cliente.cli_st_cnpj IS 'CNPJ para Empresa';
-COMMENT ON COLUMN ln_cliente.cli_st_rg IS 'RG do cliente';
-COMMENT ON COLUMN ln_cliente.cli_st_ie IS 'Inscrição Estadual';
-COMMENT ON COLUMN ln_cliente.cli_st_nome IS 'Nome ou Razão social do cliente';
-COMMENT ON COLUMN ln_cliente.cli_ch_tipo IS 'Tipo 1-Cliente 2-Fornecedor';
-
--- Sequence: seq_cliente
-
--- DROP SEQUENCE seq_cliente;
-
-CREATE SEQUENCE seq_cliente
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
-ALTER TABLE seq_cliente
-  OWNER TO postgres;
-
--- Table: ln_endereco
-
--- DROP TABLE ln_endereco;
-
-CREATE TABLE ln_endereco
-(
-  end_in_codigo integer NOT NULL, -- Código do Endereco
-  cli_in_codigo integer NOT NULL, -- código do cliente
-  end_st_tipo character varying(20) NOT NULL, -- Tipo comercial...
-  end_st_logradouro character varying(60) NOT NULL, -- Endereço
-  end_st_numero character varying(6) NOT NULL,
-  end_st_complemento character varying(30), 
-  end_st_bairro character varying(40) NOT NULL,
-  end_st_cidade character varying(50) NOT NULL,
-  end_st_estado character varying(2) NOT NULL,
-  end_st_cep character varying(8) NOT NULL,
-  CONSTRAINT pk_endereco PRIMARY KEY (end_in_codigo)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE ln_endereco
-  OWNER TO postgres;
-COMMENT ON TABLE ln_endereco
-  IS 'Endereço dos Clientes';
-COMMENT ON COLUMN ln_endereco.end_in_codigo IS 'Código do Endereco';
-COMMENT ON COLUMN ln_endereco.cli_in_codigo IS 'código do cliente';
-COMMENT ON COLUMN ln_endereco.end_st_tipo IS 'Tipo comercial
-Tipo Entrega
-';
-COMMENT ON COLUMN ln_endereco.end_st_logradouro IS 'Endereço ';
-
--- Sequence: seq_endereco
-
--- DROP SEQUENCE seq_endereco;
-
-CREATE SEQUENCE seq_endereco
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
-ALTER TABLE seq_endereco
-  OWNER TO postgres;
-
--- Table: ln_telefone
-
--- DROP TABLE ln_telefone;
-
-CREATE TABLE ln_telefone
-(
-  tel_in_codigo integer NOT NULL, -- código do telefone
-  cli_in_codigo integer NOT NULL, -- Codigo cliente
-  tel_st_tipo character varying(20) NOT NULL, -- Tipo de telefone (residencial, vivo, claro, oi, tim
-  tel_st_ddd character varying(3) NOT NULL, -- DDD
-  tel_st_telefone character varying(10) NOT NULL, -- Telefone
-  CONSTRAINT pk_telefone PRIMARY KEY (tel_in_codigo)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE ln_telefone
-  OWNER TO postgres;
-COMMENT ON TABLE ln_telefone
-  IS 'Cadastro de telefone';
-COMMENT ON COLUMN ln_telefone.tel_in_codigo IS 'código do telefone';
-COMMENT ON COLUMN ln_telefone.cli_in_codigo IS 'Codigo cliente';
-COMMENT ON COLUMN ln_telefone.tel_st_tipo IS 'Tipo de telefone (residencial, vivo, claro, oi, tim';
-COMMENT ON COLUMN ln_telefone.tel_st_ddd IS 'DDD';
-COMMENT ON COLUMN ln_telefone.tel_st_telefone IS 'Telefone';
-
--- Sequence: seq_telefone
-
--- DROP SEQUENCE seq_telefone;
-
-CREATE SEQUENCE seq_telefone
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
-ALTER TABLE seq_telefone
-  OWNER TO postgres;

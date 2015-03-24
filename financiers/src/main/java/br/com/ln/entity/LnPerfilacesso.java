@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -36,19 +35,15 @@ public class LnPerfilacesso implements Serializable {
     @EmbeddedId
     protected LnPerfilacessoPK lnPerfilacessoPK;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "pac_ch_incluir")
     private Character pacChIncluir;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "pac_ch_alterar")
     private Character pacChAlterar;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "pac_ch_excluir")
     private Character pacChExcluir;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "pac_ch_pesquisar")
     private Character pacChPesquisar;
 
@@ -133,7 +128,7 @@ public class LnPerfilacesso implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnPerfilacesso[ lnPerfilacessoPK=" + lnPerfilacessoPK + " ]";
+        return "br.com.hibernate.entities.LnPerfilacesso[ lnPerfilacessoPK=" + lnPerfilacessoPK + " ]";
     }
     
 }

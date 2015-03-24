@@ -16,8 +16,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -44,35 +42,25 @@ public class LnUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
     @Column(name = "usu_st_codigo")
     private String usuStCodigo;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "usu_st_nome")
     private String usuStNome;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
     @Column(name = "usu_st_senha")
     private String usuStSenha;
-    @Size(max = 100)
     @Column(name = "usu_st_email")
     private String usuStEmail;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "usu_ch_ativo")
     private Character usuChAtivo;
     @Column(name = "usu_in_dia")
     private Integer usuInDia;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "usu_ch_alterasenha")
     private Character usuChAlterasenha;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "usu_ch_expirasenha")
     private Character usuChExpirasenha;
     @Column(name = "usu_dt_expiracao")
@@ -82,7 +70,6 @@ public class LnUsuario implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date usuDtCadastro;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "per_in_codigo")
     private int perInCodigo;
 
@@ -213,7 +200,7 @@ public class LnUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnUsuario[ usuStCodigo=" + usuStCodigo + " ]";
+        return "br.com.hibernate.entities.LnUsuario[ usuStCodigo=" + usuStCodigo + " ]";
     }
     
 }

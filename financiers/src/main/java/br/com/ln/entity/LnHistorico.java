@@ -16,13 +16,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author f12684146896
+ * @author Marcos Naves
  */
 @Entity
 @Table(name = "ln_historico")
@@ -38,24 +36,18 @@ public class LnHistorico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "his_in_codigo")
     private Integer hisInCodigo;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mod_in_codigo")
     private int modInCodigo;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "his_dt_data")
     @Temporal(TemporalType.TIMESTAMP)
     private Date hisDtData;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
     @Column(name = "usu_st_codigo")
     private String usuStCodigo;
-    @Size(max = 200)
     @Column(name = "his_st_descricao")
     private String hisStDescricao;
 
@@ -143,7 +135,7 @@ public class LnHistorico implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnHistorico[ hisInCodigo=" + hisInCodigo + " ]";
+        return "br.com.hibernate.entities.LnHistorico[ hisInCodigo=" + hisInCodigo + " ]";
     }
     
 }

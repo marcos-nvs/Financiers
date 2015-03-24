@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,32 +35,24 @@ public class LnModulo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mod_in_codigo")
     private Integer modInCodigo;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "mod_st_descricao")
     private String modStDescricao;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mod_ch_incluir")
     private Character modChIncluir;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mod_ch_alterar")
     private Character modChAlterar;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mod_ch_excluir")
     private Character modChExcluir;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mod_ch_pesquisar")
     private Character modChPesquisar;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "mod_ch_ativo")
     private Character modChAtivo;
 
@@ -161,7 +151,7 @@ public class LnModulo implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnModulo[ modInCodigo=" + modInCodigo + " ]";
+        return "br.com.hibernate.entities.LnModulo[ modInCodigo=" + modInCodigo + " ]";
     }
     
 }

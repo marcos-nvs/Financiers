@@ -70,7 +70,7 @@ public class LnMenumodulo implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnMenumodulo[ lnMenumoduloPK=" + lnMenumoduloPK + " ]";
+        return "br.com.hibernate.entities.LnMenumodulo[ lnMenumoduloPK=" + lnMenumoduloPK + " ]";
     }
     
 }
