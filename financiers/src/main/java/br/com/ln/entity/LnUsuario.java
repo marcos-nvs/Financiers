@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnUsuario.findByUsuChExpirasenha", query = "SELECT l FROM LnUsuario l WHERE l.usuChExpirasenha = :usuChExpirasenha"),
     @NamedQuery(name = "LnUsuario.findByUsuDtExpiracao", query = "SELECT l FROM LnUsuario l WHERE l.usuDtExpiracao = :usuDtExpiracao"),
     @NamedQuery(name = "LnUsuario.findByUsuDtCadastro", query = "SELECT l FROM LnUsuario l WHERE l.usuDtCadastro = :usuDtCadastro"),
+    @NamedQuery(name = "LnUsuario.findAllUsuStCodigoUsuChAtivo", query = "SELECT l FROM LnUsuario l WHERE l.usuStCodigo = :usuStCodigo and usuChAtivo = :usuChAtivo"),
     @NamedQuery(name = "LnUsuario.findByPerInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.perInCodigo = :perInCodigo")})
 public class LnUsuario implements Serializable {
     private static final long serialVersionUID = 1L;

@@ -136,11 +136,10 @@ public class FnAcesso implements Serializable {
     }
 
     public void sistemaLogin() {
-
+        System.out.println("Banco dados : " + VarComuns.strDbName);
         if (VarComuns.strDbName != null) {
             if (usuario != null && senha != null) {
                 lnUsuario = EjbMap.grabUsuario(usuario, VarComuns.strDbName);
-                
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(senha)) {
                         lnUsuario = null;
@@ -154,7 +153,9 @@ public class FnAcesso implements Serializable {
                         LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), new Integer("0"), Postgress.grabDateFromDB(), usuario, "Acesso ao Sistema");
                         Postgress.saveObject(lnHistorico);
                     }
-                } 
+                } else{
+                    System.out.println("Ocorreu um problema na autenciacao do sistema - Favor entrar em contato como o Administrador.");
+                }
             } else {
                 mensagem = "Usuario ou senha em Branco.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));

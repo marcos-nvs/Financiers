@@ -27,7 +27,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnPerfil.findByPerInCodigo", query = "SELECT l FROM LnPerfil l WHERE l.perInCodigo = :perInCodigo"),
     @NamedQuery(name = "LnPerfil.findByPerStDescricao", query = "SELECT l FROM LnPerfil l WHERE l.perStDescricao = :perStDescricao"),
     @NamedQuery(name = "LnPerfil.findByPerChAtivo", query = "SELECT l FROM LnPerfil l WHERE l.perChAtivo = :perChAtivo"),
+    @NamedQuery(name = "LnPerfil.findByPerInCodigoPerChAtivo", query = "SELECT l FROM LnPerfil l WHERE l.perInCodigo = :perInCodigo and l.perChAtivo = :perChAtivo"),
     @NamedQuery(name = "LnPerfil.findByPerChAlterasenha", query = "SELECT l FROM LnPerfil l WHERE l.perChAlterasenha = :perChAlterasenha")})
+
+
+
 public class LnPerfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
