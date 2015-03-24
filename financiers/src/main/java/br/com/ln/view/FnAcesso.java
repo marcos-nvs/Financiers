@@ -168,4 +168,21 @@ public class FnAcesso implements Serializable {
             }
         }
     }
+   
+    public void logout() { 
+
+        cleanUpEveryThing();
+
+        try {
+            FacesContext externalcontext = FacesContext.getCurrentInstance();
+            externalcontext.getExternalContext().redirect("/financiers/encerra.ln");
+        } catch (Exception ex) {
+        } finally {
+
+        }
+    }
+
+    private void cleanUpEveryThing() {
+        this.lnUsuario = null;
+    }    
 }

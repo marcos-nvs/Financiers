@@ -151,7 +151,7 @@ public class LnMenuModel implements Serializable {
         subMenu.setRendered(true);
         
         item = new DefaultMenuItem("Sair");
-        item.setCommand("#{glazingView.logout()}");
+        item.setCommand("#{financiersView.logout()}");
         item.setAjax(false);
         item.setPartialSubmit(false);
         item.setProcess(":idFormCenter:idPanelLogin, :idFormCenter:idInUsuario, :idFormCenter:idPassword");
