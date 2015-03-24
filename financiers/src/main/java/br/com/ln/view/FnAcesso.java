@@ -147,11 +147,19 @@ public class FnAcesso implements Serializable {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
                     } else {
                         VarComuns.lnUsusario = lnUsuario;
-                        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
                         LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName); 
                         model = lnMenuModel.getModel();
-                        LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), new Integer("0"), Postgress.grabDateFromDB(), usuario, "Acesso ao Sistema");
-                        Postgress.saveObject(lnHistorico);
+                        System.out.println("model : " + model.getElements().size());
+                        if (model != null && model.getElements().size() > 0) {
+                            beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+                            LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), new Integer("0"), Postgress.grabDateFromDB(), usuario, "Acesso ao Sistema");
+                            Postgress.saveObject(lnHistorico);
+                        } else {
+                            lnUsuario =  null;
+                            beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+                            mensagem = "Ocorreu um problema na montagem do Menu. Favor entrar em contato como Administrador";
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login/Menu", mensagem));
+                        }
                     }
                 } else{
                     System.out.println("Ocorreu um problema na autenciacao do sistema - Favor entrar em contato como o Administrador.");

@@ -51,45 +51,50 @@ public class LnMenuModel implements Serializable {
         this.strDbName = strDbName;
         montaMenu();
     }
-    
-    private void montaMenu(){
+
+    private void montaMenu() {
         menuPerfil();
-        
+
         List<LnMenu> listMenu = EjbMap.grabMenu(VarComuns.strDbName);
 
         model = new DefaultMenuModel();
         DefaultSubMenu subMenu;
         DefaultMenuItem item;
 
-        for (LnMenu lnMenu : listMenu) {
-            subMenu = new DefaultSubMenu(lnMenu.getMenStDescricao());
-            subMenu.setRendered(false);
-            
-            Iterator inIt = lnMenu.getListModulos().iterator();
+        if (listMenu != null && !listMenu.isEmpty()) {
 
-            while (inIt.hasNext()) {
-                LnModulo lnModulo = (LnModulo) inIt.next();
-                
-                if (!VarComuns.mapModulo.containsKey(lnModulo.getModInCodigo())){
-                    VarComuns.mapModulo.put(lnModulo.getModInCodigo(), lnModulo.getModStDescricao());
+            for (LnMenu lnMenu : listMenu) {
+                subMenu = new DefaultSubMenu(lnMenu.getMenStDescricao());
+                subMenu.setRendered(false);
+
+                Iterator inIt = lnMenu.getListModulos().iterator();
+
+                while (inIt.hasNext()) {
+                    LnModulo lnModulo = (LnModulo) inIt.next();
+
+                    if (!VarComuns.mapModulo.containsKey(lnModulo.getModInCodigo())) {
+                        VarComuns.mapModulo.put(lnModulo.getModInCodigo(), lnModulo.getModStDescricao());
+                    }
+
+                    if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))) {
+                        item = new DefaultMenuItem(lnModulo.getModStDescricao());
+                        item.setTitle(lnModulo.getModStDescricao());
+                        item.setCommand("#{lnMenuModel.menuActionClick}");
+                        item.setUpdate(":idFormCenter");
+                        item.setProcess(":idFormCenter");
+                        item.setAjax(false);
+                        subMenu.addElement(item);
+                        subMenu.setRendered(true);
+                        subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
+                    }
                 }
 
-                if (mapPerfilUsuario.containsKey(Integer.toString(lnModulo.getModInCodigo()))) {
-                    item = new DefaultMenuItem(lnModulo.getModStDescricao());
-                    item.setTitle(lnModulo.getModStDescricao());
-                    item.setCommand("#{lnMenuModel.menuActionClick}");
-                    item.setUpdate(":idFormCenter");
-                    item.setProcess(":idFormCenter");
-                    item.setAjax(false);
-                    subMenu.addElement(item);
-                    subMenu.setRendered(true);
-                    subMenu.setId(Integer.toString(lnModulo.getModInCodigo()));
-                }
+                model.addElement(subMenu);
             }
-            
-            model.addElement(subMenu);
+            model.addElement(itemAll());
+        } else {
+            System.out.println("Nao foi possivel montar o menu. Favor entrar em contato como o Administrador");
         }
-        model.addElement(itemAll());
     }
 
 
@@ -125,17 +130,11 @@ public class LnMenuModel implements Serializable {
             switch (itemMenuClick) {
                 case "Usuário":
                     beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
-//                    VarComuns.lnPerfilacesso = Postgress.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
                     VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
                     break;
                 case "Perfil":
                     beanVar.setNovaTela("WEB-INF/templates/perfil.xhtml");
-//                    VarComuns.lnPerfilacesso = Postgress.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
                     VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
-                    break;
-                case "Cliente":
-                    beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
-                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 3);
                     break;
             }
         }
