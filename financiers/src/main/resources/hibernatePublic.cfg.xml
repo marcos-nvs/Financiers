@@ -13,6 +13,13 @@
     <property name="hibernate.connection.password">Kareta44!@#$</property>
     <property name="hibernate.default_schema">public</property>
 
-    <!--<mapping class="br.com.ln.entity.LnMenu"/>-->
+    <mapping class="br.com.ln.entity.LnHistorico"/>
+    <mapping class="br.com.ln.entity.LnMenu"/>
+    <mapping class="br.com.ln.entity.LnMenumodulo"/>
+    <mapping class="br.com.ln.entity.LnModulo"/>
+    <mapping class="br.com.ln.entity.LnPerfil"/>
+    <mapping class="br.com.ln.entity.LnPerfilacesso"/>
+    <mapping class="br.com.ln.entity.LnUsuario"/>
+
   </session-factory>
 </hibernate-configuration>

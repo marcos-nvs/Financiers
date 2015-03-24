@@ -6,10 +6,16 @@
 package br.com.ln.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -17,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author f12684146896
+ * @author Marcos Naves
  */
 @Entity
 @Table(name = "ln_menu")
@@ -27,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnMenu.findByMenInCodigo", query = "SELECT l FROM LnMenu l WHERE l.menInCodigo = :menInCodigo"),
     @NamedQuery(name = "LnMenu.findByMenStDescricao", query = "SELECT l FROM LnMenu l WHERE l.menStDescricao = :menStDescricao"),
     @NamedQuery(name = "LnMenu.findByMenChAtivo", query = "SELECT l FROM LnMenu l WHERE l.menChAtivo = :menChAtivo")})
+
 public class LnMenu implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,6 +46,10 @@ public class LnMenu implements Serializable {
     @Basic(optional = false)
     @Column(name = "men_ch_ativo")
     private Character menChAtivo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "ln_menumodulo", joinColumns ={@JoinColumn(name = "men_in_codigo", unique = true)}, inverseJoinColumns = {@JoinColumn(name = "mod_in_codigo")})
+    private Set<LnModulo> listModulos = new HashSet<>();
 
     public LnMenu() {
     }
@@ -75,6 +86,14 @@ public class LnMenu implements Serializable {
 
     public void setMenChAtivo(Character menChAtivo) {
         this.menChAtivo = menChAtivo;
+    }
+
+    public Set<LnModulo> getListModulos() {
+        return listModulos;
+    }
+
+    public void setListModulos(Set<LnModulo> listModulos) {
+        this.listModulos = listModulos;
     }
 
     @Override

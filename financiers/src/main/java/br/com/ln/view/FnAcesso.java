@@ -6,13 +6,19 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnUsuario;
+import br.com.ln.financiers.LnMenuModel;
+import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -130,6 +136,28 @@ public class FnAcesso implements Serializable {
     }
 
     public void sistemaLogin() {
-        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+        if (VarComuns.strDbName != null) {
+            if (usuario != null && senha != null) {
+                lnUsuario = EjbMap.grabUsuario(usuario, VarComuns.strDbName);
+                
+                if (lnUsuario != null) {
+                    if (!lnUsuario.getUsuStSenha().equals(senha)) {
+                        lnUsuario = null;
+                        mensagem = "Usuario ou senha invalido";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
+                    } else {
+                        VarComuns.lnUsusario = lnUsuario;
+                        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+                        LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName); 
+                        model = lnMenuModel.getModel();
+                        LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), new Integer("0"), Postgress.grabDateFromDB(), usuario, "Acesso ao Sistema");
+                        Postgress.saveObject(lnHistorico);
+                    }
+                } 
+            } else {
+                mensagem = "Usuario ou senha em Branco.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
+            }
+        }
     }
 }
