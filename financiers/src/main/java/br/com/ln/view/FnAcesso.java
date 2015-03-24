@@ -136,6 +136,7 @@ public class FnAcesso implements Serializable {
     }
 
     public void sistemaLogin() {
+
         if (VarComuns.strDbName != null) {
             if (usuario != null && senha != null) {
                 lnUsuario = EjbMap.grabUsuario(usuario, VarComuns.strDbName);
