@@ -127,7 +127,6 @@ public class LnMenuModel implements Serializable {
         
         if (menuActionEvent != null) {
             String itemMenuClick = menuActionEvent.getMenuItem().getTitle();
-            System.out.println("item : " + itemMenuClick);
             switch (itemMenuClick) {
                 case "Usuário":
                     beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
