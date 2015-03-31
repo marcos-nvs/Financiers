@@ -48,6 +48,46 @@ insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_inclu
 values (nextval('seq_modulo'), 'Usuário','S','S','S','S','S')
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
 values (nextval('seq_modulo'), 'Perfil','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Módulo','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Categoria','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Plano de Contas','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Favorecidos','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Tabelas','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Orçamento','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Lançamento Diário','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Fluxo de Caixa','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Contas à Receber','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Contas à Pagar','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Cartão Crédito','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Fechamento','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Análise de Contas','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Orçamento x Realizado','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Receitas x Despesas','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Despesas por Favorecidos','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Curva ABC Despesas','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Resumo Patrimônio','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Saldo das Contas','S','S','S','S','S')
+insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
+values (nextval('seq_modulo'), 'Comparação de Movimentação entre Meses','S','S','S','S','S')
 
 
 -- Table: ln_usuario
@@ -120,8 +160,10 @@ COMMENT ON COLUMN ln_menu.men_in_codigo IS 'Define a sequencia do menu';
 COMMENT ON COLUMN ln_menu.men_st_descricao IS 'Define o nome do menu.';
 COMMENT ON COLUMN ln_menu.men_ch_ativo IS 'Define se o menu está ativo ou inativo';
 
-
-insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (1,'Cadastros','S')
+insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (1,'Controle Acesso','S')
+insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (2,'Cadastros','S')
+insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (3,'Movimentação','S')
+insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (4,'Relatórios','S')
 
 
 -- Table: ln_menumodulo
@@ -146,10 +188,30 @@ ALTER TABLE ln_menumodulo
 COMMENT ON COLUMN ln_menumodulo.men_in_codigo IS 'Código do Menu';
 COMMENT ON COLUMN ln_menumodulo.mod_in_codigo IS 'Código do menu';
 
-
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,1)
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,2)
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,3)
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,2);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,3);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,4);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,5);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,6);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,7);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,8);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,9);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,11);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,12);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,13);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,14);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,15);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,16);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,10);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,17);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,18);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,19);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,20);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,21);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,22);
+
+
 
 
 -- Table: ln_perfil
