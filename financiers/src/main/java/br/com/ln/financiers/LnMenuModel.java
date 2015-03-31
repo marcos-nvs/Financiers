@@ -127,6 +127,7 @@ public class LnMenuModel implements Serializable {
         
         if (menuActionEvent != null) {
             String itemMenuClick = menuActionEvent.getMenuItem().getTitle();
+            System.out.println("item : " + itemMenuClick);
             switch (itemMenuClick) {
                 case "Usuário":
                     beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
@@ -134,6 +135,14 @@ public class LnMenuModel implements Serializable {
                     break;
                 case "Perfil":
                     beanVar.setNovaTela("WEB-INF/templates/perfil.xhtml");
+//                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+                    break;
+                case "Módulo":
+                    beanVar.setNovaTela("WEB-INF/templates/modulo.xhtml");
+//                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+                    break;
+                case "Histórico":
+                    beanVar.setNovaTela("WEB-INF/templates/historico.xhtml");
 //                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
                     break;
             }
@@ -144,12 +153,6 @@ public class LnMenuModel implements Serializable {
         
         DefaultSubMenu subMenu = new DefaultSubMenu("");
         DefaultMenuItem item;
-//        subMenu.setRendered(false);
-//        item = new DefaultMenuItem("Histórico");
-//        item.setCommand("#{lnMenuModel.menuActionClick}");
-//        item.setAjax(false);
-//        subMenu.addElement(item);
-        subMenu.setRendered(false);
         
         item = new DefaultMenuItem("Sair");
         item.setCommand("#{financiersView.logout()}");
