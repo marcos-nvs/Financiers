@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LnPerfilacesso.findAll", query = "SELECT l FROM LnPerfilacesso l"),
+    @NamedQuery(name = "LnPerfilacesso.findByPerInCodigoModInCodigo", query = "SELECT l FROM LnPerfilacesso l WHERE l.lnPerfilacessoPK.perInCodigo = :perInCodigo and l.lnPerfilacessoPK.modInCodigo = :modInCodigo"),
     @NamedQuery(name = "LnPerfilacesso.findByPerInCodigo", query = "SELECT l FROM LnPerfilacesso l WHERE l.lnPerfilacessoPK.perInCodigo = :perInCodigo"),
     @NamedQuery(name = "LnPerfilacesso.findByModInCodigo", query = "SELECT l FROM LnPerfilacesso l WHERE l.lnPerfilacessoPK.modInCodigo = :modInCodigo"),
     @NamedQuery(name = "LnPerfilacesso.findByPacChIncluir", query = "SELECT l FROM LnPerfilacesso l WHERE l.pacChIncluir = :pacChIncluir"),
