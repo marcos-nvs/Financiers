@@ -9,7 +9,7 @@ package br.com.ln.comum;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import java.util.Locale;
+//import java.util.Locale;
 
 /**
  * Definição de váriavies para visualização no modo web.
@@ -22,6 +22,7 @@ public class BeanVar implements Serializable{
     
     private String localizacao;
     private String novaTela;
+    private String nomeTela;
 
     public BeanVar() {
         this.localizacao = VarComuns.local();
@@ -42,6 +43,14 @@ public class BeanVar implements Serializable{
 
     public void setNovaTela(String novaTela) {
         this.novaTela = novaTela;
+    }
+
+    public String getNomeTela() {
+        return nomeTela;
+    }
+
+    public void setNomeTela(String nomeTela) {
+        this.nomeTela = nomeTela;
     }
     
 }
