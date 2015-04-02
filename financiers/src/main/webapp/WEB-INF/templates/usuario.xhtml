@@ -4,12 +4,55 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:panel id="Titulo" style="background: #E7E7E7;font-size: xx-large;border-width: 1px;position: absolute;width: 99%;">
-        <h:outputLabel value="#{msgs['template.user.register']}" 
-                       style="margin-left: 45%;font-family: sans-serif;font-weight:bold;font-size:16px;"/>
-    </p:panel>
-    <p:panel id="Titulo2" style="background: #E7E7E7;font-size: xx-large;border-width: 1px;position: absolute;width: 99%;">
-        <h:outputLabel value="#{msgs['template.user.register']}" 
-                       style="margin-left: 45%;font-family: sans-serif;font-weight:bold;font-size:16px;"/>
+    <p:panel id="cadUsuario" header="#{msgs['template.user.register']}" style="border-color: transparent;position: absolute;width: 99%;">
+        <h:panelGrid id="cadUsuarioDados" columns="4">
+            <p:outputLabel value="Teste 1"/>
+            <p:inputText />
+            <p:outputLabel value="Teste 2"/>
+            <p:inputText />
+            <p:outputLabel value="Teste 3"/>
+            <p:inputText />
+            <p:outputLabel value="Teste 4"/>
+            <p:inputText />
+        </h:panelGrid>
+        <p:dataTable id="cadUsuarioGrid">
+            <f:facet name="header">
+                <p:outputLabel value="#{msgs['template.user']}"/>
+            </f:facet>
+            <p:column headerText="#{msgs['template.user']}">
+                <p:outputLabel value="1234"/>
+            </p:column>
+        <p:column headerText="#{msgs['page.tree.employee.name.label']}">
+            <p:outputLabel value="Marcos"/>
+        </p:column>
+        <p:column headerText="#{msgs['node.email']}">
+            <p:outputLabel value="dddd@uo.c.br"/>
+        </p:column>
+        <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
+            <p:outputLabel value="sim"/>
+        </p:column>
+        <p:column headerText="#{msgs['node.user.changes.password']}">
+            <p:outputLabel value="sim"/>
+        </p:column>
+        <p:column headerText="#{msgs['password expires']}">
+            <p:outputLabel value="sim"/>
+        </p:column>
+        <p:column headerText="#{msgs['node.Registration.Date']}">
+            <p:outputLabel value="hoje"/>
+        </p:column>
+        </p:dataTable>
+        <f:facet name="footer">
+            <p:commandButton value="#{msgs['node.include']}" icon="ui-icon-document" />
+            <p:commandButton value="#{msgs['template.change']}" icon="ui-icon-pencil"/>
+            <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
+                <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert" />
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <p:commandButton value="#{msgs['node.change.password']}"  icon="ui-icon-gear"/>
+            <p:commandButton value="#{msgs['node.history']}" icon="ui-icon-notice"/>
+        </f:facet>
     </p:panel>
 </ui:composition>
