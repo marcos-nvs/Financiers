@@ -4,16 +4,37 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:panelGrid id="cadUsuarioDados" columns="4">
-        <p:outputLabel value="Teste 1"/>
-        <p:inputText disabled="true" />
-        <p:outputLabel value="Teste 2"/>
-        <p:inputText disabled="true"/>
-        <p:outputLabel value="Teste 3"/>
-        <p:inputText disabled="true"/>
-        <p:outputLabel value="Teste 4"/>
-        <p:inputText disabled="true"/>
+    <h:panelGrid id="cadUsuarioDados1" columns="10">
+        <p:outputLabel value="#{msgs['template.user']}"/>
+        <p:inputText id="idUsuStCodigo" value="#{usuarioView.usuario}" disabled="#{not beanVar.apresenta}" />
+        <p:outputLabel value="#{msgs['page.textFields.password']}"/>
+        <p:password id="idUsuStSenha" value="#{usuarioView.senha}" disabled="#{not beanVar.apresenta}"/>
+        <p:selectBooleanCheckbox value="#{usuarioView.ativo}" disabled="#{not beanVar.apresenta}" />
+        <p:outputLabel id="idUsuChAtiuvo" value="#{msgs['page.connectionStatus.status2.value']}"/>
+        <p:selectBooleanCheckbox value="#{usuarioView.alteraSenha}" disabled="#{not beanVar.apresenta}" />
+        <p:outputLabel id="idUsuChAlteraSenha" value="#{msgs['node.user.changes.password']}"/>
+        <p:selectBooleanCheckbox value="#{usuarioView.expiraSenha}" disabled="#{not beanVar.apresenta}" />
+        <p:outputLabel id="idUsuChExpiraSenha" value="#{msgs['password expires']}"/>
     </h:panelGrid>
+    <h:panelGrid id="cadUsuarioDados2" columns="4" style="margin-left: 10px;">
+        <p:outputLabel value="#{msgs['page.tree.employee.name.label']}"/>
+        <p:inputText id="idUsuStUsuario" value="#{usuarioView.nome}" maxlength="40" size="60" disabled="#{not beanVar.apresenta}"/>
+        <p:outputLabel value="#{msgs['node.email']}"/>
+        <p:inputText id="idUsuStEmaiil" value="#{usuarioView.email}" maxlength="40" size="60" disabled="#{not beanVar.apresenta}"/>
+    </h:panelGrid>
+    <h:panelGrid id="cadUsuarioDados3" columns="4" style="margin-left: 12px;">
+        <p:outputLabel value="#{msgs['template.profile']}:"/>
+        <p:selectOneMenu id="idperfil" value="#{usuarioView.perfil}" disabled="#{not beanVar.apresenta}">
+            <f:selectItems var="itemPerfil" value="#{usuarioView.listPerfil}" itemLabel="#{itemPerfil.perStDescricao}"
+                           itemValue="#{itemPerfil.perInCodigo}"/>
+        </p:selectOneMenu>
+    </h:panelGrid>
+    <h:panelGrid id="cadUsuarioButton" columns="2">
+        <p:commandButton id="btSalvar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document" disabled="#{not beanVar.apresenta}" 
+                         process="btSalvar" update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid"/>
+        <p:commandButton value="#{msgs['node.cancel']}" icon="ui-icon-document" disabled="#{not beanVar.apresenta}" />
+    </h:panelGrid>
+
     <p:dataTable id="cadUsuarioGrid" style="position: relative;width: 100%;">
         <f:facet name="header">
             <p:outputLabel value="#{msgs['template.user']}"/>
@@ -40,17 +61,24 @@
             <p:outputLabel value="hoje"/>
         </p:column>
     </p:dataTable>
-    <f:facet name="footer">
-        <p:commandButton value="#{msgs['node.include']}" icon="ui-icon-document" />
-        <p:commandButton value="#{msgs['template.change']}" icon="ui-icon-pencil"/>
-        <p:commandButton value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
-            <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert" />
+    <f:facet id="idCadButton" name="footer">
+        <p:commandButton id="btIncluir" value="#{msgs['node.include']}" icon="ui-icon-document" disabled="#{beanVar.apresenta}" 
+                         process="cadUsuarioGrid, btIncluir, btAlterar, btDeletar" 
+                         action="#{usuarioView.btIncluir}"
+                         update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar"/>
+        <p:commandButton id="btAlterar" value="#{msgs['template.change']}" icon="ui-icon-pencil" disabled="#{beanVar.apresenta}" 
+                         process="cadUsuarioGrid, btAlterar" 
+                         action="#{usuarioView.btAlterar}"
+                         update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar"/>
+        <p:commandButton id="btDeletar" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash" disabled="#{beanVar.apresenta}" 
+                         process="btDeletar" action="#{usuarioView.btDeletar}" update="cadUsuarioGrid">
+            <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert"/>
         </p:commandButton>
         <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
             <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-        </p:confirmDialog>
-        <p:commandButton value="#{msgs['node.change.password']}"  icon="ui-icon-gear"/>
-        <p:commandButton value="#{msgs['node.history']}" icon="ui-icon-notice"/>
+        </p:confirmDialog>    
+        <p:commandButton value="#{msgs['node.change.password']}"  icon="ui-icon-gear" disabled="#{beanVar.apresenta}"/>
+        <p:commandButton value="#{msgs['node.history']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"/>
     </f:facet>
 </ui:composition>

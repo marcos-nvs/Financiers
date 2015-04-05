@@ -23,10 +23,12 @@ public class BeanVar implements Serializable{
     private String localizacao;
     private String novaTela;
     private String nomeTela;
+    private boolean apresenta;
 
     public BeanVar() {
         this.localizacao = VarComuns.local();
         this.novaTela = "WEB-INF/templates/login.xhtml";
+        this.apresenta = false;
     }
         
     public String getLocalizacao() {
@@ -51,6 +53,14 @@ public class BeanVar implements Serializable{
 
     public void setNomeTela(String nomeTela) {
         this.nomeTela = nomeTela;
+    }
+
+    public boolean getApresenta() {
+        return apresenta;
+    }
+
+    public void setApresenta(boolean apresenta) {
+        this.apresenta = apresenta;
     }
     
 }
