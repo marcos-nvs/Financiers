@@ -9,11 +9,11 @@
         <p:inputText id="idUsuStCodigo" value="#{usuarioView.usuario}" disabled="#{not beanVar.apresenta}"/>
         <p:outputLabel value="#{msgs['page.textFields.password']}"/>
         <p:password id="idUsuStSenha" value="#{usuarioView.senha}" disabled="#{not beanVar.apresenta}"/>
-        <p:selectBooleanCheckbox value="#{usuarioView.ativo}" disabled="#{not beanVar.apresenta}" />
+        <p:selectBooleanCheckbox value="#{usuarioView.bAtivo}" disabled="#{not beanVar.apresenta}" />
         <p:outputLabel id="idUsuChAtiuvo" value="#{msgs['page.connectionStatus.status2.value']}"/>
-        <p:selectBooleanCheckbox value="#{usuarioView.alteraSenha}" disabled="#{not beanVar.apresenta}" />
+        <p:selectBooleanCheckbox value="#{usuarioView.bAlteraSenha}" disabled="#{not beanVar.apresenta}" />
         <p:outputLabel id="idUsuChAlteraSenha" value="#{msgs['node.user.changes.password']}"/>
-        <p:selectBooleanCheckbox value="#{usuarioView.expiraSenha}" disabled="#{not beanVar.apresenta}" />
+        <p:selectBooleanCheckbox value="#{usuarioView.bExpiraSenha}" disabled="#{not beanVar.apresenta}" />
         <p:outputLabel id="idUsuChExpiraSenha" value="#{msgs['password expires']}"/>
     </h:panelGrid>
     <h:panelGrid id="cadUsuarioDados2" columns="4" style="margin-left: 10px;">
@@ -33,14 +33,15 @@
         <p:commandButton id="btSalvar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document" 
                          disabled="#{not beanVar.apresenta}" action="#{usuarioView.btSalvar}" process="btSalvar" 
                          update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
-                         btAlteraSenha, btHistorico, cadUsuarioButton"/>
+                         btAlteraSenha, btHistorico, cadUsuarioButton, :idFormTop:growl"/>
         <p:commandButton id="btCancelar" value="#{msgs['node.cancel']}" icon="ui-icon-document" disabled="#{not beanVar.apresenta}" 
                          process="btCancelar" action="#{usuarioView.btCancelar}"
                          update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
-                         btAlteraSenha, btHistorico, cadUsuarioButton"/>
+                         btAlteraSenha, btHistorico, cadUsuarioButton, :idFormTop:growl"/>
     </h:panelGrid>
 
-    <p:dataTable id="cadUsuarioGrid" var="cadUsuario" style="position: relative;width: 100%;" value="#{usuarioView.listUsuario}">
+    <p:dataTable id="cadUsuarioGrid" var="cadUsuario" style="position: relative;width: 100%;" value="#{usuarioView.listUsuario}"
+                 selection="#{usuarioView.lnUsuario}" selectionMode="single" rowKey="#{cadUsuario.usuStCodigo}">
         <f:facet name="header">
             <p:outputLabel value="#{msgs['template.user']}"/>
         </f:facet>
@@ -54,13 +55,13 @@
             <p:outputLabel value="#{cadUsuario.usuStEmail}"/>
         </p:column>
         <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
-            <p:outputLabel value="#{tratativa.tratamentoTextoCharacter(cadUsuario.usuChAtivo)}"/>
+            <p:outputLabel value="#{tratativa.tratamentoTextoString(cadUsuario.usuChAtivo)}"/>
         </p:column>
         <p:column headerText="#{msgs['node.user.changes.password']}">
-            <p:outputLabel value="#{tratativa.tratamentoTextoCharacter(cadUsuario.usuChAlterasenha)}"/>
+            <p:outputLabel value="#{tratativa.tratamentoTextoString(cadUsuario.usuChAlterasenha)}"/>
         </p:column>
         <p:column headerText="#{msgs['password expires']}">
-            <p:outputLabel value="#{tratativa.tratamentoTextoCharacter(cadUsuario.usuChExpirasenha)}"/>
+            <p:outputLabel value="#{tratativa.tratamentoTextoString(cadUsuario.usuChExpirasenha)}"/>
         </p:column>
         <p:column headerText="#{msgs['node.Registration.Date']}">
             <p:outputLabel value="#{cadUsuario.usuDtCadastro}"/>
@@ -71,14 +72,14 @@
                          process="cadUsuarioGrid, btIncluir" 
                          action="#{usuarioView.btIncluir}"
                          update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar,
-                         btAlteraSenha, btHistorico"/>
+                         btAlteraSenha, btHistorico, :idFormTop:growl"/>
         <p:commandButton id="btAlterar" value="#{msgs['template.change']}" icon="ui-icon-pencil" disabled="#{beanVar.apresenta}" 
                          process="cadUsuarioGrid, btAlterar" 
                          action="#{usuarioView.btAlterar}"
                          update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar,
-                         btAlteraSenha, btHistorico"/>
+                         btAlteraSenha, btHistorico, :idFormTop:growl"/>
         <p:commandButton id="btDeletar" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash" disabled="#{beanVar.apresenta}" 
-                         process="btDeletar" action="#{usuarioView.btDeletar}" update="cadUsuarioGrid">
+                         process="btDeletar" action="#{usuarioView.btDeletar}" update="cadUsuarioGrid, :idFormTop:growl">
             <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert"/>
         </p:commandButton>
         <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -86,8 +87,8 @@
             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
         </p:confirmDialog>    
         <p:commandButton id="btAlteraSenha" value="#{msgs['node.change.password']}"  icon="ui-icon-gear" 
-                         disabled="#{beanVar.apresenta}"
-                         onclick="PF('novaSenha').show()"/>
+                         disabled="#{beanVar.apresenta}" update=":idFormTop:growl"
+                         action="#{usuarioView.btAlteraSenha}"/>
         <p:commandButton id="btHistorico" value="#{msgs['node.history']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"/>
     </f:facet>
     

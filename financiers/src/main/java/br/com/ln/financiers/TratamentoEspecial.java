@@ -18,7 +18,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="tratativa")
 public class TratamentoEspecial implements Serializable{
     
-    public String tratamentoTextoCharacter(Character texto){
+    public String tratamentoTextoString(Character texto){
         
         if (texto =='S'){
             return "Sim";
@@ -26,5 +26,22 @@ public class TratamentoEspecial implements Serializable{
             return "Não";
         }
     }
-    
+
+    public boolean tratamentoTextoBoolean(Character texto){
+        
+        if (texto.equals('S')){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Character tratamentoTextoCharacter(boolean texto){
+        
+        if (texto){
+            return 'S';
+        } else {
+            return 'N';
+        }
+    }
 }

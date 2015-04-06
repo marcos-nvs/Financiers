@@ -10,6 +10,7 @@ import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
+import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -34,10 +36,7 @@ public class UsuarioView implements Serializable {
     private String nome;
     private String senha;
     private String email;
-    private Character ativo;
     private Integer dia;
-    private Character alteraSenha;
-    private Character expiraSenha;
     private Date dtExpira;
     private Date dtCadastro;
     private Integer perfil;
@@ -47,11 +46,19 @@ public class UsuarioView implements Serializable {
     private String novaSenha;
     private String confirmaSenha;
     private String mensagem;
+    private LnUsuario lnUsuario;
+    private TratamentoEspecial tratamentoEspecial;
+    
+    private boolean bAtivo = false;
+    private boolean bAlteraSenha = false;
+    private boolean bExpiraSenha = false;
 
     public UsuarioView() {
         this.listPerfil = Postgress.grabListPerfilAtivo('S');
         this.listUsuario = Postgress.grabListObject(LnUsuario.class);
         this.beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        this.lnUsuario = new LnUsuario();
+        tratamentoEspecial = new TratamentoEspecial();
     }
 
     public String getUsuario() {
@@ -86,36 +93,12 @@ public class UsuarioView implements Serializable {
         this.email = email;
     }
 
-    public Character getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Character ativo) {
-        this.ativo = ativo;
-    }
-
     public Integer getDia() {
         return dia;
     }
 
     public void setDia(Integer dia) {
         this.dia = dia;
-    }
-
-    public Character getAlteraSenha() {
-        return alteraSenha;
-    }
-
-    public void setAlteraSenha(Character alteraSenha) {
-        this.alteraSenha = alteraSenha;
-    }
-
-    public Character getExpiraSenha() {
-        return expiraSenha;
-    }
-
-    public void setExpiraSenha(Character expiraSenha) {
-        this.expiraSenha = expiraSenha;
     }
 
     public Date getDtExpira() {
@@ -174,6 +157,38 @@ public class UsuarioView implements Serializable {
         this.confirmaSenha = confirmaSenha;
     }
 
+    public LnUsuario getLnUsuario() {
+        return lnUsuario;
+    }
+
+    public void setLnUsuario(LnUsuario lnUsuario) {
+        this.lnUsuario = lnUsuario;
+    }
+
+    public boolean isbAtivo() {
+        return bAtivo;
+    }
+
+    public void setbAtivo(boolean bAtivo) {
+        this.bAtivo = bAtivo;
+    }
+
+    public boolean isbAlteraSenha() {
+        return bAlteraSenha;
+    }
+
+    public void setbAlteraSenha(boolean bAlteraSenha) {
+        this.bAlteraSenha = bAlteraSenha;
+    }
+
+    public boolean isbExpiraSenha() {
+        return bExpiraSenha;
+    }
+
+    public void setbExpiraSenha(boolean bExpiraSenha) {
+        this.bExpiraSenha = bExpiraSenha;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;
@@ -198,13 +213,13 @@ public class UsuarioView implements Serializable {
 
     @Override
     public String toString() {
-        return "UsuarioView{" + "usuario=" + usuario + ", nome=" + nome + ", senha=" + senha + ", email=" + email + ", ativo=" + ativo + ", dia=" + dia + ", alteraSenha=" + alteraSenha + ", expiraSenha=" + expiraSenha + ", dtExpira=" + dtExpira + ", dtCadastro=" + dtCadastro + ", perfil=" + perfil + '}';
+        return "UsuarioView{" + "usuario=" + usuario + ", nome=" + nome + ", senha=" + senha + ", email=" + email  + ", dia=" + dia + ", dtExpira=" + dtExpira + ", dtCadastro=" + dtCadastro + ", perfil=" + perfil + '}';
     }
     
     public void btIncluir(){
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             beanVar.setApresenta(true);
-
+            lnUsuario = new LnUsuario();
         } else {
             mensagem = "Usuário sem perimissão para incluir";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
@@ -213,8 +228,20 @@ public class UsuarioView implements Serializable {
     
     public void btAlterar(){
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
-            beanVar.setApresenta(true);
-
+            if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
+                beanVar.setApresenta(true);
+                usuario = lnUsuario.getUsuStCodigo();
+                senha = lnUsuario.getUsuStSenha();
+                email = lnUsuario.getUsuStEmail();
+                bAtivo = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChAtivo());
+                bAlteraSenha = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChAlterasenha());
+                bExpiraSenha = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChExpirasenha());
+                nome = lnUsuario.getUsuStNome();
+                perfil = lnUsuario.getPerInCodigo();
+            } else {
+                mensagem = "Por favor, escolha um Usuário para alterar.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            }
         } else {
             mensagem = "Usuário sem perimissão para alterar";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
@@ -224,7 +251,6 @@ public class UsuarioView implements Serializable {
     public void btDeletar(){
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             beanVar.setApresenta(true);
-
         } else {
             mensagem = "Usuário sem perimissão para excluir";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
@@ -234,13 +260,21 @@ public class UsuarioView implements Serializable {
     public void btSalvar(){
         beanVar.setApresenta(false);
     }
-    
-    public void btCancelar(){
+
+    public void btCancelar() {
         beanVar.setApresenta(false);
     }
-    
-    public void btConfirmaSenha(){
-        
+
+    public void btAlteraSenha() {
+        if (VarComuns.lnUsusario.getUsuChAlterasenha().equals('S')) {
+            RequestContext.getCurrentInstance().execute("PF('novaSenha').show()");
+        } else {
+            mensagem = "Usuário sem perimissão para alterar senha";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+        }
+    }
+
+    public void btConfirmaSenha() {
     }
     
     
