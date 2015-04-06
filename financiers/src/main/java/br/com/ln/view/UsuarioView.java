@@ -7,15 +7,19 @@ package br.com.ln.view;
 
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
+import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
+import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -39,9 +43,14 @@ public class UsuarioView implements Serializable {
     private Integer perfil;
     private List<LnPerfil> listPerfil = new ArrayList<>();
     private BeanVar beanVar;
+    private List<LnUsuario> listUsuario = new ArrayList<>();
+    private String novaSenha;
+    private String confirmaSenha;
+    private String mensagem;
 
     public UsuarioView() {
         this.listPerfil = Postgress.grabListPerfilAtivo('S');
+        this.listUsuario = Postgress.grabListObject(LnUsuario.class);
         this.beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
@@ -141,6 +150,30 @@ public class UsuarioView implements Serializable {
         this.listPerfil = listPerfil;
     }
     
+    public List<LnUsuario> getListUsuario() {
+        return listUsuario;
+    }
+
+    public void setListUsuario(List<LnUsuario> listUsuario) {
+        this.listUsuario = listUsuario;
+    }
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
+    }
+
+    public String getConfirmaSenha() {
+        return confirmaSenha;
+    }
+
+    public void setConfirmaSenha(String confirmaSenha) {
+        this.confirmaSenha = confirmaSenha;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -169,15 +202,33 @@ public class UsuarioView implements Serializable {
     }
     
     public void btIncluir(){
-        beanVar.setApresenta(true);
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
+            beanVar.setApresenta(true);
+
+        } else {
+            mensagem = "Usuário sem perimissão para incluir";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+        }
     }
     
     public void btAlterar(){
-        beanVar.setApresenta(true);
+        if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
+            beanVar.setApresenta(true);
+
+        } else {
+            mensagem = "Usuário sem perimissão para alterar";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+        }
     }
     
     public void btDeletar(){
-        beanVar.setApresenta(true);
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
+            beanVar.setApresenta(true);
+
+        } else {
+            mensagem = "Usuário sem perimissão para excluir";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+        }
     }
 
     public void btSalvar(){
@@ -187,4 +238,10 @@ public class UsuarioView implements Serializable {
     public void btCancelar(){
         beanVar.setApresenta(false);
     }
+    
+    public void btConfirmaSenha(){
+        
+    }
+    
+    
 }

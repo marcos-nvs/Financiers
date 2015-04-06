@@ -6,7 +6,7 @@
 
     <h:panelGrid id="cadUsuarioDados1" columns="10">
         <p:outputLabel value="#{msgs['template.user']}"/>
-        <p:inputText id="idUsuStCodigo" value="#{usuarioView.usuario}" disabled="#{not beanVar.apresenta}" />
+        <p:inputText id="idUsuStCodigo" value="#{usuarioView.usuario}" disabled="#{not beanVar.apresenta}"/>
         <p:outputLabel value="#{msgs['page.textFields.password']}"/>
         <p:password id="idUsuStSenha" value="#{usuarioView.senha}" disabled="#{not beanVar.apresenta}"/>
         <p:selectBooleanCheckbox value="#{usuarioView.ativo}" disabled="#{not beanVar.apresenta}" />
@@ -30,46 +30,53 @@
         </p:selectOneMenu>
     </h:panelGrid>
     <h:panelGrid id="cadUsuarioButton" columns="2">
-        <p:commandButton id="btSalvar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document" disabled="#{not beanVar.apresenta}" 
-                         process="btSalvar" update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid"/>
-        <p:commandButton value="#{msgs['node.cancel']}" icon="ui-icon-document" disabled="#{not beanVar.apresenta}" />
+        <p:commandButton id="btSalvar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document" 
+                         disabled="#{not beanVar.apresenta}" action="#{usuarioView.btSalvar}" process="btSalvar" 
+                         update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
+                         btAlteraSenha, btHistorico, cadUsuarioButton"/>
+        <p:commandButton id="btCancelar" value="#{msgs['node.cancel']}" icon="ui-icon-document" disabled="#{not beanVar.apresenta}" 
+                         process="btCancelar" action="#{usuarioView.btCancelar}"
+                         update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
+                         btAlteraSenha, btHistorico, cadUsuarioButton"/>
     </h:panelGrid>
 
-    <p:dataTable id="cadUsuarioGrid" style="position: relative;width: 100%;">
+    <p:dataTable id="cadUsuarioGrid" var="cadUsuario" style="position: relative;width: 100%;" value="#{usuarioView.listUsuario}">
         <f:facet name="header">
             <p:outputLabel value="#{msgs['template.user']}"/>
         </f:facet>
         <p:column headerText="#{msgs['template.user']}">
-            <p:outputLabel value="1234"/>
+            <p:outputLabel value="#{cadUsuario.usuStCodigo}"/>
         </p:column>
         <p:column headerText="#{msgs['page.tree.employee.name.label']}">
-            <p:outputLabel value="Marcos"/>
+            <p:outputLabel value="#{cadUsuario.usuStNome}"/>
         </p:column>
         <p:column headerText="#{msgs['node.email']}">
-            <p:outputLabel value="dddd@uo.c.br"/>
+            <p:outputLabel value="#{cadUsuario.usuStEmail}"/>
         </p:column>
         <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
-            <p:outputLabel value="sim"/>
+            <p:outputLabel value="#{tratativa.tratamentoTextoCharacter(cadUsuario.usuChAtivo)}"/>
         </p:column>
         <p:column headerText="#{msgs['node.user.changes.password']}">
-            <p:outputLabel value="sim"/>
+            <p:outputLabel value="#{tratativa.tratamentoTextoCharacter(cadUsuario.usuChAlterasenha)}"/>
         </p:column>
         <p:column headerText="#{msgs['password expires']}">
-            <p:outputLabel value="sim"/>
+            <p:outputLabel value="#{tratativa.tratamentoTextoCharacter(cadUsuario.usuChExpirasenha)}"/>
         </p:column>
         <p:column headerText="#{msgs['node.Registration.Date']}">
-            <p:outputLabel value="hoje"/>
+            <p:outputLabel value="#{cadUsuario.usuDtCadastro}"/>
         </p:column>
     </p:dataTable>
     <f:facet id="idCadButton" name="footer">
         <p:commandButton id="btIncluir" value="#{msgs['node.include']}" icon="ui-icon-document" disabled="#{beanVar.apresenta}" 
-                         process="cadUsuarioGrid, btIncluir, btAlterar, btDeletar" 
+                         process="cadUsuarioGrid, btIncluir" 
                          action="#{usuarioView.btIncluir}"
-                         update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar"/>
+                         update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar,
+                         btAlteraSenha, btHistorico"/>
         <p:commandButton id="btAlterar" value="#{msgs['template.change']}" icon="ui-icon-pencil" disabled="#{beanVar.apresenta}" 
                          process="cadUsuarioGrid, btAlterar" 
                          action="#{usuarioView.btAlterar}"
-                         update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar"/>
+                         update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar,
+                         btAlteraSenha, btHistorico"/>
         <p:commandButton id="btDeletar" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash" disabled="#{beanVar.apresenta}" 
                          process="btDeletar" action="#{usuarioView.btDeletar}" update="cadUsuarioGrid">
             <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert"/>
@@ -78,7 +85,26 @@
             <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
             <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
         </p:confirmDialog>    
-        <p:commandButton value="#{msgs['node.change.password']}"  icon="ui-icon-gear" disabled="#{beanVar.apresenta}"/>
-        <p:commandButton value="#{msgs['node.history']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"/>
+        <p:commandButton id="btAlteraSenha" value="#{msgs['node.change.password']}"  icon="ui-icon-gear" 
+                         disabled="#{beanVar.apresenta}"
+                         onclick="PF('novaSenha').show()"/>
+        <p:commandButton id="btHistorico" value="#{msgs['node.history']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"/>
     </f:facet>
+    
+    <p:dialog id="idDialogSenha" header="Alterar Senha" widgetVar="novaSenha" modal="false" showEffect="fade" hideEffect="fade" closable="false"
+              style="background-color: #FFFFFF" width="400">
+        <p:outputLabel value="#{msgs['template.user']}: "/>
+        <h:panelGrid columns="2">
+            <p:outputLabel value="Entre com a nova senha"/>
+            <p:password value="#{usuarioView.novaSenha}"/>
+            <p:outputLabel value="Confirma a senha"/>
+            <p:password value="#{usuarioView.confirmaSenha}"/>
+        </h:panelGrid>
+        <f:facet name="footer">
+            <p:commandButton id="btSalvaSenha" value="#{msgs['node.include']}" icon="ui-icon-document" disabled="#{beanVar.apresenta}"
+                             action="#{usuarioView.btConfirmaSenha()}"/> 
+            <p:commandButton id="btFechar" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-circlesmall-close" disabled="#{beanVar.apresenta}"
+                             onclick="PF('novaSenha').hide()"/> 
+        </f:facet>
+    </p:dialog>
 </ui:composition>
