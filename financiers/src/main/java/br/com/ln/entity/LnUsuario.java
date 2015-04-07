@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -16,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -74,6 +76,9 @@ public class LnUsuario implements Serializable {
     @Column(name = "per_in_codigo")
     private int perInCodigo;
 
+    @Transient
+    private TipoFuncao tipoFuncao;
+    
     public LnUsuario() {
     }
 
@@ -177,6 +182,14 @@ public class LnUsuario implements Serializable {
 
     public void setPerInCodigo(int perInCodigo) {
         this.perInCodigo = perInCodigo;
+    }
+
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
     }
 
     @Override

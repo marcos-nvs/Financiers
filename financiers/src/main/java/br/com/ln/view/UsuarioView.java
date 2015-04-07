@@ -10,6 +10,8 @@ import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
+import br.com.ln.financiers.FunctionLn;
+import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
@@ -48,6 +50,7 @@ public class UsuarioView implements Serializable {
     private String mensagem;
     private LnUsuario lnUsuario;
     private TratamentoEspecial tratamentoEspecial;
+    private FunctionLn functions;
     
     private boolean bAtivo = false;
     private boolean bAlteraSenha = false;
@@ -59,6 +62,7 @@ public class UsuarioView implements Serializable {
         this.beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         this.lnUsuario = new LnUsuario();
         tratamentoEspecial = new TratamentoEspecial();
+        functions = new FunctionLn();
     }
 
     public String getUsuario() {
@@ -220,6 +224,7 @@ public class UsuarioView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             beanVar.setApresenta(true);
             lnUsuario = new LnUsuario();
+            lnUsuario.setTipoFuncao(TipoFuncao.Incluir);
         } else {
             mensagem = "Usuário sem perimissão para incluir";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
@@ -238,6 +243,7 @@ public class UsuarioView implements Serializable {
                 bExpiraSenha = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChExpirasenha());
                 nome = lnUsuario.getUsuStNome();
                 perfil = lnUsuario.getPerInCodigo();
+                lnUsuario.setTipoFuncao(TipoFuncao.Alterar);
             } else {
                 mensagem = "Por favor, escolha um Usuário para alterar.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
@@ -250,6 +256,7 @@ public class UsuarioView implements Serializable {
     
     public void btDeletar(){
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
+            lnUsuario.setTipoFuncao(TipoFuncao.Excluir);
             beanVar.setApresenta(true);
         } else {
             mensagem = "Usuário sem perimissão para excluir";
@@ -258,7 +265,14 @@ public class UsuarioView implements Serializable {
     }
 
     public void btSalvar(){
-        beanVar.setApresenta(false);
+        mensagem = functions.SaveObject(lnUsuario);
+        
+        if (mensagem.equals("Sucesso")){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario",mensagem));
+            beanVar.setApresenta(false);
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario",mensagem));
+        }
     }
 
     public void btCancelar() {
