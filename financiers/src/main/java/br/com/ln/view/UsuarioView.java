@@ -27,13 +27,12 @@ import org.primefaces.context.RequestContext;
 
 /**
  *
- * @author Marcos Naves 
+ * @author Marcos Naves
  */
-
 @SessionScoped
-@ManagedBean(name="usuarioView")
+@ManagedBean(name = "usuarioView")
 public class UsuarioView implements Serializable {
-    
+
     private String usuario;
     private String nome;
     private String senha;
@@ -43,15 +42,15 @@ public class UsuarioView implements Serializable {
     private Date dtCadastro;
     private Integer perfil;
     private List<LnPerfil> listPerfil = new ArrayList<>();
-    private BeanVar beanVar;
+    private final BeanVar beanVar;
     private List<LnUsuario> listUsuario = new ArrayList<>();
     private String novaSenha;
     private String confirmaSenha;
     private String mensagem;
     private LnUsuario lnUsuario;
-    private TratamentoEspecial tratamentoEspecial;
-    private FunctionLn functions;
-    
+    private final TratamentoEspecial tratamentoEspecial;
+    private final FunctionLn functions;
+
     private boolean bAtivo = false;
     private boolean bAlteraSenha = false;
     private boolean bExpiraSenha = false;
@@ -136,7 +135,7 @@ public class UsuarioView implements Serializable {
     public void setListPerfil(List<LnPerfil> listPerfil) {
         this.listPerfil = listPerfil;
     }
-    
+
     public List<LnUsuario> getListUsuario() {
         return listUsuario;
     }
@@ -192,7 +191,7 @@ public class UsuarioView implements Serializable {
     public void setbExpiraSenha(boolean bExpiraSenha) {
         this.bExpiraSenha = bExpiraSenha;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -217,12 +216,13 @@ public class UsuarioView implements Serializable {
 
     @Override
     public String toString() {
-        return "UsuarioView{" + "usuario=" + usuario + ", nome=" + nome + ", senha=" + senha + ", email=" + email  + ", dia=" + dia + ", dtExpira=" + dtExpira + ", dtCadastro=" + dtCadastro + ", perfil=" + perfil + '}';
+        return "UsuarioView{" + "usuario=" + usuario + ", nome=" + nome + ", senha=" + senha + ", email=" + email + ", dia=" + dia + ", dtExpira=" + dtExpira + ", dtCadastro=" + dtCadastro + ", perfil=" + perfil + '}';
     }
-    
-    public void btIncluir(){
+
+    public void btIncluir() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             beanVar.setApresenta(true);
+            dataClean();
             lnUsuario = new LnUsuario();
             lnUsuario.setTipoFuncao(TipoFuncao.Incluir);
         } else {
@@ -230,19 +230,12 @@ public class UsuarioView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
-    
-    public void btAlterar(){
+
+    public void btAlterar() {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
                 beanVar.setApresenta(true);
-                usuario = lnUsuario.getUsuStCodigo();
-                senha = lnUsuario.getUsuStSenha();
-                email = lnUsuario.getUsuStEmail();
-                bAtivo = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChAtivo());
-                bAlteraSenha = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChAlterasenha());
-                bExpiraSenha = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChExpirasenha());
-                nome = lnUsuario.getUsuStNome();
-                perfil = lnUsuario.getPerInCodigo();
+                dataLoadVar();
                 lnUsuario.setTipoFuncao(TipoFuncao.Alterar);
             } else {
                 mensagem = "Por favor, escolha um Usuário para alterar.";
@@ -253,8 +246,8 @@ public class UsuarioView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
-    
-    public void btDeletar(){
+
+    public void btDeletar() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             lnUsuario.setTipoFuncao(TipoFuncao.Excluir);
             beanVar.setApresenta(true);
@@ -264,18 +257,22 @@ public class UsuarioView implements Serializable {
         }
     }
 
-    public void btSalvar(){
+    public void btSalvar() {
+        dataLoadUsuario();
         mensagem = functions.SaveObject(lnUsuario);
-        
-        if (mensagem.equals("Sucesso")){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario",mensagem));
+
+        if (mensagem.equals("Sucesso")) {
+            listUsuario = Postgress.grabListObject(LnUsuario.class);
+            dataClean();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             beanVar.setApresenta(false);
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Usuario",mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
 
     public void btCancelar() {
+        dataClean();
         beanVar.setApresenta(false);
     }
 
@@ -290,6 +287,37 @@ public class UsuarioView implements Serializable {
 
     public void btConfirmaSenha() {
     }
-    
-    
+
+    public void dataClean() {
+        usuario = "";
+        senha = "";
+        email = "";
+        bAtivo = false;
+        bAlteraSenha = false;
+        bExpiraSenha = false;
+        nome = "";
+    }
+
+    public void dataLoadUsuario() {
+        lnUsuario.setPerInCodigo(perfil);
+        lnUsuario.setUsuChAlterasenha(tratamentoEspecial.tratamentoTextoCharacter(bAlteraSenha));
+        lnUsuario.setUsuChAtivo(tratamentoEspecial.tratamentoTextoCharacter(bAtivo));
+        lnUsuario.setUsuChExpirasenha(tratamentoEspecial.tratamentoTextoCharacter(bExpiraSenha));
+        lnUsuario.setUsuStCodigo(usuario);
+        lnUsuario.setUsuStEmail(email);
+        lnUsuario.setUsuStNome(nome);
+        lnUsuario.setUsuStSenha(senha);
+
+    }
+
+    public void dataLoadVar() {
+        usuario = lnUsuario.getUsuStCodigo();
+        senha = lnUsuario.getUsuStSenha();
+        email = lnUsuario.getUsuStEmail();
+        bAtivo = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChAtivo());
+        bAlteraSenha = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChAlterasenha());
+        bExpiraSenha = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChExpirasenha());
+        nome = lnUsuario.getUsuStNome();
+        perfil = lnUsuario.getPerInCodigo();
+    }
 }

@@ -33,6 +33,7 @@ public class FunctionLn {
                 inclusaoUsuario(lnUsuario);
                 break;
             case Alterar:
+                alteracaoUsuario(lnUsuario);
                 break;
             case Excluir:
                 break;
@@ -48,35 +49,51 @@ public class FunctionLn {
             mensagem = "Usuário já cadastrado!!!";
         } else {
             if (verificaDadosUsuario(lnUsuario)) {
+                if (lnUsuario.getUsuChExpirasenha().equals('S')){
+                    lnUsuario.setUsuInDia(30);
+                    lnUsuario.setUsuDtExpiracao(Postgress.grabDateFromDB());
+                }
+                lnUsuario.setUsuDtCadastro(Postgress.grabDateFromDB());
                 Postgress.saveObject(lnUsuario);
+                mensagem = "Sucesso";
             }
         }
     }
 
     private boolean verificaDadosUsuario(LnUsuario lnUsuario) {
 
-        mensagem = "Por favor preencha as seguintes informações:";
+        mensagem = "Por favor preencha as seguintes informações: ";
         boolean validado = true;
 
         if (lnUsuario.getUsuStNome() == null || lnUsuario.getUsuStNome().isEmpty()) {
             validado = false;
-            mensagem = "Nome";
+            mensagem = mensagem + "Nome - ";
         }
         if (lnUsuario.getUsuStEmail() == null || lnUsuario.getUsuStEmail().isEmpty()) {
             validado = false;
-            mensagem = "E-mail";
+            mensagem = mensagem + "E-mail - ";
         }
 
         if (lnUsuario.getTipoFuncao().equals(TipoFuncao.Incluir)) {
             if (lnUsuario.getUsuStCodigo() == null || lnUsuario.getUsuStCodigo().isEmpty()) {
                 validado = false;
-                mensagem = "Usuário";
+                mensagem = mensagem + "Usuário - ";
             }
             if (lnUsuario.getUsuStSenha() == null || lnUsuario.getUsuStSenha().isEmpty()) {
                 validado = false;
-                mensagem = "Senha";
+                mensagem = mensagem + "Senha";
             }
         }
         return validado;
+    }
+
+    private void alteracaoUsuario(LnUsuario lnUsuario) {
+
+        if (verificaDadosUsuario(lnUsuario)){
+            LnUsuario pUsuario = Postgress.grabUsuario(lnUsuario.getUsuStCodigo());
+            lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
+            Postgress.saveOrUpdateObject(lnUsuario);
+            mensagem = "Sucesso";
+        }
     }
 }
