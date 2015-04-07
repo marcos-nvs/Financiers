@@ -222,6 +222,7 @@ public class UsuarioView implements Serializable {
     public void btIncluir() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             beanVar.setApresenta(true);
+            beanVar.setBloquear(false);
             dataClean();
             lnUsuario = new LnUsuario();
             lnUsuario.setTipoFuncao(TipoFuncao.Incluir);
@@ -235,6 +236,7 @@ public class UsuarioView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
                 beanVar.setApresenta(true);
+                beanVar.setBloquear(true);
                 dataLoadVar();
                 lnUsuario.setTipoFuncao(TipoFuncao.Alterar);
             } else {
@@ -266,6 +268,7 @@ public class UsuarioView implements Serializable {
             dataClean();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             beanVar.setApresenta(false);
+            beanVar.setBloquear(true);
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
@@ -274,6 +277,7 @@ public class UsuarioView implements Serializable {
     public void btCancelar() {
         dataClean();
         beanVar.setApresenta(false);
+        beanVar.setBloquear(true);
     }
 
     public void btAlteraSenha() {

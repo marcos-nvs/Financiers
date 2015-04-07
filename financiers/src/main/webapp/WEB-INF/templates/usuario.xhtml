@@ -6,9 +6,9 @@
 
     <h:panelGrid id="cadUsuarioDados1" columns="10">
         <p:outputLabel value="#{msgs['template.user']}"/>
-        <p:inputText id="idUsuStCodigo" value="#{usuarioView.usuario}" disabled="#{not beanVar.apresenta}"/>
+        <p:inputText id="idUsuStCodigo" value="#{usuarioView.usuario}" disabled="#{beanVar.bloquear}"/>
         <p:outputLabel value="#{msgs['page.textFields.password']}"/>
-        <p:password id="idUsuStSenha" value="#{usuarioView.senha}" disabled="#{not beanVar.apresenta}"/>
+        <p:password id="idUsuStSenha" value="#{usuarioView.senha}" disabled="#{beanVar.bloquear}"/>
         <p:selectBooleanCheckbox value="#{usuarioView.bAtivo}" disabled="#{not beanVar.apresenta}" />
         <p:outputLabel id="idUsuChAtiuvo" value="#{msgs['page.connectionStatus.status2.value']}"/>
         <p:selectBooleanCheckbox value="#{usuarioView.bAlteraSenha}" disabled="#{not beanVar.apresenta}" />
