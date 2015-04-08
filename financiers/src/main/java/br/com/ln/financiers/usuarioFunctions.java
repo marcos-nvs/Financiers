@@ -5,6 +5,7 @@
  */
 package br.com.ln.financiers;
 
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 
@@ -12,20 +13,11 @@ import br.com.ln.hibernate.Postgress;
  *
  * @author Marcos Naves
  */
-public class FunctionLn {
+public class usuarioFunctions {
     
     private String mensagem;
     
-    public String SaveObject(Object obj) {
-
-        if (obj instanceof LnUsuario) {
-            LnUsuario lnUsuario = (LnUsuario) obj;
-            gravaUsuario(lnUsuario);
-        }
-        return mensagem;
-    }
-
-    private void gravaUsuario(LnUsuario lnUsuario) {
+    public String usuario(LnUsuario lnUsuario) {
         mensagem = "";
         
         switch (lnUsuario.getTipoFuncao()){
@@ -36,10 +28,13 @@ public class FunctionLn {
                 alteracaoUsuario(lnUsuario);
                 break;
             case Excluir:
+                exclusaoUsuario(lnUsuario);
                 break;
             case Pesquisar:
                 break;
         }
+        
+        return mensagem;
     }
     
     private void inclusaoUsuario(LnUsuario lnUsuario) {
@@ -96,4 +91,15 @@ public class FunctionLn {
             mensagem = "Sucesso";
         }
     }
+
+    private void exclusaoUsuario(LnUsuario lnUsuario) {
+        
+        if (Postgress.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {
+            Postgress.deleteObject(lnUsuario);
+            mensagem = "Sucesso";
+        } else {
+            mensagem = "O usuário " +lnUsuario.getUsuStCodigo() + " não pode ser excluído apenas cancelado.!!!!";
+        }
+    }
+
 }

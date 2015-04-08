@@ -10,7 +10,7 @@ import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.financiers.FunctionLn;
+import br.com.ln.financiers.usuarioFunctions;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.hibernate.Postgress;
@@ -49,7 +49,7 @@ public class UsuarioView implements Serializable {
     private String mensagem;
     private LnUsuario lnUsuario;
     private final TratamentoEspecial tratamentoEspecial;
-    private final FunctionLn functions;
+    private final usuarioFunctions functions;
 
     private boolean bAtivo = false;
     private boolean bAlteraSenha = false;
@@ -61,7 +61,7 @@ public class UsuarioView implements Serializable {
         this.beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         this.lnUsuario = new LnUsuario();
         tratamentoEspecial = new TratamentoEspecial();
-        functions = new FunctionLn();
+        functions = new usuarioFunctions();
     }
 
     public String getUsuario() {
@@ -251,8 +251,15 @@ public class UsuarioView implements Serializable {
 
     public void btDeletar() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
-            lnUsuario.setTipoFuncao(TipoFuncao.Excluir);
-            beanVar.setApresenta(true);
+            if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
+                lnUsuario.setTipoFuncao(TipoFuncao.Excluir);
+                functions.usuario(lnUsuario);
+                listUsuario = Postgress.grabListObject(LnUsuario.class);
+                beanVar.setApresenta(true);
+            } else {
+                mensagem = "Por favor, escolha um Usuário para excluir.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            }
         } else {
             mensagem = "Usuário sem perimissão para excluir";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
@@ -261,7 +268,7 @@ public class UsuarioView implements Serializable {
 
     public void btSalvar() {
         dataLoadUsuario();
-        mensagem = functions.SaveObject(lnUsuario);
+        mensagem = functions.usuario(lnUsuario);
 
         if (mensagem.equals("Sucesso")) {
             listUsuario = Postgress.grabListObject(LnUsuario.class);
