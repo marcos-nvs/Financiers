@@ -444,8 +444,6 @@ public class Postgress implements Serializable{
             listHis = query.list();
             tx.commit();
 
-            System.out.println("lishis : " + listHis.size());
-            
             if (listHis != null) {
                 retorno = listHis.size() == 0;
             } else {

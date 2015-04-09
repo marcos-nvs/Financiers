@@ -4,5 +4,27 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:outputLabel value="Tela de Historico em desenvolvimento!!!!"/>
+    <p:dialog id="idHistoricoDialog" header="Historico" widgetVar="historico" modal="true" showEffect="fade" hideEffect="fade" closable="false"
+              style="background-color: #FFFFFF" width="1200" >
+        <p:dataTable id="idDtHistorico" var="idHistorico" value="#{historicoView.listHistorico}" paginator="true" rows="10">
+            <f:facet name="header">
+                <p:outputLabel value="#{msgs['node.history']}"/>
+            </f:facet>
+            <p:column headerText="#{msgs['node.module']}">
+                <p:outputLabel value="#{historicoView.buscaDescModulo(idHistorico.modInCodigo)}"/>
+            </p:column>
+            <p:column headerText="#{msgs['template.user']}">
+                <p:outputLabel value="#{idHistorico.usuStCodigo}"/>
+            </p:column>
+            <p:column headerText="#{msgs['node.date.transaction']}">
+                <p:outputLabel value="#{idHistorico.hisDtData}"/>
+            </p:column>
+            <p:column headerText="#{msgs['tabbedHeadings.description']}">
+                <p:outputLabel value="#{idHistorico.hisStDescricao}"/>
+            </p:column>
+            <f:facet name="footer">
+                <p:commandButton value="#{msgs['page.panelPopup.closeText']}" onclick="PF('historico').hide()" icon="ui-icon-close"/>
+            </f:facet>
+        </p:dataTable>
+    </p:dialog>
 </ui:composition>

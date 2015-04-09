@@ -6,11 +6,12 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.financiers.usuarioFunctions;
+import br.com.ln.financiers.UsuarioFunctions;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.hibernate.Postgress;
@@ -49,19 +50,19 @@ public class UsuarioView implements Serializable {
     private String mensagem;
     private LnUsuario lnUsuario;
     private final TratamentoEspecial tratamentoEspecial;
-    private final usuarioFunctions functions;
+    private final UsuarioFunctions functions;
 
     private boolean bAtivo = false;
     private boolean bAlteraSenha = false;
     private boolean bExpiraSenha = false;
 
     public UsuarioView() {
-        this.listPerfil = Postgress.grabListPerfilAtivo('S');
-        this.listUsuario = Postgress.grabListObject(LnUsuario.class);
-        this.beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
-        this.lnUsuario = new LnUsuario();
+        listPerfil = Postgress.grabListPerfilAtivo('S');
+        listUsuario = Postgress.grabListObject(LnUsuario.class);
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        lnUsuario = new LnUsuario();
         tratamentoEspecial = new TratamentoEspecial();
-        functions = new usuarioFunctions();
+        functions = new UsuarioFunctions();
     }
 
     public String getUsuario() {
@@ -227,7 +228,7 @@ public class UsuarioView implements Serializable {
             lnUsuario = new LnUsuario();
             lnUsuario.setTipoFuncao(TipoFuncao.Incluir);
         } else {
-            mensagem = "Usuário sem perimissão para incluir";
+            mensagem = "Usuario sem perimissao para incluir";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
@@ -240,28 +241,34 @@ public class UsuarioView implements Serializable {
                 dataLoadVar();
                 lnUsuario.setTipoFuncao(TipoFuncao.Alterar);
             } else {
-                mensagem = "Por favor, escolha um Usuário para alterar.";
+                mensagem = "Por favor, escolha um Usuario para alterar.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             }
         } else {
-            mensagem = "Usuário sem perimissão para alterar";
+            mensagem = "Usuario sem perimissao para alterar";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
 
     public void btDeletar() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
-            if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
-                lnUsuario.setTipoFuncao(TipoFuncao.Excluir);
-                functions.usuario(lnUsuario);
-                listUsuario = Postgress.grabListObject(LnUsuario.class);
-                beanVar.setApresenta(true);
-            } else {
-                mensagem = "Por favor, escolha um Usuário para excluir.";
+
+            try {
+                if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
+                    lnUsuario.setTipoFuncao(TipoFuncao.Excluir);
+                    functions.usuario(lnUsuario);
+                    listUsuario = Postgress.grabListObject(LnUsuario.class);
+                    beanVar.setApresenta(true);
+                } else {
+                    mensagem = "Por favor, escolha um Usuario para excluir.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                }
+            } catch (NullPointerException ex) {
+                mensagem = "Por favor, escolha um Usuario para excluir.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             }
         } else {
-            mensagem = "Usuário sem perimissão para excluir";
+            mensagem = "Usuario sem perimissao para excluir";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
@@ -289,14 +296,35 @@ public class UsuarioView implements Serializable {
 
     public void btAlteraSenha() {
         if (VarComuns.lnUsusario.getUsuChAlterasenha().equals('S')) {
-            RequestContext.getCurrentInstance().execute("PF('novaSenha').show()");
+            try {
+                if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
+                    RequestContext.getCurrentInstance().execute("PF('novaSenha').show()");
+                } else {
+                    mensagem = "Por favor, escolha um usuario para realizar a alteracao!!!";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                }
+            } catch (NullPointerException ex) {
+                mensagem = "Por favor, escolha um usuario para realizar a alteracao!!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            }
         } else {
-            mensagem = "Usuário sem perimissão para alterar senha";
+            mensagem = "Usuario sem perimissao para alterar senha";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
 
     public void btConfirmaSenha() {
+        if (novaSenha.equals(confirmaSenha)) {
+            Historico historico = new Historico();
+            lnUsuario.setUsuStSenha(novaSenha);
+            Postgress.saveOrUpdateObject(lnUsuario);
+            historico.gravaHistorico("Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada." );
+            mensagem = "Senha alterada com sucesso!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+        } else {
+            mensagem = "Senha nao confere, por favor verifique!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+        }
     }
 
     public void dataClean() {
@@ -307,6 +335,7 @@ public class UsuarioView implements Serializable {
         bAlteraSenha = false;
         bExpiraSenha = false;
         nome = "";
+        dia = null;
     }
 
     public void dataLoadUsuario() {
@@ -318,7 +347,7 @@ public class UsuarioView implements Serializable {
         lnUsuario.setUsuStEmail(email);
         lnUsuario.setUsuStNome(nome);
         lnUsuario.setUsuStSenha(senha);
-
+        lnUsuario.setUsuInDia(dia);
     }
 
     public void dataLoadVar() {
@@ -330,5 +359,6 @@ public class UsuarioView implements Serializable {
         bExpiraSenha = tratamentoEspecial.tratamentoTextoBoolean(lnUsuario.getUsuChExpirasenha());
         nome = lnUsuario.getUsuStNome();
         perfil = lnUsuario.getPerInCodigo();
+        dia = lnUsuario.getUsuInDia();
     }
 }
