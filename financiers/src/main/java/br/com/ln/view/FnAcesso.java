@@ -196,7 +196,27 @@ public class FnAcesso implements Serializable {
         this.lnUsuario = null;
     }    
     
-    private void ConfirmaNovaSenha(){
-        
+    public void recuperaAcesso(){
+        beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+        beanVar.setNomeTela("Recuperacao de Acesso");
     }
+    
+    public void btVoltar(){
+        beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+        beanVar.setNomeTela("");
+    }
+    
+    public void btEnviaEmailAcesso(){
+        
+//        SimpleEmail email = new SimpleEmail(); 
+//        email.setHostName("mail.myserver.com"); // o servidor SMTP para envio do e-mail 
+//        email.addTo("jdoe@somewhere.org", "John Doe"); //destinatário 
+//        email.setFrom("me@apache.org", "Me"); // remetente 
+//        email.setSubject("Mensagem de Teste"); // assunto do e-mail 
+//        email.setMsg("Teste de Email utilizando commons-email"); //conteudo do e-mail 
+//        email.send(); //envia o e-mail
+
+        beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+        beanVar.setNomeTela("");
+}
 }

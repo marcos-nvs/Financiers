@@ -22,7 +22,8 @@
                             <p:commandButton id="idBtTrocaSenha" value="Trocar Senha" onclick="PF('senha').show()"/>
                         </f:facet>
                     </h:panelGrid>
-                    <p:commandLink value="Esqueceu a senha?" />
+                    <p:commandLink id="btRecuperaSenha" value="Esqueceu a senha?" action="#{financiersView.recuperaAcesso}" 
+                                   process="btRecuperaSenha" ajax="false" update=":idFormCenter"/>
                     <p:focus for="idInUsuario"/>
                 </p:panel>
             </h:panelGrid>
