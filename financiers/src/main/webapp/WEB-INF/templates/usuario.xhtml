@@ -92,7 +92,8 @@
         <p:commandButton id="btAlteraSenha" value="#{msgs['node.change.password']}"  icon="ui-icon-gear" 
                          disabled="#{beanVar.apresenta}" update=":idFormTop:growl"
                          action="#{usuarioView.btAlteraSenha}"/>
-        <p:commandButton id="btHistorico" value="#{msgs['node.history']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"/>
+        <p:commandButton id="btHistorico" value="#{msgs['node.history']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"
+                         onclick="PF('historico').show()"/>
     </f:facet>
     
     <p:dialog id="idDialogSenha" header="Alterar Senha" widgetVar="novaSenha" modal="false" showEffect="fade" hideEffect="fade" closable="false"

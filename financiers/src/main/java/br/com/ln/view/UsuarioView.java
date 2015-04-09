@@ -9,6 +9,7 @@ import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.UsuarioFunctions;
@@ -326,7 +327,7 @@ public class UsuarioView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
-
+    
     public void dataClean() {
         usuario = "";
         senha = "";
