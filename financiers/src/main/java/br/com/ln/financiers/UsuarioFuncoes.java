@@ -5,20 +5,24 @@
  */
 package br.com.ln.financiers;
 
-import br.com.ln.entity.LnHistorico;
+import br.com.ln.comum.Historico;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
  * @author Marcos Naves
  */
-public class usuarioFunctions {
+public class UsuarioFuncoes {
     
     private String mensagem;
+    private Historico historico;
     
     public String usuario(LnUsuario lnUsuario) {
         mensagem = "";
+        historico = new Historico();
         
         switch (lnUsuario.getTipoFuncao()){
             case Incluir:
@@ -50,6 +54,7 @@ public class usuarioFunctions {
                 }
                 lnUsuario.setUsuDtCadastro(Postgress.grabDateFromDB());
                 Postgress.saveObject(lnUsuario);
+                historico.gravaHistorico("Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
                 mensagem = "Sucesso";
             }
         }
@@ -88,6 +93,7 @@ public class usuarioFunctions {
             LnUsuario pUsuario = Postgress.grabUsuario(lnUsuario.getUsuStCodigo());
             lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
             Postgress.saveOrUpdateObject(lnUsuario);
+            historico.gravaHistorico("Alteracao do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
             mensagem = "Sucesso";
         }
     }
@@ -96,10 +102,20 @@ public class usuarioFunctions {
         
         if (Postgress.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {
             Postgress.deleteObject(lnUsuario);
+            historico.gravaHistorico("Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
             mensagem = "Sucesso";
         } else {
             mensagem = "O usuário " +lnUsuario.getUsuStCodigo() + " não pode ser excluído apenas cancelado.!!!!";
         }
+    }
+
+    public Date calculaDataExpiracao(LnUsuario lnUsuario) {
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(Postgress.grabDateFromDB());
+        calendar.add(Calendar.DATE, lnUsuario.getUsuInDia());
+        return calendar.getTime();
+        
     }
 
 }

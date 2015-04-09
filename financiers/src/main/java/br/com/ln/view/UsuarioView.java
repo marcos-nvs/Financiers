@@ -11,7 +11,7 @@ import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.financiers.UsuarioFunctions;
+import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.hibernate.Postgress;
@@ -50,7 +50,7 @@ public class UsuarioView implements Serializable {
     private String mensagem;
     private LnUsuario lnUsuario;
     private final TratamentoEspecial tratamentoEspecial;
-    private final UsuarioFunctions functions;
+    private final UsuarioFuncoes functions;
 
     private boolean bAtivo = false;
     private boolean bAlteraSenha = false;
@@ -62,7 +62,7 @@ public class UsuarioView implements Serializable {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         lnUsuario = new LnUsuario();
         tratamentoEspecial = new TratamentoEspecial();
-        functions = new UsuarioFunctions();
+        functions = new UsuarioFuncoes();
     }
 
     public String getUsuario() {
