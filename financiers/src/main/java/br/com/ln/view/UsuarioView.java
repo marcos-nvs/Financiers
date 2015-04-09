@@ -9,7 +9,6 @@ import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
-import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.UsuarioFunctions;
