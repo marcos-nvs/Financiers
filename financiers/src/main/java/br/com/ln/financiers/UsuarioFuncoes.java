@@ -117,5 +117,25 @@ public class UsuarioFuncoes {
         return calendar.getTime();
         
     }
+    
+    public boolean verificaExpiracaoSenha(LnUsuario lnUsuario){
+        
+        if (lnUsuario.getUsuChExpirasenha().equals('S')){
+            
+            Calendar hoje = Calendar.getInstance();
+            hoje.setTime(Postgress.grabDateFromDB());
+            
+            Calendar expira = Calendar.getInstance();
+            expira.setTime(lnUsuario.getUsuDtExpiracao());
+            
+            if (hoje.getTime().after(expira.getTime())){
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
 
 }

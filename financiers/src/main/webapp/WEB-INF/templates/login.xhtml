@@ -8,19 +8,18 @@
         <h:panelGrid columns="4" style="margin-left: 50px;">
             <h:graphicImage url="img/barracinza.jpg"/>
             <h:panelGrid columns="1" style="margin-left: 0px;">
-                <!--<h:graphicImage url="img/ln2.jpg"/>-->
                 <p:panel header="Identificação">
                     <h:panelGrid columns="2" style="margin-left: 50px;">
                         <p:outputLabel id="idUsuario" value="#{msgs['template.user']}"/>
-                        <p:inputText id="idInUsuario" required="true" maxlength="40" value="#{financiersView.usuario}" />
+                        <p:inputText id="idInUsuario" maxlength="40" value="#{financiersView.usuario}" />
                         <p:outputLabel value="#{msgs['page.textFields.password']}"/>
-                        <p:password id="idPassword" required="true" value="#{financiersView.senha}"/>
+                        <p:password id="idPassword" value="#{financiersView.senha}"/>
                         <f:facet name="footer">
                             <p:commandButton id="idBtLogin" value="#{msgs['template.login']}" icon="ui-icon-check" ajax="false"
                                              partialSubmit="false" process="@this, idInUsuario, idPassword, idGridLogado"
-                                             update="@this, idInUsuario, idPassword, idGridLogado"
+                                             update="@this, idInUsuario, idPassword, idGridLogado,:idFormTop:growl"
                                              action="#{financiersView.sistemaLogin}"/>
-                            <p:commandButton value="Trocar Senha"/>
+                            <p:commandButton id="idBtTrocaSenha" value="Trocar Senha" onclick="PF('senha').show()"/>
                         </f:facet>
                     </h:panelGrid>
                     <p:commandLink value="Esqueceu a senha?" />
@@ -30,4 +29,25 @@
             <h:graphicImage url="img/barracinza.jpg"/>
         </h:panelGrid>
     </p:panel>
+    
+    <p:dialog id="idDialogTrocaSenha" header="Trocar Senha" widgetVar="senha" modal="false" showEffect="fade" hideEffect="fade" closable="false"
+              style="background-color: activeborder" width="400">
+        <h:panelGrid id="dlgTrocaSenha" columns="2">
+            <p:outputLabel value="#{msgs['template.user']}"/>
+            <p:inputText id="idUsuarioNovaSenha" value="#{usuarioView.usuario}"/>
+            <p:outputLabel value="Enre com a senha atual"/>
+            <p:password value="#{usuarioView.senha}"/>
+            <p:outputLabel value="Entre com a nova senha"/>
+            <p:password value="#{usuarioView.novaSenha}"/>
+            <p:outputLabel value="Confirma a senha"/>
+            <p:password value="#{usuarioView.confirmaSenha}"/>
+        </h:panelGrid>
+        <f:facet name="footer">
+            <p:commandButton id="btloginSenha" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document"
+                             process="@this, dlgTrocaSenha" update=":idFormTop:growl" action="#{usuarioView.btTrocaSenha()}"/>
+            <p:commandButton id="btloginFechar" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-circlesmall-close"
+                             onclick="PF('novaSenha').hide()"/> 
+        </f:facet>
+    </p:dialog>
+    
 </ui:composition>

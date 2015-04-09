@@ -6,11 +6,13 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
+import br.com.ln.financiers.OrigemTela;
 import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
@@ -313,17 +315,32 @@ public class UsuarioView implements Serializable {
         }
     }
 
-    public void btConfirmaSenha() {
-        if (novaSenha.equals(confirmaSenha)) {
-            Historico historico = new Historico();
-            lnUsuario.setUsuStSenha(novaSenha);
-            lnUsuario.setUsuDtExpiracao(functions.calculaDataExpiracao(lnUsuario));
-            Postgress.saveOrUpdateObject(lnUsuario);
-            historico.gravaHistorico("Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada." );
-            mensagem = "Senha alterada com sucesso!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+    public void btConfirmaSenha(String tela) {
+        if (!novaSenha.equals("")) {
+            if (novaSenha.equals(confirmaSenha)) {
+                Historico historico = new Historico();
+                lnUsuario.setUsuStSenha(novaSenha);
+                lnUsuario.setUsuDtExpiracao(functions.calculaDataExpiracao(lnUsuario));
+                Postgress.saveOrUpdateObject(lnUsuario);
+
+                if (tela.equals("Usuario")) {
+                    if (VarComuns.lnUsusario.getUsuStCodigo().equals(lnUsuario.getUsuStCodigo())) {
+                        VarComuns.lnUsusario = lnUsuario;
+                        EjbMap.updateUsuario(lnUsuario, VarComuns.strDbName);
+                        RequestContext.getCurrentInstance().execute("PF('novaSenha').hide()");
+                    }
+                } else {
+                    RequestContext.getCurrentInstance().execute("PF('senha').hide()");
+                }
+                historico.gravaHistorico("Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada.");
+                mensagem = "Senha alterada com sucesso!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            } else {
+                mensagem = "Senha nao confere, por favor verifique!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            }
         } else {
-            mensagem = "Senha nao confere, por favor verifique!!";
+            mensagem = "Senha nao pode estar em branco!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
@@ -361,5 +378,20 @@ public class UsuarioView implements Serializable {
         nome = lnUsuario.getUsuStNome();
         perfil = lnUsuario.getPerInCodigo();
         dia = lnUsuario.getUsuInDia();
+    }
+    
+    public void btTrocaSenha(){
+        lnUsuario = Postgress.grabUsuario(usuario);
+        if (lnUsuario != null){
+            if (lnUsuario.getUsuStSenha().equals(senha)) {
+                btConfirmaSenha("Login");
+            } else {
+                mensagem = "Usuario ou senha nao encontrado!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            }
+        } else {
+            mensagem = "Senha nao confere, por favor verifique!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+        }
     }
 }

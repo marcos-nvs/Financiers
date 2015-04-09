@@ -108,7 +108,7 @@
         <f:facet name="footer">
             <p:commandButton id="btSalvaSenha" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document" 
                              disabled="#{beanVar.apresenta}" process="btSalvaSenha, idDialogSenha" update=":idFormTop:growl"
-                             action="#{usuarioView.btConfirmaSenha()}"/> 
+                             action="#{usuarioView.btConfirmaSenha("Usuario")}"/> 
             <p:commandButton id="btFechar" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-circlesmall-close" disabled="#{beanVar.apresenta}"
                              onclick="PF('novaSenha').hide()"/> 
         </f:facet>
