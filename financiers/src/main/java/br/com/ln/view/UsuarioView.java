@@ -317,6 +317,7 @@ public class UsuarioView implements Serializable {
         if (novaSenha.equals(confirmaSenha)) {
             Historico historico = new Historico();
             lnUsuario.setUsuStSenha(novaSenha);
+            lnUsuario.setUsuDtExpiracao(functions.calculaDataExpiracao(lnUsuario));
             Postgress.saveOrUpdateObject(lnUsuario);
             historico.gravaHistorico("Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada." );
             mensagem = "Senha alterada com sucesso!!";
