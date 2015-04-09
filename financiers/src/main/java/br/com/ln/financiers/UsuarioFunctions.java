@@ -13,7 +13,7 @@ import br.com.ln.hibernate.Postgress;
  *
  * @author Marcos Naves
  */
-public class UsuarioFunctions1 {
+public class UsuarioFunctions {
     
     private String mensagem;
     private Historico historico;
