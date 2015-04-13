@@ -217,19 +217,19 @@ public class FnAcesso implements Serializable {
     public void btEnviaEmailAcesso(){
         
         
-//        SimpleEmail email = new SimpleEmail(); 
-//        try {
-//            
-//            email.setHostName("mail.dasa.com.br"); // o servidor SMTP para envio do e-mail 
-//            email.addTo("m-nvs@uol.com.br", "Marcos Naves"); //destinatário 
-//            email.setFrom("marcos.naves@dasa.com.br", "Marcos Naves"); // remetente 
-//            email.setSubject("Mensagem de Teste"); // assunto do e-mail 
-//            email.setMsg("Teste de Email utilizando commons-email"); //conteudo do e-mail 
-//            email.send(); //envia o e-mail
-//            beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
-//            beanVar.setNomeTela("");
-//        } catch (EmailException ex) {
-//            Logger.getLogger(FnAcesso.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        SimpleEmail email = new SimpleEmail(); 
+        try {
+            
+            email.setHostName("mail.dasa.com.br"); // o servidor SMTP para envio do e-mail 
+            email.addTo("m-nvs@uol.com.br", "Marcos Naves"); //destinatário 
+            email.setFrom("marcos.naves@dasa.com.br", "Marcos Naves"); // remetente 
+            email.setSubject("Mensagem de Teste"); // assunto do e-mail 
+            email.setMsg("Teste de Email utilizando commons-email"); //conteudo do e-mail 
+            email.send(); //envia o e-mail
+            beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+            beanVar.setNomeTela("");
+        } catch (EmailException ex) {
+            Logger.getLogger(FnAcesso.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
