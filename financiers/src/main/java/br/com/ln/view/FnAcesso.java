@@ -16,10 +16,14 @@ import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -208,15 +212,19 @@ public class FnAcesso implements Serializable {
     
     public void btEnviaEmailAcesso(){
         
-//        SimpleEmail email = new SimpleEmail(); 
-//        email.setHostName("mail.myserver.com"); // o servidor SMTP para envio do e-mail 
-//        email.addTo("jdoe@somewhere.org", "John Doe"); //destinatário 
-//        email.setFrom("me@apache.org", "Me"); // remetente 
-//        email.setSubject("Mensagem de Teste"); // assunto do e-mail 
-//        email.setMsg("Teste de Email utilizando commons-email"); //conteudo do e-mail 
-//        email.send(); //envia o e-mail
-
-        beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
-        beanVar.setNomeTela("");
+        try {
+            SimpleEmail email = new SimpleEmail();
+            email.setHostName("");
+            email.addTo(usuario, senha);
+            email.setFrom(usuario);
+            email.setSubject(usuario);
+            email.setMsg(senha);
+            email.send();
+            
+            beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+            beanVar.setNomeTela("");
+        } catch (EmailException ex) {
+            Logger.getLogger(FnAcesso.class.getName()).log(Level.SEVERE, null, ex);
+        }
 }
 }
