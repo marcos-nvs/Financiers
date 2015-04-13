@@ -209,9 +209,9 @@ public class FnAcesso implements Serializable {
         beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
         beanVar.setNomeTela("");
     }
-    
-    public void btEnviaEmailAcesso(){
-        
+
+    public void btEnviaEmailAcesso() {
+
         try {
             SimpleEmail email = new SimpleEmail();
             email.setHostName("");
@@ -220,11 +220,11 @@ public class FnAcesso implements Serializable {
             email.setSubject(usuario);
             email.setMsg(senha);
             email.send();
-            
+
             beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
             beanVar.setNomeTela("");
         } catch (EmailException ex) {
             Logger.getLogger(FnAcesso.class.getName()).log(Level.SEVERE, null, ex);
         }
-}
+    }
 }
