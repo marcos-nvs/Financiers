@@ -5,17 +5,19 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -27,8 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LnUsuario.findAll", query = "SELECT l FROM LnUsuario l"),
-    @NamedQuery(name = "LnUsuario.findByUsuStCpf", query = "SELECT l FROM LnUsuario l WHERE l.lnUsuarioPK.usuStCpf = :usuStCpf"),
-    @NamedQuery(name = "LnUsuario.findByUsuStCodigo", query = "SELECT l FROM LnUsuario l WHERE l.lnUsuarioPK.usuStCodigo = :usuStCodigo"),
+    @NamedQuery(name = "LnUsuario.findByUsuStCodigo", query = "SELECT l FROM LnUsuario l WHERE l.usuStCodigo = :usuStCodigo"),
     @NamedQuery(name = "LnUsuario.findByUsuStNome", query = "SELECT l FROM LnUsuario l WHERE l.usuStNome = :usuStNome"),
     @NamedQuery(name = "LnUsuario.findByUsuStSenha", query = "SELECT l FROM LnUsuario l WHERE l.usuStSenha = :usuStSenha"),
     @NamedQuery(name = "LnUsuario.findByUsuStEmail", query = "SELECT l FROM LnUsuario l WHERE l.usuStEmail = :usuStEmail"),
@@ -38,11 +39,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnUsuario.findByUsuChExpirasenha", query = "SELECT l FROM LnUsuario l WHERE l.usuChExpirasenha = :usuChExpirasenha"),
     @NamedQuery(name = "LnUsuario.findByUsuDtExpiracao", query = "SELECT l FROM LnUsuario l WHERE l.usuDtExpiracao = :usuDtExpiracao"),
     @NamedQuery(name = "LnUsuario.findByUsuDtCadastro", query = "SELECT l FROM LnUsuario l WHERE l.usuDtCadastro = :usuDtCadastro"),
+    @NamedQuery(name = "LnUsuario.findAllUsuStCodigoUsuChAtivo", query = "SELECT l FROM LnUsuario l WHERE l.usuStCodigo = :usuStCodigo and usuChAtivo = :usuChAtivo"),
     @NamedQuery(name = "LnUsuario.findByPerInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.perInCodigo = :perInCodigo")})
 public class LnUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected LnUsuarioPK lnUsuarioPK;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "usu_st_codigo")
+    private String usuStCodigo;
     @Basic(optional = false)
     @Column(name = "usu_st_nome")
     private String usuStNome;
@@ -72,15 +76,18 @@ public class LnUsuario implements Serializable {
     @Column(name = "per_in_codigo")
     private int perInCodigo;
 
+    @Transient
+    private TipoFuncao tipoFuncao;
+    
     public LnUsuario() {
     }
 
-    public LnUsuario(LnUsuarioPK lnUsuarioPK) {
-        this.lnUsuarioPK = lnUsuarioPK;
+    public LnUsuario(String usuStCodigo) {
+        this.usuStCodigo = usuStCodigo;
     }
 
-    public LnUsuario(LnUsuarioPK lnUsuarioPK, String usuStNome, String usuStSenha, Character usuChAtivo, Character usuChAlterasenha, Character usuChExpirasenha, int perInCodigo) {
-        this.lnUsuarioPK = lnUsuarioPK;
+    public LnUsuario(String usuStCodigo, String usuStNome, String usuStSenha, Character usuChAtivo, Character usuChAlterasenha, Character usuChExpirasenha, int perInCodigo) {
+        this.usuStCodigo = usuStCodigo;
         this.usuStNome = usuStNome;
         this.usuStSenha = usuStSenha;
         this.usuChAtivo = usuChAtivo;
@@ -89,16 +96,12 @@ public class LnUsuario implements Serializable {
         this.perInCodigo = perInCodigo;
     }
 
-    public LnUsuario(String usuStCpf, String usuStCodigo) {
-        this.lnUsuarioPK = new LnUsuarioPK(usuStCpf, usuStCodigo);
+    public String getUsuStCodigo() {
+        return usuStCodigo;
     }
 
-    public LnUsuarioPK getLnUsuarioPK() {
-        return lnUsuarioPK;
-    }
-
-    public void setLnUsuarioPK(LnUsuarioPK lnUsuarioPK) {
-        this.lnUsuarioPK = lnUsuarioPK;
+    public void setUsuStCodigo(String usuStCodigo) {
+        this.usuStCodigo = usuStCodigo;
     }
 
     public String getUsuStNome() {
@@ -181,10 +184,18 @@ public class LnUsuario implements Serializable {
         this.perInCodigo = perInCodigo;
     }
 
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (lnUsuarioPK != null ? lnUsuarioPK.hashCode() : 0);
+        hash += (usuStCodigo != null ? usuStCodigo.hashCode() : 0);
         return hash;
     }
 
@@ -195,7 +206,7 @@ public class LnUsuario implements Serializable {
             return false;
         }
         LnUsuario other = (LnUsuario) object;
-        if ((this.lnUsuarioPK == null && other.lnUsuarioPK != null) || (this.lnUsuarioPK != null && !this.lnUsuarioPK.equals(other.lnUsuarioPK))) {
+        if ((this.usuStCodigo == null && other.usuStCodigo != null) || (this.usuStCodigo != null && !this.usuStCodigo.equals(other.usuStCodigo))) {
             return false;
         }
         return true;
@@ -203,7 +214,7 @@ public class LnUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "entidade.LnUsuario[ lnUsuarioPK=" + lnUsuarioPK + " ]";
+        return "br.com.hibernate.entities.LnUsuario[ usuStCodigo=" + usuStCodigo + " ]";
     }
     
 }
