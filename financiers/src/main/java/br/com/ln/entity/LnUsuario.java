@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnUsuario.findByUsuDtExpiracao", query = "SELECT l FROM LnUsuario l WHERE l.usuDtExpiracao = :usuDtExpiracao"),
     @NamedQuery(name = "LnUsuario.findByUsuDtCadastro", query = "SELECT l FROM LnUsuario l WHERE l.usuDtCadastro = :usuDtCadastro"),
     @NamedQuery(name = "LnUsuario.findAllUsuStCodigoUsuChAtivo", query = "SELECT l FROM LnUsuario l WHERE l.usuStCodigo = :usuStCodigo and usuChAtivo = :usuChAtivo"),
-    @NamedQuery(name = "LnUsuario.findByPerInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.perInCodigo = :perInCodigo")})
+    @NamedQuery(name = "LnUsuario.findByPerInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.perInCodigo = :perInCodigo"),
+    @NamedQuery(name = "LnUsuario.findByUsuStCPF", query = "SELECT l FROM LnUsuario l WHERE l.usuStCpf = :usuStCpf")})
 public class LnUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -75,6 +76,10 @@ public class LnUsuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "per_in_codigo")
     private int perInCodigo;
+    @Column(name = "usu_st_cpf")
+    private String usuStCpf;
+    
+    
 
     @Transient
     private TipoFuncao tipoFuncao;
@@ -86,7 +91,8 @@ public class LnUsuario implements Serializable {
         this.usuStCodigo = usuStCodigo;
     }
 
-    public LnUsuario(String usuStCodigo, String usuStNome, String usuStSenha, Character usuChAtivo, Character usuChAlterasenha, Character usuChExpirasenha, int perInCodigo) {
+    public LnUsuario(String usuStCodigo, String usuStNome, String usuStSenha, Character usuChAtivo, Character usuChAlterasenha, Character usuChExpirasenha, int perInCodigo, 
+            String usuStCpf) {
         this.usuStCodigo = usuStCodigo;
         this.usuStNome = usuStNome;
         this.usuStSenha = usuStSenha;
@@ -94,6 +100,7 @@ public class LnUsuario implements Serializable {
         this.usuChAlterasenha = usuChAlterasenha;
         this.usuChExpirasenha = usuChExpirasenha;
         this.perInCodigo = perInCodigo;
+        this.usuStCpf = usuStCpf;
     }
 
     public String getUsuStCodigo() {
@@ -190,6 +197,14 @@ public class LnUsuario implements Serializable {
 
     public void setTipoFuncao(TipoFuncao tipoFuncao) {
         this.tipoFuncao = tipoFuncao;
+    }
+
+    public String getUsuStCpf() {
+        return usuStCpf;
+    }
+
+    public void setUsuStCpf(String usuStCpf) {
+        this.usuStCpf = usuStCpf;
     }
 
     @Override
