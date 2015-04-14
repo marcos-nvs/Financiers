@@ -96,7 +96,6 @@ values (nextval('seq_modulo'), 'Comparação de Movimentação entre Meses','S',
 
 CREATE TABLE ln_usuario
 (
-  usu_st_cpf character varying(11) NOT NULL, -- Define o cpf do usuário para poder resgatar a senha de acesso
   usu_st_codigo character varying(30) NOT NULL, -- Define o código do usuário para acessar o sistema
   usu_st_nome character varying(50) NOT NULL, -- Define o nome do usuário
   usu_st_senha character varying(30) NOT NULL, -- Define a senha do usuário para acesso ao sistema
@@ -108,7 +107,8 @@ CREATE TABLE ln_usuario
   usu_dt_expiracao date, -- Define quando expira a senha do usuário
   usu_dt_cadastro date, -- Define a data do cadastro do usuário
   per_in_codigo integer NOT NULL, -- Define o perfil de acesso do usuario
-  CONSTRAINT pk_cpf PRIMARY KEY (usu_st_cpf, usu_st_codigo)
+  usu_st_cpf character varying(11) NOT NULL, -- Define o cpf do usuário para poder resgatar a senha de acesso
+  CONSTRAINT pk_usustcodigo PRIMARY KEY (usu_st_codigo)
 )
 WITH (
   OIDS=FALSE
@@ -117,7 +117,6 @@ ALTER TABLE ln_usuario
   OWNER TO postgres;
 GRANT ALL ON TABLE ln_usuario TO postgres;
 GRANT ALL ON TABLE ln_usuario TO public;
-COMMENT ON COLUMN ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
 COMMENT ON COLUMN ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
 COMMENT ON COLUMN ln_usuario.usu_st_nome IS 'Define o nome do usuário';
 COMMENT ON COLUMN ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
@@ -129,12 +128,13 @@ COMMENT ON COLUMN ln_usuario.usu_ch_expirasenha IS 'Define se a senha do usuári
 COMMENT ON COLUMN ln_usuario.usu_dt_expiracao IS 'Define quando expira a senha do usuário';
 COMMENT ON COLUMN ln_usuario.usu_dt_cadastro IS 'Define a data do cadastro do usuário';
 COMMENT ON COLUMN ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usuario';
+COMMENT ON COLUMN ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
 
 
 
-insert into public."ln_usuario" ("usu_st_cpf","usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
-                                 "usu_dt_cadastro", "per_in_codigo" ) values 
-                                ('12684146896','Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','S',CURRENT_DATE, 1)
+insert into public."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
+                                 "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf" ) values 
+                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','S',CURRENT_DATE, 1, '12684146896')
 
 
 -- Table: ln_menu
