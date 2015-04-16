@@ -8,10 +8,12 @@ package br.com.ln.view;
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
+import br.com.ln.comum.Utilitarios;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.LnMenuModel;
+import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
@@ -40,9 +42,12 @@ public class FnAcesso implements Serializable {
     private LnUsuario lnUsuario;
     private BeanVar beanVar;
     private MenuModel model;
+    private String cpf;
+    private TratamentoEspecial tratamentoEspecial;
 
     public FnAcesso() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        tratamentoEspecial = new TratamentoEspecial();
     }
 
     public String getUsuario() {
@@ -91,6 +96,14 @@ public class FnAcesso implements Serializable {
 
     public void setModel(MenuModel model) {
         this.model = model;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     @Override
@@ -172,7 +185,7 @@ public class FnAcesso implements Serializable {
                             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login/Menu", mensagem));
                         }
                     }
-                } else{
+                } else {
                     mensagem = "Usuario e Senha vazio ou ocorreu um problema na autenciacao do sistema - Favor entrar em contato como o Administrador!!!";
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login/Menu", mensagem));
                 }
@@ -182,8 +195,8 @@ public class FnAcesso implements Serializable {
             }
         }
     }
-   
-    public void logout() { 
+
+    public void logout() {
 
         cleanUpEveryThing();
 
@@ -198,33 +211,77 @@ public class FnAcesso implements Serializable {
 
     private void cleanUpEveryThing() {
         this.lnUsuario = null;
-    }    
-    
-    public void recuperaAcesso(){
+    }
+
+    public void recuperaAcesso() {
         beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
         beanVar.setNomeTela("Recuperacao de Acesso");
     }
-    
-    public void btVoltar(){
+
+    public void btVoltar() {
         beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
         beanVar.setNomeTela("");
     }
 
     public void btEnviaEmailAcesso() {
+        lnUsuario = Postgress.grabUsuario(usuario);
 
-        try {
-            SimpleEmail email = new SimpleEmail();
-            email.setHostName("");
-            email.addTo(usuario, senha);
-            email.setFrom(usuario);
-            email.setSubject(usuario);
-            email.setMsg(senha);
-            email.send();
+        if (lnUsuario != null) {
+            try {
+                cpf = tratamentoEspecial.tratamentoCpf(cpf);
 
-            beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
-            beanVar.setNomeTela("");
-        } catch (EmailException ex) {
-            Logger.getLogger(FnAcesso.class.getName()).log(Level.SEVERE, null, ex);
+                if (Utilitarios.calculaCPF(cpf)) {
+                    if (lnUsuario.getUsuStCpf().equals(cpf)) {
+                        SimpleEmail email = new SimpleEmail();
+                        email.setHostName("mail.dasa.com.br");
+                        email.addTo(lnUsuario.getUsuStEmail(), lnUsuario.getUsuStNome());
+                        email.setFrom("marcos.naves@dasa.com.br");
+                        email.setSubject("Recuperação de Senha");
+                        email.setMsg("Conforme sua solicitação está é a sua senha : " + lnUsuario.getUsuStSenha());
+                        email.send();
+
+                        lnUsuario = null;
+                        mensagem = "Sua senha foi enviada para o seu e-mail";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
+                        beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+                        beanVar.setNomeTela("");
+
+                    } else {
+                        lnUsuario = null;
+                        beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+                        beanVar.setNomeTela("Recuperacao de Acesso");
+                        mensagem = "Usuario nao encontrado na nossa base de dados";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
+                    }
+                } else {
+                    lnUsuario = null;
+                    beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+                    beanVar.setNomeTela("Recuperacao de Acesso");
+                    mensagem = "CPF invalido.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
+                }
+            } catch (EmailException ex) {
+                lnUsuario = null;
+                beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+                beanVar.setNomeTela("");
+                System.out.println("Erro o enviar o e-mail :  " + ex.getMessage());
+                mensagem = "Ocorreu um problema no envio do e-mail : " + ex.getMessage();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
+                Logger.getLogger(FnAcesso.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NumberFormatException ex) {
+                lnUsuario = null;
+                beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+                beanVar.setNomeTela("Recuperacao de Acesso");
+                mensagem = "CPF invalido ou em branco";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
+                Logger.getLogger(FnAcesso.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            lnUsuario = null;
+            mensagem = "Usuario nao encontrado na nossa base de dados";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
+            beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+            beanVar.setNomeTela("Recuperacao de Acesso");
         }
     }
 }
