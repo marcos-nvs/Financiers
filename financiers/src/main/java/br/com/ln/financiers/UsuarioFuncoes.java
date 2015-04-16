@@ -6,6 +6,7 @@
 package br.com.ln.financiers;
 
 import br.com.ln.comum.Historico;
+import br.com.ln.comum.Utilitarios;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.util.Calendar;
@@ -19,6 +20,7 @@ public class UsuarioFuncoes {
     
     private String mensagem;
     private Historico historico;
+    private String cpf;
     
     public String usuario(LnUsuario lnUsuario) {
         mensagem = "";
@@ -54,7 +56,7 @@ public class UsuarioFuncoes {
                 }
                 lnUsuario.setUsuDtCadastro(Postgress.grabDateFromDB());
                 Postgress.saveObject(lnUsuario);
-                historico.gravaHistorico("Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
+                historico.gravaHistoricoModulo("Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
                 mensagem = "Sucesso";
             }
         }
@@ -84,6 +86,12 @@ public class UsuarioFuncoes {
                 mensagem = mensagem + "Senha";
             }
         }
+        if (lnUsuario.getUsuStCpf() != null && !lnUsuario.getUsuStCpf().equals("")){
+            if (!Utilitarios.calculaCPF(lnUsuario.getUsuStCpf())) {
+                mensagem = mensagem + " " + "CPF invalido";
+                validado = false;
+            }
+        }
         return validado;
     }
 
@@ -93,7 +101,7 @@ public class UsuarioFuncoes {
             LnUsuario pUsuario = Postgress.grabUsuario(lnUsuario.getUsuStCodigo());
             lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
             Postgress.saveOrUpdateObject(lnUsuario);
-            historico.gravaHistorico("Alteracao do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
+            historico.gravaHistoricoModulo("Alteracao do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
             mensagem = "Sucesso";
         }
     }
@@ -102,7 +110,7 @@ public class UsuarioFuncoes {
         
         if (Postgress.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {
             Postgress.deleteObject(lnUsuario);
-            historico.gravaHistorico("Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
+            historico.gravaHistoricoModulo("Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
             mensagem = "Sucesso";
         } else {
             mensagem = "O usuário " +lnUsuario.getUsuStCodigo() + " não pode ser excluído apenas cancelado.!!!!";

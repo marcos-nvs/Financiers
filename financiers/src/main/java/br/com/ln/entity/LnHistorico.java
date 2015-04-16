@@ -73,6 +73,13 @@ public class LnHistorico implements Serializable {
         this.hisStDescricao = hisStDescricao;
     }
 
+    public LnHistorico(Integer hisInCodigo, Date hisDtData, String usuStCodigo, String hisStDescricao) {
+        this.hisInCodigo = hisInCodigo;
+        this.hisDtData = hisDtData;
+        this.usuStCodigo = usuStCodigo;
+        this.hisStDescricao = hisStDescricao;
+    }
+
     public Integer getHisInCodigo() {
         return hisInCodigo;
     }
@@ -135,7 +142,8 @@ public class LnHistorico implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.hibernate.entities.LnHistorico[ hisInCodigo=" + hisInCodigo + " ]";
+        return "LnHistorico{" + "hisInCodigo=" + hisInCodigo + ", modInCodigo=" + modInCodigo + ", hisDtData=" + hisDtData + ", usuStCodigo=" + usuStCodigo + ", hisStDescricao=" + hisStDescricao + '}';
     }
+
     
 }

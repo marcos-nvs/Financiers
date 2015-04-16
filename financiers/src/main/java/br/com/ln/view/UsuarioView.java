@@ -51,6 +51,7 @@ public class UsuarioView implements Serializable {
     private String confirmaSenha;
     private String mensagem;
     private LnUsuario lnUsuario;
+    private String cpf;
     private final TratamentoEspecial tratamentoEspecial;
     private final UsuarioFuncoes functions;
 
@@ -195,6 +196,14 @@ public class UsuarioView implements Serializable {
         this.bExpiraSenha = bExpiraSenha;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;
@@ -327,12 +336,17 @@ public class UsuarioView implements Serializable {
                     if (VarComuns.lnUsusario.getUsuStCodigo().equals(lnUsuario.getUsuStCodigo())) {
                         VarComuns.lnUsusario = lnUsuario;
                         EjbMap.updateUsuario(lnUsuario, VarComuns.strDbName);
+                        historico.gravaHistoricoModulo("Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada.");
                         RequestContext.getCurrentInstance().execute("PF('novaSenha').hide()");
                     }
                 } else {
+                    if (VarComuns.lnUsusario != null) {
+                        VarComuns.lnUsusario = lnUsuario;
+                        EjbMap.updateUsuario(lnUsuario, VarComuns.strDbName);
+                    }
+                    historico.gravaHistorico(lnUsuario, "Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada, no Login.");
                     RequestContext.getCurrentInstance().execute("PF('senha').hide()");
                 }
-                historico.gravaHistorico("Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada.");
                 mensagem = "Senha alterada com sucesso!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             } else {
@@ -354,6 +368,7 @@ public class UsuarioView implements Serializable {
         bExpiraSenha = false;
         nome = "";
         dia = null;
+        cpf = "";
     }
 
     public void dataLoadUsuario() {
@@ -366,6 +381,7 @@ public class UsuarioView implements Serializable {
         lnUsuario.setUsuStNome(nome);
         lnUsuario.setUsuStSenha(senha);
         lnUsuario.setUsuInDia(dia);
+        lnUsuario.setUsuStCpf(tratamentoEspecial.tratamentoCpf(cpf));
     }
 
     public void dataLoadVar() {
@@ -378,6 +394,7 @@ public class UsuarioView implements Serializable {
         nome = lnUsuario.getUsuStNome();
         perfil = lnUsuario.getPerInCodigo();
         dia = lnUsuario.getUsuInDia();
+        cpf = lnUsuario.getUsuStCpf();
     }
     
     public void btTrocaSenha(){

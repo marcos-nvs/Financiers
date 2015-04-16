@@ -229,7 +229,8 @@ public class LnUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.hibernate.entities.LnUsuario[ usuStCodigo=" + usuStCodigo + " ]";
+        return "LnUsuario{" + "usuStCodigo=" + usuStCodigo + ", usuStNome=" + usuStNome + ", usuStSenha=" + usuStSenha + ", usuStEmail=" + usuStEmail + ", usuChAtivo=" + usuChAtivo + ", usuInDia=" + usuInDia + ", usuChAlterasenha=" + usuChAlterasenha + ", usuChExpirasenha=" + usuChExpirasenha + ", usuDtExpiracao=" + usuDtExpiracao + ", usuDtCadastro=" + usuDtCadastro + ", perInCodigo=" + perInCodigo + ", usuStCpf=" + usuStCpf + ", tipoFuncao=" + tipoFuncao + '}';
     }
+
     
 }

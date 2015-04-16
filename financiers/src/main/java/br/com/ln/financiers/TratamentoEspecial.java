@@ -44,4 +44,10 @@ public class TratamentoEspecial implements Serializable{
             return 'N';
         }
     }
+    
+    public String tratamentoCpf(String cpf){
+        cpf = cpf.replaceAll("\\.", "");
+        cpf = cpf.replaceAll("-", "");
+        return cpf;
+    }
 }

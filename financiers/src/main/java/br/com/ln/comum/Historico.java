@@ -8,6 +8,7 @@ package br.com.ln.comum;
 import static br.com.ln.comum.VarComuns.lnPerfilacesso;
 import static br.com.ln.comum.VarComuns.lnUsusario;
 import br.com.ln.entity.LnHistorico;
+import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 
 /**
@@ -19,10 +20,14 @@ public class Historico {
     public Historico() {
     }
     
-    public void gravaHistorico(String descricao){
+    public void gravaHistoricoModulo(String descricao){
         LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
                                                 Postgress.grabDateFromDB(),lnUsusario.getUsuStCodigo(),descricao);
         Postgress.saveObject(lnHistorico);
     }
     
+    public void gravaHistorico(LnUsuario lnUsuario, String descricao){
+        LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), Postgress.grabDateFromDB(), lnUsuario.getUsuStCodigo(), descricao);
+        Postgress.saveObject(lnHistorico);
+    }
 }

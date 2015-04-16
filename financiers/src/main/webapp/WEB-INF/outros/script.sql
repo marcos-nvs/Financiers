@@ -131,10 +131,18 @@ COMMENT ON COLUMN ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usua
 COMMENT ON COLUMN ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
 
 
+-- Index: ind_usuariocpf
+
+-- DROP INDEX ind_usuariocpf;
+
+CREATE INDEX ind_usuariocpf
+  ON ln_usuario
+  USING btree
+  (usu_st_codigo COLLATE pg_catalog."default", usu_st_cpf COLLATE pg_catalog."default");
 
 insert into public."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
-                                 "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf" ) values 
-                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','S',CURRENT_DATE, 1, '12684146896')
+                                 "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf" ) values 
+                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','S',CURRENT_DATE,CURRENT_DATE, 1, '12684146896')
 
 
 -- Table: ln_menu
@@ -303,7 +311,7 @@ insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_in
 CREATE TABLE ln_historico
 (
   his_in_codigo integer NOT NULL,
-  mod_in_codigo integer NOT NULL, -- Modulo de onde originou a transação
+  mod_in_codigo integer, -- Modulo de onde originou a transação
   his_dt_data timestamp without time zone NOT NULL, -- Data da transação
   usu_st_codigo character varying(30) NOT NULL, -- Usuario que gerou a transação
   his_st_descricao character varying(200), -- Descrição da transação.
