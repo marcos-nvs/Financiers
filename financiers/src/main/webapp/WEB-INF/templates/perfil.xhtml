@@ -4,5 +4,28 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:outputLabel value="Tela de Perfil em desenvolvimento!!!!"/>
+    <p:dataTable var="perfil" value="#{perfilView.listPerfil}">
+        <f:facet name="header">
+
+        </f:facet>
+        <p:column style="width: 16px">
+            <p:rowToggler/>
+        </p:column>
+        <p:column headerText="id">
+            <h:outputText value="#{perfil.perStDescricao}"/>
+        </p:column>
+
+        <p:rowExpansion>
+            <p:dataTable>
+                <f:facet name="header">
+                </f:facet>
+                <p:column>
+                    <p:rowToggler/>
+                </p:column>
+                <p:column headerText="teste">
+                    <p:outputLabel value="teste"/>
+                </p:column>
+            </p:dataTable>
+        </p:rowExpansion>
+    </p:dataTable>
 </ui:composition>
