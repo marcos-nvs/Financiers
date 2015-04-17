@@ -4,26 +4,46 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:dataTable var="perfil" value="#{perfilView.listPerfil}">
+    <p:dataTable var="perfil" value="#{perfilView.listPerfil}" selectionMode="single" selection="#{perfilView.lnPerfil}"
+                 rowKey="#{perfil.perInCodigo}">
         <f:facet name="header">
-
+            <p:outputLabel value="Lista de Perfis"/>
         </f:facet>
         <p:column style="width: 16px">
-            <p:rowToggler/>
+            <p:rowToggler />
         </p:column>
-        <p:column headerText="id">
+        <p:column headerText="#{msgs['template.code']}" style="width: 40px">
+            <h:outputText value="#{perfil.perInCodigo}"/>
+        </p:column>
+        <p:column headerText="#{msgs['template.profile.description']}">
             <h:outputText value="#{perfil.perStDescricao}"/>
+        </p:column>
+        <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
+            <h:outputText value="#{tratativa.tratamentoTextoString(perfil.perChAtivo)}"/>
+        </p:column>
+        <p:column headerText="#{msgs['node.user.changes.password']}">
+            <h:outputText value="#{tratativa.tratamentoTextoString(perfil.perChAlterasenha)}"/>
         </p:column>
 
         <p:rowExpansion>
-            <p:dataTable>
-                <f:facet name="header">
-                </f:facet>
-                <p:column>
-                    <p:rowToggler/>
+            <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}">
+                <p:column headerText="#{msgs['template.code']}" style="width: 40px">
+                    <h:outputText value="#{acesso.lnPerfilacessoPK.modInCodigo}"/>
                 </p:column>
-                <p:column headerText="teste">
-                    <p:outputLabel value="teste"/>
+                <p:column headerText="#{msgs['node.module']}">
+                    <h:outputText value="#{perfilView.buscaDescModulo(acesso.lnPerfilacessoPK.modInCodigo)}"/>
+                </p:column>
+                <p:column headerText="#{msgs['node.include']}">
+                    <h:outputText value="#{acesso.lnPerfilacesso.pacStIncluir}"/>
+                </p:column>
+                <p:column headerText="#{msgs['template.change']}">
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column headerText="#{msgs['page.panelConfirmation.deleteButtonLabel']}">
+                    <h:outputText value=""/>
+                </p:column>
+                <p:column headerText="#{msgs['template.search']}">
+                    <h:outputText value=""/>
                 </p:column>
             </p:dataTable>
         </p:rowExpansion>

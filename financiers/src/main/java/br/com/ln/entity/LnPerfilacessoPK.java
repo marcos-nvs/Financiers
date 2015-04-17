@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author f12684146896
+ * @author Marcos Naves
  */
 @Embeddable
 public class LnPerfilacessoPK implements Serializable {

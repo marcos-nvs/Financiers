@@ -5,7 +5,10 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,11 +16,12 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author f12684146896
+ * @author Marcos Naves
  */
 @Entity
 @Table(name = "ln_perfil")
@@ -47,6 +51,9 @@ public class LnPerfil implements Serializable {
     @Basic(optional = false)
     @Column(name = "per_ch_alterasenha")
     private Character perChAlterasenha;
+    
+    @Transient
+    private List<LnPerfilacesso> listPerfilAcesso = new ArrayList<>(100);
 
     public LnPerfil() {
     }
@@ -92,6 +99,14 @@ public class LnPerfil implements Serializable {
 
     public void setPerChAlterasenha(Character perChAlterasenha) {
         this.perChAlterasenha = perChAlterasenha;
+    }
+
+    public List<LnPerfilacesso> getListPerfilAcesso() {
+        return listPerfilAcesso;
+    }
+
+    public void setListPerfilAcesso(List<LnPerfilacesso> listPerfilAcesso) {
+        this.listPerfilAcesso = listPerfilAcesso;
     }
 
     @Override

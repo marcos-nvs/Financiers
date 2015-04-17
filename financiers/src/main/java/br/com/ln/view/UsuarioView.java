@@ -12,7 +12,6 @@ import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.financiers.OrigemTela;
 import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
