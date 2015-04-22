@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LnModulo.findAll", query = "SELECT l FROM LnModulo l"),
+    @NamedQuery(name = "LnModulo.findAllAtivo", query = "SELECT l FROM LnModulo l WHERE l.modChAtivo = :modChAtivo"),
     @NamedQuery(name = "LnModulo.findByModInCodigo", query = "SELECT l FROM LnModulo l WHERE l.modInCodigo = :modInCodigo"),
     @NamedQuery(name = "LnModulo.findByModStDescricao", query = "SELECT l FROM LnModulo l WHERE l.modStDescricao = :modStDescricao"),
     @NamedQuery(name = "LnModulo.findByModChIncluir", query = "SELECT l FROM LnModulo l WHERE l.modChIncluir = :modChIncluir"),

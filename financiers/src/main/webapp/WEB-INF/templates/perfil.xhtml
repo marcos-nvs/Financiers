@@ -4,7 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:dataTable var="perfil" value="#{perfilView.listPerfil}" selectionMode="single" selection="#{perfilView.lnPerfil}"
+    <p:dataTable id="idTbPerfil" var="perfil" value="#{perfilView.listPerfil}" selectionMode="single" selection="#{perfilView.lnPerfil}"
                  rowKey="#{perfil.perInCodigo}">
         <f:facet name="header">
             <p:outputLabel value="Lista de Perfis"/>
@@ -26,7 +26,7 @@
         </p:column>
 
         <p:rowExpansion>
-            <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}">
+            <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}" >
                 <p:column headerText="#{msgs['template.code']}" style="width: 40px">
                     <h:outputText value="#{acesso.lnPerfilacessoPK.modInCodigo}"/>
                 </p:column>
@@ -34,18 +34,86 @@
                     <h:outputText value="#{perfilView.buscaDescModulo(acesso.lnPerfilacessoPK.modInCodigo)}"/>
                 </p:column>
                 <p:column headerText="#{msgs['node.include']}">
-                    <h:outputText value="#{acesso.lnPerfilacesso.pacStIncluir}"/>
+                    <h:outputText value="#{tratativa.tratamentoTextoString(acesso.pacChIncluir)}"/>
                 </p:column>
                 <p:column headerText="#{msgs['template.change']}">
-                    <h:outputText value=""/>
+                    <h:outputText value="#{tratativa.tratamentoTextoString(acesso.pacChAlterar)}"/>
                 </p:column>
                 <p:column headerText="#{msgs['page.panelConfirmation.deleteButtonLabel']}">
-                    <h:outputText value=""/>
+                    <h:outputText value="#{tratativa.tratamentoTextoString(acesso.pacChExcluir)}"/>
                 </p:column>
                 <p:column headerText="#{msgs['template.search']}">
-                    <h:outputText value=""/>
+                    <h:outputText value="#{tratativa.tratamentoTextoString(acesso.pacChPesquisar)}"/>
                 </p:column>
             </p:dataTable>
         </p:rowExpansion>
+        <f:facet name="footer">
+            <p:commandButton id="btIncluirPerfil" value="#{msgs['node.include']}" icon="ui-icon-document" action="#{perfilView.btIncluirPerfil}"
+                             process="btIncluirPerfil" update=":idFormTop:growl, idTbPerfil"/>
+            <p:commandButton id="btAlterarPerfil" value="#{msgs['template.change']}" icon="ui-icon-pencil" action="#{perfilView.btAlterarPerfil}"
+                             process="btAlterarPerfil, idTbPerfil" update=":idFormTop:growl"/>
+            <p:commandButton id="btExcluirPerfil" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
+                             action="#{perfilView.btExcluirPerfil()}" process="idTbPerfil" update="idTbPerfil, :idFormTop:growl">
+                <p:confirm header="Confirmação" message="Confirma a exclusão deste perfil?" icon="ui-icon-alert"/>
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </f:facet>
     </p:dataTable>
+
+    <p:dialog header="Inclusão de Perfil" widgetVar="PerfilEdit" modal="false" showEffect="fade" hideEffect="fade" closable="true" 
+              style="background-color: activeborder" width="1000">
+        <h:panelGrid columns="6">
+            <p:outputLabel value="#{msgs['template.profile.description']}"/>
+            <p:inputText size="50"/>
+            <p:selectBooleanCheckbox value="Teste" />
+            <p:outputLabel id="idPerfilAtivo" value="#{msgs['page.connectionStatus.status2.value']}"/>
+            <p:selectBooleanCheckbox value="Teste" style="margin-left: 5px"/>
+            <p:outputLabel id="idPerfilSenha" value="#{msgs['node.user.changes.password']}"/>
+        </h:panelGrid>
+        <h:panelGrid columns="10">
+            <p:outputLabel value="#{msgs['node.module']}"/>
+            <p:selectOneMenu id="idListModulo" value="#{perfilView.modInCodigo}" style="margin-left: 60px">
+                <f:selectItems value="#{perfilView.listModulo}" var="perfilAcesso" itemLabel="#{perfilAcesso.modStDescricao}"
+                               itemValue="#{perfilAcesso.modInCodigo}"/>
+            </p:selectOneMenu>
+            <p:selectBooleanCheckbox value="#{perfilView.bIncluirAcesso}" style="margin-left: 83px"/>
+            <p:outputLabel value="#{msgs['node.include']}"/>
+            <p:selectBooleanCheckbox value="#{perfilView.bAlterarAcesso}"/>
+            <p:outputLabel value="#{msgs['template.change']}"/>
+            <p:selectBooleanCheckbox value="#{perfilView.bExcluirAcesso}"/>
+            <p:outputLabel value="#{msgs['page.panelConfirmation.deleteButtonLabel']}"/>
+            <p:selectBooleanCheckbox value="#{perfilView.bPesquisarAcesso}"/>
+            <p:outputLabel value="#{msgs['template.search']}"/>
+        </h:panelGrid>
+        <p:dataTable var="incluiAcesso" value="#{perfilView.listPerfilacesso}">
+            <f:facet name="header">
+                <p:outputLabel value="Acessos do Perfil"/>
+            </f:facet>
+            <p:column headerText="#{msgs['template.code']}" style="width: 40px">
+                <h:outputText value="#{incluiAcesso.lnPerfilacessoPK.modInCodigo}"/>
+            </p:column>
+            <p:column headerText="#{msgs['node.module']}" style="width: 40px">
+                <h:outputText value="#{perfilView.buscaDescModulo(incluiAcesso.lnPerfilacessoPK.modInCodigo)}"/>
+            </p:column>
+            <p:column headerText="#{msgs['node.include']}" style="width: 40px">
+                <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChIncluir)}"/>
+            </p:column>
+            <p:column headerText="#{msgs['template.change']}" style="width: 40px">
+                <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChAlerar)}"/>
+            </p:column>
+            <p:column headerText="#{msgs['page.panelConfirmation.deleteButtonLabel']}" style="width: 40px">
+                <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChExcluir)}"/>
+            </p:column>
+            <p:column headerText="#{msgs['template.search']}" style="width: 40px">
+                <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChPesquisar)}"/>
+            </p:column>
+        </p:dataTable>
+        <f:facet name="footer">
+            <p:commandButton value="Incluir"/>
+            <p:commandButton value="Fechar"/>
+        </f:facet>
+    </p:dialog>
 </ui:composition>
