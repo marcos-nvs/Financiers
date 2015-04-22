@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -47,6 +49,9 @@ public class LnPerfilacesso implements Serializable {
     @Basic(optional = false)
     @Column(name = "pac_ch_pesquisar")
     private Character pacChPesquisar;
+
+    @Transient
+    private TipoFuncao tipoFuncao;
 
     public LnPerfilacesso() {
     }
@@ -107,6 +112,14 @@ public class LnPerfilacesso implements Serializable {
         this.pacChPesquisar = pacChPesquisar;
     }
 
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -129,7 +142,8 @@ public class LnPerfilacesso implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.hibernate.entities.LnPerfilacesso[ lnPerfilacessoPK=" + lnPerfilacessoPK + " ]";
+        return "LnPerfilacesso{" + "lnPerfilacessoPK=" + lnPerfilacessoPK + ", pacChIncluir=" + pacChIncluir + ", pacChAlterar=" + pacChAlterar + ", pacChExcluir=" + pacChExcluir + ", pacChPesquisar=" + pacChPesquisar + ", tipoFuncao=" + tipoFuncao + '}';
     }
+
     
 }

@@ -9,8 +9,14 @@ import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
+import br.com.ln.entity.LnPerfilacessoPK;
+import br.com.ln.financiers.PerfilFuncoes;
+import br.com.ln.financiers.TipoFuncao;
+import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -30,6 +36,9 @@ public class PerfilView implements Serializable {
     private LnPerfil lnPerfil;
     private LnPerfilacesso lnPerfilacesso;
     private List<LnModulo> listModulo;
+    private String perfilDescricao;
+    private boolean bAtivo;
+    private boolean bAlteraSenha;
     private Integer modInCodigo;
     private boolean bIncluirAcesso;
     private boolean bAlterarAcesso;
@@ -37,11 +46,16 @@ public class PerfilView implements Serializable {
     private boolean bPesquisarAcesso;
     private List<LnPerfilacesso> listPerfilacesso;
     private String mensagem;
+    private PerfilFuncoes perfilFuncoes;
+    private TratamentoEspecial tratativa;
 
     public PerfilView() {
         listPerfil = Postgress.grabListPerfilAtivo('S');
         listaPerfilAcesso();
         listModulo = Postgress.grabListModuloAtivo('S');
+        perfilFuncoes = new PerfilFuncoes();
+        tratativa = new TratamentoEspecial();
+        listPerfilacesso = new ArrayList<>();
     }
 
     public List<LnPerfil> getListPerfil() {
@@ -76,6 +90,30 @@ public class PerfilView implements Serializable {
         this.listModulo = listModulo;
     }
 
+    public String getPerfilDescricao() {
+        return perfilDescricao;
+    }
+
+    public void setPerfilDescricao(String perfilDescricao) {
+        this.perfilDescricao = perfilDescricao;
+    }
+
+    public boolean isbAtivo() {
+        return bAtivo;
+    }
+
+    public void setbAtivo(boolean bAtivo) {
+        this.bAtivo = bAtivo;
+    }
+
+    public boolean isbAlteraSenha() {
+        return bAlteraSenha;
+    }
+
+    public void setbAlteraSenha(boolean bAlteraSenha) {
+        this.bAlteraSenha = bAlteraSenha;
+    }
+    
     public Integer getModInCodigo() {
         return modInCodigo;
     }
@@ -137,7 +175,9 @@ public class PerfilView implements Serializable {
     public void btIncluirPerfil() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             lnPerfil = new LnPerfil();
+            lnPerfil.setTipoFuncao(TipoFuncao.Incluir);
             lnPerfilacesso = new LnPerfilacesso();
+            lnPerfilacesso.setTipoFuncao(TipoFuncao.Incluir);
             RequestContext.getCurrentInstance().execute("PF('PerfilEdit').show()");
         } else {
             mensagem = "Usuario sem perimissao para incluir";
@@ -148,6 +188,8 @@ public class PerfilView implements Serializable {
     public void btAlterarPerfil(){
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')){
             if (lnPerfil != null){
+                lnPerfil.setTipoFuncao(TipoFuncao.Alterar);
+                lnPerfilacesso.setTipoFuncao(TipoFuncao.Alterar);
                 RequestContext.getCurrentInstance().execute("PF('PerfilEdit').show()");
             } else {
                 mensagem = "Por favor, escolha um perfil para alterar";
@@ -162,6 +204,8 @@ public class PerfilView implements Serializable {
     public void btExcluirPerfil(){
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (lnPerfil != null) {
+                lnPerfil.setTipoFuncao(TipoFuncao.Excluir);
+                lnPerfilacesso.setTipoFuncao(TipoFuncao.Excluir);
             } else {
                 mensagem = "Por favor, escolha um perfil para excluir";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
@@ -170,5 +214,53 @@ public class PerfilView implements Serializable {
             mensagem = "Usuario sem perimissao para Excluir";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
+    }
+    
+    public void btIncluirPerfilAcesso(){
+        dataLoadVar();
+        
+        if (!listPerfilacesso.contains(lnPerfilacesso)) {
+            listPerfilacesso.add(lnPerfilacesso);
+        } else {
+            mensagem = "Modulo já existe";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+        }
+    }
+    
+    public void btGravarPerfilAcesso(){
+        
+    }
+    
+    public void btEditaPerfilAcesso(){
+        dataLoadPerfil();
+        listPerfilacesso.remove(lnPerfilacesso);
+    }
+    
+    private void dataLoadVar(){
+        lnPerfil.setPerStDescricao(perfilDescricao);
+        lnPerfil.setPerChAtivo(tratativa.tratamentoTextoCharacter(bAtivo));
+        lnPerfil.setPerChAlterasenha(tratativa.tratamentoTextoCharacter(bAlteraSenha));
+
+        LnPerfilacessoPK lnPerfilacessoPK = new LnPerfilacessoPK(0, modInCodigo);
+        lnPerfilacesso = new LnPerfilacesso();
+        
+        lnPerfilacesso.setLnPerfilacessoPK(lnPerfilacessoPK);
+        lnPerfilacesso.setPacChIncluir(tratativa.tratamentoTextoCharacter(bIncluirAcesso));
+        lnPerfilacesso.setPacChAlterar(tratativa.tratamentoTextoCharacter(bAlterarAcesso));
+        lnPerfilacesso.setPacChExcluir(tratativa.tratamentoTextoCharacter(bExcluirAcesso));
+        lnPerfilacesso.setPacChPesquisar(tratativa.tratamentoTextoCharacter(bPesquisarAcesso));
+    }
+
+    private void dataLoadPerfil(){
+        perfilDescricao = lnPerfil.getPerStDescricao();
+        bAtivo = tratativa.tratamentoTextoBoolean(lnPerfil.getPerChAtivo());
+        bAlteraSenha = tratativa.tratamentoTextoBoolean(lnPerfil.getPerChAlterasenha());
+
+        modInCodigo = lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo();
+        bIncluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChIncluir());
+        bAlterarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChAlterar());
+        bExcluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChExcluir());
+        bPesquisarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChPesquisar());
+        
     }
 }

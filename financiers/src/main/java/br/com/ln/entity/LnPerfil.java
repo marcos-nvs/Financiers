@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,6 +55,8 @@ public class LnPerfil implements Serializable {
     
     @Transient
     private List<LnPerfilacesso> listPerfilAcesso = new ArrayList<>(100);
+    @Transient
+    private TipoFuncao tipoFuncao;
 
     public LnPerfil() {
     }
@@ -109,6 +112,14 @@ public class LnPerfil implements Serializable {
         this.listPerfilAcesso = listPerfilAcesso;
     }
 
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
