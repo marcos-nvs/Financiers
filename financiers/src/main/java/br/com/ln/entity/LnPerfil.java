@@ -142,7 +142,8 @@ public class LnPerfil implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.hibernate.entities.LnPerfil[ perInCodigo=" + perInCodigo + " ]";
+        return "LnPerfil{" + "perInCodigo=" + perInCodigo + ", perStDescricao=" + perStDescricao + ", perChAtivo=" + perChAtivo + ", perChAlterasenha=" + perChAlterasenha + ", listPerfilAcesso=" + listPerfilAcesso + ", tipoFuncao=" + tipoFuncao + '}';
     }
+
     
 }

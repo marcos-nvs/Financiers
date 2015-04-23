@@ -50,7 +50,7 @@ public class PerfilView implements Serializable {
     private TratamentoEspecial tratativa;
 
     public PerfilView() {
-        listPerfil = Postgress.grabListPerfilAtivo('S');
+        listPerfil = Postgress.grabListObject(LnPerfil.class);
         listaPerfilAcesso();
         listModulo = Postgress.grabListModuloAtivo('S');
         perfilFuncoes = new PerfilFuncoes();
@@ -188,8 +188,8 @@ public class PerfilView implements Serializable {
     public void btAlterarPerfil(){
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')){
             if (lnPerfil != null){
+                dataLoadPerfil();
                 lnPerfil.setTipoFuncao(TipoFuncao.Alterar);
-                lnPerfilacesso.setTipoFuncao(TipoFuncao.Alterar);
                 RequestContext.getCurrentInstance().execute("PF('PerfilEdit').show()");
             } else {
                 mensagem = "Por favor, escolha um perfil para alterar";
@@ -229,6 +229,19 @@ public class PerfilView implements Serializable {
     
     public void btGravarPerfilAcesso(){
         
+        for (LnPerfilacesso lnPerfilacesso : listPerfilacesso) {
+            lnPerfil.getListPerfilAcesso().add(lnPerfilacesso);
+        }
+        mensagem = perfilFuncoes.perfil(lnPerfil);
+        
+        if (mensagem.equals("Sucesso")) {
+            listPerfil = Postgress.grabListObject(LnPerfil.class);
+            lnPerfil = new LnPerfil();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+            RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+        }
     }
     
     public void btEditaPerfilAcesso(){
@@ -256,11 +269,12 @@ public class PerfilView implements Serializable {
         bAtivo = tratativa.tratamentoTextoBoolean(lnPerfil.getPerChAtivo());
         bAlteraSenha = tratativa.tratamentoTextoBoolean(lnPerfil.getPerChAlterasenha());
 
-        modInCodigo = lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo();
-        bIncluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChIncluir());
-        bAlterarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChAlterar());
-        bExcluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChExcluir());
-        bPesquisarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChPesquisar());
-        
+        if (lnPerfilacesso != null) {
+            modInCodigo = lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo();
+            bIncluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChIncluir());
+            bAlterarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChAlterar());
+            bExcluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChExcluir());
+            bPesquisarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChPesquisar());
+        }
     }
 }
