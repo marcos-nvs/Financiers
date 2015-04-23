@@ -26,7 +26,7 @@
         </p:column>
 
         <p:rowExpansion>
-            <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}" >
+            <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}" class="default" styleClass="cabecalho" >
                 <p:column headerText="#{msgs['template.code']}" style="width: 40px">
                     <h:outputText value="#{acesso.lnPerfilacessoPK.modInCodigo}"/>
                 </p:column>

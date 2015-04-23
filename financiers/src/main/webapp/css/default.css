@@ -436,3 +436,11 @@ img.right {
 .column3{
     width: 23%;
 }
+
+.cabecalho {
+   text-align: center;
+   font: 11px Arial, sans-serif;
+   font-weight: bold;
+   color: Snow;
+   background:  #008B45;
+}
