@@ -229,6 +229,10 @@ public class PerfilView implements Serializable {
     public void btGravarPerfilAcesso(){
         
         for (LnPerfilacesso lnPerfilacesso : listPerfilacesso) {
+            
+            if (lnPerfil.getListPerfilAcesso().contains(lnPerfilacesso)){
+                lnPerfil.getListPerfilAcesso().remove(lnPerfilacesso);
+            }
             lnPerfil.getListPerfilAcesso().add(lnPerfilacesso);
         }
         mensagem = perfilFuncoes.perfil(lnPerfil);
