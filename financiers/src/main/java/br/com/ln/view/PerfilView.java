@@ -15,7 +15,6 @@ import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -276,5 +275,7 @@ public class PerfilView implements Serializable {
             bExcluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChExcluir());
             bPesquisarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChPesquisar());
         }
+        
+        listPerfilacesso = lnPerfil.getListPerfilAcesso();
     }
 }
