@@ -28,12 +28,18 @@ public class PerfilFuncoes {
                 inclusaoPerfil(lnPerfil);
                 break;
             case Alterar:
+                alterarPerfil(lnPerfil);
                 break;
             case Excluir:
                 break;
             case Pesquisar:
                 break;
         }
+        
+        return mensagem;
+    }
+    
+    public String perfilAcesso(LnPerfilacesso lnPerfilacesso){
         
         return mensagem;
     }
@@ -72,5 +78,21 @@ public class PerfilFuncoes {
             mensagem = mensagem + "Defina um tipo de acesso - ";
         }
         return validado;
+    }
+
+    private void alterarPerfil(LnPerfil lnPerfil) {
+        if (lnPerfil != null){
+            if (verificaPerfil(lnPerfil)){
+                for (LnPerfilacesso lnPerfilacesso : lnPerfil.getListPerfilAcesso()) {
+                    lnPerfilacesso.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
+                    Postgress.saveOrUpdateObject(lnPerfilacesso);
+                }
+                Postgress.saveOrUpdateObject(lnPerfil);
+                historico.gravaHistoricoModulo("Alteração do Perfil : " + lnPerfil.getPerStDescricao());
+                mensagem = "Sucesso";
+            } 
+        } else {
+            mensagem = "Inicie novamente o processo de alteracao de Perfil";
+        }
     }
 }

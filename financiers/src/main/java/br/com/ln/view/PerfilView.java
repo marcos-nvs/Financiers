@@ -221,24 +221,18 @@ public class PerfilView implements Serializable {
         if (!listPerfilacesso.contains(lnPerfilacesso)) {
             listPerfilacesso.add(lnPerfilacesso);
         } else {
-            mensagem = "Modulo já existe";
+            mensagem = "Modulo ja existe";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
     }
     
     public void btGravarPerfilAcesso(){
-        
-        for (LnPerfilacesso lnPerfilacesso : listPerfilacesso) {
-            
-            if (lnPerfil.getListPerfilAcesso().contains(lnPerfilacesso)){
-                lnPerfil.getListPerfilAcesso().remove(lnPerfilacesso);
-            }
-            lnPerfil.getListPerfilAcesso().add(lnPerfilacesso);
-        }
+       
         mensagem = perfilFuncoes.perfil(lnPerfil);
         
         if (mensagem.equals("Sucesso")) {
             listPerfil = Postgress.grabListObject(LnPerfil.class);
+            listaPerfilAcesso();
             lnPerfil = new LnPerfil();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
@@ -250,6 +244,7 @@ public class PerfilView implements Serializable {
     public void btEditaPerfilAcesso(){
         dataLoadPerfil();
         listPerfilacesso.remove(lnPerfilacesso);
+        lnPerfil.getListPerfilAcesso().remove(lnPerfilacesso);
     }
     
     private void dataLoadVar(){
