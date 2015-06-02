@@ -12,9 +12,6 @@
         <p:column style="width: 16px">
             <p:rowToggler />
         </p:column>
-<!--        <p:column headerText="#{msgs['template.code']}" style="width: 40px">
-            <h:outputText value="#{perfil.perInCodigo}"/>
-        </p:column>-->
         <p:column headerText="#{msgs['template.profile.description']}">
             <h:outputText value="#{perfil.perStDescricao}"/>
         </p:column>
@@ -26,10 +23,7 @@
         </p:column>
 
         <p:rowExpansion>
-            <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}">
-<!--                <p:column headerText="#{msgs['template.code']}" style="width: 40px">
-                    <h:outputText value="#{acesso.lnPerfilacessoPK.modInCodigo}"/>
-                </p:column>-->
+            <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}" paginator="true" rows="10">
                 <p:column headerText="#{msgs['node.module']}">
                     <h:outputText value="#{perfilView.buscaDescModulo(acesso.lnPerfilacessoPK.modInCodigo)}"/>
                 </p:column>
@@ -88,7 +82,7 @@
             <p:selectBooleanCheckbox value="#{perfilView.bPesquisarAcesso}"/>
             <p:outputLabel value="#{msgs['template.search']}"/>
         </h:panelGrid>
-        <p:dataTable id="idDtAcesso" var="incluiAcesso" value="#{perfilView.listPerfilacesso}">
+        <p:dataTable id="idDtAcesso" var="incluiAcesso" value="#{perfilView.listPerfilacesso}" paginator="true" rows="10">
             <f:facet name="header">
                 <p:outputLabel value="Acessos do Perfil"/>
             </f:facet>
