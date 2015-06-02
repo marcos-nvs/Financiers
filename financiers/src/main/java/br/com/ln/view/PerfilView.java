@@ -205,6 +205,7 @@ public class PerfilView implements Serializable {
             if (lnPerfil != null) {
                 lnPerfil.setTipoFuncao(TipoFuncao.Excluir);
                 lnPerfilacesso.setTipoFuncao(TipoFuncao.Excluir);
+                mensagem = perfilFuncoes.perfil(lnPerfil);
             } else {
                 mensagem = "Por favor, escolha um perfil para excluir";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
@@ -218,6 +219,7 @@ public class PerfilView implements Serializable {
     public void btIncluirPerfilAcesso(){
         dataLoadVar();
         
+        lnPerfilacesso.setTipoFuncao(TipoFuncao.Incluir);
         if (!listPerfilacesso.contains(lnPerfilacesso)) {
             listPerfilacesso.add(lnPerfilacesso);
         } else {
@@ -227,8 +229,21 @@ public class PerfilView implements Serializable {
     }
     
     public void btGravarPerfilAcesso(){
-       
-        mensagem = perfilFuncoes.perfil(lnPerfil);
+        
+        if (lnPerfil.getTipoFuncao().equals(TipoFuncao.Incluir)) {
+            for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
+                lnPerfil.getListPerfilAcesso().add(lnPerfilacessog);
+            }
+            mensagem = perfilFuncoes.perfil(lnPerfil);
+        } else if (lnPerfil.getTipoFuncao().equals(TipoFuncao.Alterar)){
+            mensagem = perfilFuncoes.perfil(lnPerfil);
+            for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
+                if (lnPerfilacessog.getTipoFuncao() != null) {
+                    lnPerfilacessog.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
+                    mensagem = perfilFuncoes.perfilAcesso(lnPerfilacessog);
+                }
+            }
+        }
         
         if (mensagem.equals("Sucesso")) {
             listPerfil = Postgress.grabListObject(LnPerfil.class);
@@ -245,6 +260,8 @@ public class PerfilView implements Serializable {
         dataLoadPerfil();
         listPerfilacesso.remove(lnPerfilacesso);
         lnPerfil.getListPerfilAcesso().remove(lnPerfilacesso);
+        lnPerfilacesso.setTipoFuncao(TipoFuncao.Excluir);
+        lnPerfil.getListPerfilAcesso().add(lnPerfilacesso);
     }
     
     private void dataLoadVar(){

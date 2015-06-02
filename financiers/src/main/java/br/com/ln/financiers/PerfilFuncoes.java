@@ -28,9 +28,10 @@ public class PerfilFuncoes {
                 inclusaoPerfil(lnPerfil);
                 break;
             case Alterar:
-                alterarPerfil(lnPerfil);
+                alteracaoPerfil(lnPerfil);
                 break;
             case Excluir:
+                exclusaoPerfil(lnPerfil);
                 break;
             case Pesquisar:
                 break;
@@ -40,7 +41,21 @@ public class PerfilFuncoes {
     }
     
     public String perfilAcesso(LnPerfilacesso lnPerfilacesso){
+        mensagem = "";
+        historico = new Historico();
         
+        switch (lnPerfilacesso.getTipoFuncao()){
+            case Incluir:
+                inclusaoPerfilAcesso(lnPerfilacesso);
+                break;
+            case Alterar:
+                break;
+            case Excluir:
+                exclusaoPerfilAcesso(lnPerfilacesso);
+                break;
+            case Pesquisar:
+                break;
+        }
         return mensagem;
     }
 
@@ -80,13 +95,9 @@ public class PerfilFuncoes {
         return validado;
     }
 
-    private void alterarPerfil(LnPerfil lnPerfil) {
+    private void alteracaoPerfil(LnPerfil lnPerfil) {
         if (lnPerfil != null){
             if (verificaPerfil(lnPerfil)){
-                for (LnPerfilacesso lnPerfilacesso : lnPerfil.getListPerfilAcesso()) {
-                    lnPerfilacesso.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
-                    Postgress.saveOrUpdateObject(lnPerfilacesso);
-                }
                 Postgress.saveOrUpdateObject(lnPerfil);
                 historico.gravaHistoricoModulo("Alteração do Perfil : " + lnPerfil.getPerStDescricao());
                 mensagem = "Sucesso";
@@ -94,5 +105,21 @@ public class PerfilFuncoes {
         } else {
             mensagem = "Inicie novamente o processo de alteracao de Perfil";
         }
+    }
+
+    private void inclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
+        Postgress.saveObject(lnPerfilacesso);
+        historico.gravaHistoricoModulo("Inclusão de Acesso Perfil");
+        mensagem = "Sucesso";
+    }
+
+    private void exclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
+        Postgress.deleteObject(lnPerfilacesso);
+        historico.gravaHistoricoModulo("Exclusão de Acesso Perfil ");
+        mensagem = "Sucesso";
+    }
+
+    private void exclusaoPerfil(LnPerfil lnPerfil) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
