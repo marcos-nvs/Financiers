@@ -204,8 +204,11 @@ public class PerfilView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (lnPerfil != null) {
                 lnPerfil.setTipoFuncao(TipoFuncao.Excluir);
-                lnPerfilacesso.setTipoFuncao(TipoFuncao.Excluir);
                 mensagem = perfilFuncoes.perfil(lnPerfil);
+                listPerfil = Postgress.grabListObject(LnPerfil.class);
+                listaPerfilAcesso();
+                lnPerfil = new LnPerfil();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
             } else {
                 mensagem = "Por favor, escolha um perfil para excluir";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
@@ -217,7 +220,8 @@ public class PerfilView implements Serializable {
     }
     
     public void btIncluirPerfilAcesso(){
-        dataLoadVar();
+        dataLoadVarPerfil();
+        dataLoadVarPerfilAcesso();
         
         lnPerfilacesso.setTipoFuncao(TipoFuncao.Incluir);
         if (!listPerfilacesso.contains(lnPerfilacesso)) {
@@ -229,13 +233,13 @@ public class PerfilView implements Serializable {
     }
     
     public void btGravarPerfilAcesso(){
-        
         if (lnPerfil.getTipoFuncao().equals(TipoFuncao.Incluir)) {
             for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
                 lnPerfil.getListPerfilAcesso().add(lnPerfilacessog);
             }
             mensagem = perfilFuncoes.perfil(lnPerfil);
         } else if (lnPerfil.getTipoFuncao().equals(TipoFuncao.Alterar)){
+            dataLoadVarPerfil();
             mensagem = perfilFuncoes.perfil(lnPerfil);
             for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
                 if (lnPerfilacessog.getTipoFuncao() != null) {
@@ -261,14 +265,10 @@ public class PerfilView implements Serializable {
         listPerfilacesso.remove(lnPerfilacesso);
         lnPerfil.getListPerfilAcesso().remove(lnPerfilacesso);
         lnPerfilacesso.setTipoFuncao(TipoFuncao.Excluir);
-        lnPerfil.getListPerfilAcesso().add(lnPerfilacesso);
+        perfilFuncoes.perfilAcesso(lnPerfilacesso);
     }
     
-    private void dataLoadVar(){
-        lnPerfil.setPerStDescricao(perfilDescricao);
-        lnPerfil.setPerChAtivo(tratativa.tratamentoTextoCharacter(bAtivo));
-        lnPerfil.setPerChAlterasenha(tratativa.tratamentoTextoCharacter(bAlteraSenha));
-
+    private void dataLoadVarPerfilAcesso(){
         LnPerfilacessoPK lnPerfilacessoPK = new LnPerfilacessoPK(0, modInCodigo);
         lnPerfilacesso = new LnPerfilacesso();
         
@@ -279,6 +279,12 @@ public class PerfilView implements Serializable {
         lnPerfilacesso.setPacChPesquisar(tratativa.tratamentoTextoCharacter(bPesquisarAcesso));
     }
 
+    private void dataLoadVarPerfil(){
+        lnPerfil.setPerStDescricao(perfilDescricao);
+        lnPerfil.setPerChAtivo(tratativa.tratamentoTextoCharacter(bAtivo));
+        lnPerfil.setPerChAlterasenha(tratativa.tratamentoTextoCharacter(bAlteraSenha));
+
+    }
     private void dataLoadPerfil(){
         perfilDescricao = lnPerfil.getPerStDescricao();
         bAtivo = tratativa.tratamentoTextoBoolean(lnPerfil.getPerChAtivo());

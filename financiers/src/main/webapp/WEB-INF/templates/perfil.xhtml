@@ -12,9 +12,9 @@
         <p:column style="width: 16px">
             <p:rowToggler />
         </p:column>
-        <p:column headerText="#{msgs['template.code']}" style="width: 40px">
+<!--        <p:column headerText="#{msgs['template.code']}" style="width: 40px">
             <h:outputText value="#{perfil.perInCodigo}"/>
-        </p:column>
+        </p:column>-->
         <p:column headerText="#{msgs['template.profile.description']}">
             <h:outputText value="#{perfil.perStDescricao}"/>
         </p:column>
@@ -27,9 +27,9 @@
 
         <p:rowExpansion>
             <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}">
-                <p:column headerText="#{msgs['template.code']}" style="width: 40px">
+<!--                <p:column headerText="#{msgs['template.code']}" style="width: 40px">
                     <h:outputText value="#{acesso.lnPerfilacessoPK.modInCodigo}"/>
-                </p:column>
+                </p:column>-->
                 <p:column headerText="#{msgs['node.module']}">
                     <h:outputText value="#{perfilView.buscaDescModulo(acesso.lnPerfilacessoPK.modInCodigo)}"/>
                 </p:column>
@@ -68,10 +68,10 @@
         <h:panelGrid id="idPerfilDialog" columns="6">
             <p:outputLabel value="#{msgs['template.profile.description']}"/>
             <p:inputText id="idPerfilDescricao" value="#{perfilView.perfilDescricao}" size="50"/>
-            <p:selectBooleanCheckbox value="#{perfilView.bAtivo}" />
-            <p:outputLabel id="idPerfilAtivo" value="#{msgs['page.connectionStatus.status2.value']}"/>
-            <p:selectBooleanCheckbox value="#{perfilView.bAlteraSenha}" style="margin-left: 5px"/>
-            <p:outputLabel id="idPerfilSenha" value="#{msgs['node.user.changes.password']}"/>
+            <p:selectBooleanCheckbox id="idPerfilAtivo" value="#{perfilView.bAtivo}" />
+            <p:outputLabel  value="#{msgs['page.connectionStatus.status2.value']}"/>
+            <p:selectBooleanCheckbox id="idPerfilSenha" value="#{perfilView.bAlteraSenha}" style="margin-left: 5px"/>
+            <p:outputLabel  value="#{msgs['node.user.changes.password']}"/>
         </h:panelGrid>
         <h:panelGrid id="idPerfilAcessoDialog" columns="10">
             <p:outputLabel value="#{msgs['node.module']}"/>
@@ -119,10 +119,13 @@
         </p:dataTable>
         <f:facet name="footer">
             <p:commandButton id="idIncluirPerfilAcesso" value="#{msgs['node.include']}" action="#{perfilView.btIncluirPerfilAcesso()}"
-                             process="idIncluirPerfilAcesso, idDtAcesso,idPerfilAcessoDialog,idPerfilDialog" 
+                             process="idIncluirPerfilAcesso, idDtAcesso,idPerfilAcessoDialog,idPerfilDialog, idPerfilDescricao,idPerfilAtivo,
+                                      idPerfilSenha,idPerfilDescricao, idPerfilSenha" 
                              update="idDtAcesso, :idFormTop:growl"/>
             <p:commandButton id="idGravarPerfilAcesso" value="#{msgs['page.panelConfirmation.saveButtonLabel']}"
-                             action="#{perfilView.btGravarPerfilAcesso()}" process="idGravarPerfilAcesso"
+                             action="#{perfilView.btGravarPerfilAcesso()}" 
+                             process="idGravarPerfilAcesso, idPerfilDescricao,idPerfilAtivo, idPerfilSenha, idPerfilAcessoDialog, idPerfilDescricao,
+                                      idPerfilSenha" 
                              update="idDtAcesso,idPerfilAcessoDialog,idPerfilDialog, :idFormTop:growl, idTbPerfil "/>
             <p:commandButton id="idFecharPerfilAcesso" value="#{msgs['page.panelPopup.closeText']}" onclick="PF('incluiAcesso').hide()"/>
         </f:facet>

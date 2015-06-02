@@ -120,6 +120,12 @@ public class PerfilFuncoes {
     }
 
     private void exclusaoPerfil(LnPerfil lnPerfil) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        for (LnPerfilacesso lnPerfAcesso : lnPerfil.getListPerfilAcesso()){
+            Postgress.deleteObject(lnPerfAcesso);
+        }
+        Postgress.deleteObject(lnPerfil);
+        
+        mensagem = "Sucesso";
     }
 }
