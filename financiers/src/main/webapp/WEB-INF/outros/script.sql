@@ -395,4 +395,16 @@ COMMENT ON TABLE ln_categoria
   IS 'Define a categoria das contas para filtros no sistema';
 COMMENT ON COLUMN ln_categoria.tip_in_codigo IS 'Tipo de categoria Débito ou Crédito';
 
+-- Sequence: seq_categoria
+
+-- DROP SEQUENCE seq_categoria;
+
+CREATE SEQUENCE seq_categoria
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_categoria
+  OWNER TO postgres;
 

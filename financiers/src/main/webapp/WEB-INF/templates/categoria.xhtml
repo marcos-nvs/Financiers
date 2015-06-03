@@ -4,7 +4,55 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:dataTable id="idTbCategoria" var="categoria" value="#{perfilView.listPerfil}" selectionMode="single" selection="#{perfilView.lnPerfil}"
-                 rowKey="#{perfil.perInCodigo}">
+    <p:dataTable id="idTbCategoria" var="categoria" value="#{categoriaView.listCategoria}" selectionMode="single" selection="#{categoriaView.lnCategoria}"
+                 rowKey="#{categoriaView.codigo}" paginator="true" rows="30" paginatorPosition="bottom">
+        <f:facet name="header">
+            <p:outputLabel value="Lista de Categorias"/>
+        </f:facet>
+        <p:column style="width: 16px">
+            <p:rowToggler />
+        </p:column>
+        <p:column headerText="#{msgs['tabbedHeadings.description']}">
+            <h:outputText value="#{categoria.catStDescricao}"/>
+        </p:column>
+        <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
+            <h:outputText value="#{tratativa.tratamentoTextoString(categoria.catChAtivo)}"/>
+        </p:column>
+        <f:facet name="footer">
+            <p:commandButton id="idBtIncluirCat" value="#{msgs['node.include']}" icon="ui-icon-document" action="#{categoriaView.btIncluirCategoria}"
+                             process="idTbCategoria" update="idTbCategoria"/>
+            <p:commandButton id="idBtAlterarCat" value="#{msgs['template.change']}" icon="ui-icon-pencil"/>
+            <p:commandButton id="idBtExcluirCat" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
+                <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} desta categoria?" icon="ui-icon-alert"/>
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Nao" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </f:facet>
     </p:dataTable>
+
+    <p:dialog header="#{msgs['node.inclusion']} de Categoria" widgetVar="categoriaEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
+              style="background-color: activeborder" width="1000" dynamic="true">
+        <h:panelGrid id="idPanelCategoria" columns="6">
+            <p:selectOneMenu id="idListTipoConta" value="#{categoriaView.tipo}" style="margin-left: 60px">
+                <f:selectItems value="#{categoriaView.listTipoconta}" var="categoriaTipo" itemLabel="#{categoriaTipo.tipStDescricao}"
+                               itemValue="#{categoriaTipo.tipInCodigo}"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="#{msgs['tabbedHeadings.description']}"/>
+            <p:inputText id="idCategoriaDescricao" value="#{categoriaView.descricao}" size="50"/>
+            <p:selectBooleanCheckbox id="idCategoriaAtivo" value="#{categoriaView.bAtivo}" />
+            <p:outputLabel  value="#{msgs['page.connectionStatus.status2.value']}"/>
+        </h:panelGrid>
+        <f:facet name="footer">
+            <p:commandButton id="idCategoriaGravar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document"
+                             action="#{categoriaView.btSalvarCategoria()}" 
+                             process ="@this"
+                             update = "@this"/>
+            <p:commandButton id="idCategoriaCancelar" value="#{msgs['node.cancel']}" icon="ui-icon-trash" 
+                             action="#{categoriaView.btCancelarCategoria()}"
+                             process ="@this"
+                             update = "@this"/>
+        </f:facet>
+    </p:dialog>    
 </ui:composition>

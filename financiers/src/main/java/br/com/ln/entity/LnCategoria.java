@@ -5,7 +5,10 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,6 +44,9 @@ public class LnCategoria implements Serializable {
     private Integer tipInCodigo;
     @Column(name = "cat_ch_ativo")
     private Character catChAtivo;
+    
+    @Transient
+    private TipoFuncao tipoFuncao;    
 
     public LnCategoria() {
     }
@@ -78,6 +85,14 @@ public class LnCategoria implements Serializable {
 
     public void setCatChAtivo(Character catChAtivo) {
         this.catChAtivo = catChAtivo;
+    }
+
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
     }
 
     @Override

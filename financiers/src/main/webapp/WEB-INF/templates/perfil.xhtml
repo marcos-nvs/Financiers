@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <p:dataTable id="idTbPerfil" var="perfil" value="#{perfilView.listPerfil}" selectionMode="single" selection="#{perfilView.lnPerfil}"
-                 rowKey="#{perfil.perInCodigo}" paginator="true" rows="20">
+                 rowKey="#{perfil.perInCodigo}" paginator="true" rows="20" paginatorPosition="bottom">
         <f:facet name="header">
             <p:outputLabel value="Lista de Perfis"/>
         </f:facet>
@@ -23,7 +23,7 @@
         </p:column>
 
         <p:rowExpansion>
-            <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}" paginator="true" rows="10">
+            <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}" paginator="true" rows="10" paginatorPosition="bottom">
                 <p:column headerText="#{msgs['node.module']}">
                     <h:outputText value="#{perfilView.buscaDescModulo(acesso.lnPerfilacessoPK.modInCodigo)}"/>
                 </p:column>
@@ -48,7 +48,7 @@
                              process="btAlterarPerfil, idTbPerfil" update=":idFormTop:growl"/>
             <p:commandButton id="btExcluirPerfil" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
                              action="#{perfilView.btExcluirPerfil()}" process="idTbPerfil" update="idTbPerfil, :idFormTop:growl">
-                <p:confirm header="ConfirmaÃ§Ã£o" message="Confirma a exclusÃ£o deste perfil?" icon="ui-icon-alert"/>
+                <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -57,7 +57,7 @@
         </f:facet>
     </p:dataTable>
 
-    <p:dialog header="Inclusao de Perfil" widgetVar="PerfilEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
+    <p:dialog header="#{msgs['node.inclusion']} de Perfil" widgetVar="PerfilEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idPerfilDialog" columns="6">
             <p:outputLabel value="#{msgs['template.profile.description']}"/>
@@ -82,7 +82,7 @@
             <p:selectBooleanCheckbox value="#{perfilView.bPesquisarAcesso}"/>
             <p:outputLabel value="#{msgs['template.search']}"/>
         </h:panelGrid>
-        <p:dataTable id="idDtAcesso" var="incluiAcesso" value="#{perfilView.listPerfilacesso}" paginator="true" rows="10">
+        <p:dataTable id="idDtAcesso" var="incluiAcesso" value="#{perfilView.listPerfilacesso}" paginator="true" rows="10" paginatorPosition="bottom">
             <f:facet name="header">
                 <p:outputLabel value="Acessos do Perfil"/>
             </f:facet>

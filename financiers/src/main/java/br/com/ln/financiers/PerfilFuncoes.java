@@ -63,7 +63,7 @@ public class PerfilFuncoes {
         
         if (lnPerfil != null){
             if (verificaPerfil(lnPerfil)){
-                lnPerfil.setPerInCodigo(Postgress.grabLnPeriflNextId());
+                lnPerfil.setPerInCodigo(Postgress.grabLnPerfilNextId());
                 
                 for (LnPerfilacesso lnPerfilacesso : lnPerfil.getListPerfilAcesso()) {
                     lnPerfilacesso.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());

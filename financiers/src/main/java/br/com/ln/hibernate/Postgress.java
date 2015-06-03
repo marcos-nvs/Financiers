@@ -6,6 +6,7 @@
 package br.com.ln.hibernate;
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnCategoria;
 import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
@@ -382,8 +383,12 @@ public class Postgress implements Serializable{
         return lnPerfil;
     }
 
-    public static Integer grabLnPeriflNextId() {
+    public static Integer grabLnPerfilNextId() {
         return new Integer(grabIdByNextValueStringSQL("select nextval('seq_perfil');"));
+    }
+
+    public static Integer grabLnCategoriaNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_categoria');"));
     }
 
     public static Integer grabLnHistoricoNextId() {
@@ -508,6 +513,30 @@ public class Postgress implements Serializable{
         }
         return listUsuario;
     }
+    
+    public static List<LnCategoria> grabCategoria(Character catChAtivo){
+        
+        Session session = null;
+        Transaction tx = null;
+        List<LnCategoria> listCategoria = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnCategoria.findByCatChAtivo");
+            query.setInteger("catChAtivo", catChAtivo);
+            listCategoria = query.list();
+            tx.commit();
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return listCategoria;
+    }
+    
     
     /**
      *
