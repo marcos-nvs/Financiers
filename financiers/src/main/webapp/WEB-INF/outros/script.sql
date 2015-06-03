@@ -49,8 +49,6 @@ values (nextval('seq_modulo'), 'Usuário','S','S','S','S','S')
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
 values (nextval('seq_modulo'), 'Perfil','S','S','S','S','S')
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Módulo','S','S','S','S','S')
-insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
 values (nextval('seq_modulo'), 'Categoria','S','S','S','S','S')
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
 values (nextval('seq_modulo'), 'Plano de Contas','S','S','S','S','S')
@@ -342,5 +340,59 @@ CREATE SEQUENCE seq_historico
   CACHE 1;
 ALTER TABLE seq_historico
   OWNER TO postgres;
+
+
+-- Table: ln_tipoconta
+
+-- DROP TABLE ln_tipoconta;
+
+CREATE TABLE ln_tipoconta
+(
+  tip_in_codigo integer NOT NULL, -- Código do tipo de conta
+  tip_st_descricao character varying(50) NOT NULL,
+  tip_st_tipo character(1) NOT NULL, -- Define o tipo de conta D-Débito e C-Crédito
+  CONSTRAINT ln_tipoconta_pkey PRIMARY KEY (tip_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_tipoconta
+  OWNER TO postgres;
+COMMENT ON COLUMN ln_tipoconta.tip_in_codigo IS 'Código do tipo de conta';
+COMMENT ON COLUMN ln_tipoconta.tip_st_tipo IS 'Define o tipo de conta D-Débito e C-Crédito';
+
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (1,'ATIVO','D');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (2,'PASSIVO','C');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (3'BANCO','D');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (4,'CARTÃO DE CRÉDITO','C');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (5,'DINHEIRO','D');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (6,'EMPRÉSTIMO','C');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (7,'FINANCIAMENTO','C');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (8,'OUTROS PASSIVOS','C');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (9,'RECEITAS','D');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (10,'DESPESAS','C');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (11,'CONTAS À RECEBER','D');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (12,'CONTAS À PAGAR','C');
+
+-- Table: ln_categoria
+
+-- DROP TABLE ln_categoria;
+
+CREATE TABLE ln_categoria
+(
+  cat_in_codigo integer NOT NULL,
+  cat_st_descricao character varying(50),
+  tip_in_codigo integer, -- Tipo de categoria Débito ou Crédito
+  cat_ch_ativo character(1),
+  CONSTRAINT ln_categoria_pkey PRIMARY KEY (cat_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_categoria
+  OWNER TO postgres;
+COMMENT ON TABLE ln_categoria
+  IS 'Define a categoria das contas para filtros no sistema';
+COMMENT ON COLUMN ln_categoria.tip_in_codigo IS 'Tipo de categoria Débito ou Crédito';
 
 

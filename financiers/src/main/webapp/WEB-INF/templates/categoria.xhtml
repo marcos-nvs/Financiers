@@ -4,5 +4,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:outputLabel value="Tela de Modulo em Desenvolvimento!!!!"/>
+    <p:dataTable id="idTbCategoria" var="categoria" value="#{perfilView.listPerfil}" selectionMode="single" selection="#{perfilView.lnPerfil}"
+                 rowKey="#{perfil.perInCodigo}">
+    </p:dataTable>
 </ui:composition>
