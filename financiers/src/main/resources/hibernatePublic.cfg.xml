@@ -22,6 +22,8 @@
     <mapping class="br.com.ln.entity.LnPerfil"/>
     <mapping class="br.com.ln.entity.LnPerfilacesso"/>
     <mapping class="br.com.ln.entity.LnUsuario"/>
+    <mapping class="br.com.ln.entity.LnCategoria"/>
+    <mapping class="br.com.ln.entity.LnTipoconta"/>
 
   </session-factory>
 </hibernate-configuration>
