@@ -12,6 +12,7 @@ import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
+import br.com.ln.entity.LnTipoconta;
 import br.com.ln.entity.LnUsuario;
 import java.io.Serializable;
 //import java.sql.Timestamp;
@@ -536,6 +537,55 @@ public class Postgress implements Serializable{
         }
         return listCategoria;
     }
+    
+    public static LnTipoconta grabTipoConta(Integer tipInCodigo){
+        
+        Session session = null;
+        Transaction tx = null;
+        List<LnTipoconta> listTipoConta = null;
+        LnTipoconta lnTipoconta = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnTipoconta.findByTipInCodigo");
+            query.setInteger("tipInCodigo", tipInCodigo);
+            listTipoConta = query.list();
+            lnTipoconta = listTipoConta.get(0);
+            tx.commit();
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return lnTipoconta;
+    }
+    
+    
+//    public static List<LnConta> grabContaCategoria(Integer catInCodigo){
+//        
+//        Session session = null;
+//        Transaction tx = null;
+//        List<LnUsuario> listUsuario = null;
+//        
+//        try{
+//            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+//            tx = session.beginTransaction();
+//            
+//            Query query = session.getNamedQuery("LnUsuario.findByPerInCodigo");
+//            query.setInteger("perInCodigo", perInCodigo);
+//            listUsuario = query.list();
+//            tx.commit();
+//            
+//        }finally{
+//            if (session != null && session.isOpen()){
+//                session.close();
+//            }
+//        }
+//        return listUsuario;
+//    }
     
     
     /**

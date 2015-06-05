@@ -8,6 +8,7 @@ package br.com.ln.comum;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
+import br.com.ln.entity.LnTipoconta;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
@@ -29,6 +30,7 @@ public class EjbMap implements Serializable{
     private static final Map<String, List<LnPerfilacesso>> mapListPerfilAcesso = new HashMap<>(200);
     private static final Map<String, List<LnMenu>> mapMenu = new HashMap<>(100);
     private static final Map<String, LnPerfilacesso> mapPerfilAcesso = new HashMap<>(100);
+    private static final Map<String, LnTipoconta> mapTipoConta = new HashMap<>(20);
     
     
     public synchronized static LnUsuario grabUsuario(String usuStCodigo, String strDbName){
@@ -137,6 +139,20 @@ public class EjbMap implements Serializable{
             lnPerfilacesso = Postgress.grabPerfilAcesso(perInCodigo, modInCodigo);
             mapPerfilAcesso.put(code, lnPerfilacesso);
             return lnPerfilacesso;
+        }
+    }
+    
+    public synchronized static LnTipoconta grabTipoConta(Integer tipInCodigo){
+        
+        LnTipoconta lnTipoconta = null;
+        String code = tipInCodigo.toString();
+        
+        if (mapTipoConta.containsKey(code)){
+            return mapTipoConta.get(code);
+        } else {
+            lnTipoconta = Postgress.grabTipoConta(tipInCodigo);
+            mapTipoConta.put(code, lnTipoconta);
+            return lnTipoconta;
         }
     }
 }

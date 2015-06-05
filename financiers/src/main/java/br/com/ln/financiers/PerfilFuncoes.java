@@ -8,7 +8,9 @@ package br.com.ln.financiers;
 import br.com.ln.comum.Historico;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
+import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
+import java.util.List;
 
 /**
  *
@@ -120,12 +122,26 @@ public class PerfilFuncoes {
     }
 
     private void exclusaoPerfil(LnPerfil lnPerfil) {
-        
-        for (LnPerfilacesso lnPerfAcesso : lnPerfil.getListPerfilAcesso()){
-            Postgress.deleteObject(lnPerfAcesso);
+
+        if (verificaExclusaoPerfil(lnPerfil)) {
+            for (LnPerfilacesso lnPerfAcesso : lnPerfil.getListPerfilAcesso()) {
+                Postgress.deleteObject(lnPerfAcesso);
+            }
+            Postgress.deleteObject(lnPerfil);
+            historico.gravaHistoricoModulo("Exclusão de todo o perfil : " + lnPerfil.getPerStDescricao());
+            mensagem = "Sucesso";
         }
-        Postgress.deleteObject(lnPerfil);
+    }
+
+    private boolean verificaExclusaoPerfil(LnPerfil lnPerfil) {
         
-        mensagem = "Sucesso";
+        List<LnUsuario> listUsuario = Postgress.grabUsuarioPerfil(lnPerfil.getPerInCodigo());
+        
+        if (listUsuario != null && !listUsuario.isEmpty()){
+            mensagem = "Perfil não pode ser excluído, está sendo utilizado";
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -5,6 +5,9 @@
  */
 package br.com.ln.view;
 
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.EjbMap;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.entity.LnTipoconta;
@@ -38,15 +41,18 @@ public class CategoriaView implements Serializable{
     private LnCategoria lnCategoria;
     private boolean bAtivo;
     private String mensagem;
-    private TratamentoEspecial tratativa;
-    private CategoriaFuncoes categoriaFuncoes;
+    private final TratamentoEspecial tratativa;
+    private final CategoriaFuncoes categoriaFuncoes;
     private List<LnTipoconta> listTipoconta;
+    private boolean bTipoConta;
+    private final BeanVar beanVar;
 
     public CategoriaView() {
         listCategoria = Postgress.grabListObject(LnCategoria.class);
         listTipoconta = Postgress.grabListObject(LnTipoconta.class);
         tratativa = new TratamentoEspecial();
         categoriaFuncoes = new CategoriaFuncoes();
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
     public Integer getCodigo() {
@@ -112,6 +118,14 @@ public class CategoriaView implements Serializable{
     public void setListTipoconta(List<LnTipoconta> listTipoconta) {
         this.listTipoconta = listTipoconta;
     }
+
+    public boolean isbTipoConta() {
+        return bTipoConta;
+    }
+
+    public void setbTipoConta(boolean bTipoConta) {
+        this.bTipoConta = bTipoConta;
+    }
     
     @Override
     public int hashCode() {
@@ -159,15 +173,11 @@ public class CategoriaView implements Serializable{
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "CategoriaView{" + "codigo=" + codigo + ", descricao=" + descricao + ", tipo=" + tipo + ", ativo=" + ativo + ", listCategoria=" + listCategoria + ", lnCategoria=" + lnCategoria + ", bAtivo=" + bAtivo + '}';
-    }
-    
     public void btIncluirCategoria(){
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
             lnCategoria = new LnCategoria();
             lnCategoria.setTipoFuncao(TipoFuncao.Incluir);
+            bTipoConta = false;
             RequestContext.getCurrentInstance().execute("PF('categoriaEdit').show()");
         } else {
             mensagem = "Usuario sem permissao para incluir categorias.";
@@ -177,23 +187,53 @@ public class CategoriaView implements Serializable{
     
     public void btAlterarCategoria(){
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')){
-            loadDataVar();
+            if (lnCategoria != null) {
+                lnCategoria.setTipoFuncao(TipoFuncao.Alterar);
+                bTipoConta = true;
+                RequestContext.getCurrentInstance().execute("PF('categoriaEdit').show()");
+                loadDataVar();
+            } else {
+                mensagem = "Por favor, selectione uma categoria para Alterar.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+            }
+        } else {
+            mensagem = "Usuario sem permissao para alterar categorias.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
         }
     }
     
     public void btExcluirCategoria(){
-        
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')){
+            if (lnCategoria != null){
+                lnCategoria.setTipoFuncao(TipoFuncao.Excluir);
+                mensagem = categoriaFuncoes.categoria(lnCategoria);
+                
+                if (mensagem.equals("Sucesso")) {
+                    listCategoria = Postgress.grabListObject(LnCategoria.class);
+                    mensagem = "Categoria excluida com sucesso.";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+                }
+            } else {
+                mensagem = "Por favor, selectione uma categoria para Alterar.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+            }
+        } else {
+            mensagem = "Usuario sem permissao para excluir categorias.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+        }
     }
     
     public void btSalvarCategoria(){
-        System.out.println("oi");
-        if (!descricao.equals("")){
+        if (descricao != null && !descricao.equals("")){
             dataLoadVar();
             mensagem = categoriaFuncoes.categoria(lnCategoria);
             
             if (mensagem.equals("Sucesso")){
                 listCategoria = Postgress.grabListObject(LnCategoria.class);
                 RequestContext.getCurrentInstance().execute("PF('categoriaEdit').hide()");
+                listCategoria = Postgress.grabListObject(LnCategoria.class);
+                mensagem = "Gravação realizada com sucesso.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
             }
@@ -220,4 +260,9 @@ public class CategoriaView implements Serializable{
         ativo = lnCategoria.getCatChAtivo();
     }
     
- }
+    public String tipoContaDescricao(Integer tipInCodigo) {
+        LnTipoconta lnTipoconta = EjbMap.grabTipoConta(tipInCodigo);
+        return lnTipoconta.getTipStDescricao();
+    }
+ 
+}

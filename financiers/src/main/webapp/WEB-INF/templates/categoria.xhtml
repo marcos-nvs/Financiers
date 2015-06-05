@@ -5,12 +5,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <p:dataTable id="idTbCategoria" var="categoria" value="#{categoriaView.listCategoria}" selectionMode="single" selection="#{categoriaView.lnCategoria}"
-                 rowKey="#{categoriaView.codigo}" paginator="true" rows="30" paginatorPosition="bottom">
+                 rowKey="#{categoria.catInCodigo}" paginator="true" rows="30" paginatorPosition="bottom">
         <f:facet name="header">
             <p:outputLabel value="Lista de Categorias"/>
         </f:facet>
-        <p:column style="width: 16px">
-            <p:rowToggler />
+        <p:column headerText="Tipo de Conta"  style="width: 200px;">
+            <h:outputText value="#{categoriaView.tipoContaDescricao(categoria.tipInCodigo)}"/>
         </p:column>
         <p:column headerText="#{msgs['tabbedHeadings.description']}">
             <h:outputText value="#{categoria.catStDescricao}"/>
@@ -20,9 +20,12 @@
         </p:column>
         <f:facet name="footer">
             <p:commandButton id="idBtIncluirCat" value="#{msgs['node.include']}" icon="ui-icon-document" action="#{categoriaView.btIncluirCategoria}"
-                             process="idTbCategoria" update="idTbCategoria"/>
-            <p:commandButton id="idBtAlterarCat" value="#{msgs['template.change']}" icon="ui-icon-pencil"/>
-            <p:commandButton id="idBtExcluirCat" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
+                             process="idTbCategoria" update="idTbCategoria, :idFormCenter:idCatDialog"/>
+            <p:commandButton id="idBtAlterarCat" value="#{msgs['template.change']}" icon="ui-icon-pencil" action="#{categoriaView.btAlterarCategoria}"
+                             process="idBtAlterarCat, idTbCategoria" update = "idTbCategoria, :idFormCenter:idCatDialog, :idFormTop:growl" />
+            <p:commandButton id="idBtExcluirCat" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
+                             action="#{categoriaView.btExcluirCategoria}" process="idBtExcluirCat, idTbCategoria"
+                             update="idBtExcluirCat, :idFormTop:growl, idTbCategoria">
                 <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} desta categoria?" icon="ui-icon-alert"/>
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -32,10 +35,10 @@
         </f:facet>
     </p:dataTable>
 
-    <p:dialog header="#{msgs['node.inclusion']} de Categoria" widgetVar="categoriaEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
-              style="background-color: activeborder" width="1000" dynamic="true">
+    <p:dialog id="idCatDialog" header="#{msgs['node.inclusion']} de Categoria" widgetVar="categoriaEdit" modal="false" showEffect="fade" hideEffect="fade" 
+              closable="false" style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idPanelCategoria" columns="6">
-            <p:selectOneMenu id="idListTipoConta" value="#{categoriaView.tipo}" style="margin-left: 60px">
+            <p:selectOneMenu id="idListTipoConta" value="#{categoriaView.tipo}" style="margin-left: 60px" disabled="#{categoriaView.bTipoConta}">
                 <f:selectItems value="#{categoriaView.listTipoconta}" var="categoriaTipo" itemLabel="#{categoriaTipo.tipStDescricao}"
                                itemValue="#{categoriaTipo.tipInCodigo}"/>
             </p:selectOneMenu>
@@ -47,12 +50,12 @@
         <f:facet name="footer">
             <p:commandButton id="idCategoriaGravar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document"
                              action="#{categoriaView.btSalvarCategoria()}" 
-                             process ="@this"
-                             update = "@this"/>
+                             process ="idCategoriaGravar, idPanelCategoria, idListTipoConta, idCategoriaDescricao, idCategoriaAtivo"
+                             update = ":idFormTop:growl,idTbCategoria "/>
             <p:commandButton id="idCategoriaCancelar" value="#{msgs['node.cancel']}" icon="ui-icon-trash" 
                              action="#{categoriaView.btCancelarCategoria()}"
-                             process ="@this"
-                             update = "@this"/>
+                             process ="idCategoriaCancelar"
+                             update = "idTbCategoria, :idFormTop:growl"/>
         </f:facet>
     </p:dialog>    
 </ui:composition>

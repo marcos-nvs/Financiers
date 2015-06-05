@@ -5,6 +5,7 @@
  */
 package br.com.ln.financiers;
 
+import br.com.ln.comum.Historico;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.entity.LnHistorico;
 import br.com.ln.hibernate.Postgress;
@@ -16,11 +17,11 @@ import br.com.ln.hibernate.Postgress;
 public class CategoriaFuncoes {
     
     private String mensagem;
-    private LnHistorico lnHistorico;
+    private Historico historico;
     
     public String categoria(LnCategoria lnCategoria){
         mensagem = "";
-        lnHistorico = new LnHistorico();
+        historico = new Historico();
         
         switch (lnCategoria.getTipoFuncao()){
             case Incluir:
@@ -40,6 +41,7 @@ public class CategoriaFuncoes {
         if (lnCategoria != null){
             lnCategoria.setCatInCodigo(Postgress.grabLnCategoriaNextId());
             Postgress.saveObject(lnCategoria);
+            historico.gravaHistoricoModulo("Inclusão da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
         } else {
             mensagem = "Ocorreu um problema durante a gravação.";
@@ -47,8 +49,22 @@ public class CategoriaFuncoes {
     }
 
     private void alterarCategoria(LnCategoria lnCategoria) {
+        if (lnCategoria != null){
+            Postgress.saveOrUpdateObject(lnCategoria);
+            historico.gravaHistoricoModulo("Alteração da Categoria : " + lnCategoria.getCatStDescricao());
+            mensagem = "Sucesso";
+        } else {
+            mensagem = "Ocorreu um problema durante a gravação";
+        }
     }
 
     private void excluirCategoria(LnCategoria lnCategoria) {
+        if (lnCategoria != null){
+            Postgress.deleteObject(lnCategoria);
+            historico.gravaHistoricoModulo("Exclusão da Categoria : " + lnCategoria.getCatStDescricao());
+            mensagem = "Sucesso";
+        } else {
+            mensagem = "Ocorreu um problema durante a exclusão";
+        }
     }
 }

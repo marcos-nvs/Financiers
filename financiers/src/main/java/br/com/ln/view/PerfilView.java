@@ -5,6 +5,8 @@
  */
 package br.com.ln.view;
 
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
@@ -45,8 +47,8 @@ public class PerfilView implements Serializable {
     private boolean bPesquisarAcesso;
     private List<LnPerfilacesso> listPerfilacesso;
     private String mensagem;
-    private PerfilFuncoes perfilFuncoes;
-    private TratamentoEspecial tratativa;
+    private final PerfilFuncoes perfilFuncoes;
+    private final TratamentoEspecial tratativa;
 
     public PerfilView() {
         listPerfil = Postgress.grabListObject(LnPerfil.class);
@@ -258,6 +260,10 @@ public class PerfilView implements Serializable {
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
         }
+    }
+    
+    public void btFecharPerfilAcesso() {
+        RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
     }
     
     public void btEditaPerfilAcesso(){

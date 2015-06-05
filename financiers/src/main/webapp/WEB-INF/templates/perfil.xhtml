@@ -43,9 +43,9 @@
         </p:rowExpansion>
         <f:facet name="footer">
             <p:commandButton id="btIncluirPerfil" value="#{msgs['node.include']}" icon="ui-icon-document" action="#{perfilView.btIncluirPerfil}"
-                             process="btIncluirPerfil" update=":idFormTop:growl, idTbPerfil"/>
+                             process="btIncluirPerfil" update=":idFormTop:growl, idTbPerfil, btIncluirPerfil" />
             <p:commandButton id="btAlterarPerfil" value="#{msgs['template.change']}" icon="ui-icon-pencil" action="#{perfilView.btAlterarPerfil}"
-                             process="btAlterarPerfil, idTbPerfil" update=":idFormTop:growl"/>
+                             process="btAlterarPerfil, idTbPerfil" update=":idFormTop:growl" />
             <p:commandButton id="btExcluirPerfil" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
                              action="#{perfilView.btExcluirPerfil()}" process="idTbPerfil" update="idTbPerfil, :idFormTop:growl">
                 <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
@@ -121,7 +121,8 @@
                              process="idGravarPerfilAcesso, idPerfilDescricao,idPerfilAtivo, idPerfilSenha, idPerfilAcessoDialog, idPerfilDescricao,
                                       idPerfilSenha" 
                              update="idDtAcesso,idPerfilAcessoDialog,idPerfilDialog, :idFormTop:growl, idTbPerfil "/>
-            <p:commandButton id="idFecharPerfilAcesso" value="#{msgs['page.panelPopup.closeText']}" onclick="PF('incluiAcesso').hide()"/>
+            <p:commandButton id="idFecharPerfilAcesso" value="#{msgs['page.panelPopup.closeText']}" action="#{perfilView.btFecharPerfilAcesso()}"
+                             process="idFecharPerfilAcesso" update="idTbPerfil"/>
         </f:facet>
     </p:dialog>
 </ui:composition>
