@@ -408,3 +408,31 @@ CREATE SEQUENCE seq_categoria
 ALTER TABLE seq_categoria
   OWNER TO postgres;
 
+-- Table: ln_tipotabela
+
+-- DROP TABLE ln_tipotabela;
+
+CREATE TABLE ln_tipotabela
+(
+  ttb_in_codigo integer NOT NULL, -- Código da tabela
+  ttb_st_descricao character varying NOT NULL, -- Descrição da tabela
+  CONSTRAINT ln_tipotabela_pkey PRIMARY KEY (ttb_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_tipotabela
+  OWNER TO postgres;
+COMMENT ON TABLE ln_tipotabela
+  IS 'Tipo de table para cálculos específicos';
+COMMENT ON COLUMN ln_tipotabela.ttb_in_codigo IS 'Código da tabela';
+COMMENT ON COLUMN ln_tipotabela.ttb_st_descricao IS 'Descrição da tabela';
+
+insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (1,'IRRF');
+insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (2,'INSS');
+insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (3,'IPVA');
+insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (4,'IOF');
+insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (5,'JUROS');
+insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (6,'ISS');
+insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (7,'COFINS');
+
