@@ -143,6 +143,26 @@ public class LnMenuModel implements Serializable {
                     beanVar.setNomeTela("Cadastro de Categorias de Contas");
                     VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
                     break;
+                case "Plano de Contas":
+                    beanVar.setNovaTela("WEB-INF/templates/conta.xhtml");
+                    beanVar.setNomeTela("Plano de Contas");
+                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+                    break;
+                case "Favorecidos":
+                    beanVar.setNovaTela("WEB-INF/templates/favorecido.xhtml");
+                    beanVar.setNomeTela("Cadastro de Favorecidos");
+                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+                    break;
+                case "Tabelas":
+                    beanVar.setNovaTela("WEB-INF/templates/tabela.xhtml");
+                    beanVar.setNomeTela("Tabelas para Cálculos");
+                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+                    break;
+                case "Orçamento":
+                    beanVar.setNovaTela("WEB-INF/templates/orcamento.xhtml");
+                    beanVar.setNomeTela("Orçamentos");
+                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+                    break;
                 case "Histórico":
                     beanVar.setNovaTela("WEB-INF/templates/historico.xhtml");
 //                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
