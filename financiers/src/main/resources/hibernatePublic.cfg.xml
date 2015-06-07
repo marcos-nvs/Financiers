@@ -24,6 +24,8 @@
     <mapping class="br.com.ln.entity.LnUsuario"/>
     <mapping class="br.com.ln.entity.LnCategoria"/>
     <mapping class="br.com.ln.entity.LnTipoconta"/>
+    <mapping class="br.com.ln.entity.LnTipotabela"/>
+    <mapping class="br.com.ln.entity.LnTabela"/>
 
   </session-factory>
 </hibernate-configuration>

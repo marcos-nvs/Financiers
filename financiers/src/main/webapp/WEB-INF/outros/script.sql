@@ -1,6 +1,47 @@
 -- http://stackoverflow.com/questions/17825782/how-to-convert-html-to-pdf-using-itext
 
 
+-- Table: ln_perfil
+
+-- DROP TABLE ln_perfil;
+
+CREATE TABLE ln_perfil
+(
+  per_in_codigo integer NOT NULL, -- Define através de sequence o id do perfil
+  per_st_descricao character varying(50) NOT NULL, -- Descrição do perifl
+  per_ch_ativo character(1) NOT NULL, -- Define se está ativo ou inativo
+  per_ch_alterasenha character(1) NOT NULL, -- Define se o usuário pode alterar a senha de outros usuários
+  CONSTRAINT pk_perfil PRIMARY KEY (per_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_perfil
+  OWNER TO postgres;
+COMMENT ON TABLE ln_perfil
+  IS 'Tabela contendo o nome do perfil';
+COMMENT ON COLUMN ln_perfil.per_in_codigo IS 'Define através de sequence o id do perfil';
+COMMENT ON COLUMN ln_perfil.per_st_descricao IS 'Descrição do perifl';
+COMMENT ON COLUMN ln_perfil.per_ch_ativo IS 'Define se está ativo ou inativo';
+COMMENT ON COLUMN ln_perfil.per_ch_alterasenha IS 'Define se o usuário pode alterar a senha de outros usuários';
+
+
+-- Sequence: seq_perfil
+
+-- DROP SEQUENCE seq_perfil;
+
+CREATE SEQUENCE seq_perfil
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_perfil
+  OWNER TO postgres;
+
+
+insert into public."ln_perfil" ("per_in_codigo","per_st_descricao","per_ch_ativo","per_ch_alterasenha") values (nextval('seq_perfil'),'Perfil de Administrador Master','S','S');
+
 -- Table: ln_modulo
 
 -- DROP TABLE ln_modulo;
@@ -45,47 +86,47 @@ ALTER TABLE seq_modulo
   OWNER TO postgres;
 
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Usuário','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Usuário','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Perfil','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Perfil','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Categoria','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Categoria','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Plano de Contas','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Plano de Contas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Favorecidos','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Favorecidos','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Tabelas','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Tabelas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Orçamento','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Orçamento','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Lançamento Diário','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Lançamento Diário','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Fluxo de Caixa','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Fluxo de Caixa','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Contas à Receber','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Contas à Receber','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Contas à Pagar','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Contas à Pagar','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Cartão Crédito','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Cartão Crédito','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Fechamento','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Fechamento','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Análise de Contas','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Análise de Contas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Orçamento x Realizado','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Orçamento x Realizado','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Receitas x Despesas','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Receitas x Despesas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Despesas por Favorecidos','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Despesas por Favorecidos','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Curva ABC Despesas','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Curva ABC Despesas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Resumo Patrimônio','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Resumo Patrimônio','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Saldo das Contas','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Saldo das Contas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Comparação de Movimentação entre Meses','S','S','S','S','S')
+values (nextval('seq_modulo'), 'Comparação de Movimentação entre Meses','S','S','S','S','S');
 
 
 -- Table: ln_usuario
@@ -140,7 +181,7 @@ CREATE INDEX ind_usuariocpf
 
 insert into public."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
                                  "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf" ) values 
-                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','S',CURRENT_DATE,CURRENT_DATE, 1, '12684146896')
+                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896');
 
 
 -- Table: ln_menu
@@ -169,10 +210,10 @@ COMMENT ON COLUMN ln_menu.men_in_codigo IS 'Define a sequencia do menu';
 COMMENT ON COLUMN ln_menu.men_st_descricao IS 'Define o nome do menu.';
 COMMENT ON COLUMN ln_menu.men_ch_ativo IS 'Define se o menu está ativo ou inativo';
 
-insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (1,'Controle Acesso','S')
-insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (2,'Cadastros','S')
-insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (3,'Movimentação','S')
-insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (4,'Relatórios','S')
+insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (1,'Controle Acesso','S');
+insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (2,'Cadastros','S');
+insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (3,'Movimentação','S');
+insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (4,'Relatórios','S');
 
 
 -- Table: ln_menumodulo
@@ -197,9 +238,9 @@ ALTER TABLE ln_menumodulo
 COMMENT ON COLUMN ln_menumodulo.men_in_codigo IS 'Código do Menu';
 COMMENT ON COLUMN ln_menumodulo.mod_in_codigo IS 'Código do menu';
 
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,1)
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,1);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,2);
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,3);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,3);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,4);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,5);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,6);
@@ -219,50 +260,6 @@ insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,1
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,20);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,21);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,22);
-
-
-
-
--- Table: ln_perfil
-
--- DROP TABLE ln_perfil;
-
-CREATE TABLE ln_perfil
-(
-  per_in_codigo integer NOT NULL, -- Define através de sequence o id do perfil
-  per_st_descricao character varying(50) NOT NULL, -- Descrição do perifl
-  per_ch_ativo character(1) NOT NULL, -- Define se está ativo ou inativo
-  per_ch_alterasenha character(1) NOT NULL, -- Define se o usuário pode alterar a senha de outros usuários
-  CONSTRAINT pk_perfil PRIMARY KEY (per_in_codigo)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE ln_perfil
-  OWNER TO postgres;
-COMMENT ON TABLE ln_perfil
-  IS 'Tabela contendo o nome do perfil';
-COMMENT ON COLUMN ln_perfil.per_in_codigo IS 'Define através de sequence o id do perfil';
-COMMENT ON COLUMN ln_perfil.per_st_descricao IS 'Descrição do perifl';
-COMMENT ON COLUMN ln_perfil.per_ch_ativo IS 'Define se está ativo ou inativo';
-COMMENT ON COLUMN ln_perfil.per_ch_alterasenha IS 'Define se o usuário pode alterar a senha de outros usuários';
-
-
--- Sequence: seq_perfil
-
--- DROP SEQUENCE seq_perfil;
-
-CREATE SEQUENCE seq_perfil
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
-ALTER TABLE seq_perfil
-  OWNER TO postgres;
-
-
-insert into public."ln_perfil" ("per_in_codigo","per_st_descricao","per_ch_ativo","per_ch_alterasenha") values (nextval('seq_perfil'),'Perfil de Administrador Master','S','S')
 
 
 -- Table: ln_perfilacesso
@@ -298,9 +295,9 @@ COMMENT ON COLUMN ln_perfilacesso.pac_ch_excluir IS 'Define a função';
 COMMENT ON COLUMN ln_perfilacesso.pac_ch_pesquisar IS 'Define a função';
 
 
-insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,1,'S','S','S','S')
-insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,2,'S','S','S','S')
-insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,3,'S','S','S','S')
+insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,1,'S','S','S','S');
+insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,2,'S','S','S','S');
+insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,3,'S','S','S','S');
 
 -- Table: ln_historico
 
@@ -435,4 +432,32 @@ insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (
 insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (5,'JUROS');
 insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (6,'ISS');
 insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (7,'COFINS');
+
+
+-- Table: ln_tabela
+
+-- DROP TABLE ln_tabela;
+
+CREATE TABLE ln_tabela
+(
+  tab_in_codigo integer NOT NULL,
+  ttb_in_codigo integer NOT NULL,
+  tab_st_descricao character varying(50) NOT NULL,
+  tab_dt_inicio date NOT NULL,
+  tab_dt_final date,
+  tab_fl_inicio double precision,
+  tab_fl_final double precision,
+  tab_fl_percentual double precision,
+  tab_fl_desconto double precision,
+  tab_fl_dependente double precision,
+  tab_fl_qtddependente double precision,
+  CONSTRAINT ln_tabela_pkey PRIMARY KEY (tab_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_tabela
+  OWNER TO postgres;
+COMMENT ON TABLE ln_tabela
+  IS 'Tabela de valores para cálculo de impostos e juros etc';
 
