@@ -5,12 +5,15 @@
  */
 package br.com.ln.comum;
 
+import br.com.ln.dao.MenuDao;
+import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnTipoconta;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -41,7 +44,7 @@ public class EjbMap implements Serializable{
             if (mapUsuario.containsKey(code)){
                 return mapUsuario.get(code);
             } else {
-                lnUsuario = Postgress.grabUsuario(usuStCodigo, 'S');
+                lnUsuario = UsuarioDao.grabUsuario(usuStCodigo, 'S');
                 
                 if (lnUsuario != null){
                     mapUsuario.put(code, lnUsuario);
@@ -66,7 +69,7 @@ public class EjbMap implements Serializable{
             if(mapPerfil.containsKey(code)){
                 return mapPerfil.get(code);
             } else {
-                lnPerfil = Postgress.grabPerfil(perInCodigo, 'S');
+                lnPerfil = PerfilDao.grabPerfil(perInCodigo, 'S');
                 
                 if(lnPerfil !=null){
                     mapPerfil.put(code, lnPerfil);
@@ -93,7 +96,7 @@ public class EjbMap implements Serializable{
             if (mapListPerfilAcesso.containsKey(code)){
                 return mapListPerfilAcesso.get(code);
             } else {
-                listPerfilAcesso = Postgress.grabPerfilAcessoperInCodigo(perInCodigo);
+                listPerfilAcesso = PerfilDao.grabPerfilAcessoperInCodigo(perInCodigo);
                 
                 if(listPerfilAcesso != null && !listPerfilAcesso.isEmpty()){
                     mapListPerfilAcesso.put(code, listPerfilAcesso);
@@ -111,7 +114,7 @@ public class EjbMap implements Serializable{
     }
     
     public static void incluiMenu() {
-        List<LnMenu> listMenu = Postgress.grabMenu('S');
+        List<LnMenu> listMenu = MenuDao.grabMenu('S');
         String code = VarComuns.strDbName;
         mapMenu.put(code, listMenu);
     }
@@ -122,7 +125,7 @@ public class EjbMap implements Serializable{
         if(mapMenu.containsKey(strDbName)){
             return mapMenu.get(strDbName);
         } else {
-            listMenu = Postgress.grabMenu('S');
+            listMenu = MenuDao.grabMenu('S');
             mapMenu.put(strDbName, listMenu);
         }
         return listMenu;
@@ -136,7 +139,7 @@ public class EjbMap implements Serializable{
         if(mapPerfilAcesso.containsKey(code)){
             return mapPerfilAcesso.get(code);
         }else {
-            lnPerfilacesso = Postgress.grabPerfilAcesso(perInCodigo, modInCodigo);
+            lnPerfilacesso = PerfilDao.grabPerfilAcesso(perInCodigo, modInCodigo);
             mapPerfilAcesso.put(code, lnPerfilacesso);
             return lnPerfilacesso;
         }

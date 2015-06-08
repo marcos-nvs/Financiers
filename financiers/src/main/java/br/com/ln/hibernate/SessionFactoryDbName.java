@@ -47,7 +47,7 @@ public class SessionFactoryDbName implements Serializable{
 //                    break;
                 default:
                     System.out.println("Buscando Session no banco dados : " + strDbName);
-                    sessionFactory = new AnnotationConfiguration().configure("hibernatePublic.cfg.xml").buildSessionFactory();
+                    sessionFactory = new AnnotationConfiguration().configure("hibernate"+strDbName+".cfg.xml").buildSessionFactory();
             }
         }catch (HibernateException ex){
             System.out.println(ex.getMessage());

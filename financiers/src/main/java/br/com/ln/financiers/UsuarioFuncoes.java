@@ -9,6 +9,7 @@ import br.com.ln.comum.Historico;
 import br.com.ln.comum.Utilitarios;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.UsuarioDao;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -44,7 +45,7 @@ public class UsuarioFuncoes {
     }
     
     private void inclusaoUsuario(LnUsuario lnUsuario) {
-        LnUsuario pUsuario = Postgress.grabUsuario(lnUsuario.getUsuStCodigo());
+        LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
 
         if (pUsuario != null) {
             mensagem = "Usuário já cadastrado!!!";
@@ -98,7 +99,7 @@ public class UsuarioFuncoes {
     private void alteracaoUsuario(LnUsuario lnUsuario) {
 
         if (verificaDadosUsuario(lnUsuario)){
-            LnUsuario pUsuario = Postgress.grabUsuario(lnUsuario.getUsuStCodigo());
+            LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
             lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
             Postgress.saveOrUpdateObject(lnUsuario);
             historico.gravaHistoricoModulo("Alteracao do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );

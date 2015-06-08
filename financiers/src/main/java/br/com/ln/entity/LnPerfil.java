@@ -13,9 +13,12 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,13 +38,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnPerfil.findByPerInCodigoPerChAtivo", query = "SELECT l FROM LnPerfil l WHERE l.perInCodigo = :perInCodigo and l.perChAtivo = :perChAtivo"),
     @NamedQuery(name = "LnPerfil.findByPerChAlterasenha", query = "SELECT l FROM LnPerfil l WHERE l.perChAlterasenha = :perChAlterasenha")})
 
-
-
 public class LnPerfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "per_in_codigo")
+    @SequenceGenerator(name="seqPerfil", sequenceName = "", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqPerfil")
+    @Column(name = "per_in_codigo", unique = true, nullable = false)
     private Integer perInCodigo;
     @Basic(optional = false)
     @Column(name = "per_st_descricao")

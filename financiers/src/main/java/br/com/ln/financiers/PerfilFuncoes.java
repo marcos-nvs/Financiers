@@ -6,6 +6,8 @@
 package br.com.ln.financiers;
 
 import br.com.ln.comum.Historico;
+import br.com.ln.dao.PerfilDao;
+import br.com.ln.dao.UsuarioDao;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
@@ -65,7 +67,7 @@ public class PerfilFuncoes {
         
         if (lnPerfil != null){
             if (verificaPerfil(lnPerfil)){
-                lnPerfil.setPerInCodigo(Postgress.grabLnPerfilNextId());
+//                lnPerfil.setPerInCodigo(Postgress.grabLnPerfilNextId());
                 
                 for (LnPerfilacesso lnPerfilacesso : lnPerfil.getListPerfilAcesso()) {
                     lnPerfilacesso.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
@@ -135,7 +137,7 @@ public class PerfilFuncoes {
 
     private boolean verificaExclusaoPerfil(LnPerfil lnPerfil) {
         
-        List<LnUsuario> listUsuario = Postgress.grabUsuarioPerfil(lnPerfil.getPerInCodigo());
+        List<LnUsuario> listUsuario = UsuarioDao.grabUsuarioPerfil(lnPerfil.getPerInCodigo());
         
         if (listUsuario != null && !listUsuario.isEmpty()){
             mensagem = "Perfil não pode ser excluído, está sendo utilizado";

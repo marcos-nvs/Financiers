@@ -460,4 +460,16 @@ ALTER TABLE ln_tabela
   OWNER TO postgres;
 COMMENT ON TABLE ln_tabela
   IS 'Tabela de valores para cálculo de impostos e juros etc';
+-- Sequence: seq_tabela
+
+-- DROP SEQUENCE seq_tabela;
+
+CREATE SEQUENCE seq_tabela
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_tabela
+  OWNER TO postgres;
 

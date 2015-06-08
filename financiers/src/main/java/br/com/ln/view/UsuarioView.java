@@ -10,12 +10,14 @@ import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
+import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,7 +61,7 @@ public class UsuarioView implements Serializable {
     private boolean bExpiraSenha = false;
 
     public UsuarioView() {
-        listPerfil = Postgress.grabListPerfilAtivo('S');
+        listPerfil = PerfilDao.grabListPerfilAtivo('S');
         listUsuario = Postgress.grabListObject(LnUsuario.class);
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         lnUsuario = new LnUsuario();
@@ -397,7 +399,7 @@ public class UsuarioView implements Serializable {
     }
     
     public void btTrocaSenha(){
-        lnUsuario = Postgress.grabUsuario(usuario);
+        lnUsuario = UsuarioDao.grabUsuario(usuario);
         if (lnUsuario != null){
             if (lnUsuario.getUsuStSenha().equals(senha)) {
                 btConfirmaSenha("Login");

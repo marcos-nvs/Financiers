@@ -8,14 +8,9 @@ package br.com.ln.hibernate;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.entity.LnHistorico;
-import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
-import br.com.ln.entity.LnPerfil;
-import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnTipoconta;
-import br.com.ln.entity.LnUsuario;
 import java.io.Serializable;
-//import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.hibernate.Query;
@@ -35,78 +30,7 @@ public class Postgress implements Serializable{
     static SimpleDateFormat formatOnlyYear = new SimpleDateFormat("yyyy");
     
     /**
-     * Pesquisa de usuario e senha para validacao.
-     * @param usuStCodigo
-     * @param strDbName
-     * @return 
-     */
-    
-    public static LnUsuario grabUsuario(String usuStCodigo, Character usuChAtivo){
-        
-        Session session = null;
-        Transaction tx;
-        LnUsuario lnUsuario = null;
-        
-        try{
-            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-            tx = session.beginTransaction();
-            
-            Query query = session.getNamedQuery("LnUsuario.findAllUsuStCodigoUsuChAtivo");
-            query.setString("usuStCodigo", usuStCodigo);
-            query.setCharacter("usuChAtivo", usuChAtivo);
-            
-            List l = query.list();
-            tx.commit();
-            
-            if (l != null && l.size() > 0){
-                lnUsuario = (LnUsuario) l.get(0);
-            } else {
-                lnUsuario = null;
-            }
-        }catch(HibernateException ex){
-            System.out.println("Hibernate Exception : " + ex.getMessage());
-        }finally{
-            
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return lnUsuario;
-    }
-    
-    public static LnUsuario grabUsuario(String usuStCodigo){
-        
-        Session session = null;
-        Transaction tx;
-        LnUsuario lnUsuario = null;
-        
-        try{
-            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-            tx = session.beginTransaction();
-            
-            Query query = session.getNamedQuery("LnUsuario.findByUsuStCodigo");
-            query.setString("usuStCodigo", usuStCodigo);
-            
-            List l = query.list();
-            tx.commit();
-            
-            if (l != null && l.size() > 0){
-                lnUsuario = (LnUsuario) l.get(0);
-            } else {
-                lnUsuario = null;
-            }
-        }catch(HibernateException ex){
-            System.out.println("Hibernate Exception : " + ex.getMessage());
-        }finally{
-            
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return lnUsuario;
-    }
-    /**
-     *
+     * Lista Objetos genericos
      * @param clazz
      * @param strDbName
      * @return List Object
@@ -131,71 +55,9 @@ public class Postgress implements Serializable{
         return result;
     }
     
-    public static List<LnMenu> grabMenu(Character menChAtivo){
-        
-        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-        Transaction tx = session.beginTransaction();
-        List<LnMenu> listMenu = null;
-        try{
-            Query query = session.getNamedQuery("LnMenu.findAllAtivo");
-            query.setCharacter("menChAtivo", 'S');
-            listMenu = (List<LnMenu>) query.list();
-            
-        }finally{
-            if (session !=null && session.isOpen()){
-                session.close();
-            }
-        }
-        
-        return listMenu;
-    }
     
-    public static LnPerfil grabPerfil(Integer perInCodigo, Character perChAtivo){
-        
-        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-        Transaction tx = session.beginTransaction();
-        LnPerfil lnPerfil = null;
-        
-        try{
-            Query query = session.getNamedQuery("LnPerfil.findByPerInCodigoPerChAtivo");
-            query.setInteger("perInCodigo", perInCodigo);
-            query.setCharacter("perChAtivo", perChAtivo);
-            
-            List l = query.list();
-            
-            if (l != null && !l.isEmpty()){
-                lnPerfil = (LnPerfil) l.get(0); 
-            }
-            
-        }finally{
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return lnPerfil;
-    }
-    
-    public static List<LnPerfil> grabListPerfilAtivo(Character perChAtivo){
-        
-        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-        Transaction tx = session.beginTransaction();
-        List<LnPerfil> listPerfil;
-        
-        try{
-            Query query = session.getNamedQuery("LnPerfil.findByPerChAtivo");
-            query.setCharacter("perChAtivo", perChAtivo);
-            listPerfil = query.list();
-            tx.commit();
-        }finally{
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return listPerfil;
-    }
-
-    /**
-     *
+     /**
+     * Salvar ou Atualizar o Objeto
      * @param obj save or update a obj
      * @param strDbName
      *
@@ -287,54 +149,6 @@ public class Postgress implements Serializable{
 
     }
     
-    public static LnPerfilacesso grabPerfilAcesso(Integer perInCodigo, Integer modInCodigo){
-        
-        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-        Transaction tx = session.beginTransaction();
-        LnPerfilacesso lnPerfilAcesso = null;
-        
-        try{
-            Query query = session.getNamedQuery("LnPerfilacesso.findByPerInCodigoModInCodigo");
-            query.setInteger("perInCodigo", perInCodigo);
-            query.setInteger("modInCodigo", modInCodigo);
-            
-            List l = query.list();
-            
-            if (l != null && !l.isEmpty()){
-                lnPerfilAcesso = (LnPerfilacesso) l.get(0); 
-            }
-            
-        }finally{
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return lnPerfilAcesso;
-    }
-    
-    public static List<LnPerfilacesso> grabPerfilAcessoperInCodigo(Integer perInCodigo){
-        
-        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-        Transaction tx = session.beginTransaction();
-        List<LnPerfilacesso> listlnPerfilAcesso = null;
-        
-        try{
-            Query query = session.getNamedQuery("LnPerfilacesso.findByPerInCodigo");
-            query.setInteger("perInCodigo", perInCodigo);
-            
-            List l = query.list();
-            
-            if (l != null && !l.isEmpty()){
-                listlnPerfilAcesso = l; 
-            }
-            
-        }finally{
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return listlnPerfilAcesso;
-    }
     
     public static List<LnModulo> grabListModuloAtivo(Character modChAtivo){
         
@@ -360,33 +174,6 @@ public class Postgress implements Serializable{
         return listlnModulo;
     }
 
-    public static LnPerfil grabPerfilperStDesc(String perStDescricao){
-        
-        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-        Transaction tx = session.beginTransaction();
-        LnPerfil lnPerfil = null;
-        
-        try{
-            Query query = session.getNamedQuery("LnPerfil.findByPerStDescricao");
-            query.setString("perStDescricao", perStDescricao);
-            
-            List l = query.list();
-            
-            if (l != null && !l.isEmpty()){
-                lnPerfil = (LnPerfil) l.get(0); 
-            }
-            
-        }finally{
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return lnPerfil;
-    }
-
-    public static Integer grabLnPerfilNextId() {
-        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_perfil');"));
-    }
 
     public static Integer grabLnCategoriaNextId() {
         return new Integer(grabIdByNextValueStringSQL("select nextval('seq_categoria');"));
@@ -396,18 +183,6 @@ public class Postgress implements Serializable{
         return new Integer(grabIdByNextValueStringSQL("select nextval('seq_historico');"));
     }
     
-    public static Integer grabLnClienteNextId() {
-        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_cliente');"));
-    }
-
-    public static Integer grabLnEnderecoNextId() {
-        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_endereco');"));
-    }
-
-    public static Integer grabLnTelefoneNextId() {
-        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_telefone');"));
-    }
-
     public static String grabIdByNextValueStringSQL(String strSql) {
 
         Session session = null;
@@ -451,7 +226,7 @@ public class Postgress implements Serializable{
             tx.commit();
 
             if (listHis != null) {
-                retorno = listHis.size() == 0;
+                retorno = listHis.isEmpty();
             } else {
                 retorno = false;
             }
@@ -490,29 +265,6 @@ public class Postgress implements Serializable{
         }
         
         return listHistorico;
-    }
-    
-    public static List<LnUsuario> grabUsuarioPerfil(Integer perInCodigo){
-        
-        Session session = null;
-        Transaction tx = null;
-        List<LnUsuario> listUsuario = null;
-        
-        try{
-            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-            tx = session.beginTransaction();
-            
-            Query query = session.getNamedQuery("LnUsuario.findByPerInCodigo");
-            query.setInteger("perInCodigo", perInCodigo);
-            listUsuario = query.list();
-            tx.commit();
-            
-        }finally{
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return listUsuario;
     }
     
     public static List<LnCategoria> grabCategoria(Character catChAtivo){

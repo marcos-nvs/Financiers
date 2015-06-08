@@ -8,6 +8,7 @@ package br.com.ln.view;
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
+import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
@@ -165,7 +166,7 @@ public class PerfilView implements Serializable {
 
     private void listaPerfilAcesso() {
         listPerfil.stream().forEach((perfil) -> {
-            perfil.setListPerfilAcesso(Postgress.grabPerfilAcessoperInCodigo(perfil.getPerInCodigo()));
+            perfil.setListPerfilAcesso(PerfilDao.grabPerfilAcessoperInCodigo(perfil.getPerInCodigo()));
         });
     }
 

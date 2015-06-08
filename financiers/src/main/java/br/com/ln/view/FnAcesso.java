@@ -16,6 +16,7 @@ import br.com.ln.financiers.LnMenuModel;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -224,7 +225,7 @@ public class FnAcesso implements Serializable {
     }
 
     public void btEnviaEmailAcesso() {
-        lnUsuario = Postgress.grabUsuario(usuario);
+        lnUsuario = UsuarioDao.grabUsuario(usuario);
 
         if (lnUsuario != null) {
             try {
