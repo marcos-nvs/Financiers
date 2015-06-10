@@ -5,8 +5,6 @@
  */
 package br.com.ln.view;
 
-import br.com.ln.comum.BeanVar;
-import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnModulo;
@@ -16,7 +14,8 @@ import br.com.ln.entity.LnPerfilacessoPK;
 import br.com.ln.financiers.PerfilFuncoes;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
-import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.GenericDao;
+import br.com.ln.dao.ModuloDao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,9 +51,9 @@ public class PerfilView implements Serializable {
     private final TratamentoEspecial tratativa;
 
     public PerfilView() {
-        listPerfil = Postgress.grabListObject(LnPerfil.class);
+        listPerfil = GenericDao.grabListObject(LnPerfil.class);
         listaPerfilAcesso();
-        listModulo = Postgress.grabListModuloAtivo('S');
+        listModulo = ModuloDao.grabListModuloAtivo('S');
         perfilFuncoes = new PerfilFuncoes();
         tratativa = new TratamentoEspecial();
         listPerfilacesso = new ArrayList<>();
@@ -208,7 +207,7 @@ public class PerfilView implements Serializable {
             if (lnPerfil != null) {
                 lnPerfil.setTipoFuncao(TipoFuncao.Excluir);
                 mensagem = perfilFuncoes.perfil(lnPerfil);
-                listPerfil = Postgress.grabListObject(LnPerfil.class);
+                listPerfil = GenericDao.grabListObject(LnPerfil.class);
                 listaPerfilAcesso();
                 lnPerfil = new LnPerfil();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
@@ -253,7 +252,7 @@ public class PerfilView implements Serializable {
         }
         
         if (mensagem.equals("Sucesso")) {
-            listPerfil = Postgress.grabListObject(LnPerfil.class);
+            listPerfil = GenericDao.grabListObject(LnPerfil.class);
             listaPerfilAcesso();
             lnPerfil = new LnPerfil();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));

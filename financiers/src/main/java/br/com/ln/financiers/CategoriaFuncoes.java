@@ -7,8 +7,7 @@ package br.com.ln.financiers;
 
 import br.com.ln.comum.Historico;
 import br.com.ln.entity.LnCategoria;
-import br.com.ln.entity.LnHistorico;
-import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.GenericDao;
 
 /**
  *
@@ -39,8 +38,8 @@ public class CategoriaFuncoes {
 
     private void incluirCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
-            lnCategoria.setCatInCodigo(Postgress.grabLnCategoriaNextId());
-            Postgress.saveObject(lnCategoria);
+//            lnCategoria.setCatInCodigo(GenericDao.grabLnCategoriaNextId());
+            GenericDao.saveObject(lnCategoria);
             historico.gravaHistoricoModulo("Inclusão da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
         } else {
@@ -50,7 +49,7 @@ public class CategoriaFuncoes {
 
     private void alterarCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
-            Postgress.saveOrUpdateObject(lnCategoria);
+            GenericDao.saveOrUpdateObject(lnCategoria);
             historico.gravaHistoricoModulo("Alteração da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
         } else {
@@ -60,7 +59,7 @@ public class CategoriaFuncoes {
 
     private void excluirCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
-            Postgress.deleteObject(lnCategoria);
+            GenericDao.deleteObject(lnCategoria);
             historico.gravaHistoricoModulo("Exclusão da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
         } else {

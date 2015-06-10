@@ -24,9 +24,9 @@
         <p:outputLabel value="#{msgs['node.email']}"/>
         <p:inputText id="idUsuStEmaiil" value="#{usuarioView.email}" maxlength="40" size="60" disabled="#{not beanVar.apresenta}"/>
     </h:panelGrid>
-    <h:panelGrid id="cadUsuarioDados3" columns="4" style="margin-left: 12px;">
+    <h:panelGrid id="cadUsuarioDados3" columns="4">
         <p:outputLabel value="#{msgs['template.profile']}"/>
-        <p:selectOneMenu id="idperfil" value="#{usuarioView.perfil}" disabled="#{not beanVar.apresenta}">
+        <p:selectOneMenu id="idperfil" value="#{usuarioView.perfil}" disabled="#{not beanVar.apresenta}" style="width: 125px;" effect="fade">
             <f:selectItems var="itemPerfil" value="#{usuarioView.listPerfil}" itemLabel="#{itemPerfil.perStDescricao}"
                            itemValue="#{itemPerfil.perInCodigo}"/>
         </p:selectOneMenu>

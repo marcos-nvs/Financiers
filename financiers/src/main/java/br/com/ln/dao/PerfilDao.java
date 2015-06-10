@@ -8,7 +8,7 @@ package br.com.ln.dao;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
-import static br.com.ln.hibernate.Postgress.grabIdByNextValueStringSQL;
+import static br.com.ln.dao.GenericDao.grabIdByNextValueStringSQL;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
 import java.util.List;
@@ -20,7 +20,7 @@ import org.hibernate.Transaction;
  *
  * @author Marcos Naves
  */
-public class PerfilDao implements Serializable {
+public class PerfilDao extends GenericDao implements Serializable {
     
     /**
      * Perfil especifico
@@ -170,8 +170,8 @@ public class PerfilDao implements Serializable {
         return lnPerfil;
     }
 
-//    public static Integer grabLnPerfilNextId() {
-//        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_perfil');"));
-//    }
+    public static Integer grabLnPerfilNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_perfil');"));
+    }
     
 }

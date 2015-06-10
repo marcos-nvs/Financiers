@@ -5,13 +5,14 @@
  */
 package br.com.ln.financiers;
 
+import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.Historico;
+import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.PerfilDao;
 import br.com.ln.dao.UsuarioDao;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.hibernate.Postgress;
 import java.util.List;
 
 /**
@@ -67,13 +68,14 @@ public class PerfilFuncoes {
         
         if (lnPerfil != null){
             if (verificaPerfil(lnPerfil)){
-//                lnPerfil.setPerInCodigo(Postgress.grabLnPerfilNextId());
+                lnPerfil.setPerInCodigo(PerfilDao.grabLnPerfilNextId());
                 
                 for (LnPerfilacesso lnPerfilacesso : lnPerfil.getListPerfilAcesso()) {
                     lnPerfilacesso.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
-                    Postgress.saveObject(lnPerfilacesso);
+                    PerfilDao.saveObject(lnPerfilacesso);
                 }
-                Postgress.saveObject(lnPerfil);
+                PerfilDao.saveObject(lnPerfil);
+                EjbMap.grabPerfil(lnPerfil.getPerInCodigo(), VarComuns.strDbName);
                 historico.gravaHistoricoModulo("Inclusão do Perfil : " + lnPerfil.getPerStDescricao());
                 mensagem = "Sucesso";
             } 
@@ -102,7 +104,8 @@ public class PerfilFuncoes {
     private void alteracaoPerfil(LnPerfil lnPerfil) {
         if (lnPerfil != null){
             if (verificaPerfil(lnPerfil)){
-                Postgress.saveOrUpdateObject(lnPerfil);
+                PerfilDao.saveOrUpdateObject(lnPerfil);
+                EjbMap.updatePerfil(lnPerfil, VarComuns.strDbName);
                 historico.gravaHistoricoModulo("Alteração do Perfil : " + lnPerfil.getPerStDescricao());
                 mensagem = "Sucesso";
             } 
@@ -112,13 +115,13 @@ public class PerfilFuncoes {
     }
 
     private void inclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
-        Postgress.saveObject(lnPerfilacesso);
+        PerfilDao.saveObject(lnPerfilacesso);
         historico.gravaHistoricoModulo("Inclusão de Acesso Perfil");
         mensagem = "Sucesso";
     }
 
     private void exclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
-        Postgress.deleteObject(lnPerfilacesso);
+        PerfilDao.deleteObject(lnPerfilacesso);
         historico.gravaHistoricoModulo("Exclusão de Acesso Perfil ");
         mensagem = "Sucesso";
     }
@@ -127,9 +130,9 @@ public class PerfilFuncoes {
 
         if (verificaExclusaoPerfil(lnPerfil)) {
             for (LnPerfilacesso lnPerfAcesso : lnPerfil.getListPerfilAcesso()) {
-                Postgress.deleteObject(lnPerfAcesso);
+                PerfilDao.deleteObject(lnPerfAcesso);
             }
-            Postgress.deleteObject(lnPerfil);
+            PerfilDao.deleteObject(lnPerfil);
             historico.gravaHistoricoModulo("Exclusão de todo o perfil : " + lnPerfil.getPerStDescricao());
             mensagem = "Sucesso";
         }

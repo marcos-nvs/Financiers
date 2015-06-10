@@ -19,7 +19,7 @@ import org.hibernate.Transaction;
  *
  * @author Marcos Naves
  */
-public class UsuarioDao implements Serializable {
+public class UsuarioDao extends GenericDao implements Serializable {
     
     /**
      * Pesquisa de usuario e senha para validacao.

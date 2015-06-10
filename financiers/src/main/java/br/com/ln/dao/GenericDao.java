@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.ln.hibernate;
+package br.com.ln.dao;
 
 import br.com.ln.comum.VarComuns;
-import br.com.ln.entity.LnCategoria;
-import br.com.ln.entity.LnHistorico;
-import br.com.ln.entity.LnModulo;
-import br.com.ln.entity.LnTipoconta;
+import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +22,7 @@ import org.hibernate.HibernateException;
  *
  * @author Marcos Naves
  */
-public class Postgress implements Serializable{
+public class GenericDao implements Serializable{
 
     static SimpleDateFormat formatOnlyYear = new SimpleDateFormat("yyyy");
     
@@ -149,40 +146,6 @@ public class Postgress implements Serializable{
 
     }
     
-    
-    public static List<LnModulo> grabListModuloAtivo(Character modChAtivo){
-        
-        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-        Transaction tx = session.beginTransaction();
-        List<LnModulo> listlnModulo = null;
-        
-        try{
-            Query query = session.getNamedQuery("LnModulo.findAllAtivo");
-            query.setCharacter("modChAtivo", modChAtivo);
-            
-            List l = query.list();
-            
-            if (l != null && !l.isEmpty()){
-                listlnModulo = l; 
-            }
-            
-        }finally{
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return listlnModulo;
-    }
-
-
-    public static Integer grabLnCategoriaNextId() {
-        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_categoria');"));
-    }
-
-    public static Integer grabLnHistoricoNextId() {
-        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_historico');"));
-    }
-    
     public static String grabIdByNextValueStringSQL(String strSql) {
 
         Session session = null;
@@ -208,112 +171,6 @@ public class Postgress implements Serializable{
 
     }
     
-    public static boolean grabVerificaHistorico(String usuStCodigo){
-        
-        Session session = null;
-        Transaction tx;
-        List<LnHistorico> listHis;
-        boolean retorno = false;
-        
-        try{
-            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-            tx = session.beginTransaction();
-            
-            Query query = session.getNamedQuery("LnHistorico.findByUsuStCodigo");
-            query.setString("usuStCodigo", usuStCodigo);
-            
-            listHis = query.list();
-            tx.commit();
-
-            if (listHis != null) {
-                retorno = listHis.isEmpty();
-            } else {
-                retorno = false;
-            }
-        } finally {
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        
-        return retorno;
-    }
-    
-    public static List<LnHistorico> grabListHistorico(Integer modInCodigo){
-        
-        Session session = null;
-        Transaction tx = null;
-        List<LnHistorico> listHistorico = null;
-        
-        try{
-            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-            tx = session.beginTransaction();
-            Query query;
-            
-            if (modInCodigo != null) {
-                query = session.getNamedQuery("LnHistorico.findByModInCodigo");
-                query.setInteger("modInCodigo", modInCodigo);
-            } else {
-                query = session.getNamedQuery("LnHistorico.findAll");
-            }
-            listHistorico = query.list();
-            
-        } finally {
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        
-        return listHistorico;
-    }
-    
-    public static List<LnCategoria> grabCategoria(Character catChAtivo){
-        
-        Session session = null;
-        Transaction tx = null;
-        List<LnCategoria> listCategoria = null;
-        
-        try{
-            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-            tx = session.beginTransaction();
-            
-            Query query = session.getNamedQuery("LnCategoria.findByCatChAtivo");
-            query.setInteger("catChAtivo", catChAtivo);
-            listCategoria = query.list();
-            tx.commit();
-            
-        }finally{
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return listCategoria;
-    }
-    
-    public static LnTipoconta grabTipoConta(Integer tipInCodigo){
-        
-        Session session = null;
-        Transaction tx = null;
-        List<LnTipoconta> listTipoConta = null;
-        LnTipoconta lnTipoconta = null;
-        
-        try{
-            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-            tx = session.beginTransaction();
-            
-            Query query = session.getNamedQuery("LnTipoconta.findByTipInCodigo");
-            query.setInteger("tipInCodigo", tipInCodigo);
-            listTipoConta = query.list();
-            lnTipoconta = listTipoConta.get(0);
-            tx.commit();
-            
-        }finally{
-            if (session != null && session.isOpen()){
-                session.close();
-            }
-        }
-        return lnTipoconta;
-    }
     
     
 //    public static List<LnConta> grabContaCategoria(Integer catInCodigo){

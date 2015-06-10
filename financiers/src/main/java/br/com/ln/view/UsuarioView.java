@@ -16,7 +16,6 @@ import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
-import br.com.ln.hibernate.Postgress;
 import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class UsuarioView implements Serializable {
 
     public UsuarioView() {
         listPerfil = PerfilDao.grabListPerfilAtivo('S');
-        listUsuario = Postgress.grabListObject(LnUsuario.class);
+        listUsuario = UsuarioDao.grabListObject(LnUsuario.class);
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         lnUsuario = new LnUsuario();
         tratamentoEspecial = new TratamentoEspecial();
@@ -269,7 +268,7 @@ public class UsuarioView implements Serializable {
                 if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
                     lnUsuario.setTipoFuncao(TipoFuncao.Excluir);
                     functions.usuario(lnUsuario);
-                    listUsuario = Postgress.grabListObject(LnUsuario.class);
+                    listUsuario = UsuarioDao.grabListObject(LnUsuario.class);
                     beanVar.setApresenta(true);
                 } else {
                     mensagem = "Por favor, escolha um Usuario para excluir.";
@@ -290,7 +289,7 @@ public class UsuarioView implements Serializable {
         mensagem = functions.usuario(lnUsuario);
 
         if (mensagem.equals("Sucesso")) {
-            listUsuario = Postgress.grabListObject(LnUsuario.class);
+            listUsuario = UsuarioDao.grabListObject(LnUsuario.class);
             dataClean();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             beanVar.setApresenta(false);
@@ -331,7 +330,7 @@ public class UsuarioView implements Serializable {
                 Historico historico = new Historico();
                 lnUsuario.setUsuStSenha(novaSenha);
                 lnUsuario.setUsuDtExpiracao(functions.calculaDataExpiracao(lnUsuario));
-                Postgress.saveOrUpdateObject(lnUsuario);
+                UsuarioDao.saveOrUpdateObject(lnUsuario);
 
                 if (tela.equals("Usuario")) {
                     if (VarComuns.lnUsusario.getUsuStCodigo().equals(lnUsuario.getUsuStCodigo())) {

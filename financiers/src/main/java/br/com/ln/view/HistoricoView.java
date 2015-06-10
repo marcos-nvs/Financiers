@@ -7,7 +7,7 @@ package br.com.ln.view;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnHistorico;
-import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.HistoricoDao;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -29,7 +29,7 @@ public class HistoricoView implements Serializable{
 
     public List<LnHistorico> getListHistorico() {
         if (VarComuns.lnPerfilacesso != null) {
-            listHistorico = Postgress.grabListHistorico(VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo());
+            listHistorico = HistoricoDao.grabListHistorico(VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo());
         }
         return listHistorico;
     }

@@ -6,7 +6,6 @@
 package br.com.ln.entity;
 
 import br.com.ln.financiers.TipoFuncao;
-import br.com.ln.hibernate.Postgress;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +41,8 @@ public class LnPerfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @SequenceGenerator(name="seqPerfil", sequenceName = "", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqPerfil")
+//    @SequenceGenerator(name="seqPerfil", sequenceName = "seq_perfil", allocationSize = 1)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqPerfil")
     @Column(name = "per_in_codigo", unique = true, nullable = false)
     private Integer perInCodigo;
     @Basic(optional = false)

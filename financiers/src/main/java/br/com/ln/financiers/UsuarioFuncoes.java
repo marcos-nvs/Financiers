@@ -8,7 +8,8 @@ package br.com.ln.financiers;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.Utilitarios;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.GenericDao;
+import br.com.ln.dao.HistoricoDao;
 import br.com.ln.dao.UsuarioDao;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,10 +54,10 @@ public class UsuarioFuncoes {
             if (verificaDadosUsuario(lnUsuario)) {
                 if (lnUsuario.getUsuChExpirasenha().equals('S')){
                     lnUsuario.setUsuInDia(30);
-                    lnUsuario.setUsuDtExpiracao(Postgress.grabDateFromDB());
+                    lnUsuario.setUsuDtExpiracao(GenericDao.grabDateFromDB());
                 }
-                lnUsuario.setUsuDtCadastro(Postgress.grabDateFromDB());
-                Postgress.saveObject(lnUsuario);
+                lnUsuario.setUsuDtCadastro(GenericDao.grabDateFromDB());
+                GenericDao.saveObject(lnUsuario);
                 historico.gravaHistoricoModulo("Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
                 mensagem = "Sucesso";
             }
@@ -101,7 +102,7 @@ public class UsuarioFuncoes {
         if (verificaDadosUsuario(lnUsuario)){
             LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
             lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
-            Postgress.saveOrUpdateObject(lnUsuario);
+            GenericDao.saveOrUpdateObject(lnUsuario);
             historico.gravaHistoricoModulo("Alteracao do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
             mensagem = "Sucesso";
         }
@@ -109,8 +110,8 @@ public class UsuarioFuncoes {
 
     private void exclusaoUsuario(LnUsuario lnUsuario) {
         
-        if (Postgress.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {
-            Postgress.deleteObject(lnUsuario);
+        if (HistoricoDao.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {
+            GenericDao.deleteObject(lnUsuario);
             historico.gravaHistoricoModulo("Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
             mensagem = "Sucesso";
         } else {
@@ -121,7 +122,7 @@ public class UsuarioFuncoes {
     public Date calculaDataExpiracao(LnUsuario lnUsuario) {
         
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(Postgress.grabDateFromDB());
+        calendar.setTime(GenericDao.grabDateFromDB());
         calendar.add(Calendar.DATE, lnUsuario.getUsuInDia());
         return calendar.getTime();
         
@@ -132,7 +133,7 @@ public class UsuarioFuncoes {
         if (lnUsuario.getUsuChExpirasenha().equals('S')){
             
             Calendar hoje = Calendar.getInstance();
-            hoje.setTime(Postgress.grabDateFromDB());
+            hoje.setTime(GenericDao.grabDateFromDB());
             
             Calendar expira = Calendar.getInstance();
             expira.setTime(lnUsuario.getUsuDtExpiracao());

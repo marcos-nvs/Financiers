@@ -12,7 +12,7 @@ import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnTipoconta;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.TipoContaDao;
 import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -86,6 +86,11 @@ public class EjbMap implements Serializable{
         mapPerfil.put(code, lnPerfil);
     }
     
+    public synchronized static void excluiPerfil(LnPerfil lnPerfil, String strDbName){
+        String code = lnPerfil.getPerInCodigo().toString()+strDbName;
+        mapPerfil.remove(code);
+    }
+    
     public synchronized static List<LnPerfilacesso> grabListPerfilAcesso(Integer perInCodigo, String strDbName){
         List<LnPerfilacesso> listPerfilAcesso = null;
         mapListPerfilAcesso.clear();
@@ -153,7 +158,7 @@ public class EjbMap implements Serializable{
         if (mapTipoConta.containsKey(code)){
             return mapTipoConta.get(code);
         } else {
-            lnTipoconta = Postgress.grabTipoConta(tipInCodigo);
+            lnTipoconta = TipoContaDao.grabTipoConta(tipInCodigo);
             mapTipoConta.put(code, lnTipoconta);
             return lnTipoconta;
         }

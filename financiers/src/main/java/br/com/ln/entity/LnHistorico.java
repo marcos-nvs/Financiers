@@ -10,9 +10,12 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,6 +39,8 @@ public class LnHistorico implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "seqHistorico", sequenceName = "seq_historico", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator ="seqHistorico")
     @Column(name = "his_in_codigo")
     private Integer hisInCodigo;
     @Basic(optional = false)
@@ -58,23 +63,20 @@ public class LnHistorico implements Serializable {
         this.hisInCodigo = hisInCodigo;
     }
 
-    public LnHistorico(Integer hisInCodigo, int modInCodigo, Date hisDtData, String usuStCodigo) {
-        this.hisInCodigo = hisInCodigo;
+    public LnHistorico(int modInCodigo, Date hisDtData, String usuStCodigo) {
         this.modInCodigo = modInCodigo;
         this.hisDtData = hisDtData;
         this.usuStCodigo = usuStCodigo;
     }
 
-    public LnHistorico(Integer hisInCodigo, int modInCodigo, Date hisDtData, String usuStCodigo, String hisStDescricao) {
-        this.hisInCodigo = hisInCodigo;
+    public LnHistorico(int modInCodigo, Date hisDtData, String usuStCodigo, String hisStDescricao) {
         this.modInCodigo = modInCodigo;
         this.hisDtData = hisDtData;
         this.usuStCodigo = usuStCodigo;
         this.hisStDescricao = hisStDescricao;
     }
 
-    public LnHistorico(Integer hisInCodigo, Date hisDtData, String usuStCodigo, String hisStDescricao) {
-        this.hisInCodigo = hisInCodigo;
+    public LnHistorico(Date hisDtData, String usuStCodigo, String hisStDescricao) {
         this.hisDtData = hisDtData;
         this.usuStCodigo = usuStCodigo;
         this.hisStDescricao = hisStDescricao;

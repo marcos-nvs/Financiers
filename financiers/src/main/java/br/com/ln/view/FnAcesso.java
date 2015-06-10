@@ -15,7 +15,7 @@ import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.LnMenuModel;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.financiers.UsuarioFuncoes;
-import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.GenericDao;
 import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;
 import java.util.Objects;
@@ -171,8 +171,8 @@ public class FnAcesso implements Serializable {
                             model = lnMenuModel.getModel();
                             if (model != null && model.getElements().size() > 0) {
                                 beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
-                                LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), new Integer("0"), Postgress.grabDateFromDB(), usuario, "Acesso ao Sistema");
-                                Postgress.saveObject(lnHistorico);
+                                LnHistorico lnHistorico = new LnHistorico(new Integer("0"), GenericDao.grabDateFromDB(), usuario, "Acesso ao Sistema");
+                                GenericDao.saveObject(lnHistorico);
                             } else {
                                 lnUsuario = null;
                                 beanVar.setNovaTela("WEB-INF/templates/login.xhtml");

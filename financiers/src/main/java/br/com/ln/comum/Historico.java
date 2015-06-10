@@ -9,7 +9,7 @@ import static br.com.ln.comum.VarComuns.lnPerfilacesso;
 import static br.com.ln.comum.VarComuns.lnUsusario;
 import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.hibernate.Postgress;
+import br.com.ln.dao.GenericDao;
 
 /**
  *
@@ -21,13 +21,13 @@ public class Historico {
     }
     
     public void gravaHistoricoModulo(String descricao){
-        LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                                                Postgress.grabDateFromDB(),lnUsusario.getUsuStCodigo(),descricao);
-        Postgress.saveObject(lnHistorico);
+        LnHistorico lnHistorico = new LnHistorico(lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
+                                                GenericDao.grabDateFromDB(),lnUsusario.getUsuStCodigo(),descricao);
+        GenericDao.saveObject(lnHistorico);
     }
     
     public void gravaHistorico(LnUsuario lnUsuario, String descricao){
-        LnHistorico lnHistorico = new LnHistorico(Postgress.grabLnHistoricoNextId(), Postgress.grabDateFromDB(), lnUsuario.getUsuStCodigo(), descricao);
-        Postgress.saveObject(lnHistorico);
+        LnHistorico lnHistorico = new LnHistorico(GenericDao.grabDateFromDB(), lnUsuario.getUsuStCodigo(), descricao);
+        GenericDao.saveObject(lnHistorico);
     }
 }
