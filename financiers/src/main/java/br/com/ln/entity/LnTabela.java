@@ -16,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -37,7 +38,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnTabela.findByTabFlPercentual", query = "SELECT l FROM LnTabela l WHERE l.tabFlPercentual = :tabFlPercentual"),
     @NamedQuery(name = "LnTabela.findByTabFlDesconto", query = "SELECT l FROM LnTabela l WHERE l.tabFlDesconto = :tabFlDesconto"),
     @NamedQuery(name = "LnTabela.findByTabFlDependente", query = "SELECT l FROM LnTabela l WHERE l.tabFlDependente = :tabFlDependente"),
-    @NamedQuery(name = "LnTabela.findByTabFlQtddependente", query = "SELECT l FROM LnTabela l WHERE l.tabFlQtddependente = :tabFlQtddependente")})
+    @NamedQuery(name = "LnTabela.findByTabFlQtddependente", query = "SELECT l FROM LnTabela l WHERE l.tabFlQtddependente = :tabFlQtddependente"),
+    @NamedQuery(name = "LnTabela.findByCodDescricaoListaIRRF",
+                      query = "SELECT l.tabInCodigo, l.tabStDescricao, l.tabDtInicio, l.tabFlFinal FROM LnTabela l WHERE l.ttbInCodigo = :ttbInCodigo")})
 public class LnTabela implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -70,7 +73,7 @@ public class LnTabela implements Serializable {
     private Double tabFlDependente;
     @Column(name = "tab_fl_qtddependente")
     private Double tabFlQtddependente;
-
+    
     public LnTabela() {
     }
 

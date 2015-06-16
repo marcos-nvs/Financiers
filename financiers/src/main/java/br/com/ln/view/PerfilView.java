@@ -14,7 +14,6 @@ import br.com.ln.entity.LnPerfilacessoPK;
 import br.com.ln.financiers.PerfilFuncoes;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
-import br.com.ln.dao.GenericDao;
 import br.com.ln.dao.ModuloDao;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ public class PerfilView implements Serializable {
     private final TratamentoEspecial tratativa;
 
     public PerfilView() {
-        listPerfil = GenericDao.grabListObject(LnPerfil.class);
+        listPerfil = PerfilDao.grabListObject(LnPerfil.class);
         listaPerfilAcesso();
         listModulo = ModuloDao.grabListModuloAtivo('S');
         perfilFuncoes = new PerfilFuncoes();
@@ -207,7 +206,7 @@ public class PerfilView implements Serializable {
             if (lnPerfil != null) {
                 lnPerfil.setTipoFuncao(TipoFuncao.Excluir);
                 mensagem = perfilFuncoes.perfil(lnPerfil);
-                listPerfil = GenericDao.grabListObject(LnPerfil.class);
+                listPerfil = PerfilDao.grabListObject(LnPerfil.class);
                 listaPerfilAcesso();
                 lnPerfil = new LnPerfil();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
@@ -252,7 +251,7 @@ public class PerfilView implements Serializable {
         }
         
         if (mensagem.equals("Sucesso")) {
-            listPerfil = GenericDao.grabListObject(LnPerfil.class);
+            listPerfil = PerfilDao.grabListObject(LnPerfil.class);
             listaPerfilAcesso();
             lnPerfil = new LnPerfil();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));

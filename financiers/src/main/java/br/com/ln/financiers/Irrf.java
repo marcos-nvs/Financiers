@@ -14,7 +14,7 @@ import java.util.Objects;
  *
  * @author Marcos Naves
  */
-public class Irrf extends LnTabela {
+public class Irrf extends LnTabela implements Serializable{
 
     private Integer codigo;
     private String descricao;
@@ -28,6 +28,7 @@ public class Irrf extends LnTabela {
     private Double percentual;
 
     public Irrf() {
+        
     }
 
     public Integer getCodigo() {
