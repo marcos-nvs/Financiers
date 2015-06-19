@@ -3,7 +3,15 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
-
+    
+    <h:head>
+        <h:outputScript library="js" name="#{facesContext.externalContext.request.contextPath}/jquery/jquery-2.1.4.min.js" target="head"/>
+        <h:outputScript library="js" name="#{facesContext.externalContext.request.contextPath}/jquery/jquery.mask.min.js" target="head"/>
+        <script type="text/javascript">
+                    $(document).ready(function(){
+                    $('#idFormCenter:idvlrInicial').mask('R$ 999.999,99');
+        </script>           
+    </h:head>
     <p:tabView style="border: 0px;">
         <p:tab title="IRRF" closable="false" >
             <p:dataTable id="idTabelaIrrf" var="Irrf" value="#{IrrfView.listIrrfDescricao}" selectionMode="single" selection="#{IrrfView.irrfDescricao}"
@@ -29,7 +37,7 @@
                     </p:dataTable>
                 </p:rowExpansion>
                 <f:facet name="footer">
-                    <p:commandButton id="btIncluirIrrf" value="#{msgs['node.include']}" icon="ui-icon-document"/>
+                    <p:commandButton id="btIncluirIrrf" value="#{msgs['node.include']}" icon="ui-icon-document" onclick="PF('IrrfEdit').show()"/>
                     <p:commandButton id="btAlterarIrrf" value="#{msgs['template.change']}" icon="ui-icon-pencil"/>
                     <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
                         <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
@@ -60,4 +68,65 @@
             <h:outputText value="COFINS - Em Desenvolvimento"/>
         </p:tab>
     </p:tabView>
+    
+    <p:dialog header="#{msgs['node.inclusion']} de IRRF" widgetVar="IrrfEdit" modal="false" showEffect="fade" hideEffect="fade" closable="true" 
+              style="background-color: activeborder" width="1000" dynamic="true">
+        
+        <h:panelGrid id="idgridDataIrrf" columns="6" >
+            <p:outputLabel value="#{msgs['template.profile.description']}"/>
+            <p:inputText id="idIrrfDescricao" size="50"/>
+            <p:outputLabel for="dtirrfInicio" value="Data Inicial"/>
+            <p:calendar id="dtirrfInicio" showOn="button"/>
+            <p:outputLabel for="dtirrfFinal" value="Data Final"/>
+            <p:calendar id="dtirrfFinal" showOn="button"/>
+        </h:panelGrid>
+        <h:panelGrid id="idgridValorIrrf" columns="6" style="margin-left: 35px;">
+            <p:outputLabel value="Valor Inicial"/>
+            <p:inputText id="idvlrInicial"/>
+            <p:outputLabel value="Valor Final"/>
+            <p:inputText/>
+            <p:outputLabel value="Qtde Dependente"/>
+            <p:inputText/>
+            <p:outputLabel value="% Imposto"/>
+            <p:inputText/>
+            <p:outputLabel value="Valor Desconto"/>
+            <p:inputText/>
+            <p:outputLabel value="Valor por Dependente"/>
+            <p:inputText/>
+        </h:panelGrid>
+        <p:dataTable id="idDTIRRF" var="incluiTabelaIR" paginator="true" rows="10" paginatorPosition="bottom">
+            <f:facet name="header">
+                <p:outputLabel value="Imposto de Renda retindo na Fonte"/>
+            </f:facet>
+            <p:column headerText="Valor Inicio" style="width: 40px">
+                <h:outputText value=""/>
+            </p:column>
+            <p:column headerText="Valor Final" style="width: 40px">
+                <h:outputText value=""/>
+            </p:column>
+            <p:column headerText="Qtde Dependente" style="width: 40px">
+                <h:outputText value=""/>
+            </p:column>
+            <p:column headerText="Imposto(%)" style="width: 40px">
+                <h:outputText value=""/>
+            </p:column>
+            <p:column headerText="Valor Desconto" style="width: 40px">
+                <h:outputText value=""/>
+            </p:column>
+            <p:column headerText="Valor por Dependente" style="width: 40px">
+                <h:outputText value=""/>
+            </p:column>
+            <p:column style="width: 20px; text-align: center">
+                <p:commandButton id='idBtEditaIRRF' icon="ui-icon-trash" >
+                    <!--<f:setPropertyActionListener value="#{incluiAcesso}" target="#{perfilView.lnPerfilacesso}"/>-->
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+        <f:facet name="footer">
+            <p:commandButton id="idbtincluirirrf" value="#{msgs['node.include']}" icon="ui-icon-document"/>
+            <p:commandButton id="idbtsalvarirrf" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>
+            <p:commandButton id="idbtcancelarirrf" value="#{msgs['node.cancel']}" icon="ui-icon-cancel" />
+        </f:facet>
+        
+    </p:dialog>
 </ui:composition>

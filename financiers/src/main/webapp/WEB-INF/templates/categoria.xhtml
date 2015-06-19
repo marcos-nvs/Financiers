@@ -38,6 +38,7 @@
     <p:dialog id="idCatDialog" header="#{msgs['node.inclusion']} de Categoria" widgetVar="categoriaEdit" modal="false" showEffect="fade" hideEffect="fade" 
               closable="false" style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idPanelCategoria" columns="6">
+            <p:outputLabel value="Tipo de Conta"/>
             <p:selectOneMenu id="idListTipoConta" value="#{categoriaView.tipo}" style="margin-left: 60px" disabled="#{categoriaView.bTipoConta}">
                 <f:selectItems value="#{categoriaView.listTipoconta}" var="categoriaTipo" itemLabel="#{categoriaTipo.tipStDescricao}"
                                itemValue="#{categoriaTipo.tipInCodigo}"/>
@@ -48,11 +49,11 @@
             <p:outputLabel  value="#{msgs['page.connectionStatus.status2.value']}"/>
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton id="idCategoriaGravar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document"
+            <p:commandButton id="idCategoriaGravar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
                              action="#{categoriaView.btSalvarCategoria()}" 
                              process ="idCategoriaGravar, idPanelCategoria, idListTipoConta, idCategoriaDescricao, idCategoriaAtivo"
                              update = ":idFormTop:growl,idTbCategoria "/>
-            <p:commandButton id="idCategoriaCancelar" value="#{msgs['node.cancel']}" icon="ui-icon-trash" 
+            <p:commandButton id="idCategoriaCancelar" value="#{msgs['node.cancel']}" icon="ui-icon-cancel" 
                              action="#{categoriaView.btCancelarCategoria()}"
                              process ="idCategoriaCancelar"
                              update = "idTbCategoria, :idFormTop:growl"/>

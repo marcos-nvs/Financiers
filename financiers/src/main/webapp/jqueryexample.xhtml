@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>show demo</title>
+  <style>
+  p {
+    background: yellow;
+  }
+  </style>
+
+<script src="/home/fabio/fdfdfd/jquery-2.1.4.min.js"></script>
+<script src="/home/fabio/fdfdfd/jquery.mask.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+$('#valorNF').mask('R$ 999.999,99');
+</script>
+</head>
+<body>
+ <input type="text" name="valor" id="valorNF" size="40"/>
+
+<button>Show it</button>
+<p style="display: none">Hello  2</p>
+ 
+<script>
+$( "button" ).click(function() {
+  $( "p" ).show( "slow" );
+});
+</script>
+ 
+</body>
+</html>
