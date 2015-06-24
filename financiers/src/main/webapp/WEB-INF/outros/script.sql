@@ -133,7 +133,7 @@ values (nextval('seq_modulo'), 'Comparação de Movimentação entre Meses','S',
 
 -- DROP TABLE ln_usuario;
 
-CREATE TABLE ln_usuario
+CREATE TABLE acessocontrol.ln_usuario
 (
   usu_st_codigo character varying(30) NOT NULL, -- Define o código do usuário para acessar o sistema
   usu_st_nome character varying(50) NOT NULL, -- Define o nome do usuário
@@ -155,7 +155,7 @@ WITH (
 ALTER TABLE ln_usuario
   OWNER TO postgres;
 GRANT ALL ON TABLE ln_usuario TO postgres;
-GRANT ALL ON TABLE ln_usuario TO public;
+GRANT ALL ON TABLE ln_usuario TO acessocontrol;
 COMMENT ON COLUMN ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
 COMMENT ON COLUMN ln_usuario.usu_st_nome IS 'Define o nome do usuário';
 COMMENT ON COLUMN ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
@@ -179,7 +179,7 @@ CREATE INDEX ind_usuariocpf
   USING btree
   (usu_st_codigo COLLATE pg_catalog."default", usu_st_cpf COLLATE pg_catalog."default");
 
-insert into public."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
+insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
                                  "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf" ) values 
                                 ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896');
 

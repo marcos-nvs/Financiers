@@ -20,13 +20,13 @@ import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
+import org.apache.log4j.Logger;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -36,6 +36,8 @@ import org.primefaces.model.menu.MenuModel;
 @SessionScoped
 @ManagedBean(name = "financiersView")
 public class FnAcesso implements Serializable {
+    
+    final static Logger logger = Logger.getLogger(FnAcesso.class);
 
     private String usuario;
     private String senha;
@@ -157,7 +159,7 @@ public class FnAcesso implements Serializable {
     public void sistemaLogin() {
         if (VarComuns.strDbName != null) {
             if (usuario != null && senha != null) {
-                lnUsuario = EjbMap.grabUsuario(usuario, VarComuns.strDbName);
+                lnUsuario = EjbMap.grabUsuario(usuario, "acessocontrol");
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(senha)) {
                         lnUsuario = null;
@@ -166,6 +168,7 @@ public class FnAcesso implements Serializable {
                     } else {
                         UsuarioFuncoes usuarioFuncoes = new UsuarioFuncoes();
                         if (usuarioFuncoes.verificaExpiracaoSenha(lnUsuario)) {
+                            VarComuns.strDbName = lnUsuario.getUsuStBanco();
                             VarComuns.lnUsusario = lnUsuario;
                             LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName);
                             model = lnMenuModel.getModel();
@@ -265,17 +268,16 @@ public class FnAcesso implements Serializable {
                 lnUsuario = null;
                 beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
                 beanVar.setNomeTela("");
-                System.out.println("Erro o enviar o e-mail :  " + ex.getMessage());
                 mensagem = "Ocorreu um problema no envio do e-mail : " + ex.getMessage();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
-                Logger.getLogger(FnAcesso.class.getName()).log(Level.SEVERE, null, ex);
+                logger.error(mensagem);
             } catch (NumberFormatException ex) {
                 lnUsuario = null;
                 beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
                 beanVar.setNomeTela("Recuperacao de Acesso");
                 mensagem = "CPF invalido ou em branco";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
-                Logger.getLogger(FnAcesso.class.getName()).log(Level.SEVERE, null, ex);
+                logger.error(mensagem);
             }
         } else {
             lnUsuario = null;

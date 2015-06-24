@@ -23,7 +23,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class VarComuns implements Serializable{
     
-    public static String strDbName;
+    public static String strDbName= "Public";
     public static LnPerfil lnPerfil;
     public static LnPerfilacesso lnPerfilacesso;
     public static LnUsuario lnUsusario;

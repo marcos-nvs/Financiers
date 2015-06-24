@@ -9,10 +9,12 @@ package br.com.ln.hibernate;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Mappings;
 
 /**
  * Fabrica de conexão
@@ -21,6 +23,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 public class SessionFactoryDbName implements Serializable{
     
     static Map<String, SessionFactory> mapSessionFactory = new HashMap<>(2);
+    final static Logger logger = Logger.getLogger(SessionFactoryDbName.class);
     
     public static Session getCurrentSessionByName(String strDbName){
         return getSessionFactoryByName(strDbName).openSession();
@@ -39,22 +42,19 @@ public class SessionFactoryDbName implements Serializable{
     private static SessionFactory buildSessionFactoryByDbName(String strDbName) {
         
         SessionFactory sessionFactory = null;
-        try{
-            switch (strDbName) {
-//                case "Public":
-//                    System.out.println("Buscando Session no banco dados : " + strDbName);
-//                    sessionFactory = new AnnotationConfiguration().configure("hibernate"+strDbName+".cfg.xml").buildSessionFactory();
-//                    break;
-                default:
-                    System.out.println("Buscando Session no banco dados : " + strDbName);
-                    sessionFactory = new AnnotationConfiguration().configure("hibernate"+strDbName+".cfg.xml").buildSessionFactory();
-            }
-        }catch (HibernateException ex){
-            System.out.println(ex.getMessage());
+        try {
+            System.out.println("Buscando Session no banco dados : " + strDbName);
+            AnnotationConfiguration cfg = new AnnotationConfiguration();
+            cfg.configure("hibernate.cfg.xml");
+            cfg.setProperty("hibernate.connection.datasource", "jdbc/Financiers");
+            cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+            cfg.setProperty("hibernate.default_schema", strDbName);
+
+            sessionFactory = cfg.configure().buildSessionFactory();
+        } catch (HibernateException ex) {
+            logger.error(ex.getMessage());
             mapSessionFactory.clear();
         }
-        
         return sessionFactory;
     }
-    
 }

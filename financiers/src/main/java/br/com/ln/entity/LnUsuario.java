@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Marcos Naves
  */
 @Entity
-@Table(name = "ln_usuario")
+@Table(name = "ln_usuario", schema = "acessocontrol")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LnUsuario.findAll", query = "SELECT l FROM LnUsuario l"),
@@ -78,6 +78,9 @@ public class LnUsuario implements Serializable {
     private int perInCodigo;
     @Column(name = "usu_st_cpf")
     private String usuStCpf;
+    @Column(name = "usu_st_banco")
+    private String usuStBanco;
+    
     
     
 
@@ -92,7 +95,7 @@ public class LnUsuario implements Serializable {
     }
 
     public LnUsuario(String usuStCodigo, String usuStNome, String usuStSenha, Character usuChAtivo, Character usuChAlterasenha, Character usuChExpirasenha, int perInCodigo, 
-            String usuStCpf) {
+            String usuStCpf, String usuStBanco) {
         this.usuStCodigo = usuStCodigo;
         this.usuStNome = usuStNome;
         this.usuStSenha = usuStSenha;
@@ -101,6 +104,7 @@ public class LnUsuario implements Serializable {
         this.usuChExpirasenha = usuChExpirasenha;
         this.perInCodigo = perInCodigo;
         this.usuStCpf = usuStCpf;
+        this.usuStBanco = usuStBanco;
     }
 
     public String getUsuStCodigo() {
@@ -207,6 +211,14 @@ public class LnUsuario implements Serializable {
         this.usuStCpf = usuStCpf;
     }
 
+    public String getUsuStBanco() {
+        return usuStBanco;
+    }
+
+    public void setUsuStBanco(String usuStBanco) {
+        this.usuStBanco = usuStBanco;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -229,8 +241,7 @@ public class LnUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "LnUsuario{" + "usuStCodigo=" + usuStCodigo + ", usuStNome=" + usuStNome + ", usuStSenha=" + usuStSenha + ", usuStEmail=" + usuStEmail + ", usuChAtivo=" + usuChAtivo + ", usuInDia=" + usuInDia + ", usuChAlterasenha=" + usuChAlterasenha + ", usuChExpirasenha=" + usuChExpirasenha + ", usuDtExpiracao=" + usuDtExpiracao + ", usuDtCadastro=" + usuDtCadastro + ", perInCodigo=" + perInCodigo + ", usuStCpf=" + usuStCpf + ", tipoFuncao=" + tipoFuncao + '}';
+        return "LnUsuario{" + "usuStCodigo=" + usuStCodigo + ", usuStNome=" + usuStNome + ", usuStSenha=" + usuStSenha + ", usuStEmail=" + usuStEmail + ", usuChAtivo=" + usuChAtivo + ", usuInDia=" + usuInDia + ", usuChAlterasenha=" + usuChAlterasenha + ", usuChExpirasenha=" + usuChExpirasenha + ", usuDtExpiracao=" + usuDtExpiracao + ", usuDtCadastro=" + usuDtCadastro + ", perInCodigo=" + perInCodigo + ", usuStCpf=" + usuStCpf + ", usuStBanco=" + usuStBanco + ", tipoFuncao=" + tipoFuncao + '}';
     }
 
-    
 }
