@@ -1,5 +1,58 @@
 -- http://stackoverflow.com/questions/17825782/how-to-convert-html-to-pdf-using-itext
 
+-- Schema: acessocontrol
+
+-- DROP SCHEMA acessocontrol;
+
+CREATE SCHEMA acessocontrol
+  AUTHORIZATION postgres;
+
+-- Table: acessocontrol.ln_cliente
+
+-- DROP TABLE acessocontrol.ln_cliente;
+
+CREATE TABLE acessocontrol.ln_cliente
+(
+  cli_in_codigo integer NOT NULL,
+  cli_st_documento character varying(20) NOT NULL, -- Documento de identificação único.
+  cli_st_nome character varying(50) NOT NULL, -- Nome do cliente ou razão social
+  cli_ch_ativo character(1) NOT NULL, -- Identifica se o cliente está ativo
+  CONSTRAINT ln_cliente_pkey PRIMARY KEY (cli_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE acessocontrol.ln_cliente
+  OWNER TO postgres;
+COMMENT ON COLUMN acessocontrol.ln_cliente.cli_st_documento IS 'Documento de identificação único.';
+COMMENT ON COLUMN acessocontrol.ln_cliente.cli_st_nome IS 'Nome do cliente ou razão social';
+COMMENT ON COLUMN acessocontrol.ln_cliente.cli_ch_ativo IS 'Identifica se o cliente está ativo';
+
+-- Sequence: acessocontrol.seq_cliente
+
+-- DROP SEQUENCE acessocontrol.seq_cliente;
+
+CREATE SEQUENCE acessocontrol.seq_cliente
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE acessocontrol.seq_cliente
+  OWNER TO postgres;
+
+
+-- Schema: public
+
+-- DROP SCHEMA public;
+
+CREATE SCHEMA public
+  AUTHORIZATION postgres;
+
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+COMMENT ON SCHEMA public
+  IS 'standard public schema';
 
 -- Table: ln_perfil
 
