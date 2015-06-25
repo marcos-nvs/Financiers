@@ -42,6 +42,53 @@ ALTER TABLE acessocontrol.seq_cliente
   OWNER TO postgres;
 
 
+-- Table: acessocontrol.ln_endereco
+
+-- DROP TABLE acessocontrol.ln_endereco;
+
+CREATE TABLE acessocontrol.ln_endereco
+(
+  end_in_codigo integer NOT NULL,
+  cli_in_codigo integer NOT NULL,
+  end_st_endereco character varying(50) NOT NULL,
+  end_st_bairro character varying(50) NOT NULL,
+  end_st_cidade character varying(50) NOT NULL,
+  end_st_estado character varying(2) NOT NULL,
+  end_st_cep character varying(8) NOT NULL,
+  CONSTRAINT ln_endereco_pkey PRIMARY KEY (end_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE acessocontrol.ln_endereco
+  OWNER TO postgres;
+
+-- Index: acessocontrol.ln_endereco_cli_in_codigo_idx
+
+-- DROP INDEX acessocontrol.ln_endereco_cli_in_codigo_idx;
+
+CREATE INDEX ln_endereco_cli_in_codigo_idx
+  ON acessocontrol.ln_endereco
+  USING btree
+  (cli_in_codigo);
+
+-- Sequence: acessocontrol.seq_endereco
+
+-- DROP SEQUENCE acessocontrol.seq_endereco;
+
+CREATE SEQUENCE acessocontrol.seq_endereco
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE acessocontrol.seq_endereco
+  OWNER TO postgres;
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Schema: public
 
 -- DROP SCHEMA public;

@@ -24,6 +24,8 @@
                     </h:panelGrid>
                     <p:commandLink id="btRecuperaSenha" value="Esqueceu a senha?" action="#{financiersView.recuperaAcesso}" 
                                    process="btRecuperaSenha" ajax="false" update=":idFormCenter"/>
+                    <p:commandLink id="btCadastroCliente" value="Cadastre-se" style="margin-left: 30px;" action="#{financiersView.cadastroCliente()}" 
+                                   process="btCadastroCliente" ajax="false" update=":idFormCenter"/>
                     <p:focus for="idInUsuario"/>
                 </p:panel>
             </h:panelGrid>
@@ -49,6 +51,11 @@
             <p:commandButton id="btloginFechar" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-circlesmall-close"
                              onclick="PF('novaSenha').hide()"/> 
         </f:facet>
+    </p:dialog>
+    
+    <p:dialog id="idDialogCadastroCliente" header="Cadastro de Cliente" widgetVar="cliente" modal="false" showEffect="fade" hideEffect="fade" 
+              closable="false" style="background-color: activeborder" width="400">
+                  
     </p:dialog>
     
 </ui:composition>
