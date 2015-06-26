@@ -6,8 +6,8 @@
 package br.com.ln.financiers;
 
 import br.com.ln.comum.Historico;
+import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
-import br.com.ln.dao.GenericDao;
 
 /**
  *
@@ -39,7 +39,7 @@ public class CategoriaFuncoes {
     private void incluirCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
 //            lnCategoria.setCatInCodigo(GenericDao.grabLnCategoriaNextId());
-            GenericDao.saveObject(lnCategoria);
+            CategoriaDao.saveObject(lnCategoria);
             historico.gravaHistoricoModulo("Inclusão da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
         } else {
@@ -49,7 +49,7 @@ public class CategoriaFuncoes {
 
     private void alterarCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
-            GenericDao.saveOrUpdateObject(lnCategoria);
+            CategoriaDao.saveOrUpdateObject(lnCategoria);
             historico.gravaHistoricoModulo("Alteração da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
         } else {
@@ -59,7 +59,7 @@ public class CategoriaFuncoes {
 
     private void excluirCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
-            GenericDao.deleteObject(lnCategoria);
+            CategoriaDao.deleteObject(lnCategoria);
             historico.gravaHistoricoModulo("Exclusão da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
         } else {

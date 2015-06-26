@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -48,6 +50,9 @@ public class LnCliente implements Serializable {
     @Column(name = "cli_st_banco")
     private String cliStBanco;
 
+    @Transient
+    private TipoFuncao tipoFuncao;
+    
     public LnCliente() {
     }
 
@@ -103,6 +108,14 @@ public class LnCliente implements Serializable {
         this.cliStBanco = cliStBanco;
     }
 
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

@@ -9,12 +9,12 @@ import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
+import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.entity.LnTipoconta;
 import br.com.ln.financiers.CategoriaFuncoes;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
-import br.com.ln.dao.GenericDao;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -48,8 +48,8 @@ public class CategoriaView implements Serializable{
     private final BeanVar beanVar;
 
     public CategoriaView() {
-        listCategoria = GenericDao.grabListObject(LnCategoria.class);
-        listTipoconta = GenericDao.grabListObject(LnTipoconta.class);
+        listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
+        listTipoconta = CategoriaDao.grabListObject(LnTipoconta.class);
         tratativa = new TratamentoEspecial();
         categoriaFuncoes = new CategoriaFuncoes();
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
@@ -209,7 +209,7 @@ public class CategoriaView implements Serializable{
                 mensagem = categoriaFuncoes.categoria(lnCategoria);
                 
                 if (mensagem.equals("Sucesso")) {
-                    listCategoria = GenericDao.grabListObject(LnCategoria.class);
+                    listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
                     mensagem = "Categoria excluida com sucesso.";
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
                 }
@@ -229,9 +229,9 @@ public class CategoriaView implements Serializable{
             mensagem = categoriaFuncoes.categoria(lnCategoria);
             
             if (mensagem.equals("Sucesso")){
-                listCategoria = GenericDao.grabListObject(LnCategoria.class);
+                listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
                 RequestContext.getCurrentInstance().execute("PF('categoriaEdit').hide()");
-                listCategoria = GenericDao.grabListObject(LnCategoria.class);
+                listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
                 mensagem = "Gravação realizada com sucesso.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
             } else {

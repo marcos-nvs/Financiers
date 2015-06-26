@@ -18,7 +18,7 @@ import org.hibernate.Transaction;
  *
  * @author Marcos Naves
  */
-public class CategoriaDao implements Serializable{
+public class CategoriaDao extends GenericDao implements Serializable{
     
     public static List<LnCategoria> grabCategoria(Character catChAtivo){
         
