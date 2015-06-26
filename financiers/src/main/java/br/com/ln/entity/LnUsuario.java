@@ -39,9 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnUsuario.findByUsuChExpirasenha", query = "SELECT l FROM LnUsuario l WHERE l.usuChExpirasenha = :usuChExpirasenha"),
     @NamedQuery(name = "LnUsuario.findByUsuDtExpiracao", query = "SELECT l FROM LnUsuario l WHERE l.usuDtExpiracao = :usuDtExpiracao"),
     @NamedQuery(name = "LnUsuario.findByUsuDtCadastro", query = "SELECT l FROM LnUsuario l WHERE l.usuDtCadastro = :usuDtCadastro"),
-    @NamedQuery(name = "LnUsuario.findAllUsuStCodigoUsuChAtivo", query = "SELECT l FROM LnUsuario l WHERE l.usuStCodigo = :usuStCodigo and usuChAtivo = :usuChAtivo"),
     @NamedQuery(name = "LnUsuario.findByPerInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.perInCodigo = :perInCodigo"),
-    @NamedQuery(name = "LnUsuario.findByUsuStCPF", query = "SELECT l FROM LnUsuario l WHERE l.usuStCpf = :usuStCpf")})
+    @NamedQuery(name = "LnUsuario.findByUsuStCpf", query = "SELECT l FROM LnUsuario l WHERE l.usuStCpf = :usuStCpf"),
+    @NamedQuery(name = "LnUsuario.findByUsuStBanco", query = "SELECT l FROM LnUsuario l WHERE l.usuStBanco = :usuStBanco"),
+    @NamedQuery(name = "LnUsuario.findByCliInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.cliInCodigo = :cliInCodigo"),
+    @NamedQuery(name = "LnUsuario.findAllUsuStCodigoUsuChAtivo", query = "SELECT l FROM LnUsuario l WHERE l.usuStCodigo = :usuStCodigo and l.usuChAtivo = :usuChAtivo")})
 public class LnUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -76,17 +78,19 @@ public class LnUsuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "per_in_codigo")
     private int perInCodigo;
+    @Basic(optional = false)
     @Column(name = "usu_st_cpf")
     private String usuStCpf;
+    @Basic(optional = false)
     @Column(name = "usu_st_banco")
     private String usuStBanco;
+    @Column(name = "cli_in_codigo")
+    private Integer cliInCodigo;
     
-    
-    
-
     @Transient
     private TipoFuncao tipoFuncao;
     
+
     public LnUsuario() {
     }
 
@@ -94,8 +98,7 @@ public class LnUsuario implements Serializable {
         this.usuStCodigo = usuStCodigo;
     }
 
-    public LnUsuario(String usuStCodigo, String usuStNome, String usuStSenha, Character usuChAtivo, Character usuChAlterasenha, Character usuChExpirasenha, int perInCodigo, 
-            String usuStCpf, String usuStBanco) {
+    public LnUsuario(String usuStCodigo, String usuStNome, String usuStSenha, Character usuChAtivo, Character usuChAlterasenha, Character usuChExpirasenha, int perInCodigo, String usuStCpf, String usuStBanco) {
         this.usuStCodigo = usuStCodigo;
         this.usuStNome = usuStNome;
         this.usuStSenha = usuStSenha;
@@ -195,14 +198,6 @@ public class LnUsuario implements Serializable {
         this.perInCodigo = perInCodigo;
     }
 
-    public TipoFuncao getTipoFuncao() {
-        return tipoFuncao;
-    }
-
-    public void setTipoFuncao(TipoFuncao tipoFuncao) {
-        this.tipoFuncao = tipoFuncao;
-    }
-
     public String getUsuStCpf() {
         return usuStCpf;
     }
@@ -217,6 +212,22 @@ public class LnUsuario implements Serializable {
 
     public void setUsuStBanco(String usuStBanco) {
         this.usuStBanco = usuStBanco;
+    }
+
+    public Integer getCliInCodigo() {
+        return cliInCodigo;
+    }
+
+    public void setCliInCodigo(Integer cliInCodigo) {
+        this.cliInCodigo = cliInCodigo;
+    }
+
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
     }
 
     @Override
@@ -241,7 +252,7 @@ public class LnUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "LnUsuario{" + "usuStCodigo=" + usuStCodigo + ", usuStNome=" + usuStNome + ", usuStSenha=" + usuStSenha + ", usuStEmail=" + usuStEmail + ", usuChAtivo=" + usuChAtivo + ", usuInDia=" + usuInDia + ", usuChAlterasenha=" + usuChAlterasenha + ", usuChExpirasenha=" + usuChExpirasenha + ", usuDtExpiracao=" + usuDtExpiracao + ", usuDtCadastro=" + usuDtCadastro + ", perInCodigo=" + perInCodigo + ", usuStCpf=" + usuStCpf + ", usuStBanco=" + usuStBanco + ", tipoFuncao=" + tipoFuncao + '}';
+        return "br.com.ln.entity.LnUsuario[ usuStCodigo=" + usuStCodigo + " ]";
     }
-
+    
 }

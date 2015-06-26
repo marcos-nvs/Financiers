@@ -26,6 +26,10 @@
     <mapping class="br.com.ln.entity.LnTipoconta"/>
     <mapping class="br.com.ln.entity.LnTipotabela"/>
     <mapping class="br.com.ln.entity.LnTabela"/>
+    <mapping class="br.com.ln.entity.LnCliente"/>
+    <mapping class="br.com.ln.entity.LnEndereco"/>
+    <mapping class="br.com.ln.entity.LnTelefone"/>
+    
 
   </session-factory>
 </hibernate-configuration>

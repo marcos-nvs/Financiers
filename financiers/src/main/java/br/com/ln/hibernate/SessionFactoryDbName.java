@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Mappings;
 
 /**
@@ -44,7 +44,8 @@ public class SessionFactoryDbName implements Serializable{
         SessionFactory sessionFactory = null;
         try {
             System.out.println("Buscando Session no banco dados : " + strDbName);
-            AnnotationConfiguration cfg = new AnnotationConfiguration();
+            
+            Configuration cfg = new Configuration();
             cfg.configure("hibernate.cfg.xml");
             cfg.setProperty("hibernate.connection.datasource", "jdbc/Financiers");
             cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");

@@ -17,6 +17,8 @@ CREATE TABLE acessocontrol.ln_cliente
   cli_st_documento character varying(20) NOT NULL, -- Documento de identificação único.
   cli_st_nome character varying(50) NOT NULL, -- Nome do cliente ou razão social
   cli_ch_ativo character(1) NOT NULL, -- Identifica se o cliente está ativo
+  cli_st_banco character varying(20) NOT NULL,
+  cli_st_email character varying(100),
   CONSTRAINT ln_cliente_pkey PRIMARY KEY (cli_in_codigo)
 )
 WITH (
@@ -85,8 +87,97 @@ CREATE SEQUENCE acessocontrol.seq_endereco
 ALTER TABLE acessocontrol.seq_endereco
   OWNER TO postgres;
 
+-- Table: acessocontrol.ln_telefone
+
+-- DROP TABLE acessocontrol.ln_telefone;
+
+CREATE TABLE acessocontrol.ln_telefone
+(
+  tel_in_codigo integer NOT NULL,
+  cli_in_codigo integer NOT NULL,
+  tel_ch_tipo character(1) NOT NULL, -- 1-Residêncial...
+  tel_st_pais character varying(3),
+  tel_st_ddd character varying(5),
+  tel_st_telefone character varying(14),
+  CONSTRAINT ln_telefone_pkey PRIMARY KEY (tel_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE acessocontrol.ln_telefone
+  OWNER TO postgres;
+COMMENT ON COLUMN acessocontrol.ln_telefone.tel_ch_tipo IS '1-Residêncial
+2-Comercial
+3-Celular';
+
+-- Sequence: acessocontrol.seq_telefone
+
+-- DROP SEQUENCE acessocontrol.seq_telefone;
+
+CREATE SEQUENCE acessocontrol.seq_telefone
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE acessocontrol.seq_telefone
+  OWNER TO postgres;
+
+-- Table: acessocontrol.ln_usuario
+
+-- DROP TABLE acessocontrol.ln_usuario;
+
+CREATE TABLE acessocontrol.ln_usuario
+(
+  usu_st_codigo character varying(30) NOT NULL,
+  usu_st_nome character varying(50) NOT NULL,
+  usu_st_senha character varying(30) NOT NULL,
+  usu_st_email character varying(100),
+  usu_ch_ativo character(1) NOT NULL,
+  usu_in_dia integer,
+  usu_ch_alterasenha character(1) NOT NULL,
+  usu_ch_expirasenha character(1) NOT NULL,
+  usu_dt_expiracao date,
+  usu_dt_cadastro date,
+  per_in_codigo integer NOT NULL,
+  usu_st_cpf character varying(11) NOT NULL,
+  usu_st_banco character varying(20) NOT NULL,
+  cli_in_codigo integer,
+  CONSTRAINT pk_usustcodigo PRIMARY KEY (usu_st_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_usuario
+  OWNER TO postgres;
+GRANT ALL ON TABLE ln_usuario TO postgres;
+GRANT ALL ON TABLE ln_usuario TO acessocontrol;
+COMMENT ON COLUMN ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
+COMMENT ON COLUMN ln_usuario.usu_st_nome IS 'Define o nome do usuário';
+COMMENT ON COLUMN ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
+COMMENT ON COLUMN ln_usuario.usu_st_email IS 'Define o e-mail do usuário';
+COMMENT ON COLUMN ln_usuario.usu_ch_ativo IS 'Define se o usuário está ativo ou inativo';
+COMMENT ON COLUMN ln_usuario.usu_in_dia IS 'Define o período em dias para a troca da senha';
+COMMENT ON COLUMN ln_usuario.usu_ch_alterasenha IS 'Define se o usuário pode ou não trocar a senha';
+COMMENT ON COLUMN ln_usuario.usu_ch_expirasenha IS 'Define se a senha do usuário expira';
+COMMENT ON COLUMN ln_usuario.usu_dt_expiracao IS 'Define quando expira a senha do usuário';
+COMMENT ON COLUMN ln_usuario.usu_dt_cadastro IS 'Define a data do cadastro do usuário';
+COMMENT ON COLUMN ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usuario';
+COMMENT ON COLUMN ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
 
 
+-- Index: ind_usuariocpf
+
+-- DROP INDEX ind_usuariocpf;
+
+CREATE INDEX ind_usuariocpf
+  ON ln_usuario
+  USING btree
+  (usu_st_codigo COLLATE pg_catalog."default", usu_st_cpf COLLATE pg_catalog."default");
+
+insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
+                                 "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf" ) values 
+                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896');
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Schema: public
@@ -229,59 +320,6 @@ insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_inclu
 values (nextval('seq_modulo'), 'Comparação de Movimentação entre Meses','S','S','S','S','S');
 
 
--- Table: ln_usuario
-
--- DROP TABLE ln_usuario;
-
-CREATE TABLE acessocontrol.ln_usuario
-(
-  usu_st_codigo character varying(30) NOT NULL, -- Define o código do usuário para acessar o sistema
-  usu_st_nome character varying(50) NOT NULL, -- Define o nome do usuário
-  usu_st_senha character varying(30) NOT NULL, -- Define a senha do usuário para acesso ao sistema
-  usu_st_email character varying(100), -- Define o e-mail do usuário
-  usu_ch_ativo character(1) NOT NULL, -- Define se o usuário está ativo ou inativo
-  usu_in_dia integer, -- Define o período em dias para a troca da senha
-  usu_ch_alterasenha character(1) NOT NULL, -- Define se o usuário pode ou não trocar a senha
-  usu_ch_expirasenha character(1) NOT NULL, -- Define se a senha do usuário expira
-  usu_dt_expiracao date, -- Define quando expira a senha do usuário
-  usu_dt_cadastro date, -- Define a data do cadastro do usuário
-  per_in_codigo integer NOT NULL, -- Define o perfil de acesso do usuario
-  usu_st_cpf character varying(11) NOT NULL, -- Define o cpf do usuário para poder resgatar a senha de acesso
-  CONSTRAINT pk_usustcodigo PRIMARY KEY (usu_st_codigo)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE ln_usuario
-  OWNER TO postgres;
-GRANT ALL ON TABLE ln_usuario TO postgres;
-GRANT ALL ON TABLE ln_usuario TO acessocontrol;
-COMMENT ON COLUMN ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
-COMMENT ON COLUMN ln_usuario.usu_st_nome IS 'Define o nome do usuário';
-COMMENT ON COLUMN ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
-COMMENT ON COLUMN ln_usuario.usu_st_email IS 'Define o e-mail do usuário';
-COMMENT ON COLUMN ln_usuario.usu_ch_ativo IS 'Define se o usuário está ativo ou inativo';
-COMMENT ON COLUMN ln_usuario.usu_in_dia IS 'Define o período em dias para a troca da senha';
-COMMENT ON COLUMN ln_usuario.usu_ch_alterasenha IS 'Define se o usuário pode ou não trocar a senha';
-COMMENT ON COLUMN ln_usuario.usu_ch_expirasenha IS 'Define se a senha do usuário expira';
-COMMENT ON COLUMN ln_usuario.usu_dt_expiracao IS 'Define quando expira a senha do usuário';
-COMMENT ON COLUMN ln_usuario.usu_dt_cadastro IS 'Define a data do cadastro do usuário';
-COMMENT ON COLUMN ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usuario';
-COMMENT ON COLUMN ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
-
-
--- Index: ind_usuariocpf
-
--- DROP INDEX ind_usuariocpf;
-
-CREATE INDEX ind_usuariocpf
-  ON ln_usuario
-  USING btree
-  (usu_st_codigo COLLATE pg_catalog."default", usu_st_cpf COLLATE pg_catalog."default");
-
-insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
-                                 "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf" ) values 
-                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896');
 
 
 -- Table: ln_menu

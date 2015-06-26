@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnCliente.findByCliInCodigo", query = "SELECT l FROM LnCliente l WHERE l.cliInCodigo = :cliInCodigo"),
     @NamedQuery(name = "LnCliente.findByCliStDocumento", query = "SELECT l FROM LnCliente l WHERE l.cliStDocumento = :cliStDocumento"),
     @NamedQuery(name = "LnCliente.findByCliStNome", query = "SELECT l FROM LnCliente l WHERE l.cliStNome = :cliStNome"),
-    @NamedQuery(name = "LnCliente.findByCliChAtivo", query = "SELECT l FROM LnCliente l WHERE l.cliChAtivo = :cliChAtivo")})
+    @NamedQuery(name = "LnCliente.findByCliChAtivo", query = "SELECT l FROM LnCliente l WHERE l.cliChAtivo = :cliChAtivo"),
+    @NamedQuery(name = "LnCliente.findByCliStBanco", query = "SELECT l FROM LnCliente l WHERE l.cliStBanco = :cliStBanco")})
 public class LnCliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,6 +44,9 @@ public class LnCliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "cli_ch_ativo")
     private Character cliChAtivo;
+    @Basic(optional = false)
+    @Column(name = "cli_st_banco")
+    private String cliStBanco;
 
     public LnCliente() {
     }
@@ -51,11 +55,12 @@ public class LnCliente implements Serializable {
         this.cliInCodigo = cliInCodigo;
     }
 
-    public LnCliente(Integer cliInCodigo, String cliStDocumento, String cliStNome, Character cliChAtivo) {
+    public LnCliente(Integer cliInCodigo, String cliStDocumento, String cliStNome, Character cliChAtivo, String cliStBanco) {
         this.cliInCodigo = cliInCodigo;
         this.cliStDocumento = cliStDocumento;
         this.cliStNome = cliStNome;
         this.cliChAtivo = cliChAtivo;
+        this.cliStBanco = cliStBanco;
     }
 
     public Integer getCliInCodigo() {
@@ -88,6 +93,14 @@ public class LnCliente implements Serializable {
 
     public void setCliChAtivo(Character cliChAtivo) {
         this.cliChAtivo = cliChAtivo;
+    }
+
+    public String getCliStBanco() {
+        return cliStBanco;
+    }
+
+    public void setCliStBanco(String cliStBanco) {
+        this.cliStBanco = cliStBanco;
     }
 
     @Override

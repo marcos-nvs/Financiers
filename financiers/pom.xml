@@ -53,6 +53,16 @@
             <classifier>1.0.0</classifier>
             <type>Final.jar</type>
         </dependency>
+<!--        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.5.1-Final</version>
+        </dependency>-->
+<!--        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.5.1-Final</version>
+        </dependency>-->
         
 <!--        <dependency>
             <groupId>org.hibernate</groupId>
@@ -70,17 +80,7 @@
             <artifactId>primefaces</artifactId>  
             <version>5.0</version>  
         </dependency>     
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>3.5.1-Final</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.5.1-Final</version>
-        </dependency>
+       
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
