@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnCliente.findByCliChAtivo", query = "SELECT l FROM LnCliente l WHERE l.cliChAtivo = :cliChAtivo"),
     @NamedQuery(name = "LnCliente.findByCliStBanco", query = "SELECT l FROM LnCliente l WHERE l.cliStBanco = :cliStBanco")})
 public class LnCliente implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -49,10 +50,13 @@ public class LnCliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "cli_st_banco")
     private String cliStBanco;
+    @Basic(optional = false)
+    @Column(name = "cli_st_email")
+    private String cliStEmail;
 
     @Transient
     private TipoFuncao tipoFuncao;
-    
+
     public LnCliente() {
     }
 
@@ -108,6 +112,14 @@ public class LnCliente implements Serializable {
         this.cliStBanco = cliStBanco;
     }
 
+    public String getCliStEmail() {
+        return cliStEmail;
+    }
+
+    public void setCliStEmail(String cliStEmail) {
+        this.cliStEmail = cliStEmail;
+    }
+
     public TipoFuncao getTipoFuncao() {
         return tipoFuncao;
     }
@@ -115,7 +127,7 @@ public class LnCliente implements Serializable {
     public void setTipoFuncao(TipoFuncao tipoFuncao) {
         this.tipoFuncao = tipoFuncao;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -140,5 +152,5 @@ public class LnCliente implements Serializable {
     public String toString() {
         return "br.com.ln.entity.LnCliente[ cliInCodigo=" + cliInCodigo + " ]";
     }
-    
+
 }
