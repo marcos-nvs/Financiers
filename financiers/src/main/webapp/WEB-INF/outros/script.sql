@@ -52,7 +52,9 @@ CREATE TABLE acessocontrol.ln_endereco
 (
   end_in_codigo integer NOT NULL,
   cli_in_codigo integer NOT NULL,
+  end_ch_tipo character(1) NOT NULL, 
   end_st_endereco character varying(50) NOT NULL,
+  end_st_complemento character varying(50), 
   end_st_bairro character varying(50) NOT NULL,
   end_st_cidade character varying(50) NOT NULL,
   end_st_estado character varying(2) NOT NULL,

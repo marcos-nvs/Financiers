@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -20,18 +22,21 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Marcos Naves
  */
 @Entity
-@Table(name = "ln_endereco",schema = "acessocontrol")
+@Table(name = "ln_endereco")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LnEndereco.findAll", query = "SELECT l FROM LnEndereco l"),
     @NamedQuery(name = "LnEndereco.findByEndInCodigo", query = "SELECT l FROM LnEndereco l WHERE l.endInCodigo = :endInCodigo"),
     @NamedQuery(name = "LnEndereco.findByCliInCodigo", query = "SELECT l FROM LnEndereco l WHERE l.cliInCodigo = :cliInCodigo"),
+    @NamedQuery(name = "LnEndereco.findByEndChTipo", query = "SELECT l FROM LnEndereco l WHERE l.endChTipo = :endChTipo"),
     @NamedQuery(name = "LnEndereco.findByEndStEndereco", query = "SELECT l FROM LnEndereco l WHERE l.endStEndereco = :endStEndereco"),
+    @NamedQuery(name = "LnEndereco.findByEndStComplemento", query = "SELECT l FROM LnEndereco l WHERE l.endStComplemento = :endStComplemento"),
     @NamedQuery(name = "LnEndereco.findByEndStBairro", query = "SELECT l FROM LnEndereco l WHERE l.endStBairro = :endStBairro"),
     @NamedQuery(name = "LnEndereco.findByEndStCidade", query = "SELECT l FROM LnEndereco l WHERE l.endStCidade = :endStCidade"),
     @NamedQuery(name = "LnEndereco.findByEndStEstado", query = "SELECT l FROM LnEndereco l WHERE l.endStEstado = :endStEstado"),
     @NamedQuery(name = "LnEndereco.findByEndStCep", query = "SELECT l FROM LnEndereco l WHERE l.endStCep = :endStCep")})
 public class LnEndereco implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -41,8 +46,13 @@ public class LnEndereco implements Serializable {
     @Column(name = "cli_in_codigo")
     private int cliInCodigo;
     @Basic(optional = false)
+    @Column(name = "end_ch_tipo")
+    private Character endChTipo;
+    @Basic(optional = false)
     @Column(name = "end_st_endereco")
     private String endStEndereco;
+    @Column(name = "end_st_complemento")
+    private String endStComplemento;
     @Basic(optional = false)
     @Column(name = "end_st_bairro")
     private String endStBairro;
@@ -55,6 +65,8 @@ public class LnEndereco implements Serializable {
     @Basic(optional = false)
     @Column(name = "end_st_cep")
     private String endStCep;
+    @Transient
+    private TipoFuncao tipoFuncao;
 
     public LnEndereco() {
     }
@@ -63,9 +75,10 @@ public class LnEndereco implements Serializable {
         this.endInCodigo = endInCodigo;
     }
 
-    public LnEndereco(Integer endInCodigo, int cliInCodigo, String endStEndereco, String endStBairro, String endStCidade, String endStEstado, String endStCep) {
+    public LnEndereco(Integer endInCodigo, int cliInCodigo, Character endChTipo, String endStEndereco, String endStBairro, String endStCidade, String endStEstado, String endStCep) {
         this.endInCodigo = endInCodigo;
         this.cliInCodigo = cliInCodigo;
+        this.endChTipo = endChTipo;
         this.endStEndereco = endStEndereco;
         this.endStBairro = endStBairro;
         this.endStCidade = endStCidade;
@@ -89,12 +102,28 @@ public class LnEndereco implements Serializable {
         this.cliInCodigo = cliInCodigo;
     }
 
+    public Character getEndChTipo() {
+        return endChTipo;
+    }
+
+    public void setEndChTipo(Character endChTipo) {
+        this.endChTipo = endChTipo;
+    }
+
     public String getEndStEndereco() {
         return endStEndereco;
     }
 
     public void setEndStEndereco(String endStEndereco) {
         this.endStEndereco = endStEndereco;
+    }
+
+    public String getEndStComplemento() {
+        return endStComplemento;
+    }
+
+    public void setEndStComplemento(String endStComplemento) {
+        this.endStComplemento = endStComplemento;
     }
 
     public String getEndStBairro() {
@@ -129,6 +158,14 @@ public class LnEndereco implements Serializable {
         this.endStCep = endStCep;
     }
 
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -153,5 +190,5 @@ public class LnEndereco implements Serializable {
     public String toString() {
         return "br.com.ln.entity.LnEndereco[ endInCodigo=" + endInCodigo + " ]";
     }
-    
+
 }

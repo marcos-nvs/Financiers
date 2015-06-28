@@ -14,7 +14,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.cfg.Mappings;
+import org.hibernate.service.ServiceRegistry;
 
 /**
  * Fabrica de conexão
@@ -51,7 +51,7 @@ public class SessionFactoryDbName implements Serializable{
             cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
             cfg.setProperty("hibernate.default_schema", strDbName);
 
-            sessionFactory = cfg.configure().buildSessionFactory();
+           sessionFactory = cfg.configure().buildSessionFactory();
         } catch (HibernateException ex) {
             logger.error(ex.getMessage());
             mapSessionFactory.clear();
