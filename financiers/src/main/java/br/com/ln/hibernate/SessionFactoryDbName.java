@@ -13,11 +13,12 @@ import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
 /**
- * Fabrica de conexão
+ * Fabrica de conexÃ£o
  * @author Marcos Naves
  */
 public class SessionFactoryDbName implements Serializable{
@@ -45,13 +46,16 @@ public class SessionFactoryDbName implements Serializable{
         try {
             System.out.println("Buscando Session no banco dados : " + strDbName);
             
-            Configuration cfg = new Configuration();
+            
+            Configuration cfg = new Configuration().configure();
             cfg.configure("hibernate.cfg.xml");
             cfg.setProperty("hibernate.connection.datasource", "jdbc/Financiers");
             cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
             cfg.setProperty("hibernate.default_schema", strDbName);
-
-           sessionFactory = cfg.configure().buildSessionFactory();
+            
+            StandardServiceRegistry seviceRegistry = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
+            sessionFactory = cfg.buildSessionFactory(seviceRegistry);
+//           sessionFactory = cfg.configure().buildSessionFactory();
         } catch (HibernateException ex) {
             logger.error(ex.getMessage());
             mapSessionFactory.clear();
