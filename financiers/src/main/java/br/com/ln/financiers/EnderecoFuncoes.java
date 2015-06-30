@@ -15,29 +15,58 @@ public class EnderecoFuncoes {
     
     private String mensagem;
     private boolean validado;
+    private Integer codigo = 0;
     
-    public String endereco(LnEndereco lnEndereco){
+    public String validacao(LnEndereco lnEndereco){
         mensagem = "";
         
         if (lnEndereco != null){
-            if (lnEndereco.getEndStEndereco().isEmpty()){
+            if (lnEndereco.getEndStEndereco() != null && lnEndereco.getEndStEndereco().isEmpty()){
                 mensagem = mensagem + "Por favor, preencher o Logradouro - ";
             }
-            if (lnEndereco.getEndStBairro().isEmpty()){
+            if (lnEndereco.getEndStBairro() != null && lnEndereco.getEndStBairro().isEmpty()){
                 mensagem = mensagem + "Por favor, preencher o Bairro - ";
             }
-            if (lnEndereco.getEndStCidade().isEmpty()){
+            if (lnEndereco.getEndStCidade() != null && lnEndereco.getEndStCidade().isEmpty()){
                 mensagem = mensagem + "Por favor, preencher o Cidade - ";
             }
-            if (lnEndereco.getEndStEstado().isEmpty()){
+            if (lnEndereco.getEndStEstado() != null && lnEndereco.getEndStEstado().isEmpty()){
                 mensagem = mensagem + "Por favor, preencher o Estado - ";
             }
-            if (lnEndereco.getEndStCep().isEmpty()){
+            if (lnEndereco.getEndStCep() != null && lnEndereco.getEndStCep().isEmpty()){
                 mensagem = mensagem + "Por favor, preencher o CEP - ";
             }
         } else {
             mensagem="Endereço vazio, por favor preencher";
         }
+        
+        if (mensagem.equals("")){
+            mensagem = "Sucesso";
+        }
+        
         return mensagem;
     }
+    
+    public String descricaoTipo(Character tipoEndereco){
+        
+        switch (tipoEndereco){
+            case '1':
+                return "Residêncial";
+            case '2':
+                return "Comercial";
+            case '3':
+                return "Cobrança";
+        }
+        return null;
+    }
+    
+    public Integer calculaCodigo(){
+        Integer codigoNovo;
+        
+        codigoNovo = codigo + 1;
+        codigo = codigoNovo;
+        
+        return codigo;
+    }
+    
 }

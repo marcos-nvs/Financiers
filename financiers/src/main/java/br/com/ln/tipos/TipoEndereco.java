@@ -10,5 +10,5 @@ package br.com.ln.financiers;
  * @author Marcos Naves
  */
 public enum TipoEndereco {
-    Comercial, Residencial, Cobrança;
+    Comercial, Residencial, Cobranca;
 }

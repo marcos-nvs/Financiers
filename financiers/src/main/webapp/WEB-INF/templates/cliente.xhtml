@@ -17,34 +17,37 @@
             <p:outputLabel value="E-mail"/>
             <p:inputText id="idinputemail" value="#{clienteView.email}" size="100"/>
         </h:panelGrid>
-        <p:dataTable id="iddtendereco" var="endereco" style="margin-top: 20px;" value="#{clienteView.listEndereco}" selectionMode="single"
-                     selection="#{clienteView.lnEndereco}" rowKey="#{endereco.endInCodigo}">
+        <p:dataTable id="iddtendereco" var="dtendereco" style="margin-top: 20px;" value="#{clienteView.listEndereco}" selectionMode="single"
+                     selection="#{clienteView.lnEndereco}" rowKey="#{dtendereco.endInCodigo}">
             <f:facet name="header">
                 <h:outputLabel value="Endereço"/>
             </f:facet>
             <p:column headerText="Tipo" style="width: 100px;">
-                <h:outputLabel value ="#{endereco.endChEndereco}"/>
+                <h:outputLabel value ="#{clienteView.buscaDescricaoTipoEndereco(dtendereco.endChTipo)}"/>
             </p:column>
             <p:column headerText="Logradouro" style="width: 300px;">
-                <h:outputLabel value ="#{endereco.endStEndereco}"/>
+                <h:outputLabel value ="#{dtendereco.endStEndereco}"/>
             </p:column>
             <p:column headerText="Bairro" style="width: 200px;">
-                <h:outputLabel value ="#{endereco.endStBairro}"/>
+                <h:outputLabel value ="#{dtendereco.endStBairro}"/>
             </p:column>
             <p:column headerText="Cidade" style="width: 200px;">
-                <h:outputLabel value ="#{endereco.endStCidade}"/>
+                <h:outputLabel value ="#{dtendereco.endStCidade}"/>
             </p:column>
             <p:column headerText="Estado" style="width: 60px;">
-                <h:outputLabel value ="#{endereco.endStEstado}"/>
+                <h:outputLabel value ="#{dtendereco.endStEstado}"/>
             </p:column>
             <p:column headerText="CEP" style="width: 60px;">
-                <h:outputLabel value ="#{endereco.endStCep}"/>
+                <h:outputLabel value ="#{dtendereco.endStCep}"/>
             </p:column>
             <f:facet name="footer">
                 <p:commandButton id="idbtincluiendereco" value="#{msgs['node.include']}" icon="ui-icon-document"
-                                 action="#{clienteView.btIncluirEndereco()}" process="@this" update="@this"/>
-                <p:commandButton id="idbtalterarendereco" value="#{msgs['template.change']}" icon="ui-icon-pencil"/>
-                <p:commandButton id="idbtexcluirendereco" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
+                                 action="#{clienteView.btIncluirEndereco()}" process="idbtincluiendereco" update="idbtincluiendereco"/>
+                <p:commandButton id="idbtalterarendereco" value="#{msgs['template.change']}" icon="ui-icon-pencil"
+                                 action="#{clienteView.btAlterarEndereco()}" process="idbtalterarendereco" 
+                                 update="idbtalterarendereco, :idFormCenter:iddlgendereco"/>
+                <p:commandButton id="idbtexcluirendereco" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
+                                 action="#{clienteView.btExcluirEndereco()}" process="idbtexcluirendereco" update="idbtexcluirendereco, iddtendereco">
                     <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert"/>
                 </p:commandButton>
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -59,7 +62,7 @@
                 <h:outputLabel value="Telefone"/>
             </f:facet>
             <p:column headerText="Tipo Telefone">
-                <h:outputLabel value ="#{telefone.telChTipo}"/>
+                <h:outputLabel value ="#{clienteView.buscaDescricaoTipoTelefone(telefone.telChTipo)}"/>
             </p:column>
             <p:column headerText="Código País">
                 <h:outputLabel value ="#{telefone.telStPais}"/>
@@ -73,8 +76,12 @@
             <f:facet name="footer">
                 <p:commandButton id="idbtincluitelefone" value="#{msgs['node.include']}" icon="ui-icon-document"
                                  action="#{clienteView.btIncluirTelefone()}" process="idbtincluitelefone" update="idbtincluitelefone"/>
-                <p:commandButton id="idbtalterartelefone" value="#{msgs['template.change']}" icon="ui-icon-pencil"/>
-                <p:commandButton id="idbtexcluirtelefone" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
+                <p:commandButton id="idbtalterartelefone" value="#{msgs['template.change']}" icon="ui-icon-pencil"
+                                 action="#{clienteView.btAlterarTelefone()}" process="idbtalterartelefone, iddttelefone" 
+                                 update="idbtalterartelefone, :idFormCenter:iddlgtelefone"/>
+                <p:commandButton id="idbtexcluirtelefone" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
+                                 action="#{clienteView.btExcluirTelefone()}" process="idbtexcluirtelefone, iddttelefone" 
+                                 update="iddttelefone, :idFormTop:growl">
                     <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert"/>
                 </p:commandButton>
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -91,7 +98,7 @@
                          update="idFormCenter"/>
     </f:facet>
     
-    <p:dialog header="#{msgs['node.inclusion']} de Endereco" widgetVar="DlgEndereco" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
+    <p:dialog id="iddlgendereco" header="#{msgs['node.inclusion']} de Endereco" widgetVar="DlgEndereco" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idgridcep" columns="3" style="margin-left: 50px;">
             <p:outputLabel value="CEP"/>
@@ -109,6 +116,10 @@
             <p:outputLabel value="Logradouro"/>
             <p:inputText value="#{clienteView.endereco}" size="50" />
         </h:panelGrid>
+        <h:panelGrid id="idgridcomplemento" columns="2" style="margin-left: 4px;">
+            <p:outputLabel value="Complemento"/>
+            <p:inputText value="#{clienteView.complemento}" size="50" />
+        </h:panelGrid>
         <h:panelGrid id="idgriddetalhe" columns="6" style="margin-left: 40px;">
             <p:outputLabel value="Bairro"/>
             <p:inputText value="#{clienteView.bairro}" size="20" />
@@ -118,15 +129,18 @@
             <p:inputText value="#{clienteView.estado}" size="20" />
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton id="idbtsalvarendereco" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>
+            <p:commandButton id="idbtsalvarendereco" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
+                             action="#{clienteView.btSalvarEndereco()}" 
+                             process="idbtsalvarendereco, idgridendereco, idgridcomplemento, idgriddetalhe"
+                             update="iddtendereco, :idFormTop:growl, idgridendereco, idgridcomplemento, idgriddetalhe"/>
             <p:commandButton id="idbtfecharendereco" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-close"
                              action="#{clienteView.btFecharEndereco()}" process="idbtfecharendereco" update="idbtfecharendereco"/>
         </f:facet>
     </p:dialog>
     
-    <p:dialog header="#{msgs['node.inclusion']} de Telefone" widgetVar="DlgTelefone" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
+    <p:dialog id="iddlgtelefone" header="#{msgs['node.inclusion']} de Telefone" widgetVar="DlgTelefone" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
-        <h:panelGrid columns="8">
+        <h:panelGrid id="idgridtelefone" columns="8">
             <p:outputLabel value="Tipo Telefone"/>
             <p:selectOneMenu id="idtipotelefone" value="#{clienteView.tipoTelefone}">
                 <f:selectItem itemLabel="Residêncial" itemValue="Residencial"/>
@@ -134,14 +148,17 @@
                 <f:selectItem itemLabel="Celular" itemValue="Celular"/>
             </p:selectOneMenu>
             <p:outputLabel value="Código País"/>
-            <p:inputText value="#{clienteView.codigoPais}" size="4" />
+            <p:inputText id="idinputcodpais" value="#{clienteView.codigoPais}" size="4" />
             <p:outputLabel value="DDD"/>
-            <p:inputText value="#{clienteView.ddd}" size="4" />
+            <p:inputText id="idinputddd" value="#{clienteView.ddd}" size="4" />
             <p:outputLabel value="Telefone"/>
-            <p:inputText value="#{clienteView.telefone}" size="30" />
+            <p:inputText id="idinputtelefone" value="#{clienteView.telefone}" size="20" />
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton id="idbtsalvartelefone" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>
+            <p:commandButton id="idbtsalvartelefone" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
+                             action="#{clienteView.btSalvarTelefone()}" 
+                             process="idbtsalvartelefone, idgridtelefone"
+                             update="idbtsalvartelefone, :idFormTop:growl, idgridtelefone, iddttelefone"/>
             <p:commandButton id="idbtfechartelefone" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-close"
                              action="#{clienteView.btFecharTelefone()}" process="idbtfechartelefone" update="idbtfechartelefone"/>
         </f:facet>

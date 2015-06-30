@@ -16,6 +16,7 @@ import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnTelefone;
 import br.com.ln.financiers.ClienteFuncoes;
 import br.com.ln.financiers.EnderecoFuncoes;
+import br.com.ln.financiers.TelefoneFuncoes;
 import br.com.ln.financiers.TipoEndereco;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TipoTelefone;
@@ -43,6 +44,7 @@ public class ClienteView implements Serializable {
     private String email;
     private TipoEndereco tipoEndereco;
     private String endereco;
+    private String complemento;
     private String bairro;
     private String cidade;
     private String estado;
@@ -56,6 +58,7 @@ public class ClienteView implements Serializable {
     private Utilitarios utilitarios;
     private ClienteFuncoes clienteFuncoes;
     private EnderecoFuncoes enderecoFuncoes;
+    private TelefoneFuncoes telefoneFuncoes;
 
     private LnCliente lnCliente;
     private LnEndereco lnEndereco;
@@ -63,11 +66,15 @@ public class ClienteView implements Serializable {
 
     private String mensagem;
 
-    private List<LnEndereco> listEndereco = new ArrayList<LnEndereco>();
-    private List<LnTelefone> listTelefone = new ArrayList<LnTelefone>();
+    private List<LnEndereco> listEndereco;
+    private List<LnTelefone> listTelefone;
 
     public ClienteView() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        enderecoFuncoes = new EnderecoFuncoes();
+        telefoneFuncoes = new TelefoneFuncoes();
+        listEndereco = new ArrayList<>();
+        listTelefone = new ArrayList<>();
     }
 
     public String getDocumento() {
@@ -118,6 +125,14 @@ public class ClienteView implements Serializable {
         this.endereco = endereco;
     }
 
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+    
     public String getBairro() {
         return bairro;
     }
@@ -225,21 +240,40 @@ public class ClienteView implements Serializable {
     public void btIncluirEndereco() {
         lnEndereco = new LnEndereco();
         lnEndereco.setTipoFuncao(TipoFuncao.Incluir);
-        listEndereco.clear();
         RequestContext.getCurrentInstance().execute("PF('DlgEndereco').show()");
     }
 
     public void btAlterarEndereco() {
-
+        if(lnEndereco != null){
+            varLoadEndereco();
+            listEndereco.remove(lnEndereco);
+            RequestContext.getCurrentInstance().execute("PF('DlgEndereco').show()");
+        } else {
+            mensagem = "Para alterar é necessário escolher um endereço!!";
+            FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
 
     public void btExcluirEndereco() {
-
+        if(lnEndereco != null){
+            listEndereco.remove(lnEndereco);
+        } else {
+            mensagem = "Para excluir é necessário escolher um endereço!!";
+            FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
 
     public void btSalvarEndereco() {
         dataLoadEndereco();
+        mensagem = enderecoFuncoes.validacao(lnEndereco);
 
+        if (mensagem.equals("Sucesso")){
+            listEndereco.add(lnEndereco);
+            clearVarEndereco();
+            RequestContext.getCurrentInstance().execute("PF('DlgEndereco').hide()");
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
 
     public void btFecharEndereco() {
@@ -247,18 +281,43 @@ public class ClienteView implements Serializable {
     }
 
     public void btIncluirTelefone() {
+        lnTelefone = new LnTelefone();
+        lnTelefone.setTipoFuncao(TipoFuncao.Incluir);
         RequestContext.getCurrentInstance().execute("PF('DlgTelefone').show()");
     }
 
     public void btAlterarTelefone() {
-
+        if (lnTelefone != null){
+            varLoadTelefone();
+            listTelefone.remove(lnTelefone);
+            RequestContext.getCurrentInstance().execute("PF('DlgTelefone').show()");
+        } else {
+            mensagem = "Para alterar é necessário escolher um telefone!!";
+            FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
 
     public void btExcluirTelefone() {
+        if(lnTelefone != null){
+            listTelefone.remove(lnTelefone);
+        } else {
+            mensagem = "Para excluir é necessário escolher um telefone!!";
+            FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
 
     }
 
     public void btSalvarTelefone() {
+        dataLoadTelefone();
+        mensagem = telefoneFuncoes.validacao(lnTelefone);
+        
+        if (mensagem.equals("Sucesso")){
+            listTelefone.add(lnTelefone);
+            clearVarTelefone();
+            RequestContext.getCurrentInstance().execute("PF('DlgTelefone').hide()");
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));            
+        }
 
     }
 
@@ -275,28 +334,137 @@ public class ClienteView implements Serializable {
     }
 
     private void dataLoadEndereco() {
+        tipoLoadEndereco();
+        lnEndereco.setEndInCodigo(enderecoFuncoes.calculaCodigo());
         lnEndereco.setEndStEndereco(endereco);
+        lnEndereco.setEndStComplemento(complemento);
         lnEndereco.setEndStBairro(bairro);
         lnEndereco.setEndStCidade(cidade);
         lnEndereco.setEndStEstado(estado);
         lnEndereco.setEndStCep(cep);
     }
+    
+    private void dataLoadTelefone(){
+        tipoLoadTelefone();
+        lnTelefone.setTelInCodigo(telefoneFuncoes.calculaCodigo());
+        lnTelefone.setTelStPais(codigoPais);
+        lnTelefone.setTelStDdd(ddd);
+        lnTelefone.setTelStTelefone(telefone);
+    }
+    
+    private void clearVarEndereco(){
+        tipoEndereco = null;
+        endereco = "";
+        complemento = "";
+        bairro = "";
+        cidade = "";
+        estado = "";
+        cep = "";
+    }
+    
+    private void clearVarTelefone(){
+        tipoTelefone = null;
+        codigoPais = "";
+        ddd ="";
+        telefone = "";
+    }
+    
+    private void varLoadEndereco(){
+        tipoLoadVarEndereco();
+        endereco = lnEndereco.getEndStEndereco();
+        complemento = lnEndereco.getEndStComplemento();
+        bairro = lnEndereco.getEndStBairro();
+        cidade = lnEndereco.getEndStCidade();
+        estado = lnEndereco.getEndStEstado();
+        cep = lnEndereco.getEndStCep();
+    }
+    
+    private void varLoadTelefone(){
+        tipoLoadVarTelefone();
+        codigoPais = lnTelefone.getTelStPais();
+        ddd = lnTelefone.getTelStDdd();
+        telefone = lnTelefone.getTelStTelefone();
+    }
+    
+    private void tipoLoadEndereco(){
+        switch (tipoEndereco){
+            case Residencial:
+                lnEndereco.setEndChTipo('1');
+                break;
+            case Comercial:
+                lnEndereco.setEndChTipo('2');
+                break;
+            case Cobranca:
+                lnEndereco.setEndChTipo('3');
+                break;
+        }
+    }
+    
+    private void tipoLoadTelefone(){
+        switch (tipoTelefone){
+            case Residencial:
+                lnTelefone.setTelChTipo('1');
+                break;
+            case Comercial:
+                lnTelefone.setTelChTipo('2');
+                break;
+            case Celular:
+                lnTelefone.setTelChTipo('3');
+                break;
+        }
+    }
+    
+    private void tipoLoadVarEndereco(){
+        switch (lnEndereco.getEndChTipo()){
+            case '1':
+                tipoEndereco = tipoEndereco.Residencial;
+                break;
+            case '2':
+                tipoEndereco = tipoEndereco.Comercial;
+                break;
+            case '3':
+                tipoEndereco = tipoEndereco.Cobranca;
+                break;
+        }
+    }
+    
+    private void tipoLoadVarTelefone(){
+        switch (lnTelefone.getTelChTipo()){
+            case '1':
+                tipoTelefone = tipoTelefone.Residencial;
+                break;
+            case '2':
+                tipoTelefone = tipoTelefone.Comercial;
+                break;
+            case '3':
+                tipoTelefone = tipoTelefone.Celular;
+                break;
+        }
+    }
+    
+    public String buscaDescricaoTipoEndereco(Character tipoEndereco){
+        return enderecoFuncoes.descricaoTipo(tipoEndereco);
+    }
+    
+    public String buscaDescricaoTipoTelefone(Character tipoTelefone){
+        return telefoneFuncoes.descricaoTipo(tipoTelefone);
+    }
 
-//    static {
-//        String host = "proxy-sp.dasa.net";
-//        String port = "3128";
-//        System.out.println("Using proxy: " + host + ":" + port);
-//        System.setProperty("http.proxyHost", host);
-//        System.setProperty("http.proxyPort", port);
-//        System.setProperty("http.proxySet", "true");
-//        System.setProperty("http.nonProxyHosts", "localhost|127.0.0.1");
-//    }
+    static {
+        String host = "proxy-sp.dasa.net";
+        String port = "3128";
+        System.out.println("Using proxy: " + host + ":" + port);
+        System.setProperty("http.proxyHost", host);
+        System.setProperty("http.proxyPort", port);
+        System.setProperty("http.proxySet", "true");
+        System.setProperty("http.nonProxyHosts", "localhost|127.0.0.1");
+    }
 
     public void btPesquisaCEP() {
         try {
             if (ApprovalConnection.getConnectionApproval("http://correiosapi.apphb.com")) {
                 if (cep != null) {
-                    EnderecoCep enderecoCep = new EnderecoCep();
+                    EnderecoCep enderecoCep;
                     Correios correio = new Correios();
                     enderecoCep = correio.entregaEndereco(cep.replaceAll("-", ""));
                     correio.close();
