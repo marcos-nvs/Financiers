@@ -71,6 +71,7 @@ public class ClienteView implements Serializable {
 
     public ClienteView() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        clienteFuncoes = new ClienteFuncoes();
         enderecoFuncoes = new EnderecoFuncoes();
         telefoneFuncoes = new TelefoneFuncoes();
         listEndereco = new ArrayList<>();
@@ -326,11 +327,27 @@ public class ClienteView implements Serializable {
     }
 
     public void btSalvarCliente() {
-
+        dataLoadCliente();
+        if (clienteFuncoes.validacao(lnCliente, listEndereco, listTelefone)){
+            
+        } else {
+            mensagem = clienteFuncoes.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
     }
 
     public void btFecharCliente() {
         beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+    }
+    
+    private void dataLoadCliente(){
+        lnCliente = new LnCliente();
+        lnCliente.setCliStDocumento(documento);
+        lnCliente.setCliStNome(nome);
+        lnCliente.setCliStBanco(banco);
+        lnCliente.setCliStEmail(email);
+        lnCliente.setTipoFuncao(TipoFuncao.Incluir);
+        
     }
 
     private void dataLoadEndereco() {

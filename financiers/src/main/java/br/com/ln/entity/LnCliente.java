@@ -10,9 +10,12 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,6 +39,8 @@ public class LnCliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "seqCliente", sequenceName = "seq_cliente", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqCliente")
     @Column(name = "cli_in_codigo")
     private Integer cliInCodigo;
     @Basic(optional = false)

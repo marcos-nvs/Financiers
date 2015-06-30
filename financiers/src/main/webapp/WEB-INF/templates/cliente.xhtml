@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <p:panel header="Cadastro de Cliente">
-        <h:panelGrid columns="6">
+        <h:panelGrid id="idgrdcliente" columns="6">
             <p:outputLabel value="CPF" style="margin-left: 10px;"/>
             <p:inputText id="idinputdocumento" value="#{clienteView.documento}" />
             <p:outputLabel value="Nome"/>
@@ -92,7 +92,9 @@
         </p:dataTable>
     </p:panel>
     <f:facet name="footer">
-        <p:commandButton id="idbtsalvarcliente" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>
+        <p:commandButton id="idbtsalvarcliente" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
+                         action="#{clienteView.btSalvarCliente()}" process="idbtsalvarcliente,idgrdcliente"
+                         update="idbtsalvarcliente, :idFormTop:growl,idgrdcliente"/>
         <p:commandButton id="idbtfecharcliente" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-close"
                          action="#{clienteView.btFecharCliente()}" process="idbtfecharcliente"
                          update="idFormCenter"/>

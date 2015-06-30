@@ -11,43 +11,49 @@ import java.io.Serializable;
  *
  * @author Marcos Naves
  */
-
-public class Utilitarios implements Serializable{
+public class Utilitarios implements Serializable {
 
     public static boolean calculaCPF(String cpfNum) {
-        int[] cpf = new int[cpfNum.length()]; //define o valor com o tamanho da string   
-        int resultP = 0;
-        int resultS = 0;
 
-        //converte a string para um array de integer   
-        for (int i = 0; i < cpf.length; i++) {
-            cpf[i] = Integer.parseInt(cpfNum.substring(i, i + 1));
-        }
+        if (cpfNum != null && !cpfNum.isEmpty()) {
+            int[] cpf = new int[cpfNum.length()]; //define o valor com o tamanho da string   
+            int resultP = 0;
+            int resultS = 0;
 
-        //calcula o primeiro numero(DIV) do cpf   
-        for (int i = 0; i < 9; i++) {
-            resultP += cpf[i] * (i + 1);
-        }
-        int divP = resultP % 11;
-
-        //se o resultado for diferente ao 10 digito do cpf retorna falso   
-        if (divP != cpf[9]) {
-            return false;
-        } else {
-            //calcula o segundo numero(DIV) do cpf   
-            for (int i = 0; i < 10; i++) {
-                resultS += cpf[i] * (i);
+            //converte a string para um array de integer   
+            for (int i = 0; i < cpf.length; i++) {
+                cpf[i] = Integer.parseInt(cpfNum.substring(i, i + 1));
             }
-            int divS = resultS % 11;
 
-            //se o resultado for diferente ao 11 digito do cpf retorna falso   
-            if (divS != cpf[10]) {
+            //calcula o primeiro numero(DIV) do cpf   
+            for (int i = 0; i < 9; i++) {
+                resultP += cpf[i] * (i + 1);
+            }
+            int divP = resultP % 11;
+
+            //se o resultado for diferente ao 10 digito do cpf retorna falso   
+            if (divP != cpf[9]) {
                 return false;
+            } else {
+                //calcula o segundo numero(DIV) do cpf   
+                for (int i = 0; i < 10; i++) {
+                    resultS += cpf[i] * (i);
+                }
+                int divS = resultS % 11;
+
+                //se o resultado for diferente ao 11 digito do cpf retorna falso   
+                if (divS != cpf[10]) {
+                    return false;
+                }
             }
+
+            //se tudo estiver ok retorna verdadeiro   
+            return true;
+
+        } else {
+            return false;
         }
 
-        //se tudo estiver ok retorna verdadeiro   
-        return true;
     }//fim do calcular cpf ==================================================   
 
     public static boolean calculaCNPJ(String cnpjNum) {

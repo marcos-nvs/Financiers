@@ -30,4 +30,9 @@ public class Historico {
         LnHistorico lnHistorico = new LnHistorico(GenericDao.grabDateFromDB(), lnUsuario.getUsuStCodigo(), descricao);
         GenericDao.saveObject(lnHistorico);
     }
+
+    public void gravaHistorico(String usuario, String descricao){
+        LnHistorico lnHistorico = new LnHistorico(GenericDao.grabDateFromDB(), usuario, descricao);
+        GenericDao.saveObject(lnHistorico);
+    }
 }

@@ -10,9 +10,12 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -22,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Marcos Naves
  */
 @Entity
-@Table(name = "ln_endereco")
+@Table(name = "ln_endereco" , schema = "acessocontrol")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LnEndereco.findAll", query = "SELECT l FROM LnEndereco l"),
@@ -40,6 +43,8 @@ public class LnEndereco implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "seqEndereco", sequenceName = "seq_endereco", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqEndereco")
     @Column(name = "end_in_codigo")
     private Integer endInCodigo;
     @Basic(optional = false)
