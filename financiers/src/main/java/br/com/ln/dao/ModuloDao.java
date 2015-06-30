@@ -20,11 +20,6 @@ import org.hibernate.Transaction;
  */
 public class ModuloDao implements Serializable{
 
-/**
-     *
-     * @param obj delete object
-     * @param strDbName
-     */
     public static List<LnModulo> grabListModuloAtivo(Character modChAtivo){
         
         Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
@@ -42,7 +37,7 @@ public class ModuloDao implements Serializable{
             }
             
         }finally{
-            if (session != null && session.isOpen()){
+            if (session.isOpen()){
                 session.close();
             }
         }

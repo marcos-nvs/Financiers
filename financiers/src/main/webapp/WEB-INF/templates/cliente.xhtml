@@ -93,13 +93,13 @@
     
     <p:dialog header="#{msgs['node.inclusion']} de Endereco" widgetVar="DlgEndereco" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
-        <h:panelGrid columns="4">
+        <h:panelGrid id="idgridcep" columns="3" style="margin-left: 50px;">
             <p:outputLabel value="CEP"/>
-            <p:inputText size="10" />
-            <p:commandButton id="idbuscacep" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>
-            
+            <p:inputText id="idinputcep" value="#{clienteView.cep}" size="10" />
+            <p:commandButton id="idbtbuscacep" icon="ui-icon-search" action="#{clienteView.btPesquisaCEP()}"
+                             process="idbtbuscacep, idinputcep" update="idgridendereco,idgriddetalhe, idgridcep,:idFormTop:growl"/>
         </h:panelGrid>
-        <h:panelGrid columns="4">
+        <h:panelGrid id="idgridendereco" columns="4">
             <p:outputLabel value="Tipo Endereço"/>
             <p:selectOneMenu id="idtipoendereco" value="#{clienteView.tipoEndereco}">
                 <f:selectItem itemLabel="Residêncial" itemValue="Residencial"/>
@@ -107,15 +107,15 @@
                 <f:selectItem itemLabel="Cobrança" itemValue="Cobranca"/>
             </p:selectOneMenu>
             <p:outputLabel value="Logradouro"/>
-            <p:inputText size="50" />
+            <p:inputText value="#{clienteView.endereco}" size="50" />
         </h:panelGrid>
-        <h:panelGrid columns="6" style="margin-left: 40px;">
+        <h:panelGrid id="idgriddetalhe" columns="6" style="margin-left: 40px;">
             <p:outputLabel value="Bairro"/>
-            <p:inputText size="20" />
+            <p:inputText value="#{clienteView.bairro}" size="20" />
             <p:outputLabel value="Cidade"/>
-            <p:inputText size="20" />
+            <p:inputText value="#{clienteView.cidade}" size="20" />
             <p:outputLabel value="Estado"/>
-            <p:inputText size="20" />
+            <p:inputText value="#{clienteView.estado}" size="20" />
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton id="idbtsalvarendereco" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>
@@ -123,6 +123,7 @@
                              action="#{clienteView.btFecharEndereco()}" process="idbtfecharendereco" update="idbtfecharendereco"/>
         </f:facet>
     </p:dialog>
+    
     <p:dialog header="#{msgs['node.inclusion']} de Telefone" widgetVar="DlgTelefone" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid columns="8">
@@ -133,11 +134,11 @@
                 <f:selectItem itemLabel="Celular" itemValue="Celular"/>
             </p:selectOneMenu>
             <p:outputLabel value="Código País"/>
-            <p:inputText size="4" />
+            <p:inputText value="#{clienteView.codigoPais}" size="4" />
             <p:outputLabel value="DDD"/>
-            <p:inputText size="4" />
+            <p:inputText value="#{clienteView.ddd}" size="4" />
             <p:outputLabel value="Telefone"/>
-            <p:inputText size="30" />
+            <p:inputText value="#{clienteView.telefone}" size="30" />
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton id="idbtsalvartelefone" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>

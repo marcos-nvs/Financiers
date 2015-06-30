@@ -5,7 +5,10 @@
  */
 package br.com.ln.view;
 
+import br.com.ln.comum.ApprovalConnection;
 import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.Correios;
+import br.com.ln.comum.EnderecoCep;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.Utilitarios;
 import br.com.ln.entity.LnCliente;
@@ -17,10 +20,13 @@ import br.com.ln.financiers.TipoEndereco;
 import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TipoTelefone;
 import java.io.Serializable;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -54,7 +60,7 @@ public class ClienteView implements Serializable {
     private LnCliente lnCliente;
     private LnEndereco lnEndereco;
     private LnTelefone lnTelefone;
-    
+
     private String mensagem;
 
     private List<LnEndereco> listEndereco = new ArrayList<LnEndereco>();
@@ -216,7 +222,7 @@ public class ClienteView implements Serializable {
         this.listTelefone = listTelefone;
     }
 
-     public void btIncluirEndereco() {
+    public void btIncluirEndereco() {
         lnEndereco = new LnEndereco();
         lnEndereco.setTipoFuncao(TipoFuncao.Incluir);
         listEndereco.clear();
@@ -233,7 +239,6 @@ public class ClienteView implements Serializable {
 
     public void btSalvarEndereco() {
         dataLoadEndereco();
-        
 
     }
 
@@ -270,12 +275,52 @@ public class ClienteView implements Serializable {
     }
 
     private void dataLoadEndereco() {
-        
         lnEndereco.setEndStEndereco(endereco);
         lnEndereco.setEndStBairro(bairro);
         lnEndereco.setEndStCidade(cidade);
         lnEndereco.setEndStEstado(estado);
         lnEndereco.setEndStCep(cep);
     }
-    
+
+//    static {
+//        String host = "proxy-sp.dasa.net";
+//        String port = "3128";
+//        System.out.println("Using proxy: " + host + ":" + port);
+//        System.setProperty("http.proxyHost", host);
+//        System.setProperty("http.proxyPort", port);
+//        System.setProperty("http.proxySet", "true");
+//        System.setProperty("http.nonProxyHosts", "localhost|127.0.0.1");
+//    }
+
+    public void btPesquisaCEP() {
+        try {
+            if (ApprovalConnection.getConnectionApproval("http://correiosapi.apphb.com")) {
+                if (cep != null) {
+                    EnderecoCep enderecoCep = new EnderecoCep();
+                    Correios correio = new Correios();
+                    enderecoCep = correio.entregaEndereco(cep.replaceAll("-", ""));
+                    correio.close();
+                    if (enderecoCep != null) {
+                        endereco = enderecoCep.getTipoDeLogradouro() + " " + enderecoCep.getLogradouro();
+                        bairro = enderecoCep.getBairro();
+                        cidade = enderecoCep.getCidade();
+                        estado = enderecoCep.getEstado();
+                    } else {
+                        mensagem = "Cep não localizado!!!";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+                    }
+                } else {
+                    mensagem = "Cep em branco, por favor entre com o CEP!!!";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+                }
+            } else {
+                mensagem = "Não foi possível pesquisar o CEP, computador fora da internet ou site indisponível!!!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            }
+        } catch (ConnectException ex) {
+            mensagem = "Não foi possível pesquisar o CEP, computador fora da internet ou site indisponível!!!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+        }
+    }
+
 }
