@@ -21,15 +21,15 @@
     <mapping class="br.com.ln.entity.LnModulo"/>
     <mapping class="br.com.ln.entity.LnPerfil"/>
     <mapping class="br.com.ln.entity.LnPerfilacesso"/>
-    <mapping class="br.com.ln.entity.LnUsuario"/>
     <mapping class="br.com.ln.entity.LnCategoria"/>
     <mapping class="br.com.ln.entity.LnTipoconta"/>
     <mapping class="br.com.ln.entity.LnTipotabela"/>
     <mapping class="br.com.ln.entity.LnTabela"/>
-    <mapping class="br.com.ln.entity.LnCliente"/>
     <mapping class="br.com.ln.entity.LnEndereco"/>
     <mapping class="br.com.ln.entity.LnTelefone"/>
     
+    <mapping class="br.com.ln.entity.LnUsuario"/>
+    <mapping class="br.com.ln.entity.LnCliente"/>
 
   </session-factory>
 </hibernate-configuration>

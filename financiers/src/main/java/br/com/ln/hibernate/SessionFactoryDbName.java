@@ -16,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 /**
  * Fabrica de conexÃ£o
@@ -52,6 +53,9 @@ public class SessionFactoryDbName implements Serializable{
             cfg.setProperty("hibernate.connection.datasource", "jdbc/Financiers");
             cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
             cfg.setProperty("hibernate.default_schema", strDbName);
+            
+            SchemaExport export = new SchemaExport(cfg);
+            export.create(true, true);
             
             StandardServiceRegistry seviceRegistry = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
             sessionFactory = cfg.buildSessionFactory(seviceRegistry);
