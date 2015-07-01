@@ -41,7 +41,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnUsuario.findByUsuDtCadastro", query = "SELECT l FROM LnUsuario l WHERE l.usuDtCadastro = :usuDtCadastro"),
     @NamedQuery(name = "LnUsuario.findByPerInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.perInCodigo = :perInCodigo"),
     @NamedQuery(name = "LnUsuario.findByUsuStCpf", query = "SELECT l FROM LnUsuario l WHERE l.usuStCpf = :usuStCpf"),
-    @NamedQuery(name = "LnUsuario.findByUsuStBanco", query = "SELECT l FROM LnUsuario l WHERE l.usuStBanco = :usuStBanco"),
     @NamedQuery(name = "LnUsuario.findByCliInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.cliInCodigo = :cliInCodigo"),
     @NamedQuery(name = "LnUsuario.findAllUsuStCodigoUsuChAtivo", query = "SELECT l FROM LnUsuario l WHERE l.usuStCodigo = :usuStCodigo and l.usuChAtivo = :usuChAtivo")})
 public class LnUsuario implements Serializable {
@@ -81,9 +80,6 @@ public class LnUsuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "usu_st_cpf")
     private String usuStCpf;
-    @Basic(optional = false)
-    @Column(name = "usu_st_banco")
-    private String usuStBanco;
     @Column(name = "cli_in_codigo")
     private Integer cliInCodigo;
     
@@ -98,7 +94,7 @@ public class LnUsuario implements Serializable {
         this.usuStCodigo = usuStCodigo;
     }
 
-    public LnUsuario(String usuStCodigo, String usuStNome, String usuStSenha, Character usuChAtivo, Character usuChAlterasenha, Character usuChExpirasenha, int perInCodigo, String usuStCpf, String usuStBanco) {
+    public LnUsuario(String usuStCodigo, String usuStNome, String usuStSenha, Character usuChAtivo, Character usuChAlterasenha, Character usuChExpirasenha, int perInCodigo, String usuStCpf) {
         this.usuStCodigo = usuStCodigo;
         this.usuStNome = usuStNome;
         this.usuStSenha = usuStSenha;
@@ -107,7 +103,6 @@ public class LnUsuario implements Serializable {
         this.usuChExpirasenha = usuChExpirasenha;
         this.perInCodigo = perInCodigo;
         this.usuStCpf = usuStCpf;
-        this.usuStBanco = usuStBanco;
     }
 
     public String getUsuStCodigo() {
@@ -204,14 +199,6 @@ public class LnUsuario implements Serializable {
 
     public void setUsuStCpf(String usuStCpf) {
         this.usuStCpf = usuStCpf;
-    }
-
-    public String getUsuStBanco() {
-        return usuStBanco;
-    }
-
-    public void setUsuStBanco(String usuStBanco) {
-        this.usuStBanco = usuStBanco;
     }
 
     public Integer getCliInCodigo() {

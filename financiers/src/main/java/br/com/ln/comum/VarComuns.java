@@ -6,6 +6,7 @@
 
 package br.com.ln.comum;
 
+import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
@@ -27,6 +28,7 @@ public class VarComuns implements Serializable{
     public static LnPerfil lnPerfil;
     public static LnPerfilacesso lnPerfilacesso;
     public static LnUsuario lnUsusario;
+    public static LnCliente lnCliente;
     public static Map<Integer, String> mapModulo = new HashMap<>();
     
     public static String local(){

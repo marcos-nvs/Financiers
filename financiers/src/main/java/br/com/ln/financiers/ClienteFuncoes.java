@@ -50,11 +50,11 @@ public class ClienteFuncoes {
         if (lnCliente != null) {
             if (lnCliente.getCliStDocumento() != null && !lnCliente.getCliStDocumento().isEmpty()) {
                 if (!Utilitarios.calculaCPF(lnCliente.getCliStDocumento())) {
-                    mensagem = mensagem + "CPF inválido,";
+                    mensagem = mensagem + "CPF invalido,";
                 } else {
                     LnCliente lnClienteCpf = ClienteDao.grabClienteCpf(lnCliente.getCliStDocumento());
                     if (lnClienteCpf != null) {
-                        mensagem = "Cliente já cadastrado!";
+                        mensagem = "Cliente ja cadastrado!";
                         return false;
                     }
                 }
@@ -67,14 +67,14 @@ public class ClienteFuncoes {
             }
 
             if (lnCliente.getCliStBanco() != null && lnCliente.getCliStBanco().isEmpty()) {
-                mensagem = mensagem + "Preencher a identificação do sistema,";
+                mensagem = mensagem + "Preencher a identificacao do sistema,";
             }
             if (lnCliente.getCliStEmail() != null && lnCliente.getCliStEmail().isEmpty()) {
                 mensagem = mensagem + "Preencher o e-mail";
             }
 
             if (listEndereco.size() == 0 && listEndereco.isEmpty()) {
-                mensagem = mensagem + "Preencher um endereço";
+                mensagem = mensagem + "Preencher um endereco";
             }
 
             if (listTelefone.size() == 0 && listTelefone.isEmpty()) {
@@ -95,18 +95,18 @@ public class ClienteFuncoes {
 
         if (lnCliente != null) {
             ClienteDao.saveObject(lnCliente);
-            historico.gravaHistorico("Web", "Inclusão do Cliente : " + lnCliente.getCliStNome());
+            historico.gravaHistorico("Web", "Inclusao do Cliente : " + lnCliente.getCliStNome());
 
             for (LnEndereco lnEndereco : listEndereco) {
                 lnEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
                 ClienteDao.saveObject(lnEndereco);
-                historico.gravaHistorico("Web", "Inclusão do Endereco do Cliente: " + lnCliente.getCliStNome());
+                historico.gravaHistorico("Web", "Inclusso do Endereco do Cliente: " + lnCliente.getCliStNome());
             }
 
             for (LnTelefone lnTelefone : listTelefone) {
                 lnTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
                 ClienteDao.saveObject(lnTelefone);
-                historico.gravaHistorico("Web", "Inclusão do Telefone do Cliente: " + lnCliente.getCliStNome());
+                historico.gravaHistorico("Web", "Inclusao do Telefone do Cliente: " + lnCliente.getCliStNome());
             }
 
             mensagem = "Sucesso";

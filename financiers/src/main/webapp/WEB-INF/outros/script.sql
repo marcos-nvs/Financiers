@@ -143,7 +143,6 @@ CREATE TABLE acessocontrol.ln_usuario
   usu_dt_cadastro date,
   per_in_codigo integer NOT NULL,
   usu_st_cpf character varying(11) NOT NULL,
-  usu_st_banco character varying(20) NOT NULL,
   cli_in_codigo integer,
   CONSTRAINT pk_usustcodigo PRIMARY KEY (usu_st_codigo)
 )
@@ -178,8 +177,8 @@ CREATE INDEX ind_usuariocpf
   (usu_st_codigo COLLATE pg_catalog."default", usu_st_cpf COLLATE pg_catalog."default");
 
 insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
-                                 "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "usu_st_banco" ) values 
-                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896','public');
+                                 "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "cli_in_codigo") values 
+                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',6);
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Schema: public

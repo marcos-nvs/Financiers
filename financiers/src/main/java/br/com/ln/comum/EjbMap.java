@@ -5,6 +5,7 @@
  */
 package br.com.ln.comum;
 
+import br.com.ln.dao.ClienteDao;
 import br.com.ln.dao.MenuDao;
 import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnMenu;
@@ -14,6 +15,7 @@ import br.com.ln.entity.LnTipoconta;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.dao.TipoContaDao;
 import br.com.ln.dao.UsuarioDao;
+import br.com.ln.entity.LnCliente;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +31,7 @@ import javax.ejb.Singleton;
 public class EjbMap implements Serializable{
     
     private static final Map<String, LnUsuario> mapUsuario = new HashMap<>(100);
+    private static final Map<String, LnCliente> mapCliente = new HashMap<>(100);
     private static final Map<String, LnPerfil> mapPerfil = new HashMap<>(30);
     private static final Map<String, List<LnPerfilacesso>> mapListPerfilAcesso = new HashMap<>(200);
     private static final Map<String, List<LnMenu>> mapMenu = new HashMap<>(100);
@@ -53,6 +56,24 @@ public class EjbMap implements Serializable{
             }
         }
         return lnUsuario;
+    }
+    
+    public synchronized static LnCliente grabCliente(Integer cliInCodigo){
+        LnCliente lnCliente = null;
+        String code = cliInCodigo.toString();
+        
+        if (cliInCodigo != null){
+            if (mapCliente.containsKey(code)){
+                lnCliente = mapCliente.get(code);
+            } else {
+                lnCliente = ClienteDao.grabClienteCodigo(cliInCodigo);
+                if (lnCliente != null){
+                    mapCliente.put(code, lnCliente);
+                }
+            }
+        }
+        
+        return lnCliente;
     }
     
     public synchronized static void updateUsuario(LnUsuario lnUsuario, String strDbName){

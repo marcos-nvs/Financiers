@@ -27,7 +27,7 @@ public class ClienteDao extends GenericDao implements Serializable{
         LnCliente lnCliente = null;
         
         try{
-            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            session = SessionFactoryDbName.getCurrentSessionByName("acessocontrol");
             tx = session.beginTransaction();
 
             Query query = session.getNamedQuery("LnCliente.findByCliStDocumento");
@@ -40,6 +40,34 @@ public class ClienteDao extends GenericDao implements Serializable{
                 lnCliente = (LnCliente) l.get(0);
             }
         }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return lnCliente;
+    }
+    
+    public static LnCliente grabClienteCodigo(Integer cliInCodigo){
+        
+        Session session = null;
+        Transaction tx = null;
+        LnCliente lnCliente = null;
+        
+        try {
+            session = SessionFactoryDbName.getCurrentSessionByName("acessocontrol");
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnCliente.findByCliInCodigo");
+            query.setInteger("cliInCodigo",cliInCodigo);
+            
+            List l = query.list();
+            tx.commit();
+            
+            if (l != null && !l.isEmpty()){
+                lnCliente = (LnCliente) l.get(0);
+            }
+        } finally {
             if (session != null && session.isOpen()){
                 session.close();
             }

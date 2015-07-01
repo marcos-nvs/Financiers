@@ -17,6 +17,7 @@ import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.dao.GenericDao;
 import br.com.ln.dao.UsuarioDao;
+import br.com.ln.entity.LnCliente;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -43,6 +44,7 @@ public class FnAcesso implements Serializable {
     private String senha;
     private String mensagem;
     private LnUsuario lnUsuario;
+    private LnCliente lnCliente;
     private BeanVar beanVar;
     private MenuModel model;
     private String cpf;
@@ -160,6 +162,7 @@ public class FnAcesso implements Serializable {
         if (VarComuns.strDbName != null) {
             if (usuario != null && senha != null) {
                 lnUsuario = EjbMap.grabUsuario(usuario, "acessocontrol");
+                lnCliente = EjbMap.grabCliente(lnUsuario.getCliInCodigo());
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(senha)) {
                         lnUsuario = null;
@@ -167,8 +170,9 @@ public class FnAcesso implements Serializable {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
                     } else {
                         UsuarioFuncoes usuarioFuncoes = new UsuarioFuncoes();
+                        
                         if (usuarioFuncoes.verificaExpiracaoSenha(lnUsuario)) {
-                            VarComuns.strDbName = lnUsuario.getUsuStBanco();
+                            VarComuns.strDbName = lnCliente.getCliStBanco();
                             VarComuns.lnUsusario = lnUsuario;
                             LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName);
                             model = lnMenuModel.getModel();
