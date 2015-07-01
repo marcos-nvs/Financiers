@@ -48,7 +48,7 @@ public class ClienteFuncoes {
         validado = true;
         
         if (lnCliente != null) {
-            if (lnCliente.getCliStDocumento() != null && lnCliente.getCliStDocumento().isEmpty()) {
+            if (lnCliente.getCliStDocumento() != null && !lnCliente.getCliStDocumento().isEmpty()) {
                 if (!Utilitarios.calculaCPF(lnCliente.getCliStDocumento())) {
                     mensagem = mensagem + "CPF inválido,";
                 } else {

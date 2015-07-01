@@ -43,7 +43,7 @@ public class LnEndereco implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @SequenceGenerator(name = "seqEndereco", sequenceName = "seq_endereco", allocationSize = 1)
+    @SequenceGenerator(name = "seqEndereco", sequenceName = "acessocontrol.seq_endereco", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqEndereco")
     @Column(name = "end_in_codigo")
     private Integer endInCodigo;

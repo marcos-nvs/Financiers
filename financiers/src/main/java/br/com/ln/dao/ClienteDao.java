@@ -22,19 +22,23 @@ public class ClienteDao extends GenericDao implements Serializable{
     
     public static LnCliente grabClienteCpf(String documento){
         
-        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-        Transaction tx = session.getTransaction();
+        Session session = null;
+        Transaction tx = null;
         LnCliente lnCliente = null;
         
         try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+
             Query query = session.getNamedQuery("LnCliente.findByCliStDocumento");
             query.setString("cliStDocumento", documento);
             
             List l = query.list();
             tx.commit();
             
-            lnCliente = (LnCliente) l.get(0);
-            
+            if (l != null && !l.isEmpty()) {
+                lnCliente = (LnCliente) l.get(0);
+            }
         }finally{
             if (session != null && session.isOpen()){
                 session.close();

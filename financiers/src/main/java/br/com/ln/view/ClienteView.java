@@ -329,7 +329,8 @@ public class ClienteView implements Serializable {
     public void btSalvarCliente() {
         dataLoadCliente();
         if (clienteFuncoes.validacao(lnCliente, listEndereco, listTelefone)){
-            
+            clienteFuncoes.cliente(lnCliente, listEndereco, listTelefone);
+            btFecharCliente();
         } else {
             mensagem = clienteFuncoes.mensagem;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
@@ -346,8 +347,8 @@ public class ClienteView implements Serializable {
         lnCliente.setCliStNome(nome);
         lnCliente.setCliStBanco(banco);
         lnCliente.setCliStEmail(email);
+        lnCliente.setCliChAtivo('N');
         lnCliente.setTipoFuncao(TipoFuncao.Incluir);
-        
     }
 
     private void dataLoadEndereco() {

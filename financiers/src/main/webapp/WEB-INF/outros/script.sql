@@ -46,7 +46,7 @@ ALTER TABLE acessocontrol.seq_cliente
 
 -- Table: acessocontrol.ln_endereco
 
--- DROP TABLE acessocontrol.ln_endereco;
+ DROP TABLE acessocontrol.ln_endereco;
 
 CREATE TABLE acessocontrol.ln_endereco
 (
@@ -57,8 +57,8 @@ CREATE TABLE acessocontrol.ln_endereco
   end_st_complemento character varying(50), 
   end_st_bairro character varying(50) NOT NULL,
   end_st_cidade character varying(50) NOT NULL,
-  end_st_estado character varying(2) NOT NULL,
-  end_st_cep character varying(8) NOT NULL,
+  end_st_estado character varying(20) NOT NULL,
+  end_st_cep character varying(10) NOT NULL,
   CONSTRAINT ln_endereco_pkey PRIMARY KEY (end_in_codigo)
 )
 WITH (

@@ -39,7 +39,7 @@ public class LnCliente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @SequenceGenerator(name = "seqCliente", sequenceName = "seq_cliente", allocationSize = 1)
+    @SequenceGenerator(name = "seqCliente", sequenceName = "acessocontrol.seq_cliente", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqCliente")
     @Column(name = "cli_in_codigo")
     private Integer cliInCodigo;
@@ -155,7 +155,8 @@ public class LnCliente implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnCliente[ cliInCodigo=" + cliInCodigo + " ]";
+        return "LnCliente{" + "cliInCodigo=" + cliInCodigo + ", cliStDocumento=" + cliStDocumento + ", cliStNome=" + cliStNome + ", cliChAtivo=" + cliChAtivo + ", cliStBanco=" + cliStBanco + ", cliStEmail=" + cliStEmail + ", tipoFuncao=" + tipoFuncao + '}';
     }
+
 
 }

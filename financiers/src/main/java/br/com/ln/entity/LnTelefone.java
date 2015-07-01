@@ -39,7 +39,7 @@ public class LnTelefone implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @SequenceGenerator(name = "seqTelefone", sequenceName = "seq_telefone", allocationSize = 1)
+    @SequenceGenerator(name = "seqTelefone", sequenceName = "acessocontrol.seq_telefone", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqTelefone")
     @Column(name = "tel_in_codigo")
     private Integer telInCodigo;

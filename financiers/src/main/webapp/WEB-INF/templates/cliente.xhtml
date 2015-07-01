@@ -93,7 +93,8 @@
     </p:panel>
     <f:facet name="footer">
         <p:commandButton id="idbtsalvarcliente" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
-                         action="#{clienteView.btSalvarCliente()}" process="idbtsalvarcliente,idgrdcliente"
+                         action="#{clienteView.btSalvarCliente()}" process="idbtsalvarcliente,idgrdcliente, idinputdocumento, idinputnome,
+                         idinputbanco, idinputemail"
                          update="idbtsalvarcliente, :idFormTop:growl,idgrdcliente"/>
         <p:commandButton id="idbtfecharcliente" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-close"
                          action="#{clienteView.btFecharCliente()}" process="idbtfecharcliente"
