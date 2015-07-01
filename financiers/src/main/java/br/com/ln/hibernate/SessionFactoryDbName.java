@@ -54,8 +54,8 @@ public class SessionFactoryDbName implements Serializable{
             cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
             cfg.setProperty("hibernate.default_schema", strDbName);
             
-            SchemaExport export = new SchemaExport(cfg);
-            export.create(true, true);
+//            SchemaExport export = new SchemaExport(cfg);
+//            export.create(true, true);
             
             StandardServiceRegistry seviceRegistry = new StandardServiceRegistryBuilder().applySettings(cfg.getProperties()).build();
             sessionFactory = cfg.buildSessionFactory(seviceRegistry);
