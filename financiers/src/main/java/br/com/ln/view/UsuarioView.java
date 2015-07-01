@@ -382,6 +382,7 @@ public class UsuarioView implements Serializable {
         lnUsuario.setUsuStSenha(senha);
         lnUsuario.setUsuInDia(dia);
         lnUsuario.setUsuStCpf(tratamentoEspecial.tratamentoCpf(cpf));
+        lnUsuario.setCliInCodigo(VarComuns.lnCliente.getCliInCodigo());
     }
 
     public void dataLoadVar() {

@@ -163,6 +163,7 @@ public class FnAcesso implements Serializable {
             if (usuario != null && senha != null) {
                 lnUsuario = EjbMap.grabUsuario(usuario, "acessocontrol");
                 lnCliente = EjbMap.grabCliente(lnUsuario.getCliInCodigo());
+                VarComuns.lnCliente = lnCliente;
                 if (lnUsuario != null) {
                     if (!lnUsuario.getUsuStSenha().equals(senha)) {
                         lnUsuario = null;
@@ -170,7 +171,6 @@ public class FnAcesso implements Serializable {
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
                     } else {
                         UsuarioFuncoes usuarioFuncoes = new UsuarioFuncoes();
-                        
                         if (usuarioFuncoes.verificaExpiracaoSenha(lnUsuario)) {
                             VarComuns.strDbName = lnCliente.getCliStBanco();
                             VarComuns.lnUsusario = lnUsuario;
