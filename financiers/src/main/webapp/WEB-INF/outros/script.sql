@@ -46,7 +46,7 @@ ALTER TABLE acessocontrol.seq_cliente
 
 -- Table: acessocontrol.ln_endereco
 
- DROP TABLE acessocontrol.ln_endereco;
+-- DROP TABLE acessocontrol.ln_endereco;
 
 CREATE TABLE acessocontrol.ln_endereco
 (
