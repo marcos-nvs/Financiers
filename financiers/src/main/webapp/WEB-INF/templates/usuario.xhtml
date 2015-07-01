@@ -84,7 +84,7 @@
                          update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar,
                          btAlteraSenha, btHistorico, :idFormTop:growl"/>
         <p:commandButton id="btDeletar" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash" disabled="#{beanVar.apresenta}" 
-                         process="btDeletar" action="#{usuarioView.btDeletar}" update="cadUsuarioGrid, :idFormTop:growl">
+                         process="btDeletar, cadUsuarioGrid" action="#{usuarioView.btDeletar}" update="cadUsuarioGrid, :idFormTop:growl">
             <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert"/>
         </p:commandButton>
         <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">

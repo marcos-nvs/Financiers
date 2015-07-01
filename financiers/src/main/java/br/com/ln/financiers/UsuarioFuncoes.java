@@ -19,16 +19,25 @@ import java.util.Date;
  * @author Marcos Naves
  */
 public class UsuarioFuncoes {
-    
+
     private String mensagem;
     private Historico historico;
     private String cpf;
+
+    public String getMensagem() {
+        return mensagem;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
+
     
     public String usuario(LnUsuario lnUsuario) {
         mensagem = "";
         historico = new Historico();
-        
-        switch (lnUsuario.getTipoFuncao()){
+
+        switch (lnUsuario.getTipoFuncao()) {
             case Incluir:
                 inclusaoUsuario(lnUsuario);
                 break;
@@ -41,10 +50,10 @@ public class UsuarioFuncoes {
             case Pesquisar:
                 break;
         }
-        
+
         return mensagem;
     }
-    
+
     private void inclusaoUsuario(LnUsuario lnUsuario) {
         LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
 
@@ -52,14 +61,14 @@ public class UsuarioFuncoes {
             mensagem = "Usuário já cadastrado!!!";
         } else {
             if (verificaDadosUsuario(lnUsuario)) {
-                if (lnUsuario.getUsuChExpirasenha().equals('S')){
+                if (lnUsuario.getUsuChExpirasenha().equals('S')) {
                     lnUsuario.setUsuInDia(30);
                     lnUsuario.setUsuStAdmin('N');
                     lnUsuario.setUsuDtExpiracao(GenericDao.grabDateFromDB());
                 }
                 lnUsuario.setUsuDtCadastro(GenericDao.grabDateFromDB());
                 GenericDao.saveObject(lnUsuario);
-                historico.gravaHistoricoModulo("Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
+                historico.gravaHistoricoModulo("Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
                 mensagem = "Sucesso";
             }
         }
@@ -89,7 +98,7 @@ public class UsuarioFuncoes {
                 mensagem = mensagem + "Senha";
             }
         }
-        if (lnUsuario.getUsuStCpf() != null && !lnUsuario.getUsuStCpf().equals("")){
+        if (lnUsuario.getUsuStCpf() != null && !lnUsuario.getUsuStCpf().equals("")) {
             if (!Utilitarios.calculaCPF(lnUsuario.getUsuStCpf())) {
                 mensagem = mensagem + " " + "CPF invalido";
                 validado = false;
@@ -100,46 +109,46 @@ public class UsuarioFuncoes {
 
     private void alteracaoUsuario(LnUsuario lnUsuario) {
 
-        if (verificaDadosUsuario(lnUsuario)){
+        if (verificaDadosUsuario(lnUsuario)) {
             LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
             lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
             GenericDao.saveOrUpdateObject(lnUsuario);
-            historico.gravaHistoricoModulo("Alteracao do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
+            historico.gravaHistoricoModulo("Alteracao do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
             mensagem = "Sucesso";
         }
     }
 
     private void exclusaoUsuario(LnUsuario lnUsuario) {
-        
+
         if (HistoricoDao.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {
             GenericDao.deleteObject(lnUsuario);
-            historico.gravaHistoricoModulo("Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() );
+            historico.gravaHistoricoModulo("Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
             mensagem = "Sucesso";
         } else {
-            mensagem = "O usuário " +lnUsuario.getUsuStCodigo() + " não pode ser excluído apenas cancelado.!!!!";
+            mensagem = "O usuário " + lnUsuario.getUsuStCodigo() + " não pode ser excluído apenas cancelado.!!!!";
         }
     }
 
     public Date calculaDataExpiracao(LnUsuario lnUsuario) {
-        
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(GenericDao.grabDateFromDB());
         calendar.add(Calendar.DATE, lnUsuario.getUsuInDia());
         return calendar.getTime();
-        
+
     }
-    
-    public boolean verificaExpiracaoSenha(LnUsuario lnUsuario){
-        
-        if (lnUsuario.getUsuChExpirasenha().equals('S')){
-            
+
+    public boolean verificaExpiracaoSenha(LnUsuario lnUsuario) {
+
+        if (lnUsuario.getUsuChExpirasenha().equals('S')) {
+
             Calendar hoje = Calendar.getInstance();
             hoje.setTime(GenericDao.grabDateFromDB());
-            
+
             Calendar expira = Calendar.getInstance();
             expira.setTime(lnUsuario.getUsuDtExpiracao());
-            
-            if (hoje.getTime().after(expira.getTime())){
+
+            if (hoje.getTime().after(expira.getTime())) {
                 return false;
             } else {
                 return true;

@@ -6,6 +6,7 @@
 package br.com.ln.dao;
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

@@ -238,6 +238,7 @@ public class UsuarioView implements Serializable {
             dataClean();
             lnUsuario = new LnUsuario();
             lnUsuario.setTipoFuncao(TipoFuncao.Incluir);
+            lnUsuario.setUsuStAdmin('N');
         } else {
             mensagem = "Usuario sem perimissao para incluir";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
@@ -263,20 +264,21 @@ public class UsuarioView implements Serializable {
 
     public void btDeletar() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
-
             try {
                 if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
                     lnUsuario.setTipoFuncao(TipoFuncao.Excluir);
                     functions.usuario(lnUsuario);
                     listUsuario = UsuarioDao.grabListObject(LnUsuario.class);
                     beanVar.setApresenta(true);
+                    mensagem = functions.getMensagem();
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
                 } else {
                     mensagem = "Por favor, escolha um Usuario para excluir.";
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
                 }
             } catch (NullPointerException ex) {
-                mensagem = "Por favor, escolha um Usuario para excluir.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                mensagem = "Ocorreu um problema durante a exclusão.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario", mensagem));
             }
         } else {
             mensagem = "Usuario sem perimissao para excluir";
