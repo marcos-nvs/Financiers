@@ -132,7 +132,7 @@ public class LnMenuModel implements Serializable {
             String itemMenuClick = menuActionEvent.getMenuItem().getTitle();
             switch (itemMenuClick) {
                 case "Cliente":
-                    beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
+                    beanVar.setNovaTela("WEB-INF/templates/clienteadmin.xhtml");
                     beanVar.setNomeTela("Cadastro de Cliente");
 //                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
                     break;

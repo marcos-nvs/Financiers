@@ -39,9 +39,9 @@ public class EjbMap implements Serializable{
     private static final Map<String, LnTipoconta> mapTipoConta = new HashMap<>(20);
     
     
-    public synchronized static LnUsuario grabUsuario(String usuStCodigo, String strDbName){
+    public synchronized static LnUsuario grabUsuario(String usuStCodigo){
         LnUsuario lnUsuario = null;
-        String code = usuStCodigo+strDbName;
+        String code = usuStCodigo;
         
         if (usuStCodigo != null){
             if (mapUsuario.containsKey(code)){
@@ -76,8 +76,8 @@ public class EjbMap implements Serializable{
         return lnCliente;
     }
     
-    public synchronized static void updateUsuario(LnUsuario lnUsuario, String strDbName){
-        String code = lnUsuario.getUsuStCodigo()+strDbName;
+    public synchronized static void updateUsuario(LnUsuario lnUsuario){
+        String code = lnUsuario.getUsuStCodigo();
         mapUsuario.put(code, lnUsuario);
     }
     

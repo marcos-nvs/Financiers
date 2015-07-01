@@ -335,14 +335,14 @@ public class UsuarioView implements Serializable {
                 if (tela.equals("Usuario")) {
                     if (VarComuns.lnUsusario.getUsuStCodigo().equals(lnUsuario.getUsuStCodigo())) {
                         VarComuns.lnUsusario = lnUsuario;
-                        EjbMap.updateUsuario(lnUsuario, VarComuns.strDbName);
+                        EjbMap.updateUsuario(lnUsuario);
                         historico.gravaHistoricoModulo("Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada.");
                         RequestContext.getCurrentInstance().execute("PF('novaSenha').hide()");
                     }
                 } else {
                     if (VarComuns.lnUsusario != null) {
                         VarComuns.lnUsusario = lnUsuario;
-                        EjbMap.updateUsuario(lnUsuario, VarComuns.strDbName);
+                        EjbMap.updateUsuario(lnUsuario);
                     }
                     historico.gravaHistorico(lnUsuario, "Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada, no Login.");
                     RequestContext.getCurrentInstance().execute("PF('senha').hide()");
