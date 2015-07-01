@@ -54,6 +54,7 @@ public class UsuarioFuncoes {
             if (verificaDadosUsuario(lnUsuario)) {
                 if (lnUsuario.getUsuChExpirasenha().equals('S')){
                     lnUsuario.setUsuInDia(30);
+                    lnUsuario.setUsuStAdmin('N');
                     lnUsuario.setUsuDtExpiracao(GenericDao.grabDateFromDB());
                 }
                 lnUsuario.setUsuDtCadastro(GenericDao.grabDateFromDB());

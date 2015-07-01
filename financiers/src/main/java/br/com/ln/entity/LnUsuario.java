@@ -82,6 +82,8 @@ public class LnUsuario implements Serializable {
     private String usuStCpf;
     @Column(name = "cli_in_codigo")
     private Integer cliInCodigo;
+    @Column(name = "usu_st_admin")
+    private Character usuStAdmin;
     
     @Transient
     private TipoFuncao tipoFuncao;
@@ -209,6 +211,14 @@ public class LnUsuario implements Serializable {
         this.cliInCodigo = cliInCodigo;
     }
 
+    public Character getUsuStAdmin() {
+        return usuStAdmin;
+    }
+
+    public void setUsuStAdmin(Character usuStAdmin) {
+        this.usuStAdmin = usuStAdmin;
+    }
+    
     public TipoFuncao getTipoFuncao() {
         return tipoFuncao;
     }

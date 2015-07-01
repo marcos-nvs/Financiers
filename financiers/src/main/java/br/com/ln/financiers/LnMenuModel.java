@@ -63,6 +63,9 @@ public class LnMenuModel implements Serializable {
 
         if (listMenu != null && !listMenu.isEmpty()) {
 
+            if (VarComuns.lnUsusario.getUsuStAdmin().equals('S')) {
+                model.addElement(clienteControl());
+            }
             for (LnMenu lnMenu : listMenu) {
                 subMenu = new DefaultSubMenu(lnMenu.getMenStDescricao());
                 subMenu.setRendered(false);
@@ -128,6 +131,11 @@ public class LnMenuModel implements Serializable {
         if (menuActionEvent != null) {
             String itemMenuClick = menuActionEvent.getMenuItem().getTitle();
             switch (itemMenuClick) {
+                case "Cliente":
+                    beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
+                    beanVar.setNomeTela("Cadastro de Cliente");
+//                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
+                    break;
                 case "Usuário":
                     beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
                     beanVar.setNomeTela("Cadastro de Usuário");
@@ -171,6 +179,24 @@ public class LnMenuModel implements Serializable {
         }
     }
     
+    public DefaultSubMenu clienteControl(){
+        
+        DefaultSubMenu subMenu = new DefaultSubMenu("");
+        DefaultMenuItem item;
+        
+        subMenu = new DefaultSubMenu("Administração");
+        item = new DefaultMenuItem("Cliente");
+        item.setTitle("Cliente");
+        item.setCommand("#{lnMenuModel.menuActionClick}");
+        item.setUpdate(":idFormCenter");
+        item.setProcess(":idFormCenter");
+        item.setAjax(false);
+        subMenu.addElement(item);
+        subMenu.setRendered(true);
+        
+        return subMenu;
+    } 
+
     public DefaultSubMenu itemAll(){
         
         DefaultSubMenu subMenu = new DefaultSubMenu("");
