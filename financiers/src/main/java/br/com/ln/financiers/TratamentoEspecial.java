@@ -50,4 +50,28 @@ public class TratamentoEspecial implements Serializable{
         cpf = cpf.replaceAll("-", "");
         return cpf;
     }
+    
+    public String tratamentoTipoEndereco(Character tipoEndereco){
+        switch (tipoEndereco){
+            case '1':
+                return "Residêncial";
+            case '2':
+                return "Comercial";
+            case '3':
+                return "Cobrança";
+        }
+        return null;
+    }
+    
+    public String tratamentoTipoTelefone(Character tipoTelefone){
+        switch (tipoTelefone){
+            case '1':
+                return "Residêncial";
+            case '2':
+                return "Comercial";
+            case '3':
+                return "Celular";
+        }
+        return null;
+    }
 }

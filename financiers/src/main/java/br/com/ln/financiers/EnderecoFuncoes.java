@@ -5,7 +5,11 @@
  */
 package br.com.ln.financiers;
 
+import br.com.ln.dao.EnderecoDao;
+import br.com.ln.dao.TelefoneDao;
 import br.com.ln.entity.LnEndereco;
+import br.com.ln.entity.LnTelefone;
+import java.util.List;
 
 /**
  *
@@ -69,4 +73,11 @@ public class EnderecoFuncoes {
         return codigo;
     }
     
+    public List<LnEndereco> grabListEndereco(Integer cliInCodigo){
+        return EnderecoDao.grabListEnderecoCodigoCliente(cliInCodigo);
+    }
+
+    public List<LnTelefone> grabListTelefone(Integer cliInCodigo){
+        return TelefoneDao.grabListTelefoneCodigoCliente(cliInCodigo);
+    }
 }

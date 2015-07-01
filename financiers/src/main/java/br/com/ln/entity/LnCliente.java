@@ -7,6 +7,7 @@ package br.com.ln.entity;
 
 import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -61,6 +62,10 @@ public class LnCliente implements Serializable {
 
     @Transient
     private TipoFuncao tipoFuncao;
+    @Transient
+    private List<LnEndereco> listEndereco;
+    @Transient
+    private List<LnTelefone> listTelefone;
 
     public LnCliente() {
     }
@@ -131,6 +136,22 @@ public class LnCliente implements Serializable {
 
     public void setTipoFuncao(TipoFuncao tipoFuncao) {
         this.tipoFuncao = tipoFuncao;
+    }
+
+    public List<LnEndereco> getListEndereco() {
+        return listEndereco;
+    }
+
+    public void setListEndereco(List<LnEndereco> listEndereco) {
+        this.listEndereco = listEndereco;
+    }
+
+    public List<LnTelefone> getListTelefone() {
+        return listTelefone;
+    }
+
+    public void setListTelefone(List<LnTelefone> listTelefone) {
+        this.listTelefone = listTelefone;
     }
 
     @Override
