@@ -55,10 +55,9 @@ public class ClienteView implements Serializable {
     private String telefone;
 
     private final BeanVar beanVar;
-    private Utilitarios utilitarios;
-    private ClienteFuncoes clienteFuncoes;
-    private EnderecoFuncoes enderecoFuncoes;
-    private TelefoneFuncoes telefoneFuncoes;
+    private final ClienteFuncoes clienteFuncoes;
+    private final EnderecoFuncoes enderecoFuncoes;
+    private final TelefoneFuncoes telefoneFuncoes;
 
     private LnCliente lnCliente;
     private LnEndereco lnEndereco;
@@ -76,6 +75,7 @@ public class ClienteView implements Serializable {
         telefoneFuncoes = new TelefoneFuncoes();
         listEndereco = new ArrayList<>();
         listTelefone = new ArrayList<>();
+        lnCliente = new LnCliente();
     }
 
     public String getDocumento() {
@@ -133,7 +133,7 @@ public class ClienteView implements Serializable {
     public void setComplemento(String complemento) {
         this.complemento = complemento;
     }
-    
+
     public String getBairro() {
         return bairro;
     }
@@ -245,22 +245,22 @@ public class ClienteView implements Serializable {
     }
 
     public void btAlterarEndereco() {
-        if(lnEndereco != null){
+        if (lnEndereco != null) {
             varLoadEndereco();
             listEndereco.remove(lnEndereco);
             RequestContext.getCurrentInstance().execute("PF('DlgEndereco').show()");
         } else {
             mensagem = "Para alterar é necessário escolher um endereço!!";
-            FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
     }
 
     public void btExcluirEndereco() {
-        if(lnEndereco != null){
+        if (lnEndereco != null) {
             listEndereco.remove(lnEndereco);
         } else {
             mensagem = "Para excluir é necessário escolher um endereço!!";
-            FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
     }
 
@@ -268,7 +268,7 @@ public class ClienteView implements Serializable {
         dataLoadEndereco();
         mensagem = enderecoFuncoes.validacao(lnEndereco);
 
-        if (mensagem.equals("Sucesso")){
+        if (mensagem.equals("Sucesso")) {
             listEndereco.add(lnEndereco);
             clearVarEndereco();
             RequestContext.getCurrentInstance().execute("PF('DlgEndereco').hide()");
@@ -288,22 +288,22 @@ public class ClienteView implements Serializable {
     }
 
     public void btAlterarTelefone() {
-        if (lnTelefone != null){
+        if (lnTelefone != null) {
             varLoadTelefone();
             listTelefone.remove(lnTelefone);
             RequestContext.getCurrentInstance().execute("PF('DlgTelefone').show()");
         } else {
             mensagem = "Para alterar é necessário escolher um telefone!!";
-            FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
     }
 
     public void btExcluirTelefone() {
-        if(lnTelefone != null){
+        if (lnTelefone != null) {
             listTelefone.remove(lnTelefone);
         } else {
             mensagem = "Para excluir é necessário escolher um telefone!!";
-            FacesContext.getCurrentInstance().addMessage(null , new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
 
     }
@@ -311,13 +311,13 @@ public class ClienteView implements Serializable {
     public void btSalvarTelefone() {
         dataLoadTelefone();
         mensagem = telefoneFuncoes.validacao(lnTelefone);
-        
-        if (mensagem.equals("Sucesso")){
+
+        if (mensagem.equals("Sucesso")) {
             listTelefone.add(lnTelefone);
             clearVarTelefone();
             RequestContext.getCurrentInstance().execute("PF('DlgTelefone').hide()");
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
         }
 
     }
@@ -328,7 +328,7 @@ public class ClienteView implements Serializable {
 
     public void btSalvarCliente() {
         dataLoadCliente();
-        if (clienteFuncoes.validacao(lnCliente, listEndereco, listTelefone)){
+        if (clienteFuncoes.validacao(lnCliente, listEndereco, listTelefone)) {
             clienteFuncoes.cliente(lnCliente, listEndereco, listTelefone);
             btFecharCliente();
         } else {
@@ -338,17 +338,16 @@ public class ClienteView implements Serializable {
     }
 
     public void btFecharCliente() {
-        beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+        beanVar.setNovaTela(beanVar.getTelaOrigem());
     }
-    
-    private void dataLoadCliente(){
-        lnCliente = new LnCliente();
+
+    private void dataLoadCliente() {
         lnCliente.setCliStDocumento(documento);
         lnCliente.setCliStNome(nome);
         lnCliente.setCliStBanco(banco);
         lnCliente.setCliStEmail(email);
         lnCliente.setCliChAtivo('N');
-        lnCliente.setTipoFuncao(TipoFuncao.Incluir);
+//        lnCliente.setTipoFuncao(TipoFuncao.Incluir);
     }
 
     private void dataLoadEndereco() {
@@ -361,16 +360,16 @@ public class ClienteView implements Serializable {
         lnEndereco.setEndStEstado(estado);
         lnEndereco.setEndStCep(cep);
     }
-    
-    private void dataLoadTelefone(){
+
+    private void dataLoadTelefone() {
         tipoLoadTelefone();
         lnTelefone.setTelInCodigo(telefoneFuncoes.calculaCodigo());
         lnTelefone.setTelStPais(codigoPais);
         lnTelefone.setTelStDdd(ddd);
         lnTelefone.setTelStTelefone(telefone);
     }
-    
-    private void clearVarEndereco(){
+
+    private void clearVarEndereco() {
         tipoEndereco = null;
         endereco = "";
         complemento = "";
@@ -379,15 +378,15 @@ public class ClienteView implements Serializable {
         estado = "";
         cep = "";
     }
-    
-    private void clearVarTelefone(){
+
+    private void clearVarTelefone() {
         tipoTelefone = null;
         codigoPais = "";
-        ddd ="";
+        ddd = "";
         telefone = "";
     }
-    
-    private void varLoadEndereco(){
+
+    private void varLoadEndereco() {
         tipoLoadVarEndereco();
         endereco = lnEndereco.getEndStEndereco();
         complemento = lnEndereco.getEndStComplemento();
@@ -396,16 +395,16 @@ public class ClienteView implements Serializable {
         estado = lnEndereco.getEndStEstado();
         cep = lnEndereco.getEndStCep();
     }
-    
-    private void varLoadTelefone(){
+
+    private void varLoadTelefone() {
         tipoLoadVarTelefone();
         codigoPais = lnTelefone.getTelStPais();
         ddd = lnTelefone.getTelStDdd();
         telefone = lnTelefone.getTelStTelefone();
     }
-    
-    private void tipoLoadEndereco(){
-        switch (tipoEndereco){
+
+    private void tipoLoadEndereco() {
+        switch (tipoEndereco) {
             case Residencial:
                 lnEndereco.setEndChTipo('1');
                 break;
@@ -417,9 +416,9 @@ public class ClienteView implements Serializable {
                 break;
         }
     }
-    
-    private void tipoLoadTelefone(){
-        switch (tipoTelefone){
+
+    private void tipoLoadTelefone() {
+        switch (tipoTelefone) {
             case Residencial:
                 lnTelefone.setTelChTipo('1');
                 break;
@@ -431,9 +430,9 @@ public class ClienteView implements Serializable {
                 break;
         }
     }
-    
-    private void tipoLoadVarEndereco(){
-        switch (lnEndereco.getEndChTipo()){
+
+    private void tipoLoadVarEndereco() {
+        switch (lnEndereco.getEndChTipo()) {
             case '1':
                 tipoEndereco = tipoEndereco.Residencial;
                 break;
@@ -445,9 +444,9 @@ public class ClienteView implements Serializable {
                 break;
         }
     }
-    
-    private void tipoLoadVarTelefone(){
-        switch (lnTelefone.getTelChTipo()){
+
+    private void tipoLoadVarTelefone() {
+        switch (lnTelefone.getTelChTipo()) {
             case '1':
                 tipoTelefone = tipoTelefone.Residencial;
                 break;
@@ -459,12 +458,12 @@ public class ClienteView implements Serializable {
                 break;
         }
     }
-    
-    public String buscaDescricaoTipoEndereco(Character tipoEndereco){
+
+    public String buscaDescricaoTipoEndereco(Character tipoEndereco) {
         return enderecoFuncoes.descricaoTipo(tipoEndereco);
     }
-    
-    public String buscaDescricaoTipoTelefone(Character tipoTelefone){
+
+    public String buscaDescricaoTipoTelefone(Character tipoTelefone) {
         return telefoneFuncoes.descricaoTipo(tipoTelefone);
     }
 

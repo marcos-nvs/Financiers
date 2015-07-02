@@ -227,6 +227,7 @@ public class FnAcesso implements Serializable {
     }
 
     public void cadastroCliente() {
+        beanVar.setTelaOrigem("WEB-INF/templates/login.xhtml");
         beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
         beanVar.setNomeTela("Sistema Financeiro");
     }

@@ -73,7 +73,9 @@
         </p:rowExpansion>
         
         <f:facet name="footer">
-            <p:commandButton id="btIncluirCliente" value="#{msgs['node.include']}" icon="ui-icon-document"/>
+            <p:commandButton id="btIncluirCliente" value="#{msgs['node.include']}" icon="ui-icon-document" 
+                             action="#{clienteAdminView.btIncluirCliente()}" process="btIncluirCliente"
+                             update="btIncluirCliente, :idFormCenter"/>
             <p:commandButton id="btAlterarCliente" value="#{msgs['template.change']}" icon="ui-icon-pencil"/>
             <p:commandButton id="btExcluirCliente" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
                 <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste cliente?" icon="ui-icon-alert"/>

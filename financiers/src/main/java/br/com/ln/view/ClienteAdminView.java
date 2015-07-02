@@ -5,13 +5,14 @@
  */
 package br.com.ln.view;
 
-import br.com.ln.dao.ClienteAdminDao;
-import br.com.ln.dao.EnderecoDao;
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnTelefone;
 import br.com.ln.financiers.ClienteAdminFuncoes;
 import br.com.ln.financiers.EnderecoFuncoes;
+import br.com.ln.financiers.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import java.io.Serializable;
 import java.util.List;
@@ -38,7 +39,13 @@ public class ClienteAdminView implements Serializable {
     private EnderecoFuncoes enderecoFuncoes;
     private TratamentoEspecial tratativa;
     
+    private final BeanVar beanVar;
+    private final ClienteView clienteView;
+    
+    
     public ClienteAdminView() {
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        clienteView = (ClienteView) JsfHelper.getSessionAttribute("clienteView");
         enderecoFuncoes = new EnderecoFuncoes();
         tratativa = new TratamentoEspecial();
         clienteAdminFuncoes = new ClienteAdminFuncoes();
@@ -108,4 +115,17 @@ public class ClienteAdminView implements Serializable {
         });
     }
     
+    public void btIncluirCliente(){
+        clienteView.getLnCliente().setTipoFuncao(TipoFuncao.Incluir);
+        beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
+        beanVar.setTelaOrigem("WEB-INF/templates/clienteadmin.xhtml");
+    }
+    
+    public void btAlterarCliente(){
+        beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
+        beanVar.setTelaOrigem("WEB-INF/templates/clienteadmin.xhtml");
+    }
+
+    public void btExcluirCliente(){
+    }
 }

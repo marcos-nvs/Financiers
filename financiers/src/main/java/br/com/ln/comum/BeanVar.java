@@ -22,6 +22,7 @@ public class BeanVar implements Serializable{
     
     private String localizacao;
     private String novaTela;
+    private String telaOrigem;
     private String nomeTela;
     private boolean apresenta;
     private boolean bloquear;
@@ -71,6 +72,14 @@ public class BeanVar implements Serializable{
 
     public void setBloquear(boolean bloquear) {
         this.bloquear = bloquear;
+    }
+
+    public String getTelaOrigem() {
+        return telaOrigem;
+    }
+
+    public void setTelaOrigem(String telaOrigem) {
+        this.telaOrigem = telaOrigem;
     }
 }
     
