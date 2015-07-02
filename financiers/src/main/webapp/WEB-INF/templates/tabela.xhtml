@@ -5,12 +5,15 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
     
     <h:head>
-        <h:outputScript library="js" name="#{facesContext.externalContext.request.contextPath}/jquery/jquery-2.1.4.min.js" target="head"/>
+<!--        <h:outputScript library="js" name="#{facesContext.externalContext.request.contextPath}/jquery/jquery-2.1.4.min.js" target="head"/>
         <h:outputScript library="js" name="#{facesContext.externalContext.request.contextPath}/jquery/jquery.mask.min.js" target="head"/>
+        <script src="../../jquery/jquery.maskMoney.min.js" type="text/javascript"></script>
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head"/>
         <script type="text/javascript">
-                    $(document).ready(function(){
-                    $('#idFormCenter:idvlrInicial').mask('R$ 999.999,99');
-        </script>           
+                    jQuery(documento).ready(function(jQuery){
+                        jQuery("#:idFormCentrer:idvlrInicial").maskMoney();
+                    })
+        </script>           -->
     </h:head>
     <p:tabView style="border: 0px;">
         <p:tab title="IRRF" closable="false" >
@@ -76,23 +79,23 @@
             <p:outputLabel value="#{msgs['template.profile.description']}"/>
             <p:inputText id="idIrrfDescricao" size="50"/>
             <p:outputLabel for="dtirrfInicio" value="Data Inicial"/>
-            <p:calendar id="dtirrfInicio" showOn="button"/>
+            <p:calendar id="dtirrfInicio" showOn="button" />
             <p:outputLabel for="dtirrfFinal" value="Data Final"/>
             <p:calendar id="dtirrfFinal" showOn="button"/>
         </h:panelGrid>
         <h:panelGrid id="idgridValorIrrf" columns="6" style="margin-left: 35px;">
             <p:outputLabel value="Valor Inicial"/>
-            <p:inputText id="idvlrInicial"/>
+            <p:inputMask id="idvlrInicial" mask="R$ 999.999.99" style="text-align: right; width: 80px;" size="20"/>
             <p:outputLabel value="Valor Final"/>
-            <p:inputText/>
+            <p:inputMask id="idvlrFinal" mask="R$ 999.999.99" style="text-align: right; width: 80px;" size="20"/>
             <p:outputLabel value="Qtde Dependente"/>
-            <p:inputText/>
+            <p:inputMask id="idqtdDep" mask="999" style="text-align: right; width: 80px;" size="20"/>
             <p:outputLabel value="% Imposto"/>
-            <p:inputText/>
+            <p:inputMask id="idpercImposto" mask="999,99%" style="text-align: right; width: 80px;" size="20"/>
             <p:outputLabel value="Valor Desconto"/>
-            <p:inputText/>
+            <p:inputMask id="idvlrDesconto" mask="R$ 999.999.99" style="text-align: right; width: 80px;" size="20"/>
             <p:outputLabel value="Valor por Dependente"/>
-            <p:inputText/>
+            <p:inputMask id="idvlrDependente" mask="R$ 999.999.99" style="text-align: right; width: 80px;" size="20"/>
         </h:panelGrid>
         <p:dataTable id="idDTIRRF" var="incluiTabelaIR" paginator="true" rows="10" paginatorPosition="bottom">
             <f:facet name="header">
