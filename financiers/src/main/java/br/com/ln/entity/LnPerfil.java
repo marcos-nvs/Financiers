@@ -21,6 +21,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -44,15 +45,20 @@ public class LnPerfil implements Serializable {
 //    @SequenceGenerator(name="seqPerfil", sequenceName = "seq_perfil", allocationSize = 1)
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqPerfil")
     @Column(name = "per_in_codigo", unique = true, nullable = false)
+//    @Type(type = "integer")
     private Integer perInCodigo;
     @Basic(optional = false)
-    @Column(name = "per_st_descricao")
+    @Column(name = "per_st_descricao", length = 50, nullable = false)
+//    @Column(name = "per_st_descricao", length = 50, nullable = false)
+//    @Type(type = "string")
     private String perStDescricao;
     @Basic(optional = false)
     @Column(name = "per_ch_ativo")
+//    @Type(type = "character")
     private Character perChAtivo;
     @Basic(optional = false)
     @Column(name = "per_ch_alterasenha")
+//    @Type(type = "character")
     private Character perChAlterasenha;
     
     @Transient
