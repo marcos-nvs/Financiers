@@ -55,12 +55,11 @@ public class LnTabela implements Serializable {
     private String tabStDescricao;
     @Basic(optional = false)
     @Column(name = "tab_dt_inicio")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)    
     private Date tabDtInicio;
     @Column(name = "tab_dt_final")
     @Temporal(TemporalType.DATE)
     private Date tabDtFinal;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "tab_fl_inicio")
     private Double tabFlInicio;
     @Column(name = "tab_fl_final")

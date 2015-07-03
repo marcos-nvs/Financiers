@@ -17,8 +17,7 @@
     </h:head>
     <p:tabView style="border: 0px;">
         <p:tab title="IRRF" closable="false" >
-            <p:dataTable id="idTabelaIrrf" var="Irrf" value="#{IrrfView.listIrrfDescricao}" selectionMode="single" selection="#{IrrfView.irrfDescricao}"
-                         rowKey="#{Irrf.codigo}" paginator="true" rows="20" paginatorPosition="bottom">
+            <p:dataTable id="idTabelaIrrf" var="Irrf" paginator="true" rows="20" paginatorPosition="bottom">
                 <f:facet name="header">
                     <p:outputLabel value="Lista de IRRF"/>
                 </f:facet>
@@ -26,17 +25,16 @@
                     <p:rowToggler />
                 </p:column>
                 <p:column headerText="#{msgs['tabbedHeadings.description']}">
-                    <h:outputText value="#{Irrf.descricao}"/>
+                    <h:outputText value=""/>
                 </p:column>
                 <p:column headerText="Data Início">
-                    <h:outputText value="#{Irrf.dtInicio}"/>
+                    <h:outputText value=""/>
                 </p:column>
                 <p:column headerText="Data Final">
-                    <h:outputText value="#{Irrf.dtFinal}"/>
+                    <h:outputText value=""/>
                 </p:column>
                 <p:rowExpansion>
-                    <p:dataTable id="idTabelaIrrfDetalhe" var="IrrfDetalhe" value="#{IrrfView.listIrrfDescricao}" selectionMode="single" selection="#{IrrfView.irrfDescricao}"
-                                 rowKey="#{Irrf.codigo}" paginator="true" rows="20" paginatorPosition="bottom">
+                    <p:dataTable id="idTabelaIrrfDetalhe" var="IrrfDetalhe"  paginator="true" rows="20" paginatorPosition="bottom">
                     </p:dataTable>
                 </p:rowExpansion>
                 <f:facet name="footer">
