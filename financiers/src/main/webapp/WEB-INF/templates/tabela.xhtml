@@ -2,14 +2,16 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
     
     <h:head>
 <!--        <h:outputScript library="js" name="#{facesContext.externalContext.request.contextPath}/jquery/jquery-2.1.4.min.js" target="head"/>
-        <h:outputScript library="js" name="#{facesContext.externalContext.request.contextPath}/jquery/jquery.mask.min.js" target="head"/>
-        <script src="../../jquery/jquery.maskMoney.min.js" type="text/javascript"></script>
-        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head"/>
-        <script type="text/javascript">
+        <h:outputScript library="js" name="#{facesContext.externalContext.request.contextPath}/jquery/jquery.mask.min.js" target="head"/>-->
+        <!--<script src="../../jquery/jquery.maskMoney.min.js" type="text/javascript"></script>-->
+        <!--<h:outputScript library="primefaces" name="jquery/jquery.js" target="head"/>-->
+<!--        <script type="text/javascript">
                     jQuery(documento).ready(function(jQuery){
                         jQuery("#:idFormCentrer:idvlrInicial").maskMoney();
                     })
@@ -17,7 +19,8 @@
     </h:head>
     <p:tabView style="border: 0px;">
         <p:tab title="IRRF" closable="false" >
-            <p:dataTable id="idTabelaIrrf" var="Irrf" paginator="true" rows="20" paginatorPosition="bottom">
+            <p:dataTable id="idTabelaIrrf" var="Irrf" value="#{IrrfView.listTabela}"
+                         paginator="true" rows="20" paginatorPosition="bottom">
                 <f:facet name="header">
                     <p:outputLabel value="Lista de IRRF"/>
                 </f:facet>
@@ -25,20 +28,40 @@
                     <p:rowToggler />
                 </p:column>
                 <p:column headerText="#{msgs['tabbedHeadings.description']}">
-                    <h:outputText value=""/>
+                    <h:outputText value="#{Irrf.nomeTabela}"/>
                 </p:column>
                 <p:column headerText="Data Início">
-                    <h:outputText value=""/>
+                    <h:outputText value="#{Irrf.dataInicial}"/>
                 </p:column>
                 <p:column headerText="Data Final">
-                    <h:outputText value=""/>
+                    <h:outputText value="#{Irrf.dataInicial}"/>
                 </p:column>
                 <p:rowExpansion>
-                    <p:dataTable id="idTabelaIrrfDetalhe" var="IrrfDetalhe"  paginator="true" rows="20" paginatorPosition="bottom">
+                    <p:dataTable id="idTabelaIrrfDetalhe" var="IrrfDetalhe" value="#{Irrf.listTabelaItem}"
+                                 paginator="true" rows="20" paginatorPosition="bottom">
+                        <p:column headerText="Valor Inicial">
+                            <h:outputText value="#{IrrfDetalhe.valorInicial}"/>
+                        </p:column>
+                        <p:column headerText="Valor Final">
+                            <h:outputText value="#{IrrfDetalhe.valorFinal}"/>
+                        </p:column>
+                        <p:column headerText="Valor Desconto">
+                            <h:outputText value="#{IrrfDetalhe.valorDesconto}"/>
+                        </p:column>
+                        <p:column headerText="Percentual">
+                            <h:outputText value="#{IrrfDetalhe.percentual}"/>
+                        </p:column>
+                        <p:column headerText="Qtd Dependente">
+                            <h:outputText value="#{IrrfDetalhe.qtdDependente}"/>
+                        </p:column>
+                        <p:column headerText="Valor Dependente">
+                            <h:outputText value="#{IrrfDetalhe.valorDependente}"/>
+                        </p:column>
                     </p:dataTable>
                 </p:rowExpansion>
                 <f:facet name="footer">
-                    <p:commandButton id="btIncluirIrrf" value="#{msgs['node.include']}" icon="ui-icon-document" onclick="PF('IrrfEdit').show()"/>
+                    <p:commandButton id="btIncluirIrrf" value="#{msgs['node.include']}" icon="ui-icon-document" 
+                                     onclick="PF('IrrfEdit').show()"/>
                     <p:commandButton id="btAlterarIrrf" value="#{msgs['template.change']}" icon="ui-icon-pencil"/>
                     <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
                         <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
@@ -70,30 +93,35 @@
         </p:tab>
     </p:tabView>
     
-    <p:dialog header="#{msgs['node.inclusion']} de IRRF" widgetVar="IrrfEdit" modal="false" showEffect="fade" hideEffect="fade" closable="true" 
+    <p:dialog header="#{msgs['node.inclusion']} de IRRF" widgetVar="IrrfEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
         
         <h:panelGrid id="idgridDataIrrf" columns="6" >
             <p:outputLabel value="#{msgs['template.profile.description']}"/>
-            <p:inputText id="idIrrfDescricao" size="50"/>
+            <p:inputText id="idIrrfDescricao" value="#{IrrfView.nomeTabela}" size="50"/>
             <p:outputLabel for="dtirrfInicio" value="Data Inicial"/>
-            <p:calendar id="dtirrfInicio" showOn="button" />
+            <p:calendar id="dtirrfInicio" showOn="button" value="#{IrrfView.dataInicial}" />
             <p:outputLabel for="dtirrfFinal" value="Data Final"/>
-            <p:calendar id="dtirrfFinal" showOn="button"/>
+            <p:calendar id="dtirrfFinal" showOn="button" value="#{IrrfView.dataFinal}"/>
         </h:panelGrid>
         <h:panelGrid id="idgridValorIrrf" columns="6" style="margin-left: 35px;">
             <p:outputLabel value="Valor Inicial"/>
-            <p:inputMask id="idvlrInicial" mask="R$ 999.999.99" style="text-align: right; width: 80px;" size="20"/>
+            <pe:inputNumber id="idinputvlrinicial" value="#{IrrfView.valorInicial}"/>
             <p:outputLabel value="Valor Final"/>
-            <p:inputMask id="idvlrFinal" mask="R$ 999.999.99" style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idvlrFinal" value="#{IrrfView.valorFinal}"
+                         style="text-align: right; width: 80px;" size="20"/>
             <p:outputLabel value="Qtde Dependente"/>
-            <p:inputMask id="idqtdDep" mask="999" style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idqtdDep" value="#{IrrfView.qtdDependente}"
+                         style="text-align: right; width: 80px;" size="20"/>
             <p:outputLabel value="% Imposto"/>
-            <p:inputMask id="idpercImposto" mask="999,99%" style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idpercImposto" value="#{IrrfView.percentual}"
+                         style="text-align: right; width: 80px;" size="20"/>
             <p:outputLabel value="Valor Desconto"/>
-            <p:inputMask id="idvlrDesconto" mask="R$ 999.999.99" style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idvlrDesconto" value="#{IrrfView.valorDesconto}"
+                         style="text-align: right; width: 80px;" size="20"/>
             <p:outputLabel value="Valor por Dependente"/>
-            <p:inputMask id="idvlrDependente" mask="R$ 999.999.99" style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idvlrDependente"  value="#{IrrfView.valorDependente}"
+                         style="text-align: right; width: 80px;" size="20"/>
         </h:panelGrid>
         <p:dataTable id="idDTIRRF" var="incluiTabelaIR" paginator="true" rows="10" paginatorPosition="bottom">
             <f:facet name="header">
@@ -124,9 +152,12 @@
             </p:column>
         </p:dataTable>
         <f:facet name="footer">
-            <p:commandButton id="idbtincluirirrf" value="#{msgs['node.include']}" icon="ui-icon-document"/>
+            <p:commandButton id="idbtincluirirrf" value="#{msgs['node.include']}" icon="ui-icon-document"
+                             action="#{IrrfView.btIncluiDetalhe()}" process="idbtincluirirrf, idgridDataIrrf, idgridValorIrrf"
+                             update="idDTIRRF"/>
             <p:commandButton id="idbtsalvarirrf" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>
-            <p:commandButton id="idbtcancelarirrf" value="#{msgs['node.cancel']}" icon="ui-icon-cancel" />
+            <p:commandButton id="idbtfecharirrf" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-cancel"
+                             action="#{IrrfView.btFechar()}" process="idbtfecharirrf" update="idbtfecharirrf"/>
         </f:facet>
         
     </p:dialog>

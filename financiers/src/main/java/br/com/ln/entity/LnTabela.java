@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -40,7 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnTabela.findByTabFlDependente", query = "SELECT l FROM LnTabela l WHERE l.tabFlDependente = :tabFlDependente"),
     @NamedQuery(name = "LnTabela.findByTabFlQtddependente", query = "SELECT l FROM LnTabela l WHERE l.tabFlQtddependente = :tabFlQtddependente"),
     @NamedQuery(name = "LnTabela.findByCodDescricaoListaIRRF",
-                      query = "SELECT l.tabInCodigo, l.tabStDescricao, l.tabDtInicio, l.tabFlFinal FROM LnTabela l WHERE l.ttbInCodigo = :ttbInCodigo")})
+                      query = "SELECT l.tabInCodigo, l.tabStDescricao, l.tabDtInicio, l.tabFlFinal FROM LnTabela l WHERE l.ttbInCodigo = :ttbInCodigo"),
+    @NamedQuery(name = "LnTabela.findByCodigoDetallheIRRF",
+                      query = "SELECT l FROM LnTabela l WHERE l.tabInCodigo = :tabInCodigo")})
 public class LnTabela implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -174,7 +177,7 @@ public class LnTabela implements Serializable {
     public void setTabFlQtddependente(Double tabFlQtddependente) {
         this.tabFlQtddependente = tabFlQtddependente;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;
