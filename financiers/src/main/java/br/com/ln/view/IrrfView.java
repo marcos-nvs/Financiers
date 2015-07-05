@@ -13,6 +13,7 @@ import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -45,6 +46,7 @@ public class IrrfView implements Serializable {
     
     private Tabela tabela;
     private TabelaItem tabelaItem;
+    private List<TabelaItem> listTabelaItem;
     private List<Tabela> listTabela;
     private final IrrfFuncoes irrfFuncao;
     
@@ -177,7 +179,14 @@ public class IrrfView implements Serializable {
     public void setValor(String valor) {
         this.valor = valor;
     }
-    
+
+    public List<TabelaItem> getListTabelaItem() {
+        return listTabelaItem;
+    }
+
+    public void setListTabelaItem(List<TabelaItem> listTabelaItem) {
+        this.listTabelaItem = listTabelaItem;
+    }
     
     
     @Override
@@ -217,6 +226,7 @@ public class IrrfView implements Serializable {
             tabelaItem = new TabelaItem();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
             tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
+            listTabelaItem = new ArrayList<>();
             RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
         } else {
             mensagem = "Usuario sem premissao para incluir tabela de IRRF.";
@@ -233,8 +243,8 @@ public class IrrfView implements Serializable {
     }
     
     public void btIncluiDetalhe(){
-//        tabela.getListTabelaItem().add(tabelaItem);
-        
+        loadVarTabelaItem();
+        listTabelaItem.add(tabelaItem);
     }
     
     public void btSalvar(){
@@ -245,11 +255,12 @@ public class IrrfView implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
     }
     
-    public void formataValores() {
-        BigDecimal vlr = new BigDecimal(valor);
-        NumberFormat nf = NumberFormat.getCurrencyInstance();
-        valor = nf.format(vlr);
-        System.out.println(valor);
-//O resultado é R$ 12.000.000,12
+    private void loadVarTabelaItem(){
+        tabelaItem.setPercentual(percentual);
+        tabelaItem.setQtdDependente(qtdDependente);
+        tabelaItem.setValorDependente(valorDependente);
+        tabelaItem.setValorDesconto(valorDesconto);
+        tabelaItem.setValorFinal(valorFinal);
+        tabelaItem.setValorInicial(valorInicial);
     }
 }

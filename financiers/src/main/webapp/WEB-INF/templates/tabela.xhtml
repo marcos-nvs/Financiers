@@ -99,9 +99,9 @@
             <p:outputLabel value="#{msgs['template.profile.description']}"/>
             <p:inputText id="idIrrfDescricao" value="#{IrrfView.nomeTabela}" size="50"/>
             <p:outputLabel for="dtirrfInicio" value="Data Inicial"/>
-            <p:calendar id="dtirrfInicio" showOn="button" value="#{IrrfView.dataInicial}" />
+            <p:calendar id="dtirrfInicio" showOn="button" value="#{IrrfView.dataInicial}" pattern="dd/MM/yyyy"/>
             <p:outputLabel for="dtirrfFinal" value="Data Final"/>
-            <p:calendar id="dtirrfFinal" showOn="button" value="#{IrrfView.dataFinal}"/>
+            <p:calendar id="dtirrfFinal" showOn="button" value="#{IrrfView.dataFinal}" pattern="dd/MM/yyyy"/>
         </h:panelGrid>
         <h:panelGrid id="idgridValorIrrf" columns="6" style="margin-left: 35px;">
             <p:outputLabel value="Valor Inicial"/>
@@ -136,27 +136,28 @@
                 <p:ajax update="idvlrDependente" process="idvlrDependente" event="change"/>
             </p:inputText>
         </h:panelGrid>
-        <p:dataTable id="idDTIRRF" var="incluiTabelaIR" paginator="true" rows="10" paginatorPosition="bottom">
+        <p:dataTable id="idDTIRRF" var="incluiTabelaIR" value="#{IrrfView.listTabelaItem}"
+                     paginator="true" rows="10" paginatorPosition="bottom">
             <f:facet name="header">
                 <p:outputLabel value="Imposto de Renda retindo na Fonte"/>
             </f:facet>
             <p:column headerText="Valor Inicio" style="width: 40px">
-                <h:outputText value=""/>
+                <h:outputText value="#{incluiTabelaIR.valorInicial}"/>
             </p:column>
             <p:column headerText="Valor Final" style="width: 40px">
-                <h:outputText value=""/>
+                <h:outputText value="#{incluiTabelaIR.valorFinal}"/>
             </p:column>
             <p:column headerText="Qtde Dependente" style="width: 40px">
-                <h:outputText value=""/>
+                <h:outputText value="#{incluiTabelaIR.qtdDependente}"/>
             </p:column>
             <p:column headerText="Imposto(%)" style="width: 40px">
-                <h:outputText value=""/>
+                <h:outputText value="#{incluiTabelaIR.percentual}"/>
             </p:column>
             <p:column headerText="Valor Desconto" style="width: 40px">
-                <h:outputText value=""/>
+                <h:outputText value="#{incluiTabelaIR.valorDesconto}"/>
             </p:column>
             <p:column headerText="Valor por Dependente" style="width: 40px">
-                <h:outputText value=""/>
+                <h:outputText value="#{incluiTabelaIR.valorDependente}"/>
             </p:column>
             <p:column style="width: 20px; text-align: center">
                 <p:commandButton id='idBtEditaIRRF' icon="ui-icon-trash" >
@@ -166,7 +167,8 @@
         </p:dataTable>
         <f:facet name="footer">
             <p:commandButton id="idbtincluirirrf" value="#{msgs['node.include']}" icon="ui-icon-document"
-                             action="#{IrrfView.btIncluiDetalhe()}" process="idbtincluirirrf, idgridDataIrrf, idgridValorIrrf"
+                             action="#{IrrfView.btIncluiDetalhe()}" process="idbtincluirirrf, idgridDataIrrf, idgridValorIrrf, idIrrfDescricao,
+                             dtirrfInicio, dtirrfFinal, idinputvlrinicial, idvlrFinal, idqtdDep, idpercImposto, idvlrDesconto, idvlrDependente"
                              update="idDTIRRF"/>
             <p:commandButton id="idbtsalvarirrf" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>
             <p:commandButton id="idbtfecharirrf" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-cancel"
