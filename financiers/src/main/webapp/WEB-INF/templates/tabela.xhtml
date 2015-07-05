@@ -2,7 +2,6 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:pe="http://primefaces.org/ui/extensions"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
     
@@ -106,22 +105,36 @@
         </h:panelGrid>
         <h:panelGrid id="idgridValorIrrf" columns="6" style="margin-left: 35px;">
             <p:outputLabel value="Valor Inicial"/>
-            <pe:inputNumber id="idinputvlrinicial" value="#{IrrfView.valorInicial}"/>
+            <p:inputText id="idinputvlrinicial" value="#{IrrfView.valorInicial}" style="width: 80px;" size="20">
+                <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
+                <p:ajax update="idinputvlrinicial" process="idinputvlrinicial" event="change"/>
+            </p:inputText>
             <p:outputLabel value="Valor Final"/>
-            <p:inputText id="idvlrFinal" value="#{IrrfView.valorFinal}"
-                         style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idvlrFinal" value="#{IrrfView.valorFinal}" style="width: 80px;" size="20">
+                <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
+                <p:ajax update="idvlrFinal" process="idvlrFinal" event="change"/>
+            </p:inputText>
             <p:outputLabel value="Qtde Dependente"/>
-            <p:inputText id="idqtdDep" value="#{IrrfView.qtdDependente}"
-                         style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idqtdDep" value="#{IrrfView.qtdDependente}" style="width: 80px;" size="20">
+                <f:convertNumber pattern="0"/>
+                <p:ajax update="idqtdDep" process="idqtdDep" event="change"/>
+            </p:inputText>
+                
             <p:outputLabel value="% Imposto"/>
-            <p:inputText id="idpercImposto" value="#{IrrfView.percentual}"
-                         style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idpercImposto" value="#{IrrfView.percentual}" style="width: 80px;" size="20">
+                <f:convertNumber pattern="##0.00" type="percent"/>
+                <p:ajax update="idpercImposto" process="idpercImposto" event="change"/>
+            </p:inputText>
             <p:outputLabel value="Valor Desconto"/>
-            <p:inputText id="idvlrDesconto" value="#{IrrfView.valorDesconto}"
-                         style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idvlrDesconto" value="#{IrrfView.valorDesconto}" style="width: 80px;" size="20">
+                <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
+                <p:ajax update="idvlrDesconto" process="idvlrDesconto" event="change"/>
+            </p:inputText>
             <p:outputLabel value="Valor por Dependente"/>
-            <p:inputText id="idvlrDependente"  value="#{IrrfView.valorDependente}"
-                         style="text-align: right; width: 80px;" size="20"/>
+            <p:inputText id="idvlrDependente"  value="#{IrrfView.valorDependente}" style="width: 80px;" size="20">
+                <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
+                <p:ajax update="idvlrDependente" process="idvlrDependente" event="change"/>
+            </p:inputText>
         </h:panelGrid>
         <p:dataTable id="idDTIRRF" var="incluiTabelaIR" paginator="true" rows="10" paginatorPosition="bottom">
             <f:facet name="header">

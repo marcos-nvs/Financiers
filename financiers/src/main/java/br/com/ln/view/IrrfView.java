@@ -11,6 +11,8 @@ import br.com.ln.financiers.Tabela;
 import br.com.ln.financiers.TabelaItem;
 import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -46,8 +48,11 @@ public class IrrfView implements Serializable {
     private List<Tabela> listTabela;
     private final IrrfFuncoes irrfFuncao;
     
+    private String valor;
+    
     private String mensagem;
 
+    
     public IrrfView() {
         irrfFuncao = new IrrfFuncoes();
         listTabela = irrfFuncao.buscaTabela();
@@ -164,6 +169,16 @@ public class IrrfView implements Serializable {
     public void setTabelaItem(TabelaItem tabelaItem) {
         this.tabelaItem = tabelaItem;
     }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
+    
+    
     
     @Override
     public int hashCode() {
@@ -218,7 +233,7 @@ public class IrrfView implements Serializable {
     }
     
     public void btIncluiDetalhe(){
-        tabela.getListTabelaItem().add(tabelaItem);
+//        tabela.getListTabelaItem().add(tabelaItem);
         
     }
     
@@ -230,5 +245,11 @@ public class IrrfView implements Serializable {
         RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
     }
     
-    
+    public void formataValores() {
+        BigDecimal vlr = new BigDecimal(valor);
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
+        valor = nf.format(vlr);
+        System.out.println(valor);
+//O resultado é R$ 12.000.000,12
+    }
 }
