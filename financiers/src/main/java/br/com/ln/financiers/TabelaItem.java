@@ -14,6 +14,7 @@ import java.util.Objects;
  */
 public class TabelaItem implements Serializable{
     
+    private Integer codigoTabItem;
     private Double valorInicial;
     private Double valorFinal;
     private Double valorDependente;
@@ -26,6 +27,14 @@ public class TabelaItem implements Serializable{
     public TabelaItem() {
     }
 
+    public Integer getCodigoTabItem() {
+        return codigoTabItem;
+    }
+
+    public void setCodigoTabItem(Integer codigoTabItem) {
+        this.codigoTabItem = codigoTabItem;
+    }
+    
     public Double getValorInicial() {
         return valorInicial;
     }
@@ -126,6 +135,7 @@ public class TabelaItem implements Serializable{
 
     @Override
     public String toString() {
-        return "TabelaItem{" + "valorInicial=" + valorInicial + ", valorFinal=" + valorFinal + ", valorDependente=" + valorDependente + ", valorDesconto=" + valorDesconto + ", percentual=" + percentual + ", qtdDependente=" + qtdDependente + ", tipoFuncao=" + tipoFuncao + '}';
+        return "TabelaItem{" + "codigoTabItem=" + codigoTabItem + ", valorInicial=" + valorInicial + ", valorFinal=" + valorFinal + ", valorDependente=" + valorDependente + ", valorDesconto=" + valorDesconto + ", percentual=" + percentual + ", qtdDependente=" + qtdDependente + ", tipoFuncao=" + tipoFuncao + '}';
     }
+
 }

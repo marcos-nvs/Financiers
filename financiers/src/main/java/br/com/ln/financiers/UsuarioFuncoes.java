@@ -11,6 +11,7 @@ import br.com.ln.entity.LnUsuario;
 import br.com.ln.dao.GenericDao;
 import br.com.ln.dao.HistoricoDao;
 import br.com.ln.dao.UsuarioDao;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,7 +19,7 @@ import java.util.Date;
  *
  * @author Marcos Naves
  */
-public class UsuarioFuncoes {
+public class UsuarioFuncoes implements Serializable{
 
     private String mensagem;
     private Historico historico;

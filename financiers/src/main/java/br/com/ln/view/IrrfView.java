@@ -11,8 +11,6 @@ import br.com.ln.financiers.Tabela;
 import br.com.ln.financiers.TabelaItem;
 import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +35,7 @@ public class IrrfView implements Serializable {
     private String nomeTabela;
     private Date dataInicial;
     private Date dataFinal;
+    private Integer codigoTabItem;
     private Double valorInicial;
     private Double valorFinal;
     private Double valorDependente;
@@ -56,8 +55,11 @@ public class IrrfView implements Serializable {
 
     
     public IrrfView() {
+        tabela = new Tabela();
+        tabelaItem = new TabelaItem();
         irrfFuncao = new IrrfFuncoes();
         listTabela = irrfFuncao.buscaTabela();
+        listTabelaItem = new ArrayList<>();
     }
 
     public Integer getIdCodigo() {
@@ -116,6 +118,14 @@ public class IrrfView implements Serializable {
         this.valorFinal = valorFinal;
     }
 
+    public Integer getCodigoTabItem() {
+        return codigoTabItem;
+    }
+
+    public void setCodigoTabItem(Integer codigoTabItem) {
+        this.codigoTabItem = codigoTabItem;
+    }
+    
     public Double getValorDependente() {
         return valorDependente;
     }
@@ -189,6 +199,7 @@ public class IrrfView implements Serializable {
     }
     
     
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -223,10 +234,7 @@ public class IrrfView implements Serializable {
     public void btIncluir(){
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
             tabela = new Tabela();
-            tabelaItem = new TabelaItem();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
-            tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
-            listTabelaItem = new ArrayList<>();
             RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
         } else {
             mensagem = "Usuario sem premissao para incluir tabela de IRRF.";
@@ -243,8 +251,19 @@ public class IrrfView implements Serializable {
     }
     
     public void btIncluiDetalhe(){
+        tabelaItem = new TabelaItem();
+        tabelaItem.setCodigoTabItem(irrfFuncao.calcIdTabelaItem());
+        tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
         loadVarTabelaItem();
+        System.out.println("tabela Item : " + tabelaItem.toString());
         listTabelaItem.add(tabelaItem);
+    }
+    
+    public void btExcluiDetalhe(){
+        tabelaItem = new TabelaItem();
+        tabelaItem.setTipoFuncao(TipoFuncao.Excluir);
+        loadVarTabelaItem();
+        listTabelaItem.remove(tabelaItem);
     }
     
     public void btSalvar(){

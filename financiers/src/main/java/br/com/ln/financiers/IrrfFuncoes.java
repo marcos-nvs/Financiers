@@ -17,7 +17,10 @@ import java.util.List;
  */
 public class IrrfFuncoes implements Serializable  {
     
+    private Integer codigoTabItem = 0;
+    
     public List<Tabela> buscaTabela(){
+
         
         Tabela tabela = new Tabela();
         TabelaItem tabelaItem = new TabelaItem();
@@ -53,4 +56,14 @@ public class IrrfFuncoes implements Serializable  {
         }
         return listaTabela;
     } 
+    
+    public Integer calcIdTabelaItem(){
+        Integer i = codigoTabItem + 1;
+        System.out.println("i : " + i.toString());
+        codigoTabItem = i;
+        System.out.println("codigoitem : " + codigoTabItem.toString());
+        return codigoTabItem;
+    }
+    
+    
 }
