@@ -20,15 +20,15 @@ import java.util.List;
  * @author Marcos Naves
  */
 public class PerfilFuncoes {
-    
+
     private String mensagem;
     private Historico historico;
-    
-    public String perfil(LnPerfil lnPerfil){
+
+    public String perfil(LnPerfil lnPerfil) {
         mensagem = "";
         historico = new Historico();
-        
-        switch (lnPerfil.getTipoFuncao()){
+
+        switch (lnPerfil.getTipoFuncao()) {
             case Incluir:
                 inclusaoPerfil(lnPerfil);
                 break;
@@ -41,15 +41,15 @@ public class PerfilFuncoes {
             case Pesquisar:
                 break;
         }
-        
+
         return mensagem;
     }
-    
-    public String perfilAcesso(LnPerfilacesso lnPerfilacesso){
+
+    public String perfilAcesso(LnPerfilacesso lnPerfilacesso) {
         mensagem = "";
         historico = new Historico();
-        
-        switch (lnPerfilacesso.getTipoFuncao()){
+
+        switch (lnPerfilacesso.getTipoFuncao()) {
             case Incluir:
                 inclusaoPerfilAcesso(lnPerfilacesso);
                 break;
@@ -65,11 +65,11 @@ public class PerfilFuncoes {
     }
 
     private void inclusaoPerfil(LnPerfil lnPerfil) {
-        
-        if (lnPerfil != null){
-            if (verificaPerfil(lnPerfil)){
+
+        if (lnPerfil != null) {
+            if (verificaPerfil(lnPerfil)) {
                 lnPerfil.setPerInCodigo(PerfilDao.grabLnPerfilNextId());
-                
+
                 for (LnPerfilacesso lnPerfilacesso : lnPerfil.getListPerfilAcesso()) {
                     lnPerfilacesso.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
                     PerfilDao.saveObject(lnPerfilacesso);
@@ -78,23 +78,23 @@ public class PerfilFuncoes {
                 EjbMap.grabPerfil(lnPerfil.getPerInCodigo(), VarComuns.strDbName);
                 historico.gravaHistoricoModulo("Inclusão do Perfil : " + lnPerfil.getPerStDescricao());
                 mensagem = "Sucesso";
-            } 
+            }
         } else {
             mensagem = "Inicie novamente o processo de inclusão de Perfil";
         }
-        
+
     }
 
     private boolean verificaPerfil(LnPerfil lnPerfil) {
         mensagem = "Por favor preencha as seguintes informações: ";
         boolean validado = true;
 
-        if (lnPerfil.getPerStDescricao() == null || lnPerfil.getPerStDescricao().isEmpty()){
+        if (lnPerfil.getPerStDescricao() == null || lnPerfil.getPerStDescricao().isEmpty()) {
             validado = false;
             mensagem = mensagem + "Descricao do perfil - ";
-        } 
-        
-        if (lnPerfil.getListPerfilAcesso() == null || lnPerfil.getListPerfilAcesso().isEmpty()){
+        }
+
+        if (lnPerfil.getListPerfilAcesso() == null || lnPerfil.getListPerfilAcesso().isEmpty()) {
             validado = false;
             mensagem = mensagem + "Defina um tipo de acesso - ";
         }
@@ -102,13 +102,13 @@ public class PerfilFuncoes {
     }
 
     private void alteracaoPerfil(LnPerfil lnPerfil) {
-        if (lnPerfil != null){
-            if (verificaPerfil(lnPerfil)){
+        if (lnPerfil != null) {
+            if (verificaPerfil(lnPerfil)) {
                 PerfilDao.saveOrUpdateObject(lnPerfil);
                 EjbMap.updatePerfil(lnPerfil, VarComuns.strDbName);
                 historico.gravaHistoricoModulo("Alteração do Perfil : " + lnPerfil.getPerStDescricao());
                 mensagem = "Sucesso";
-            } 
+            }
         } else {
             mensagem = "Inicie novamente o processo de alteracao de Perfil";
         }
@@ -129,8 +129,10 @@ public class PerfilFuncoes {
     private void exclusaoPerfil(LnPerfil lnPerfil) {
 
         if (verificaExclusaoPerfil(lnPerfil)) {
-            for (LnPerfilacesso lnPerfAcesso : lnPerfil.getListPerfilAcesso()) {
-                PerfilDao.deleteObject(lnPerfAcesso);
+            if (lnPerfil.getListPerfilAcesso() != null) {
+                for (LnPerfilacesso lnPerfAcesso : lnPerfil.getListPerfilAcesso()) {
+                    PerfilDao.deleteObject(lnPerfAcesso);
+                }
             }
             PerfilDao.deleteObject(lnPerfil);
             historico.gravaHistoricoModulo("Exclusão de todo o perfil : " + lnPerfil.getPerStDescricao());
@@ -139,10 +141,10 @@ public class PerfilFuncoes {
     }
 
     private boolean verificaExclusaoPerfil(LnPerfil lnPerfil) {
-        
+
         List<LnUsuario> listUsuario = UsuarioDao.grabUsuarioPerfil(lnPerfil.getPerInCodigo());
-        
-        if (listUsuario != null && !listUsuario.isEmpty()){
+
+        if (listUsuario != null && !listUsuario.isEmpty()) {
             mensagem = "Perfil não pode ser excluído, está sendo utilizado";
             return false;
         } else {

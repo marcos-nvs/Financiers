@@ -178,6 +178,8 @@ public class PerfilView implements Serializable {
             lnPerfil.setTipoFuncao(TipoFuncao.Incluir);
             lnPerfilacesso = new LnPerfilacesso();
             lnPerfilacesso.setTipoFuncao(TipoFuncao.Incluir);
+            clearVar();
+            listPerfilacesso.clear();
             RequestContext.getCurrentInstance().execute("PF('PerfilEdit').show()");
         } else {
             mensagem = "Usuario sem perimissao para incluir";
@@ -263,14 +265,20 @@ public class PerfilView implements Serializable {
     
     public void btFecharPerfilAcesso() {
         RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
+        
     }
     
     public void btEditaPerfilAcesso(){
-        dataLoadPerfil();
-        listPerfilacesso.remove(lnPerfilacesso);
-        lnPerfil.getListPerfilAcesso().remove(lnPerfilacesso);
-        lnPerfilacesso.setTipoFuncao(TipoFuncao.Excluir);
-        perfilFuncoes.perfilAcesso(lnPerfilacesso);
+        if (lnPerfil.getListPerfilAcesso().size() > 1) {
+            dataLoadPerfil();
+            listPerfilacesso.remove(lnPerfilacesso);
+            lnPerfil.getListPerfilAcesso().remove(lnPerfilacesso);
+            lnPerfilacesso.setTipoFuncao(TipoFuncao.Excluir);
+            perfilFuncoes.perfilAcesso(lnPerfilacesso);
+        } else {
+            mensagem = "O perfil deve ter pelo menos um tipo de acesso. Não excluido";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Perfil", mensagem));
+        }
     }
     
     private void dataLoadVarPerfilAcesso(){
@@ -295,14 +303,25 @@ public class PerfilView implements Serializable {
         bAtivo = tratativa.tratamentoTextoBoolean(lnPerfil.getPerChAtivo());
         bAlteraSenha = tratativa.tratamentoTextoBoolean(lnPerfil.getPerChAlterasenha());
 
-        if (lnPerfilacesso != null) {
-            modInCodigo = lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo();
-            bIncluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChIncluir());
-            bAlterarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChAlterar());
-            bExcluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChExcluir());
-            bPesquisarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChPesquisar());
-        }
+//        if (lnPerfilacesso != null) {
+//            modInCodigo = lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo();
+//            bIncluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChIncluir());
+//            bAlterarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChAlterar());
+//            bExcluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChExcluir());
+//            bPesquisarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChPesquisar());
+//        }
         
         listPerfilacesso = lnPerfil.getListPerfilAcesso();
+    }
+    
+    private void clearVar(){
+        perfilDescricao = "";
+        bAtivo = false;
+        bAlteraSenha = false;
+        modInCodigo = null;
+        bIncluirAcesso = false;
+        bAlterarAcesso = false;
+        bExcluirAcesso = false;
+        bPesquisarAcesso = false;
     }
 }

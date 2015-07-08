@@ -43,9 +43,9 @@
         </p:rowExpansion>
         <f:facet name="footer">
             <p:commandButton id="btIncluirPerfil" value="#{msgs['node.include']}" icon="ui-icon-document" action="#{perfilView.btIncluirPerfil}"
-                             process="btIncluirPerfil" update=":idFormTop:growl, idTbPerfil, btIncluirPerfil" />
+                             process="btIncluirPerfil" update=":idFormTop:growl, idTbPerfil, btIncluirPerfil, :idFormCenter:iddlgPerfil" />
             <p:commandButton id="btAlterarPerfil" value="#{msgs['template.change']}" icon="ui-icon-pencil" action="#{perfilView.btAlterarPerfil}"
-                             process="btAlterarPerfil, idTbPerfil" update=":idFormTop:growl" />
+                             process="btAlterarPerfil, idTbPerfil" update=":idFormTop:growl, :idFormCenter:iddlgPerfil" />
             <p:commandButton id="btExcluirPerfil" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
                              action="#{perfilView.btExcluirPerfil()}" process="idTbPerfil" update="idTbPerfil, :idFormTop:growl">
                 <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
@@ -57,7 +57,7 @@
         </f:facet>
     </p:dataTable>
 
-    <p:dialog header="#{msgs['node.inclusion']} de Perfil" widgetVar="PerfilEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
+    <p:dialog id="iddlgPerfil" header="#{msgs['node.inclusion']} de Perfil" widgetVar="PerfilEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idPerfilDialog" columns="6">
             <p:outputLabel value="#{msgs['template.profile.description']}"/>

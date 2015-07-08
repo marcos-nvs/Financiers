@@ -91,8 +91,8 @@ CREATE SEQUENCE acessocontrol.seq_endereco
 ALTER TABLE acessocontrol.seq_endereco
   OWNER TO postgres;
 
-insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
-values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','public','m-nvs@uol.com.br');
+insert into acessocontrol.ln_endereco("end_in_codigo","cli_in_codigo","end_ch_tipo","end_st_endereco","end_st_complemento","end_st_bairro","end_st_cidade","end_st_estado","end_st_cep")
+values (nextval('acessocontrol.seq_endereco'),1, '1','Rua Diógenes Ribeiro de Lima, 801', null, 'Jardim Belval','Barueri','São Paulo','06420250');
 
 -- Table: acessocontrol.ln_telefone
 
