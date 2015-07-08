@@ -43,6 +43,8 @@ CREATE SEQUENCE acessocontrol.seq_cliente
 ALTER TABLE acessocontrol.seq_cliente
   OWNER TO postgres;
 
+insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
+values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','public','m-nvs@uol.com.br');
 
 -- Table: acessocontrol.ln_endereco
 
@@ -89,6 +91,9 @@ CREATE SEQUENCE acessocontrol.seq_endereco
 ALTER TABLE acessocontrol.seq_endereco
   OWNER TO postgres;
 
+insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
+values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','public','m-nvs@uol.com.br');
+
 -- Table: acessocontrol.ln_telefone
 
 -- DROP TABLE acessocontrol.ln_telefone;
@@ -125,6 +130,9 @@ CREATE SEQUENCE acessocontrol.seq_telefone
 ALTER TABLE acessocontrol.seq_telefone
   OWNER TO postgres;
 
+insert into acessocontrol.ln_telefone ("tel_in_codigo","cli_in_codigo","tel_ch_tipo","tel_st_pais","tel_st_ddd","tel_st_telefone")
+values (nextval('acessocontrol.seq_telefone'), 1, '3', null, '011','995046236');
+
 -- Table: acessocontrol.ln_usuario
 
 -- DROP TABLE acessocontrol.ln_usuario;
@@ -150,22 +158,22 @@ CREATE TABLE acessocontrol.ln_usuario
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_usuario
+ALTER TABLE acessocontrol.ln_usuario
   OWNER TO postgres;
-GRANT ALL ON TABLE ln_usuario TO postgres;
-GRANT ALL ON TABLE ln_usuario TO acessocontrol;
-COMMENT ON COLUMN ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
-COMMENT ON COLUMN ln_usuario.usu_st_nome IS 'Define o nome do usuário';
-COMMENT ON COLUMN ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
-COMMENT ON COLUMN ln_usuario.usu_st_email IS 'Define o e-mail do usuário';
-COMMENT ON COLUMN ln_usuario.usu_ch_ativo IS 'Define se o usuário está ativo ou inativo';
-COMMENT ON COLUMN ln_usuario.usu_in_dia IS 'Define o período em dias para a troca da senha';
-COMMENT ON COLUMN ln_usuario.usu_ch_alterasenha IS 'Define se o usuário pode ou não trocar a senha';
-COMMENT ON COLUMN ln_usuario.usu_ch_expirasenha IS 'Define se a senha do usuário expira';
-COMMENT ON COLUMN ln_usuario.usu_dt_expiracao IS 'Define quando expira a senha do usuário';
-COMMENT ON COLUMN ln_usuario.usu_dt_cadastro IS 'Define a data do cadastro do usuário';
-COMMENT ON COLUMN ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usuario';
-COMMENT ON COLUMN ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
+GRANT ALL ON TABLE acessocontrol.ln_usuario TO postgres;
+GRANT ALL ON TABLE acessocontrol.ln_usuario TO acessocontrol;
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_nome IS 'Define o nome do usuário';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_email IS 'Define o e-mail do usuário';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_ch_ativo IS 'Define se o usuário está ativo ou inativo';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_in_dia IS 'Define o período em dias para a troca da senha';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_ch_alterasenha IS 'Define se o usuário pode ou não trocar a senha';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_ch_expirasenha IS 'Define se a senha do usuário expira';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_dt_expiracao IS 'Define quando expira a senha do usuário';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_dt_cadastro IS 'Define a data do cadastro do usuário';
+COMMENT ON COLUMN acessocontrol.ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usuario';
+COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
 
 
 -- Index: ind_usuariocpf
@@ -173,13 +181,13 @@ COMMENT ON COLUMN ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder 
 -- DROP INDEX ind_usuariocpf;
 
 CREATE INDEX ind_usuariocpf
-  ON ln_usuario
+  ON acessocontrol.ln_usuario
   USING btree
   (usu_st_codigo COLLATE pg_catalog."default", usu_st_cpf COLLATE pg_catalog."default");
 
 insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
                                  "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "cli_in_codigo", "usu_st_admin") values 
-                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',6,'S');
+                                ('Naves', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',1,'S');
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Schema: public
@@ -198,7 +206,7 @@ COMMENT ON SCHEMA public
 
 -- DROP TABLE ln_perfil;
 
-CREATE TABLE ln_perfil
+CREATE TABLE public.ln_perfil
 (
   per_in_codigo integer NOT NULL, -- Define através de sequence o id do perfil
   per_st_descricao character varying(50) NOT NULL, -- Descrição do perifl
@@ -209,37 +217,37 @@ CREATE TABLE ln_perfil
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_perfil
+ALTER TABLE public.ln_perfil
   OWNER TO postgres;
-COMMENT ON TABLE ln_perfil
+COMMENT ON TABLE public.ln_perfil
   IS 'Tabela contendo o nome do perfil';
-COMMENT ON COLUMN ln_perfil.per_in_codigo IS 'Define através de sequence o id do perfil';
-COMMENT ON COLUMN ln_perfil.per_st_descricao IS 'Descrição do perifl';
-COMMENT ON COLUMN ln_perfil.per_ch_ativo IS 'Define se está ativo ou inativo';
-COMMENT ON COLUMN ln_perfil.per_ch_alterasenha IS 'Define se o usuário pode alterar a senha de outros usuários';
+COMMENT ON COLUMN public.ln_perfil.per_in_codigo IS 'Define através de sequence o id do perfil';
+COMMENT ON COLUMN public.ln_perfil.per_st_descricao IS 'Descrição do perifl';
+COMMENT ON COLUMN public.ln_perfil.per_ch_ativo IS 'Define se está ativo ou inativo';
+COMMENT ON COLUMN public.ln_perfil.per_ch_alterasenha IS 'Define se o usuário pode alterar a senha de outros usuários';
 
 
 -- Sequence: seq_perfil
 
 -- DROP SEQUENCE seq_perfil;
 
-CREATE SEQUENCE seq_perfil
+CREATE SEQUENCE public.seq_perfil
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_perfil
+ALTER TABLE public.seq_perfil
   OWNER TO postgres;
 
 
-insert into public."ln_perfil" ("per_in_codigo","per_st_descricao","per_ch_ativo","per_ch_alterasenha") values (nextval('seq_perfil'),'Perfil de Administrador Master','S','S');
+insert into public."ln_perfil" ("per_in_codigo","per_st_descricao","per_ch_ativo","per_ch_alterasenha") values (nextval('public.seq_perfil'),'Perfil de Administrador Master','S','S');
 
 -- Table: ln_modulo
 
 -- DROP TABLE ln_modulo;
 
-CREATE TABLE ln_modulo
+CREATE TABLE public.ln_modulo
 (
   mod_in_codigo integer NOT NULL, -- Define o ID do modulo, utilizar a sequence
   mod_st_descricao character varying(50) NOT NULL, -- Define o nome do módulo do sistema
@@ -253,76 +261,73 @@ CREATE TABLE ln_modulo
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_modulo
+ALTER TABLE public.ln_modulo
   OWNER TO postgres;
-COMMENT ON TABLE ln_modulo
+COMMENT ON TABLE public.ln_modulo
   IS 'Tabela geral de modulo de sistemas';
-COMMENT ON COLUMN ln_modulo.mod_in_codigo IS 'Define o ID do modulo, utilizar a sequence';
-COMMENT ON COLUMN ln_modulo.mod_st_descricao IS 'Define o nome do módulo do sistema';
-COMMENT ON COLUMN ln_modulo.mod_ch_incluir IS 'Define se o módulo tem a função de incluir';
-COMMENT ON COLUMN ln_modulo.mod_ch_alterar IS 'Define se o módulo tem a função de alterar';
-COMMENT ON COLUMN ln_modulo.mod_ch_excluir IS 'Define se o módulo tem a função de excluir';
-COMMENT ON COLUMN ln_modulo.mod_ch_pesquisar IS 'Define se o módulo tem a função de pesquisar ou consultar';
-COMMENT ON COLUMN ln_modulo.mod_ch_ativo IS 'Define se o módulo está ativo ou inativo';
+COMMENT ON COLUMN public.ln_modulo.mod_in_codigo IS 'Define o ID do modulo, utilizar a sequence';
+COMMENT ON COLUMN public.ln_modulo.mod_st_descricao IS 'Define o nome do módulo do sistema';
+COMMENT ON COLUMN public.ln_modulo.mod_ch_incluir IS 'Define se o módulo tem a função de incluir';
+COMMENT ON COLUMN public.ln_modulo.mod_ch_alterar IS 'Define se o módulo tem a função de alterar';
+COMMENT ON COLUMN public.ln_modulo.mod_ch_excluir IS 'Define se o módulo tem a função de excluir';
+COMMENT ON COLUMN public.ln_modulo.mod_ch_pesquisar IS 'Define se o módulo tem a função de pesquisar ou consultar';
+COMMENT ON COLUMN public.ln_modulo.mod_ch_ativo IS 'Define se o módulo está ativo ou inativo';
 
 -- Sequence: seq_modulo
 
 -- DROP SEQUENCE seq_modulo;
 
-CREATE SEQUENCE seq_modulo
+CREATE SEQUENCE public.seq_modulo
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_modulo
+ALTER TABLE public.seq_modulo
   OWNER TO postgres;
 
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Usuário','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Usuário','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Perfil','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Perfil','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Categoria','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Tabelas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Plano de Contas','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Categoria','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Favorecidos','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Plano de Contas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Tabelas','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Favorecidos','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Orçamento','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Orçamento','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Lançamento Diário','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Lançamento Diário','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Fluxo de Caixa','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Fluxo de Caixa','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Contas à Receber','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Contas à Receber','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Contas à Pagar','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Contas à Pagar','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Cartão Crédito','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Cartão Crédito','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Fechamento','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Fechamento','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Análise de Contas','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Análise de Contas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Orçamento x Realizado','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Orçamento x Realizado','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Receitas x Despesas','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Receitas x Despesas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Despesas por Favorecidos','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Despesas por Favorecidos','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Curva ABC Despesas','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Curva ABC Despesas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Resumo Patrimônio','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Resumo Patrimônio','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Saldo das Contas','S','S','S','S','S');
+values (nextval('public.seq_modulo'), 'Saldo das Contas','S','S','S','S','S');
 insert into public."ln_modulo" ("mod_in_codigo","mod_st_descricao","mod_ch_incluir","mod_ch_alterar","mod_ch_excluir","mod_ch_pesquisar","mod_ch_ativo")
-values (nextval('seq_modulo'), 'Comparação de Movimentação entre Meses','S','S','S','S','S');
-
-
-
+values (nextval('public.seq_modulo'), 'Comparação de Movimentação entre Meses','S','S','S','S','S');
 
 -- Table: ln_menu
 
@@ -332,7 +337,7 @@ values (nextval('seq_modulo'), 'Comparação de Movimentação entre Meses','S',
 
 -- DROP TABLE ln_menu;
 
-CREATE TABLE ln_menu
+CREATE TABLE public.ln_menu
 (
   men_in_codigo integer NOT NULL, -- Define a sequencia do menu
   men_st_descricao character varying(50) NOT NULL, -- Define o nome do menu.
@@ -342,13 +347,13 @@ CREATE TABLE ln_menu
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_menu
+ALTER TABLE public.ln_menu
   OWNER TO postgres;
-COMMENT ON TABLE ln_menu
+COMMENT ON TABLE public.ln_menu
   IS 'Define o menu principal';
-COMMENT ON COLUMN ln_menu.men_in_codigo IS 'Define a sequencia do menu';
-COMMENT ON COLUMN ln_menu.men_st_descricao IS 'Define o nome do menu.';
-COMMENT ON COLUMN ln_menu.men_ch_ativo IS 'Define se o menu está ativo ou inativo';
+COMMENT ON COLUMN public.ln_menu.men_in_codigo IS 'Define a sequencia do menu';
+COMMENT ON COLUMN public.ln_menu.men_st_descricao IS 'Define o nome do menu.';
+COMMENT ON COLUMN public.ln_menu.men_ch_ativo IS 'Define se o menu está ativo ou inativo';
 
 insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (1,'Controle Acesso','S');
 insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo") values (2,'Cadastros','S');
@@ -364,7 +369,7 @@ insert into public."ln_menu" ("men_in_codigo","men_st_descricao","men_ch_ativo")
 
 -- DROP TABLE ln_menumodulo;
 
-CREATE TABLE ln_menumodulo
+CREATE TABLE public.ln_menumodulo
 (
   men_in_codigo integer NOT NULL, -- Código do Menu
   mod_in_codigo integer NOT NULL, -- Código do menu
@@ -373,10 +378,10 @@ CREATE TABLE ln_menumodulo
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_menumodulo
+ALTER TABLE public.ln_menumodulo
   OWNER TO postgres;
-COMMENT ON COLUMN ln_menumodulo.men_in_codigo IS 'Código do Menu';
-COMMENT ON COLUMN ln_menumodulo.mod_in_codigo IS 'Código do menu';
+COMMENT ON COLUMN public.ln_menumodulo.men_in_codigo IS 'Código do Menu';
+COMMENT ON COLUMN public.ln_menumodulo.mod_in_codigo IS 'Código do menu';
 
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,1);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (1,2);
@@ -410,7 +415,7 @@ insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,2
 
 -- DROP TABLE ln_perfilacesso;
 
-CREATE TABLE ln_perfilacesso
+CREATE TABLE public.ln_perfilacesso
 (
   per_in_codigo integer NOT NULL, -- Define o perfil ao qual pertence
   mod_in_codigo integer NOT NULL, -- Define o módulo de acesso
@@ -423,27 +428,26 @@ CREATE TABLE ln_perfilacesso
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_perfilacesso
+ALTER TABLE public.ln_perfilacesso
   OWNER TO postgres;
-COMMENT ON TABLE ln_perfilacesso
+COMMENT ON TABLE public.ln_perfilacesso
   IS 'Define os acessos do perfil';
-COMMENT ON COLUMN ln_perfilacesso.per_in_codigo IS 'Define o perfil ao qual pertence';
-COMMENT ON COLUMN ln_perfilacesso.mod_in_codigo IS 'Define o módulo de acesso';
-COMMENT ON COLUMN ln_perfilacesso.pac_ch_incluir IS 'Define a função';
-COMMENT ON COLUMN ln_perfilacesso.pac_ch_alterar IS 'Define a função';
-COMMENT ON COLUMN ln_perfilacesso.pac_ch_excluir IS 'Define a função';
-COMMENT ON COLUMN ln_perfilacesso.pac_ch_pesquisar IS 'Define a função';
+COMMENT ON COLUMN public.ln_perfilacesso.per_in_codigo IS 'Define o perfil ao qual pertence';
+COMMENT ON COLUMN public.ln_perfilacesso.mod_in_codigo IS 'Define o módulo de acesso';
+COMMENT ON COLUMN public.ln_perfilacesso.pac_ch_incluir IS 'Define a função';
+COMMENT ON COLUMN public.ln_perfilacesso.pac_ch_alterar IS 'Define a função';
+COMMENT ON COLUMN public.ln_perfilacesso.pac_ch_excluir IS 'Define a função';
+COMMENT ON COLUMN public.ln_perfilacesso.pac_ch_pesquisar IS 'Define a função';
 
 
 insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,1,'S','S','S','S');
 insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,2,'S','S','S','S');
-insert into public."ln_perfilacesso" ("per_in_codigo","mod_in_codigo","pac_ch_incluir","pac_ch_alterar","pac_ch_excluir","pac_ch_pesquisar") values (1,3,'S','S','S','S');
 
 -- Table: ln_historico
 
 -- DROP TABLE ln_historico;
 
-CREATE TABLE ln_historico
+CREATE TABLE public.ln_historico
 (
   his_in_codigo integer NOT NULL,
   mod_in_codigo integer, -- Modulo de onde originou a transação
@@ -455,27 +459,27 @@ CREATE TABLE ln_historico
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_historico
+ALTER TABLE public.ln_historico
   OWNER TO postgres;
-COMMENT ON TABLE ln_historico
+COMMENT ON TABLE public.ln_historico
   IS 'Rastreabilidade e Historico de todas as transações do sistema';
-COMMENT ON COLUMN ln_historico.mod_in_codigo IS 'Modulo de onde originou a transação';
-COMMENT ON COLUMN ln_historico.his_dt_data IS 'Data da transação';
-COMMENT ON COLUMN ln_historico.usu_st_codigo IS 'Usuario que gerou a transação';
-COMMENT ON COLUMN ln_historico.his_st_descricao IS 'Descrição da transação.';
+COMMENT ON COLUMN public.ln_historico.mod_in_codigo IS 'Modulo de onde originou a transação';
+COMMENT ON COLUMN public.ln_historico.his_dt_data IS 'Data da transação';
+COMMENT ON COLUMN public.ln_historico.usu_st_codigo IS 'Usuario que gerou a transação';
+COMMENT ON COLUMN public.ln_historico.his_st_descricao IS 'Descrição da transação.';
 
 
 -- Sequence: seq_historico
 
 -- DROP SEQUENCE seq_historico;
 
-CREATE SEQUENCE seq_historico
+CREATE SEQUENCE public.seq_historico
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_historico
+ALTER TABLE public.seq_historico
   OWNER TO postgres;
 
 
@@ -483,7 +487,7 @@ ALTER TABLE seq_historico
 
 -- DROP TABLE ln_tipoconta;
 
-CREATE TABLE ln_tipoconta
+CREATE TABLE public.ln_tipoconta
 (
   tip_in_codigo integer NOT NULL, -- Código do tipo de conta
   tip_st_descricao character varying(50) NOT NULL,
@@ -493,10 +497,10 @@ CREATE TABLE ln_tipoconta
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_tipoconta
+ALTER TABLE public.ln_tipoconta
   OWNER TO postgres;
-COMMENT ON COLUMN ln_tipoconta.tip_in_codigo IS 'Código do tipo de conta';
-COMMENT ON COLUMN ln_tipoconta.tip_st_tipo IS 'Define o tipo de conta D-Débito e C-Crédito';
+COMMENT ON COLUMN public.ln_tipoconta.tip_in_codigo IS 'Código do tipo de conta';
+COMMENT ON COLUMN public.ln_tipoconta.tip_st_tipo IS 'Define o tipo de conta D-Débito e C-Crédito';
 
 insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (1,'ATIVO','D');
 insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (2,'PASSIVO','C');
@@ -515,7 +519,7 @@ insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_
 
 -- DROP TABLE ln_categoria;
 
-CREATE TABLE ln_categoria
+CREATE TABLE public.ln_categoria
 (
   cat_in_codigo integer NOT NULL,
   cat_st_descricao character varying(50),
@@ -526,30 +530,30 @@ CREATE TABLE ln_categoria
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_categoria
+ALTER TABLE public.ln_categoria
   OWNER TO postgres;
-COMMENT ON TABLE ln_categoria
+COMMENT ON TABLE public.ln_categoria
   IS 'Define a categoria das contas para filtros no sistema';
-COMMENT ON COLUMN ln_categoria.tip_in_codigo IS 'Tipo de categoria Débito ou Crédito';
+COMMENT ON COLUMN public.ln_categoria.tip_in_codigo IS 'Tipo de categoria Débito ou Crédito';
 
 -- Sequence: seq_categoria
 
 -- DROP SEQUENCE seq_categoria;
 
-CREATE SEQUENCE seq_categoria
+CREATE SEQUENCE public.seq_categoria
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_categoria
+ALTER TABLE public.seq_categoria
   OWNER TO postgres;
 
 -- Table: ln_tipotabela
 
 -- DROP TABLE ln_tipotabela;
 
-CREATE TABLE ln_tipotabela
+CREATE TABLE public.ln_tipotabela
 (
   ttb_in_codigo integer NOT NULL, -- Código da tabela
   ttb_st_descricao character varying NOT NULL, -- Descrição da tabela
@@ -558,12 +562,12 @@ CREATE TABLE ln_tipotabela
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_tipotabela
+ALTER TABLE public.ln_tipotabela
   OWNER TO postgres;
-COMMENT ON TABLE ln_tipotabela
+COMMENT ON TABLE public.ln_tipotabela
   IS 'Tipo de table para cálculos específicos';
-COMMENT ON COLUMN ln_tipotabela.ttb_in_codigo IS 'Código da tabela';
-COMMENT ON COLUMN ln_tipotabela.ttb_st_descricao IS 'Descrição da tabela';
+COMMENT ON COLUMN public.ln_tipotabela.ttb_in_codigo IS 'Código da tabela';
+COMMENT ON COLUMN public.ln_tipotabela.ttb_st_descricao IS 'Descrição da tabela';
 
 insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (1,'IRRF');
 insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (2,'INSS');
@@ -578,7 +582,7 @@ insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (
 
 -- DROP TABLE ln_tabela;
 
-CREATE TABLE ln_tabela
+CREATE TABLE public.ln_tabela
 (
   tab_in_codigo integer NOT NULL,
   ttb_in_codigo integer NOT NULL,
@@ -596,20 +600,32 @@ CREATE TABLE ln_tabela
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_tabela
+ALTER TABLE public.ln_tabela
   OWNER TO postgres;
-COMMENT ON TABLE ln_tabela
+COMMENT ON TABLE public.ln_tabela
   IS 'Tabela de valores para cálculo de impostos e juros etc';
 -- Sequence: seq_tabela
 
 -- DROP SEQUENCE seq_tabela;
 
-CREATE SEQUENCE seq_tabela
+CREATE SEQUENCE public.seq_tabela
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_tabela
+ALTER TABLE public.seq_tabela
   OWNER TO postgres;
 
+
+-------------------------------------------------------------------------------------------------------------------------
+
+insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
+values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','naves','m-nvs@uol.com.br');
+insert into acessocontrol.ln_endereco ("end_in_codigo","cli_in_codigo", "end_ch_tipo","end_st_endereco","end_st_complemento","end_st_bairro","end_st_cidade","end_st_estado","end_st_cep")
+values (nextval('acessocontrol.seq_endereco'), 2, '1','Rua Diógenes Ribeiro de Lima ,801',null,'Jardim Belval','Barueri','São Paulo','06420250');
+insert into acessocontrol.ln_telefone ("tel_in_codigo","cli_in_codigo","tel_ch_tipo","tel_st_pais","tel_st_ddd","tel_st_telefone")
+values (nextval('acessocontrol.seq_telefone'), 2, '3', null, '011','995046236');
+insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
+                                 "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "cli_in_codigo", "usu_st_admin") values 
+                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',2,'N');

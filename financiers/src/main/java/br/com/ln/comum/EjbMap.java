@@ -97,7 +97,7 @@ public class EjbMap implements Serializable{
                     return lnPerfil;
                 }
             }
-        }
+        }       
         
         return lnPerfil;
     }

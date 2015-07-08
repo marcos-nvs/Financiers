@@ -24,25 +24,30 @@ public class PerfilDao extends GenericDao implements Serializable {
     
     /**
      * Perfil especifico
-     * @param clazz
-     * @param strDbName
+     * @param perInCodigo
+     * @param perChAtivo
      * @return List Object
      */
     public static LnPerfil grabPerfil(Integer perInCodigo, Character perChAtivo){
-        
-        Session session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-        Transaction tx = session.beginTransaction();
+    
+        Session session = null;
+        Transaction tx = null;
         LnPerfil lnPerfil = null;
         
         try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
             Query query = session.getNamedQuery("LnPerfil.findByPerInCodigoPerChAtivo");
             query.setInteger("perInCodigo", perInCodigo);
             query.setCharacter("perChAtivo", perChAtivo);
             
             List l = query.list();
+            tx.commit();
             
             if (l != null && !l.isEmpty()){
                 lnPerfil = (LnPerfil) l.get(0); 
+            } else {
+                System.out.println("perfil nao encontrado");
             }
             
         }finally{

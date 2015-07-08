@@ -4,7 +4,7 @@
   <session-factory>
     <property name="hibernate.connection.datasource">jdbc/Financiers</property>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-    <property name="hibernate.default_schema">public</property>
+    <!--<property name="hibernate.default_schema">public</property>-->
 
 
 <!--    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
@@ -13,6 +13,11 @@
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">Kareta44!@#$</property>
     <property name="hibernate.default_schema">public</property>-->
+    
+<!--    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.format_sql">true</property>
+    <property name="use_sql_comments">true</property>-->
+
 
 
     <mapping class="br.com.ln.entity.LnHistorico"/>
