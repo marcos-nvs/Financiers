@@ -249,14 +249,17 @@ public class IrrfView implements Serializable {
     public void btExcluir(){
         
     }
-    
-    public void btIncluiDetalhe(){
-        tabelaItem = new TabelaItem();
-        tabelaItem.setCodigoTabItem(irrfFuncao.calcIdTabelaItem());
-        tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
-        loadVarTabelaItem();
-        System.out.println("tabela Item : " + tabelaItem.toString());
-        listTabelaItem.add(tabelaItem);
+
+    public void btIncluiDetalhe() {
+
+//        if (irrfFuncao.verificaInformacoes()) {
+            tabelaItem = new TabelaItem();
+            tabelaItem.setCodigoTabItem(irrfFuncao.calcIdTabelaItem());
+            tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
+            loadVarTabelaItem();
+            System.out.println("tabela Item : " + tabelaItem.toString());
+            listTabelaItem.add(tabelaItem);
+//        }
     }
     
     public void btExcluiDetalhe(){

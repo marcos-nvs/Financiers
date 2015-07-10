@@ -227,7 +227,7 @@ public class PerfilView implements Serializable {
         dataLoadVarPerfilAcesso();
         
         lnPerfilacesso.setTipoFuncao(TipoFuncao.Incluir);
-        if (!listPerfilacesso.contains(lnPerfilacesso)) {
+        if (!lnPerfil.getListPerfilAcesso().contains(lnPerfilacesso)) {
             listPerfilacesso.add(lnPerfilacesso);
         } else {
             mensagem = "Modulo ja existe";
