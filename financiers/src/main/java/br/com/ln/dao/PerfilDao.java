@@ -46,9 +46,7 @@ public class PerfilDao extends GenericDao implements Serializable {
             
             if (l != null && !l.isEmpty()){
                 lnPerfil = (LnPerfil) l.get(0); 
-            } else {
-                System.out.println("perfil nao encontrado");
-            }
+            } 
             
         }finally{
             if (session != null && session.isOpen()){

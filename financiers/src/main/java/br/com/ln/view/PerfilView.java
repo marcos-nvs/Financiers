@@ -223,15 +223,8 @@ public class PerfilView implements Serializable {
     }
     
     public void btIncluirPerfilAcesso(){
-        lnPerfilacesso = new LnPerfilacesso();
         dataLoadVarPerfil();
         dataLoadVarPerfilAcesso();
-        
-        System.out.println("LnAcesso : " + lnPerfilacesso.toString());
-        
-        for (LnPerfilacesso acesso : lnPerfil.getListPerfilAcesso()) {
-            System.out.println("Acesso  : " + acesso.toString());
-        }
         
         if (!lnPerfil.getListPerfilAcesso().contains(lnPerfilacesso)) {
             lnPerfilacesso.setTipoFuncao(TipoFuncao.Incluir);
@@ -289,7 +282,14 @@ public class PerfilView implements Serializable {
     }
     
     private void dataLoadVarPerfilAcesso(){
-        LnPerfilacessoPK lnPerfilacessoPK = new LnPerfilacessoPK(lnPerfil.getPerInCodigo(), modInCodigo);
+        LnPerfilacessoPK lnPerfilacessoPK;
+        
+        if (lnPerfil.getTipoFuncao().equals(TipoFuncao.Incluir)) {
+            lnPerfilacessoPK = new LnPerfilacessoPK(0, modInCodigo);
+        } else {
+            lnPerfilacessoPK = new LnPerfilacessoPK(lnPerfil.getPerInCodigo(), modInCodigo);
+        }
+        
         lnPerfilacesso = new LnPerfilacesso();
         
         lnPerfilacesso.setLnPerfilacessoPK(lnPerfilacessoPK);
