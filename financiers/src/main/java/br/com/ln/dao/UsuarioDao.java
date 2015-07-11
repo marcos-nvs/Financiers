@@ -127,4 +127,60 @@ public class UsuarioDao extends GenericDao implements Serializable {
         }
         return listUsuario;
     }
+    
+    /**
+     * Pesquisa de usuario e senha para validacao.
+     * @param cliente
+     * @return 
+     */
+    public static List<LnUsuario> grabListUsuarioCliente(Integer cliente){
+        
+        Session session = null;
+        Transaction tx = null;
+        List<LnUsuario> listUsuario = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnUsuario.findByCliInCodigo");
+            query.setInteger("cliInCodigo", cliente);
+            listUsuario = query.list();
+            tx.commit();
+            
+        } finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listUsuario;
+    }
+    
+    public static LnUsuario grabUsuarioDocumento(String documento){
+        
+        Session session = null;
+        Transaction tx = null;
+        LnUsuario lnUsuario = null;
+        
+        try {
+            session  = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnUsuario.findByUsuStCpf");
+            query.setString("usuStCpf", documento);
+            List l = query.list();
+            tx.commit();
+            
+            if (l != null && !l.isEmpty()){
+                lnUsuario = (LnUsuario) l.get(0);
+            }
+            
+        } finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return lnUsuario;
+    }
 }

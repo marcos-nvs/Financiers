@@ -7,6 +7,7 @@ package br.com.ln.view;
 
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.EjbMap;
+import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.Utilitarios;
 import br.com.ln.comum.VarComuns;
@@ -20,7 +21,6 @@ import br.com.ln.dao.UsuarioDao;
 import br.com.ln.entity.LnCliente;
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.logging.Level;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -28,6 +28,7 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.menu.MenuModel;
 
 /**
@@ -40,19 +41,33 @@ public class FnAcesso implements Serializable {
     
     final static Logger logger = Logger.getLogger(FnAcesso.class);
 
+    private String documento;
     private String usuario;
     private String senha;
+    private String rusuario;
+    private String rsenha;
+    private String novaSenha;
+    private String confirmaSenha;
+    
     private String mensagem;
     private LnUsuario lnUsuario;
     private LnCliente lnCliente;
     private BeanVar beanVar;
     private MenuModel model;
     private String cpf;
-    private TratamentoEspecial tratamentoEspecial;
+    private final TratamentoEspecial tratamentoEspecial;
 
     public FnAcesso() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tratamentoEspecial = new TratamentoEspecial();
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
     }
 
     public String getUsuario() {
@@ -69,6 +84,38 @@ public class FnAcesso implements Serializable {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getRusuario() {
+        return rusuario;
+    }
+
+    public void setRusuario(String rusuario) {
+        this.rusuario = rusuario;
+    }
+
+    public String getRsenha() {
+        return rsenha;
+    }
+
+    public void setRsenha(String rsenha) {
+        this.rsenha = rsenha;
+    }
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
+    }
+
+    public String getConfirmaSenha() {
+        return confirmaSenha;
+    }
+
+    public void setConfirmaSenha(String confirmaSenha) {
+        this.confirmaSenha = confirmaSenha;
     }
 
     public String getMensagem() {
@@ -160,8 +207,10 @@ public class FnAcesso implements Serializable {
 
     public void sistemaLogin() {
         if (VarComuns.strDbName != null) {
+            System.out.println("usuario : " + usuario);
             if (usuario != null && senha != null) {
                 lnUsuario = EjbMap.grabUsuario(usuario);
+                System.out.println("usuario : " + lnUsuario.toString());
                 lnCliente = EjbMap.grabCliente(lnUsuario.getCliInCodigo());
                 VarComuns.lnCliente = lnCliente;
                 if (lnUsuario != null) {
@@ -297,4 +346,59 @@ public class FnAcesso implements Serializable {
             beanVar.setNomeTela("Recuperacao de Acesso");
         }
     }
+
+    public void btConfirmaSenha() {
+        if (documento != null && !documento.isEmpty()){
+            UsuarioFuncoes usuarioFuncao = new UsuarioFuncoes();
+            lnUsuario = UsuarioDao.grabUsuarioDocumento(documento);
+            if (lnUsuario != null) {
+                System.out.println("rsenha : " + rsenha);
+                System.out.println("UsuSenha : " + lnUsuario.getUsuStSenha());
+                if (lnUsuario.getUsuStSenha().equals(rsenha)){
+                    if (!novaSenha.equals("")) {
+                        if (novaSenha.equals(confirmaSenha)) {
+                            Historico historico = new Historico();
+                            lnUsuario.setUsuStSenha(novaSenha);
+                            lnUsuario.setUsuDtExpiracao(usuarioFuncao.calculaDataExpiracao(lnUsuario));
+                            UsuarioDao.saveOrUpdateObject(lnUsuario);
+
+                            if (VarComuns.lnUsusario != null) {
+                                VarComuns.lnUsusario = lnUsuario;
+                                EjbMap.updateUsuario(lnUsuario);
+                            }
+
+                            historico.gravaHistorico(lnUsuario, "Senha do usuario: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada, no Login.");
+                            RequestContext.getCurrentInstance().execute("PF('senha').hide()");
+                            mensagem = "Senha alterada com sucesso!!";
+                            rusuario = null;
+                            rsenha = null;
+                            lnUsuario = new LnUsuario();
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                        } else {
+                            mensagem = "Senha nao confere, por favor verifique!!";
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                        }
+                    } else {
+                        mensagem = "Senha nao pode estar em branco!!";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                    }
+                } else {
+                    mensagem = "Usuario ou senha invalida";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                }
+            } else {
+                mensagem = "Usuario nao encontrado";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            }
+        } else {
+            mensagem = "Por favor, entre com o documento (CPF)!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+        }
+    }
+
+    public void btFechaTroca(){
+        lnUsuario = new LnUsuario();
+        RequestContext.getCurrentInstance().execute("PF('senha').hide()");
+    }
+
 }

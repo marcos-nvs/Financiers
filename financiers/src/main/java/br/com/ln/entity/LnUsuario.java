@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnUsuario.findByPerInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.perInCodigo = :perInCodigo"),
     @NamedQuery(name = "LnUsuario.findByUsuStCpf", query = "SELECT l FROM LnUsuario l WHERE l.usuStCpf = :usuStCpf"),
     @NamedQuery(name = "LnUsuario.findByCliInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.cliInCodigo = :cliInCodigo"),
+    @NamedQuery(name = "LnUsuario.findByClienteUsuario", query = "SELECT l FROM LnUsuario l WHERE l.cliInCodigo = :cliInCodigo and l.usuStCodigo = :usuStCodigo"),
     @NamedQuery(name = "LnUsuario.findAllUsuStCodigoUsuChAtivo", query = "SELECT l FROM LnUsuario l WHERE l.usuStCodigo = :usuStCodigo and l.usuChAtivo = :usuChAtivo")})
 public class LnUsuario implements Serializable {
     private static final long serialVersionUID = 1L;

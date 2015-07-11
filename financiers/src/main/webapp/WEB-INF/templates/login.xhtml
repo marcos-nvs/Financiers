@@ -16,15 +16,16 @@
                         <p:password id="idPassword" value="#{financiersView.senha}"/>
                         <f:facet name="footer">
                             <p:commandButton id="idBtLogin" value="#{msgs['template.login']}" icon="ui-icon-check" ajax="false"
-                                             partialSubmit="false" process="@this, idInUsuario, idPassword, idGridLogado"
-                                             update="@this, idInUsuario, idPassword, idGridLogado,:idFormTop:growl"
-                                             action="#{financiersView.sistemaLogin}"/>
+                                             action="#{financiersView.sistemaLogin}"  partialSubmit="false" 
+                                             process="idBtLogin, idInUsuario, idPassword" update=":idFormTop:growl"/>
                             <p:commandButton id="idBtTrocaSenha" value="Trocar Senha" onclick="PF('senha').show()"/>
                         </f:facet>
                     </h:panelGrid>
-                    <p:commandLink id="btRecuperaSenha" value="Esqueceu a senha?" action="#{financiersView.recuperaAcesso}" 
+                    <p:commandLink id="btRecuperaSenha" value="Esqueceu a senha?" style="margin-left: 30px;"
+                                   action="#{financiersView.recuperaAcesso}" 
                                    process="btRecuperaSenha" ajax="false" update=":idFormCenter"/>
-                    <p:commandLink id="btCadastroCliente" value="Cadastre-se" style="margin-left: 30px;" action="#{financiersView.cadastroCliente()}" 
+                    <p:commandLink id="btCadastroCliente" value="Cadastre-se" style="margin-left: 30px;" 
+                                   action="#{financiersView.cadastroCliente()}" 
                                    process="btCadastroCliente" ajax="false" update=":idFormCenter"/>
                     <p:focus for="idInUsuario"/>
                 </p:panel>
@@ -36,20 +37,23 @@
     <p:dialog id="idDialogTrocaSenha" header="Trocar Senha" widgetVar="senha" modal="false" showEffect="fade" hideEffect="fade" closable="false"
               style="background-color: activeborder" width="400">
         <h:panelGrid id="dlgTrocaSenha" columns="2">
+            <p:outputLabel value="Documento"/>
+            <p:inputText id="idUsuarioDocumento" value="#{financiersView.documento}"/>
             <p:outputLabel value="#{msgs['template.user']}"/>
-            <p:inputText id="idUsuarioNovaSenha" value="#{usuarioView.usuario}"/>
+            <p:inputText id="idUsuarioNovaSenha" value="#{financiersView.rusuario}"/>
             <p:outputLabel value="Enre com a senha atual"/>
-            <p:password value="#{usuarioView.senha}"/>
+            <p:password value="#{financiersView.rsenha}"/>
             <p:outputLabel value="Entre com a nova senha"/>
-            <p:password value="#{usuarioView.novaSenha}"/>
+            <p:password value="#{financiersView.novaSenha}"/>
             <p:outputLabel value="Confirma a senha"/>
-            <p:password value="#{usuarioView.confirmaSenha}"/>
+            <p:password value="#{financiersView.confirmaSenha}"/>
         </h:panelGrid>
         <f:facet name="footer">
             <p:commandButton id="btloginSenha" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-document"
-                             process="@this, dlgTrocaSenha" update=":idFormTop:growl" action="#{usuarioView.btTrocaSenha()}"/>
+                             action="#{financiersView.btConfirmaSenha()}" process="@this, dlgTrocaSenha" 
+                             update=":idFormTop:growl, :idformmenu" />
             <p:commandButton id="btloginFechar" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-circlesmall-close"
-                             onclick="PF('novaSenha').hide()"/> 
+                             action="#{financiersView.btFechaTroca()}" process="btloginFechar" update=":idFormCenter, :idformmenu"/> 
         </f:facet>
     </p:dialog>
 </ui:composition>

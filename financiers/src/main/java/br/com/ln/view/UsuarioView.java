@@ -61,7 +61,7 @@ public class UsuarioView implements Serializable {
 
     public UsuarioView() {
         listPerfil = PerfilDao.grabListPerfilAtivo('S');
-        listUsuario = UsuarioDao.grabListObject(LnUsuario.class);
+        listUsuario = UsuarioDao.grabListUsuarioCliente(VarComuns.lnCliente.getCliInCodigo());
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         lnUsuario = new LnUsuario();
         tratamentoEspecial = new TratamentoEspecial();
@@ -277,7 +277,7 @@ public class UsuarioView implements Serializable {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
                 }
             } catch (NullPointerException ex) {
-                mensagem = "Ocorreu um problema durante a exclusão.";
+                mensagem = "Ocorreu um problema durante a exclusÃ£o.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario", mensagem));
             }
         } else {
@@ -326,40 +326,6 @@ public class UsuarioView implements Serializable {
         }
     }
 
-    public void btConfirmaSenha(String tela) {
-        if (!novaSenha.equals("")) {
-            if (novaSenha.equals(confirmaSenha)) {
-                Historico historico = new Historico();
-                lnUsuario.setUsuStSenha(novaSenha);
-                lnUsuario.setUsuDtExpiracao(functions.calculaDataExpiracao(lnUsuario));
-                UsuarioDao.saveOrUpdateObject(lnUsuario);
-
-                if (tela.equals("Usuario")) {
-                    if (VarComuns.lnUsusario.getUsuStCodigo().equals(lnUsuario.getUsuStCodigo())) {
-                        VarComuns.lnUsusario = lnUsuario;
-                        EjbMap.updateUsuario(lnUsuario);
-                        historico.gravaHistoricoModulo("Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada.");
-                        RequestContext.getCurrentInstance().execute("PF('novaSenha').hide()");
-                    }
-                } else {
-                    if (VarComuns.lnUsusario != null) {
-                        VarComuns.lnUsusario = lnUsuario;
-                        EjbMap.updateUsuario(lnUsuario);
-                    }
-                    historico.gravaHistorico(lnUsuario, "Senha do usuário: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada, no Login.");
-                    RequestContext.getCurrentInstance().execute("PF('senha').hide()");
-                }
-                mensagem = "Senha alterada com sucesso!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
-            } else {
-                mensagem = "Senha nao confere, por favor verifique!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
-            }
-        } else {
-            mensagem = "Senha nao pode estar em branco!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
-        }
-    }
     
     public void dataClean() {
         usuario = "";
@@ -400,18 +366,40 @@ public class UsuarioView implements Serializable {
         cpf = lnUsuario.getUsuStCpf();
     }
     
-    public void btTrocaSenha(){
-        lnUsuario = UsuarioDao.grabUsuario(usuario);
-        if (lnUsuario != null){
-            if (lnUsuario.getUsuStSenha().equals(senha)) {
-                btConfirmaSenha("Login");
+    public void btConfirmaSenha(String tela) {
+        if (!novaSenha.equals("")) {
+            if (novaSenha.equals(confirmaSenha)) {
+                Historico historico = new Historico();
+                lnUsuario.setUsuStSenha(novaSenha);
+                UsuarioFuncoes usuarioFuncao = new UsuarioFuncoes();
+                lnUsuario.setUsuDtExpiracao(usuarioFuncao.calculaDataExpiracao(lnUsuario));
+                UsuarioDao.saveOrUpdateObject(lnUsuario);
+
+                if (tela.equals("Usuario")) {
+                    if (VarComuns.lnUsusario.getUsuStCodigo().equals(lnUsuario.getUsuStCodigo())) {
+                        VarComuns.lnUsusario = lnUsuario;
+                        EjbMap.updateUsuario(lnUsuario);
+                        historico.gravaHistoricoModulo("Senha do usuario: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada.");
+                        RequestContext.getCurrentInstance().execute("PF('novaSenha').hide()");
+                    }
+                } else {
+                    if (VarComuns.lnUsusario != null) {
+                        VarComuns.lnUsusario = lnUsuario;
+                        EjbMap.updateUsuario(lnUsuario);
+                    }
+                    historico.gravaHistorico(lnUsuario, "Senha do usuario: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada, no Login.");
+                    RequestContext.getCurrentInstance().execute("PF('senha').hide()");
+                }
+                mensagem = "Senha alterada com sucesso!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             } else {
-                mensagem = "Usuario ou senha nao encontrado!!";
+                mensagem = "Senha nao confere, por favor verifique!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
             }
         } else {
-            mensagem = "Senha nao confere, por favor verifique!!";
+            mensagem = "Senha nao pode estar em branco!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
         }
     }
+
 }
