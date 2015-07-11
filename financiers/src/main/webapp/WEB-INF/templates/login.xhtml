@@ -9,22 +9,22 @@
             <h:graphicImage url="img/barracinza.jpg"/>
             <h:panelGrid columns="1" style="margin-left: 0px;">
                 <p:panel header="Identificação">
-                    <h:panelGrid columns="2" style="margin-left: 50px;">
+                    <h:panelGrid columns="2" style="margin-left: 10px;">
                         <p:outputLabel id="idUsuario" value="#{msgs['template.user']}"/>
                         <p:inputText id="idInUsuario" maxlength="40" value="#{financiersView.usuario}" />
                         <p:outputLabel value="#{msgs['page.textFields.password']}"/>
                         <p:password id="idPassword" value="#{financiersView.senha}"/>
                         <f:facet name="footer">
                             <p:commandButton id="idBtLogin" value="#{msgs['template.login']}" icon="ui-icon-check" ajax="false"
-                                             action="#{financiersView.sistemaLogin}"  partialSubmit="false" 
+                                             action="#{financiersView.sistemaLogin}"  partialSubmit="false" style="margin-left: 10px;"
                                              process="idBtLogin, idInUsuario, idPassword" update=":idFormTop:growl"/>
-                            <p:commandButton id="idBtTrocaSenha" value="Trocar Senha" onclick="PF('senha').show()"/>
+                            <p:commandButton id="idBtTrocaSenha" value="Trocar Senha" onclick="PF('senha').show()" style="margin-left: 10px;"/>
                         </f:facet>
                     </h:panelGrid>
-                    <p:commandLink id="btRecuperaSenha" value="Esqueceu a senha?" style="margin-left: 30px;"
+                    <p:commandLink id="btRecuperaSenha" value="Esqueceu a senha?" style="margin-left: 20px;"
                                    action="#{financiersView.recuperaAcesso}" 
                                    process="btRecuperaSenha" ajax="false" update=":idFormCenter"/>
-                    <p:commandLink id="btCadastroCliente" value="Cadastre-se" style="margin-left: 30px;" 
+                    <p:commandLink id="btCadastroCliente" value="Cadastre-se" style="margin-left: 20px;" 
                                    action="#{financiersView.cadastroCliente()}" 
                                    process="btCadastroCliente" ajax="false" update=":idFormCenter"/>
                     <p:focus for="idInUsuario"/>
