@@ -16,7 +16,7 @@
                     })
         </script>           -->
     </h:head>
-    <p:tabView style="border: 0px;">
+    <p:tabView id="tabIRRF" style="border: 0px;">
         <p:tab title="IRRF" closable="false" >
             <p:dataTable id="idTabelaIrrf" var="Irrf" value="#{IrrfView.listTabela}"
                          paginator="true" rows="20" paginatorPosition="bottom">
@@ -136,8 +136,7 @@
                 <p:ajax update="idvlrDependente" process="idvlrDependente" event="change"/>
             </p:inputText>
         </h:panelGrid>
-        <p:dataTable id="idDTIRRF" var="incluiTabelaIR" value="#{IrrfView.listTabelaItem}" selection="#{IrrfView.tabelaItem}" selectionMode="single"
-                     rowKey="#{incluiTabelaIR.codigoTabItem}" paginator="true" rows="10" paginatorPosition="bottom">
+        <p:dataTable id="idDTIRRF" var="incluiTabelaIR" value="#{IrrfView.listTabelaItem}" paginator="true" rows="10" paginatorPosition="bottom">
             <f:facet name="header">
                 <p:outputLabel value="Imposto de Renda retindo na Fonte"/>
             </f:facet>
@@ -170,8 +169,9 @@
             <p:commandButton id="idbtincluirirrf" value="#{msgs['node.include']}" icon="ui-icon-document"
                              action="#{IrrfView.btIncluiDetalhe()}" process="idbtincluirirrf, idgridDataIrrf, idgridValorIrrf, idIrrfDescricao,
                              dtirrfInicio, dtirrfFinal, idinputvlrinicial, idvlrFinal, idqtdDep, idpercImposto, idvlrDesconto, idvlrDependente"
-                             update="idDTIRRF"/>
-            <p:commandButton id="idbtsalvarirrf" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"/>
+                             update="idDTIRRF :idFormTop:growl"/>
+            <p:commandButton id="idbtsalvarirrf" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
+                             action="#{IrrfView.btSalvar()}" process="idbtsalvarirrf" update=":idFormTop:growl, :idFormCenter:tabIRRF:idTabelaIrrf"/>
             <p:commandButton id="idbtfecharirrf" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-cancel"
                              action="#{IrrfView.btFechar()}" process="idbtfecharirrf" update="idbtfecharirrf"/>
         </f:facet>

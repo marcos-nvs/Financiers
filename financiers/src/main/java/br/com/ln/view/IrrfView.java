@@ -6,6 +6,7 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnTabela;
 import br.com.ln.financiers.IrrfFuncoes;
 import br.com.ln.financiers.Tabela;
 import br.com.ln.financiers.TabelaItem;
@@ -198,8 +199,6 @@ public class IrrfView implements Serializable {
         this.listTabelaItem = listTabelaItem;
     }
     
-    
-    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -251,30 +250,36 @@ public class IrrfView implements Serializable {
     }
 
     public void btIncluiDetalhe() {
-
-//        if (irrfFuncao.verificaInformacoes()) {
-            tabelaItem = new TabelaItem();
-            tabelaItem.setCodigoTabItem(irrfFuncao.calcIdTabelaItem());
+        tabelaItem = new TabelaItem();
+        tabelaItem.setCodigoTabItem(irrfFuncao.calcIdTabelaItem());
+        loadVarTabela();
+        loadVarTabelaItem();
+        if (irrfFuncao.verificaInformacoes(tabela, tabelaItem)) {
             tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
-            loadVarTabelaItem();
-            System.out.println("tabela Item : " + tabelaItem.toString());
             listTabelaItem.add(tabelaItem);
-//        }
+        } else {
+            mensagem = irrfFuncao.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+        }
     }
     
     public void btExcluiDetalhe(){
-        tabelaItem = new TabelaItem();
-        tabelaItem.setTipoFuncao(TipoFuncao.Excluir);
-        loadVarTabelaItem();
         listTabelaItem.remove(tabelaItem);
     }
     
     public void btSalvar(){
-        
+        loadLnTabela();
     }
     
     public void btFechar(){
         RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
+    }
+    
+    private void loadVarTabela(){
+        tabela.setDataFinal(dataFinal);
+        tabela.setDataInicial(dataInicial);
+        tabela.setCodigoTabela(codigoTabela);
+        tabela.setNomeTabela(nomeTabela);
     }
     
     private void loadVarTabelaItem(){
@@ -284,5 +289,54 @@ public class IrrfView implements Serializable {
         tabelaItem.setValorDesconto(valorDesconto);
         tabelaItem.setValorFinal(valorFinal);
         tabelaItem.setValorInicial(valorInicial);
+    }
+
+    private void loadLnTabela() {
+
+        List<LnTabela> listTabela = new ArrayList<>(100);
+        boolean bFecha = true;
+
+        if (listTabelaItem != null) {
+
+            for (TabelaItem tbItem : listTabelaItem) {
+                LnTabela lnTabela = new LnTabela();
+                lnTabela.setTabDtFinal(tabela.getDataFinal());
+                lnTabela.setTabDtInicio(tabela.getDataInicial());
+                lnTabela.setTabFlDependente(tbItem.getValorDependente());
+                lnTabela.setTabFlDesconto(tbItem.getValorDesconto());
+                lnTabela.setTabFlFinal(tbItem.getValorFinal());
+                lnTabela.setTabFlInicio(tbItem.getValorInicial());
+                lnTabela.setTabFlPercentual(tbItem.getPercentual());
+                lnTabela.setTabFlQtddependente(tbItem.getQtdDependente());
+                lnTabela.setTabStDescricao(tabela.getNomeTabela());
+                lnTabela.setTtbInCodigo(1);
+
+                if (!listTabela.contains(lnTabela)) {
+                    listTabela.add(lnTabela);
+                } else {
+                    mensagem = "Exitem valores na tabela iguais, por favor verifique!!";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                    bFecha = false;
+                    break;
+                }
+            }
+            
+            if (bFecha){
+                RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
+            }
+            
+        } else {
+            mensagem = "Lista da tabela esta vazia!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+        }
+    }
+    
+    private void clearVarTabela(){
+        
+        
+    }
+    
+    private void clearVarTabelaItem(){
+        
     }
 }

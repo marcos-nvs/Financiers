@@ -105,7 +105,7 @@
                 <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChPesquisar)}"/>
             </p:column>
             <p:column style="width: 20px; text-align: center">
-                <p:commandButton id='idBtEditaAcesso' icon="ui-icon-trash" action="#{perfilView.btEditaPerfilAcesso()}" 
+                <p:commandButton id='idBtEditaAcesso' icon="ui-icon-trash" action="#{perfilView.btEditaPerfilAcesso}" 
                                  process="idBtEditaAcesso, idDtAcesso" update=":idFormCenter:idPerfilAcessoDialog, idDtAcesso">
                     <f:setPropertyActionListener value="#{incluiAcesso}" target="#{perfilView.lnPerfilacesso}"/>
                 </p:commandButton>
