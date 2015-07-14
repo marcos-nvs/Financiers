@@ -26,7 +26,6 @@ import org.primefaces.context.RequestContext;
  *
  * @author Marcos Naves
  */
-
 @SessionScoped
 @ManagedBean(name = "IrrfView")
 public class IrrfView implements Serializable {
@@ -42,19 +41,18 @@ public class IrrfView implements Serializable {
     private Double valorDependente;
     private Double valorDesconto;
     private Double percentual;
-    private Double qtdDependente;    
-    
+    private Double qtdDependente;
+
     private Tabela tabela;
     private TabelaItem tabelaItem;
     private List<TabelaItem> listTabelaItem;
     private List<Tabela> listTabela;
     private final IrrfFuncoes irrfFuncao;
-    
+
     private String valor;
-    
+
     private String mensagem;
 
-    
     public IrrfView() {
         tabela = new Tabela();
         tabelaItem = new TabelaItem();
@@ -126,7 +124,7 @@ public class IrrfView implements Serializable {
     public void setCodigoTabItem(Integer codigoTabItem) {
         this.codigoTabItem = codigoTabItem;
     }
-    
+
     public Double getValorDependente() {
         return valorDependente;
     }
@@ -198,7 +196,7 @@ public class IrrfView implements Serializable {
     public void setListTabelaItem(List<TabelaItem> listTabelaItem) {
         this.listTabelaItem = listTabelaItem;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -230,28 +228,36 @@ public class IrrfView implements Serializable {
         return "IrrfView{" + "tabela=" + tabela + ", listTabela=" + listTabela + '}';
     }
 
-    public void btIncluir(){
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
+    public void btIncluir() {
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             tabela = new Tabela();
-            tabela.setTipoFuncao(TipoFuncao.Incluir);
             RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
         } else {
             mensagem = "Usuario sem premissao para incluir tabela de IRRF.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Tabela IRRF", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
         }
     }
-    
-    public void btAlterar(){
-        
+
+    public void btAlterar() {
+        if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
+            tabela.setTipoFuncao(TipoFuncao.Alterar);
+            listTabelaItem = tabela.getListTabelaItem();
+            loadTabelaVarDesc();
+            RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
+        } else {
+            mensagem = "Usuario sem permissao para alterar a tabela de IRRF";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+        }
     }
-    
-    public void btExcluir(){
-        
+
+    public void btExcluir() {
+
     }
 
     public void btIncluiDetalhe() {
         tabelaItem = new TabelaItem();
         tabelaItem.setCodigoTabItem(irrfFuncao.calcIdTabelaItem());
+        tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
         loadVarTabela();
         loadVarTabelaItem();
         if (irrfFuncao.verificaInformacoes(tabela, tabelaItem)) {
@@ -262,27 +268,87 @@ public class IrrfView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
         }
     }
-    
-    public void btExcluiDetalhe(){
-        listTabelaItem.remove(tabelaItem);
+
+    public void btExcluiDetalhe() {
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
+            if (listTabelaItem.size() > 1) {
+                tabelaItem.setTipoFuncao(TipoFuncao.Excluir);
+//                listTabelaItem.remove(tabelaItem);
+                mensagem = "Registro marcado para exclusao com sucesso";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+            } else {
+                mensagem = "E ncessario ter pelo menos um valor na tabela.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+            }
+        } else {
+            mensagem = "Usuario sem permissao para excluir tabela.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+        }
     }
-    
-    public void btSalvar(){
-        loadLnTabela();
+
+    public void btSalvar() {
+        List<LnTabela> listTabelaLoad = new ArrayList<>(100);
+        boolean bGravar = true;
+
+        if (listTabelaItem != null) {
+
+            for (TabelaItem tbItem : listTabelaItem) {
+                if (tbItem.getTipoFuncao() != null && tbItem.getTipoFuncao().equals(TipoFuncao.Incluir)) {
+                    LnTabela lnTabela = new LnTabela();
+                    lnTabela.setTabDtFinal(tabela.getDataFinal());
+                    lnTabela.setTabDtInicio(tabela.getDataInicial());
+                    lnTabela.setTabFlDependente(tbItem.getValorDependente());
+                    lnTabela.setTabFlDesconto(tbItem.getValorDesconto());
+                    lnTabela.setTabFlFinal(tbItem.getValorFinal());
+                    lnTabela.setTabFlInicio(tbItem.getValorInicial());
+                    lnTabela.setTabFlPercentual(tbItem.getPercentual());
+                    lnTabela.setTabFlQtddependente(tbItem.getQtdDependente());
+                    lnTabela.setTabStDescricao(tabela.getNomeTabela());
+                    lnTabela.setTtbInCodigo(1);
+                    lnTabela.setTipoFuncao(tbItem.getTipoFuncao());
+
+                    if (!listTabelaLoad.contains(lnTabela)) {
+                        listTabelaLoad.add(lnTabela);
+                    } else {
+                        mensagem = "Exitem valores na tabela iguais, por favor verifique!!";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                        bGravar = false;
+                        break;
+                    }
+                }
+            }
+
+            if (bGravar) {
+                bGravar = irrfFuncao.tabela(listTabelaLoad);
+                if (bGravar) {
+                    clearVarTabela();
+                    clearVarTabelaItem();
+                    RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
+                    mensagem = "Tabela de Imposto incluida com sucesso!!!";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                } else {
+                    mensagem = irrfFuncao.mensagem;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
+                }
+            }
+        } else {
+            mensagem = "Lista da tabela esta vazia!!";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
+        }
     }
-    
-    public void btFechar(){
+
+    public void btFechar() {
         RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
     }
-    
-    private void loadVarTabela(){
+
+    private void loadVarTabela() {
         tabela.setDataFinal(dataFinal);
         tabela.setDataInicial(dataInicial);
         tabela.setCodigoTabela(codigoTabela);
         tabela.setNomeTabela(nomeTabela);
     }
-    
-    private void loadVarTabelaItem(){
+
+    private void loadVarTabelaItem() {
         tabelaItem.setPercentual(percentual);
         tabelaItem.setQtdDependente(qtdDependente);
         tabelaItem.setValorDependente(valorDependente);
@@ -291,52 +357,26 @@ public class IrrfView implements Serializable {
         tabelaItem.setValorInicial(valorInicial);
     }
 
-    private void loadLnTabela() {
-
-        List<LnTabela> listTabela = new ArrayList<>(100);
-        boolean bFecha = true;
-
-        if (listTabelaItem != null) {
-
-            for (TabelaItem tbItem : listTabelaItem) {
-                LnTabela lnTabela = new LnTabela();
-                lnTabela.setTabDtFinal(tabela.getDataFinal());
-                lnTabela.setTabDtInicio(tabela.getDataInicial());
-                lnTabela.setTabFlDependente(tbItem.getValorDependente());
-                lnTabela.setTabFlDesconto(tbItem.getValorDesconto());
-                lnTabela.setTabFlFinal(tbItem.getValorFinal());
-                lnTabela.setTabFlInicio(tbItem.getValorInicial());
-                lnTabela.setTabFlPercentual(tbItem.getPercentual());
-                lnTabela.setTabFlQtddependente(tbItem.getQtdDependente());
-                lnTabela.setTabStDescricao(tabela.getNomeTabela());
-                lnTabela.setTtbInCodigo(1);
-
-                if (!listTabela.contains(lnTabela)) {
-                    listTabela.add(lnTabela);
-                } else {
-                    mensagem = "Exitem valores na tabela iguais, por favor verifique!!";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
-                    bFecha = false;
-                    break;
-                }
-            }
-            
-            if (bFecha){
-                RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
-            }
-            
-        } else {
-            mensagem = "Lista da tabela esta vazia!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
-        }
+    private void clearVarTabela() {
+        nomeTabela = "";
+        dataInicial = null;
+        dataFinal = null;
+        codigoTabela = null;
     }
-    
-    private void clearVarTabela(){
-        
-        
+
+    private void clearVarTabelaItem() {
+        codigoTabItem = null;
+        valorDependente = null;
+        valorDesconto = null;
+        valorFinal = null;
+        valorInicial = null;
+        qtdDependente = null;
+        percentual = null;
     }
-    
-    private void clearVarTabelaItem(){
-        
+
+    private void loadTabelaVarDesc() {
+        nomeTabela = tabela.getNomeTabela();
+        dataInicial = tabela.getDataInicial();
+        dataFinal = tabela.getDataFinal();
     }
 }

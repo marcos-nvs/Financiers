@@ -42,8 +42,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnTabela.findByTabFlQtddependente", query = "SELECT l FROM LnTabela l WHERE l.tabFlQtddependente = :tabFlQtddependente"),
     @NamedQuery(name = "LnTabela.findByCodDescricaoListaIRRF",
                       query = "SELECT l.tabInCodigo, l.tabStDescricao, l.tabDtInicio, l.tabFlFinal FROM LnTabela l WHERE l.ttbInCodigo = :ttbInCodigo"),
-    @NamedQuery(name = "LnTabela.findByCodigoDetallheIRRF",
-                      query = "SELECT l FROM LnTabela l WHERE l.tabInCodigo = :tabInCodigo")})
+    @NamedQuery(name = "LnTabela.findByCodigoDetalheIRRF",
+                      query = "SELECT l FROM LnTabela l WHERE l.ttbInCodigo = :ttbInCodigo and l.tabDtInicio = :tabDtInicio and l.tabDtFinal = :tabDtFinal")})
 public class LnTabela implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -75,6 +75,9 @@ public class LnTabela implements Serializable {
     private Double tabFlDependente;
     @Column(name = "tab_fl_qtddependente")
     private Double tabFlQtddependente;
+    
+    @Transient
+    private TipoFuncao tipoFuncao;
     
     public LnTabela() {
     }
@@ -177,6 +180,15 @@ public class LnTabela implements Serializable {
     public void setTabFlQtddependente(Double tabFlQtddependente) {
         this.tabFlQtddependente = tabFlQtddependente;
     }
+
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
+    }
+    
     
     @Override
     public int hashCode() {

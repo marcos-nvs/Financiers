@@ -9,6 +9,7 @@ import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -23,14 +24,14 @@ public class IrrfDao extends GenericDao implements Serializable{
     public static synchronized List<LnTabela> grabDescricaoTabela(){
         
         Session session = null;
-        Transaction tx = null;
+        Transaction tx;
         List<LnTabela> listTabela = null;
         
         try{
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
-            Query query = session.getNamedQuery("LnTabela.findByCodDescricaoListaIRRF");
+            Query query = session.getNamedQuery("LnTabela.findByTtbInCodigo");
             query.setInteger("ttbInCodigo", 1);
             listTabela = query.list();
             tx.commit();
@@ -43,7 +44,7 @@ public class IrrfDao extends GenericDao implements Serializable{
         return listTabela;
     }
     
-    public static synchronized List<LnTabela> grabDetalheTabela(Integer codTabela){
+    public static synchronized List<LnTabela> grabDetalheTabela(Integer tipoTabela, Date dtInicio, Date dtFinal){
         
         Session session = null;
         Transaction tx = null;
@@ -53,8 +54,10 @@ public class IrrfDao extends GenericDao implements Serializable{
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
-            Query query = session.getNamedQuery("LnTabela.findByCodigoDetallheIRRF");
-            query.setInteger("tabInCodigo", codTabela);
+            Query query = session.getNamedQuery("LnTabela.findByCodigoDetalheIRRF");
+            query.setInteger("ttbInCodigo", tipoTabela);
+            query.setDate("tabDtInicio", dtInicio);
+            query.setDate("tabDtFinal", dtFinal);
             listTabela = query.list();
             tx.commit();
             
@@ -66,4 +69,9 @@ public class IrrfDao extends GenericDao implements Serializable{
                 
         return listTabela;
     }
+    
+    public static Integer grabLnTabelaNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_tabela');"));
+    }
+    
 }

@@ -10,6 +10,7 @@ import br.com.ln.entity.LnTabela;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.HibernateException;
 
 /**
  *
@@ -23,36 +24,39 @@ public class IrrfFuncoes implements Serializable {
     public List<Tabela> buscaTabela() {
 
         Tabela tabela = new Tabela();
-        TabelaItem tabelaItem = new TabelaItem();
+        TabelaItem tabelaItem = null;
         List<Tabela> listaTabela = new ArrayList<>();
         List<TabelaItem> listTabelaItem = new ArrayList<>();
 
         List<LnTabela> listTabela = IrrfDao.grabDescricaoTabela();
-        List<LnTabela> listTabelaDetalhe = new ArrayList<>();
-
+        List<LnTabela> listTabelaDetalhe;
+        
         for (LnTabela tabelaDesc : listTabela) {
             tabela.setCodigoTabela(tabelaDesc.getTtbInCodigo());
             tabela.setDataFinal(tabelaDesc.getTabDtFinal());
             tabela.setDataInicial(tabelaDesc.getTabDtInicio());
             tabela.setIdCodigo(tabelaDesc.getTabInCodigo());
             tabela.setNomeTabela(tabelaDesc.getTabStDescricao());
+            
+            if (!listaTabela.contains(tabela)) {
+                listTabelaDetalhe = IrrfDao.grabDetalheTabela(tabelaDesc.getTabInCodigo(), tabelaDesc.getTabDtInicio(), tabelaDesc.getTabDtFinal());
+                listTabelaItem.clear();
+                
+                for (LnTabela tabelaDetalhe : listTabelaDetalhe) {
+                    tabelaItem = new TabelaItem();
+                    tabelaItem.setCodigoTabItem(tabelaDetalhe.getTabInCodigo());
+                    tabelaItem.setPercentual(tabelaDetalhe.getTabFlPercentual());
+                    tabelaItem.setQtdDependente(tabelaDetalhe.getTabFlQtddependente());
+                    tabelaItem.setValorDependente(tabelaDetalhe.getTabFlDependente());
+                    tabelaItem.setValorDesconto(tabelaDetalhe.getTabFlDesconto());
+                    tabelaItem.setValorFinal(tabelaDetalhe.getTabFlFinal());
+                    tabelaItem.setValorInicial(tabelaDetalhe.getTabFlInicio());
 
-            listTabelaDetalhe = IrrfDao.grabDetalheTabela(tabelaDesc.getTabInCodigo());
-            listTabelaItem.clear();
-
-            for (LnTabela tabelaDetalhe : listTabelaDetalhe) {
-                tabelaItem.setPercentual(tabelaDetalhe.getTabFlPercentual());
-                tabelaItem.setQtdDependente(tabelaDetalhe.getTabFlQtddependente());
-                tabelaItem.setValorDependente(tabelaItem.getValorDependente());
-                tabelaItem.setValorDesconto(tabelaItem.getValorDesconto());
-                tabelaItem.setValorFinal(tabelaItem.getValorFinal());
-                tabelaItem.setValorInicial(tabelaItem.getValorInicial());
-
-                listTabelaItem.add(tabelaItem);
+                    listTabelaItem.add(tabelaItem);
+                }
+                tabela.setListTabelaItem(listTabelaItem);
+                listaTabela.add(tabela);
             }
-
-            tabela.setListTabelaItem(listTabelaItem);
-            listaTabela.add(tabela);
         }
         return listaTabela;
     }
@@ -106,5 +110,12 @@ public class IrrfFuncoes implements Serializable {
         }
         return validado;
     }
+    
+    public boolean tabela(List<LnTabela> listTabela){
+        TabelaFuncoes tabelafuncao = new TabelaFuncoes();
+        mensagem = tabelafuncao.mensagem;
+        return tabelafuncao.gravaTabela(listTabela);
+    }
+    
 
 }
