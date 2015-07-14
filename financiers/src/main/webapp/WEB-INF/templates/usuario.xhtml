@@ -24,13 +24,13 @@
         <p:outputLabel value="#{msgs['node.email']}"/>
         <p:inputText id="idUsuStEmaiil" value="#{usuarioView.email}" maxlength="40" size="60" disabled="#{not beanVar.apresenta}"/>
     </h:panelGrid>
-    <h:panelGrid id="cadUsuarioDados3" columns="4">
+    <h:panelGrid id="cadUsuarioDados3" columns="4" style="margin-left: 13px">
         <p:outputLabel value="#{msgs['template.profile']}"/>
-        <p:selectOneMenu id="idperfil" value="#{usuarioView.perfil}" disabled="#{not beanVar.apresenta}" style="width: 125px;" effect="fade">
+        <p:selectOneMenu id="idperfil" value="#{usuarioView.perfil}" disabled="#{not beanVar.apresenta}" style="width: 250px;" effect="fade">
             <f:selectItems var="itemPerfil" value="#{usuarioView.listPerfil}" itemLabel="#{itemPerfil.perStDescricao}"
                            itemValue="#{itemPerfil.perInCodigo}"/>
         </p:selectOneMenu>
-        <p:outputLabel value="CPF"/>
+        <p:outputLabel value="CPF" />
         <p:inputMask id="idUsuStCPF" mask="999.999.999-99" value="#{usuarioView.cpf}" maxlength="40" size="11" disabled="#{not beanVar.apresenta}"/>
     </h:panelGrid>
     <h:panelGrid id="cadUsuarioButton" columns="2">
