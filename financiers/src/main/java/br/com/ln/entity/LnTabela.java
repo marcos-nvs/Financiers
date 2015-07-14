@@ -8,6 +8,7 @@ package br.com.ln.entity;
 import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,17 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnTabela.findByTtbInCodigo", query = "SELECT l FROM LnTabela l WHERE l.ttbInCodigo = :ttbInCodigo"),
     @NamedQuery(name = "LnTabela.findByTabStDescricao", query = "SELECT l FROM LnTabela l WHERE l.tabStDescricao = :tabStDescricao"),
     @NamedQuery(name = "LnTabela.findByTabDtInicio", query = "SELECT l FROM LnTabela l WHERE l.tabDtInicio = :tabDtInicio"),
-    @NamedQuery(name = "LnTabela.findByTabDtFinal", query = "SELECT l FROM LnTabela l WHERE l.tabDtFinal = :tabDtFinal"),
-    @NamedQuery(name = "LnTabela.findByTabFlInicio", query = "SELECT l FROM LnTabela l WHERE l.tabFlInicio = :tabFlInicio"),
-    @NamedQuery(name = "LnTabela.findByTabFlFinal", query = "SELECT l FROM LnTabela l WHERE l.tabFlFinal = :tabFlFinal"),
-    @NamedQuery(name = "LnTabela.findByTabFlPercentual", query = "SELECT l FROM LnTabela l WHERE l.tabFlPercentual = :tabFlPercentual"),
-    @NamedQuery(name = "LnTabela.findByTabFlDesconto", query = "SELECT l FROM LnTabela l WHERE l.tabFlDesconto = :tabFlDesconto"),
-    @NamedQuery(name = "LnTabela.findByTabFlDependente", query = "SELECT l FROM LnTabela l WHERE l.tabFlDependente = :tabFlDependente"),
-    @NamedQuery(name = "LnTabela.findByTabFlQtddependente", query = "SELECT l FROM LnTabela l WHERE l.tabFlQtddependente = :tabFlQtddependente"),
-    @NamedQuery(name = "LnTabela.findByCodDescricaoListaIRRF",
-                      query = "SELECT l.tabInCodigo, l.tabStDescricao, l.tabDtInicio, l.tabFlFinal FROM LnTabela l WHERE l.ttbInCodigo = :ttbInCodigo"),
-    @NamedQuery(name = "LnTabela.findByCodigoDetalheIRRF",
-                      query = "SELECT l FROM LnTabela l WHERE l.ttbInCodigo = :ttbInCodigo and l.tabDtInicio = :tabDtInicio and l.tabDtFinal = :tabDtFinal")})
+    @NamedQuery(name = "LnTabela.findByTabDtFinal", query = "SELECT l FROM LnTabela l WHERE l.tabDtFinal = :tabDtFinal")})
 public class LnTabela implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,27 +49,19 @@ public class LnTabela implements Serializable {
     private String tabStDescricao;
     @Basic(optional = false)
     @Column(name = "tab_dt_inicio")
-    @Temporal(TemporalType.DATE)    
+    @Temporal(TemporalType.DATE)
     private Date tabDtInicio;
+    @Basic(optional = false)
     @Column(name = "tab_dt_final")
     @Temporal(TemporalType.DATE)
     private Date tabDtFinal;
-    @Column(name = "tab_fl_inicio")
-    private Double tabFlInicio;
-    @Column(name = "tab_fl_final")
-    private Double tabFlFinal;
-    @Column(name = "tab_fl_percentual")
-    private Double tabFlPercentual;
-    @Column(name = "tab_fl_desconto")
-    private Double tabFlDesconto;
-    @Column(name = "tab_fl_dependente")
-    private Double tabFlDependente;
-    @Column(name = "tab_fl_qtddependente")
-    private Double tabFlQtddependente;
     
     @Transient
     private TipoFuncao tipoFuncao;
     
+    @Transient
+    List<LnTabelaItem> listLnTabelaItem;
+
     public LnTabela() {
     }
 
@@ -86,11 +69,12 @@ public class LnTabela implements Serializable {
         this.tabInCodigo = tabInCodigo;
     }
 
-    public LnTabela(Integer tabInCodigo, int ttbInCodigo, String tabStDescricao, Date tabDtInicio) {
+    public LnTabela(Integer tabInCodigo, int ttbInCodigo, String tabStDescricao, Date tabDtInicio, Date tabDtFinal) {
         this.tabInCodigo = tabInCodigo;
         this.ttbInCodigo = ttbInCodigo;
         this.tabStDescricao = tabStDescricao;
         this.tabDtInicio = tabDtInicio;
+        this.tabDtFinal = tabDtFinal;
     }
 
     public Integer getTabInCodigo() {
@@ -133,54 +117,6 @@ public class LnTabela implements Serializable {
         this.tabDtFinal = tabDtFinal;
     }
 
-    public Double getTabFlInicio() {
-        return tabFlInicio;
-    }
-
-    public void setTabFlInicio(Double tabFlInicio) {
-        this.tabFlInicio = tabFlInicio;
-    }
-
-    public Double getTabFlFinal() {
-        return tabFlFinal;
-    }
-
-    public void setTabFlFinal(Double tabFlFinal) {
-        this.tabFlFinal = tabFlFinal;
-    }
-
-    public Double getTabFlPercentual() {
-        return tabFlPercentual;
-    }
-
-    public void setTabFlPercentual(Double tabFlPercentual) {
-        this.tabFlPercentual = tabFlPercentual;
-    }
-
-    public Double getTabFlDesconto() {
-        return tabFlDesconto;
-    }
-
-    public void setTabFlDesconto(Double tabFlDesconto) {
-        this.tabFlDesconto = tabFlDesconto;
-    }
-
-    public Double getTabFlDependente() {
-        return tabFlDependente;
-    }
-
-    public void setTabFlDependente(Double tabFlDependente) {
-        this.tabFlDependente = tabFlDependente;
-    }
-
-    public Double getTabFlQtddependente() {
-        return tabFlQtddependente;
-    }
-
-    public void setTabFlQtddependente(Double tabFlQtddependente) {
-        this.tabFlQtddependente = tabFlQtddependente;
-    }
-
     public TipoFuncao getTipoFuncao() {
         return tipoFuncao;
     }
@@ -188,7 +124,14 @@ public class LnTabela implements Serializable {
     public void setTipoFuncao(TipoFuncao tipoFuncao) {
         this.tipoFuncao = tipoFuncao;
     }
-    
+
+    public List<LnTabelaItem> getListLnTabelaItem() {
+        return listLnTabelaItem;
+    }
+
+    public void setListLnTabelaItem(List<LnTabelaItem> listLnTabelaItem) {
+        this.listLnTabelaItem = listLnTabelaItem;
+    }
     
     @Override
     public int hashCode() {
@@ -212,7 +155,6 @@ public class LnTabela implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnTabela[ tabInCodigo=" + tabInCodigo + " ]";
+        return "LnTabela{" + "tabInCodigo=" + tabInCodigo + ", ttbInCodigo=" + ttbInCodigo + ", tabStDescricao=" + tabStDescricao + ", tabDtInicio=" + tabDtInicio + ", tabDtFinal=" + tabDtFinal + ", tipoFuncao=" + tipoFuncao + ", listLnTabelaItem=" + listLnTabelaItem + '}';
     }
-    
 }

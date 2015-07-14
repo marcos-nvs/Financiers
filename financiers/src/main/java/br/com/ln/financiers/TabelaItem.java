@@ -15,12 +15,13 @@ import java.util.Objects;
 public class TabelaItem implements Serializable{
     
     private Integer codigoTabItem;
+    private Integer codigoTabela;
     private Double valorInicial;
     private Double valorFinal;
     private Double valorDependente;
     private Double valorDesconto;
     private Double percentual;
-    private Double qtdDependente;
+    private Integer qtdDependente;
     
     private TipoFuncao tipoFuncao;
 
@@ -33,6 +34,14 @@ public class TabelaItem implements Serializable{
 
     public void setCodigoTabItem(Integer codigoTabItem) {
         this.codigoTabItem = codigoTabItem;
+    }
+
+    public Integer getCodigoTabela() {
+        return codigoTabela;
+    }
+
+    public void setCodigoTabela(Integer codigoTabela) {
+        this.codigoTabela = codigoTabela;
     }
     
     public Double getValorInicial() {
@@ -75,11 +84,11 @@ public class TabelaItem implements Serializable{
         this.percentual = percentual;
     }
 
-    public Double getQtdDependente() {
+    public Integer getQtdDependente() {
         return qtdDependente;
     }
 
-    public void setQtdDependente(Double qtdDependente) {
+    public void setQtdDependente(Integer qtdDependente) {
         this.qtdDependente = qtdDependente;
     }
 
@@ -135,7 +144,8 @@ public class TabelaItem implements Serializable{
 
     @Override
     public String toString() {
-        return "TabelaItem{" + "codigoTabItem=" + codigoTabItem + ", valorInicial=" + valorInicial + ", valorFinal=" + valorFinal + ", valorDependente=" + valorDependente + ", valorDesconto=" + valorDesconto + ", percentual=" + percentual + ", qtdDependente=" + qtdDependente + ", tipoFuncao=" + tipoFuncao + '}';
+        return "TabelaItem{" + "codigoTabItem=" + codigoTabItem + ", codigoTabela=" + codigoTabela + ", valorInicial=" + valorInicial + ", valorFinal=" + valorFinal + ", valorDependente=" + valorDependente + ", valorDesconto=" + valorDesconto + ", percentual=" + percentual + ", qtdDependente=" + qtdDependente + ", tipoFuncao=" + tipoFuncao + '}';
     }
+
 
 }

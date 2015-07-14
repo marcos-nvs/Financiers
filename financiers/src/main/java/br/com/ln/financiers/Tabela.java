@@ -24,7 +24,6 @@ public class Tabela implements Serializable{
     
     private TipoFuncao tipoFuncao;
     
-    
     private List<TabelaItem> listTabelaItem;
 
     public Tabela() {

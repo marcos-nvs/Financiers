@@ -81,7 +81,8 @@
                     <p:commandButton id="btAlterarIrrf" value="#{msgs['template.change']}" icon="ui-icon-pencil"
                                      action="#{IrrfView.btAlterar}" process="btAlterarIrrf, :idFormCenter:tabIRRF:idTabelaIrrf"
                                      update=":idFormTop:growl" />
-                    <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash">
+                    <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
+                                     action="#{IrrfView.btExcluir}" process="btExcluirIrrf" update=":idFormTop:growl,:idFormCenter:tabIRRF:idTabelaIrrf">
                         <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -160,22 +161,34 @@
                 <p:outputLabel value="Imposto de Renda retindo na Fonte"/>
             </f:facet>
             <p:column headerText="Valor Inicio" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.valorInicial}"/>
+                <h:outputText value="#{incluiTabelaIR.valorInicial}">
+                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="R$"/>
+                </h:outputText>
             </p:column>
             <p:column headerText="Valor Final" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.valorFinal}"/>
+                <h:outputText value="#{incluiTabelaIR.valorFinal}">
+                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="R$"/>
+                </h:outputText>
             </p:column>
             <p:column headerText="Qtde Dependente" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.qtdDependente}"/>
+                <h:outputText value="#{incluiTabelaIR.qtdDependente}">
+                    <f:convertNumber pattern="##0" type="number"/>
+                </h:outputText>
             </p:column>
             <p:column headerText="Imposto(%)" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.percentual}"/>
+                <h:outputText value="#{incluiTabelaIR.percentual}">
+                    <f:convertNumber pattern="##0.00" type="percent"/>
+                </h:outputText>
             </p:column>
             <p:column headerText="Valor Desconto" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.valorDesconto}"/>
+                <h:outputText value="#{incluiTabelaIR.valorDesconto}">
+                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="R$"/>
+                </h:outputText>
             </p:column>
             <p:column headerText="Valor por Dependente" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.valorDependente}"/>
+                <h:outputText value="#{incluiTabelaIR.valorDependente}">
+                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="R$"/>
+                </h:outputText>
             </p:column>
             <p:column style="width: 20px; text-align: center">
                 <p:commandButton id='idBtEditaIRRF' icon="ui-icon-trash" action="#{IrrfView.btExcluiDetalhe}"

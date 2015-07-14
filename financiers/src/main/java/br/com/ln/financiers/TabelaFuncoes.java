@@ -7,6 +7,7 @@ package br.com.ln.financiers;
 
 import br.com.ln.dao.IrrfDao;
 import br.com.ln.entity.LnTabela;
+import br.com.ln.entity.LnTabelaItem;
 import java.io.Serializable;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -19,27 +20,26 @@ public class TabelaFuncoes implements Serializable{
     
     public String mensagem;
     
-    public boolean gravaTabela(List<LnTabela> listTabela){
+    public boolean gravaTabela(LnTabela lnTabela){
         mensagem = "";
         boolean bSalvo = false;
 
-        for (LnTabela lnTabela : listTabela) {
-            switch (lnTabela.getTipoFuncao()) {
-                case Incluir:
-                    bSalvo = incluirTabela(lnTabela);
-                    break;
-                case Alterar:
-                    break;
-                case Excluir:
-                    break;
-            }
+        switch (lnTabela.getTipoFuncao()) {
+            case Incluir:
+                bSalvo = incluirTabela(lnTabela);
+                bSalvo = incluirTabelaItem(lnTabela);
+                break;
+            case Alterar:
+                break;
+            case Excluir:
+                bSalvo = excluirTabela(lnTabela);
+                break;
         }
         return bSalvo;
     }
 
     private boolean incluirTabela(LnTabela lnTabela) {
-        Integer codTabela = IrrfDao.grabLnTabelaNextId();
-        lnTabela.setTabInCodigo(codTabela);
+        lnTabela.setTabInCodigo(IrrfDao.grabLnTabelaNextId());
         
         try{
             IrrfDao.saveObject(lnTabela);
@@ -49,5 +49,40 @@ public class TabelaFuncoes implements Serializable{
             return false;
         }
     }
+
+    private boolean incluirTabelaItem(LnTabela lnTabela) {
+        
+        boolean bSalvo = false;
+        
+        for (LnTabelaItem lnTabelaItem: lnTabela.getListLnTabelaItem()){
+            lnTabelaItem.setTabInCodigo(lnTabela.getTabInCodigo());
+            lnTabelaItem.setTaiInCodigo(IrrfDao.grabLnTabelaItemNextId());
+            
+            try{
+                IrrfDao.saveObject(lnTabelaItem);
+                bSalvo = true;
+            } catch (HibernateException ex){
+                mensagem = "Ocorreu um erro na gravação!";
+                bSalvo = false;
+                break;
+            }
+        }
+        return bSalvo;
+    }
+
+    private boolean excluirTabela(LnTabela lnTabela) {
+        try{
+            for (LnTabelaItem lnTabelaItem : lnTabela.getListLnTabelaItem()){
+                IrrfDao.deleteObject(lnTabelaItem);
+            }
+            IrrfDao.deleteObject(lnTabela);
+            return true;
+        } catch (HibernateException ex){
+            mensagem = "Ocorreu um erro na gravação!";
+            return false;
+        }
+        
+    }
+
     
 }

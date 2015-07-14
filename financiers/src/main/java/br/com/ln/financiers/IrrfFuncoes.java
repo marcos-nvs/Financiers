@@ -7,10 +7,10 @@ package br.com.ln.financiers;
 
 import br.com.ln.dao.IrrfDao;
 import br.com.ln.entity.LnTabela;
+import br.com.ln.entity.LnTabelaItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import org.hibernate.HibernateException;
 
 /**
  *
@@ -22,41 +22,46 @@ public class IrrfFuncoes implements Serializable {
     public String mensagem;
 
     public List<Tabela> buscaTabela() {
-
-        Tabela tabela = new Tabela();
-        TabelaItem tabelaItem = null;
+        Tabela tabela;
+        TabelaItem tabelaItem;
+        
         List<Tabela> listaTabela = new ArrayList<>();
         List<TabelaItem> listTabelaItem = new ArrayList<>();
 
-        List<LnTabela> listTabela = IrrfDao.grabDescricaoTabela();
-        List<LnTabela> listTabelaDetalhe;
+        List<LnTabela> listLnTabela = IrrfDao.grabTabela();
+        List<LnTabelaItem> listLnTabelaItem;
         
-        for (LnTabela tabelaDesc : listTabela) {
-            tabela.setCodigoTabela(tabelaDesc.getTtbInCodigo());
-            tabela.setDataFinal(tabelaDesc.getTabDtFinal());
-            tabela.setDataInicial(tabelaDesc.getTabDtInicio());
-            tabela.setIdCodigo(tabelaDesc.getTabInCodigo());
-            tabela.setNomeTabela(tabelaDesc.getTabStDescricao());
+        for (LnTabela lnTabela : listLnTabela) {
+            tabela = new Tabela();
             
-            if (!listaTabela.contains(tabela)) {
-                listTabelaDetalhe = IrrfDao.grabDetalheTabela(tabelaDesc.getTabInCodigo(), tabelaDesc.getTabDtInicio(), tabelaDesc.getTabDtFinal());
-                listTabelaItem.clear();
-                
-                for (LnTabela tabelaDetalhe : listTabelaDetalhe) {
+            tabela.setCodigoTabela(lnTabela.getTabInCodigo());
+            tabela.setIdCodigo(lnTabela.getTtbInCodigo());
+            tabela.setNomeTabela(lnTabela.getTabStDescricao());
+            tabela.setDataInicial(lnTabela.getTabDtInicio());
+            tabela.setDataFinal(lnTabela.getTabDtFinal());
+            
+            listLnTabelaItem = IrrfDao.grabTabelaItem(lnTabela.getTabInCodigo());
+            
+            if (listLnTabelaItem != null && listLnTabelaItem.size() > 0){
+                for (LnTabelaItem lnTabelaItem : listLnTabelaItem) {
                     tabelaItem = new TabelaItem();
-                    tabelaItem.setCodigoTabItem(tabelaDetalhe.getTabInCodigo());
-                    tabelaItem.setPercentual(tabelaDetalhe.getTabFlPercentual());
-                    tabelaItem.setQtdDependente(tabelaDetalhe.getTabFlQtddependente());
-                    tabelaItem.setValorDependente(tabelaDetalhe.getTabFlDependente());
-                    tabelaItem.setValorDesconto(tabelaDetalhe.getTabFlDesconto());
-                    tabelaItem.setValorFinal(tabelaDetalhe.getTabFlFinal());
-                    tabelaItem.setValorInicial(tabelaDetalhe.getTabFlInicio());
+                    
+                    tabelaItem.setCodigoTabItem(lnTabelaItem.getTaiInCodigo());
+                    tabelaItem.setCodigoTabela(lnTabelaItem.getTabInCodigo());
+                    tabelaItem.setValorInicial(lnTabelaItem.getTaiFlInicio());
+                    tabelaItem.setValorFinal(lnTabelaItem.getTaiFlFinal());
+                    tabelaItem.setPercentual(lnTabelaItem.getTaiFlPercentual());
+                    tabelaItem.setQtdDependente(lnTabelaItem.getTaiInQtddependente());
+                    tabelaItem.setValorDependente(lnTabelaItem.getTaiFlDependente());
+                    tabelaItem.setValorDesconto(lnTabelaItem.getTaiFlDesconto());
 
                     listTabelaItem.add(tabelaItem);
+                    
                 }
-                tabela.setListTabelaItem(listTabelaItem);
-                listaTabela.add(tabela);
             }
+            
+            tabela.setListTabelaItem(listTabelaItem);
+            listaTabela.add(tabela);
         }
         return listaTabela;
     }
@@ -111,10 +116,10 @@ public class IrrfFuncoes implements Serializable {
         return validado;
     }
     
-    public boolean tabela(List<LnTabela> listTabela){
+    public boolean tabela(LnTabela lnTabela){
         TabelaFuncoes tabelafuncao = new TabelaFuncoes();
         mensagem = tabelafuncao.mensagem;
-        return tabelafuncao.gravaTabela(listTabela);
+        return tabelafuncao.gravaTabela(lnTabela);
     }
     
 

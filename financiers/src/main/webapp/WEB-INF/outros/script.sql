@@ -582,41 +582,98 @@ insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (
 
 -- DROP TABLE ln_tabela;
 
-CREATE TABLE public.ln_tabela
+CREATE TABLE ln_tabela
 (
   tab_in_codigo integer NOT NULL,
-  ttb_in_codigo integer NOT NULL,
-  tab_st_descricao character varying(50) NOT NULL,
-  tab_dt_inicio date NOT NULL,
-  tab_dt_final date,
-  tab_fl_inicio double precision,
-  tab_fl_final double precision,
-  tab_fl_percentual double precision,
-  tab_fl_desconto double precision,
-  tab_fl_dependente double precision,
-  tab_fl_qtddependente double precision,
+  ttb_in_codigo integer NOT NULL, -- Tipo de Impostos, Taxas...
+  tab_st_descricao character varying(50) NOT NULL, -- Descrição para identificação da tabela para o usuario
+  tab_dt_inicio date NOT NULL, -- Data inicial
+  tab_dt_final date NOT NULL, -- Data Final
   CONSTRAINT ln_tabela_pkey PRIMARY KEY (tab_in_codigo)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE public.ln_tabela
+ALTER TABLE ln_tabela
   OWNER TO postgres;
-COMMENT ON TABLE public.ln_tabela
-  IS 'Tabela de valores para cálculo de impostos e juros etc';
+COMMENT ON TABLE ln_tabela
+  IS 'Tabela de impostos, juros e taxas para cálculos de IR, INS, IOF, Juros, entre outor
+';
+COMMENT ON COLUMN ln_tabela.ttb_in_codigo IS 'Tipo de Impostos, Taxas...';
+COMMENT ON COLUMN ln_tabela.tab_st_descricao IS 'Descrição para identificação da tabela para o usuario';
+COMMENT ON COLUMN ln_tabela.tab_dt_inicio IS 'Data inicial';
+COMMENT ON COLUMN ln_tabela.tab_dt_final IS 'Data Final';
+
+-- Index: ln_tabela_ttb_in_codigo_tab_in_codigo_idx
+
+-- DROP INDEX ln_tabela_ttb_in_codigo_tab_in_codigo_idx;
+
+CREATE INDEX ln_tabela_ttb_in_codigo_tab_in_codigo_idx
+  ON ln_tabela
+  USING btree
+  (ttb_in_codigo, tab_in_codigo);
+
 -- Sequence: seq_tabela
 
 -- DROP SEQUENCE seq_tabela;
 
-CREATE SEQUENCE public.seq_tabela
+CREATE SEQUENCE seq_tabela
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE public.seq_tabela
+ALTER TABLE seq_tabela
   OWNER TO postgres;
 
+-- Table: "ln_tabelaItem"
+
+-- DROP TABLE "ln_tabelaItem";
+
+CREATE TABLE "ln_tabelaItem"
+(
+  tai_in_codigo integer NOT NULL, -- Item da tabela
+  tab_in_codigo integer NOT NULL, -- Tabela pai
+  tai_fl_inicio double precision,
+  tai_fl_final double precision,
+  tai_fl_percentual double precision,
+  tai_fl_desconto double precision,
+  tai_fl_dependente double precision,
+  tai_in_qtddependente integer,
+  CONSTRAINT "ln_tabelaItem_pkey" PRIMARY KEY (tai_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE "ln_tabelaItem"
+  OWNER TO postgres;
+COMMENT ON TABLE "ln_tabelaItem"
+  IS 'Item da tabela de impostos, taxas, juros entre outros';
+COMMENT ON COLUMN "ln_tabelaItem".tai_in_codigo IS 'Item da tabela';
+COMMENT ON COLUMN "ln_tabelaItem".tab_in_codigo IS 'Tabela pai';
+
+
+-- Index: "ln_tabelaItem_tab_in_codigo_tai_in_codigo_idx"
+
+-- DROP INDEX "ln_tabelaItem_tab_in_codigo_tai_in_codigo_idx";
+
+CREATE INDEX "ln_tabelaItem_tab_in_codigo_tai_in_codigo_idx"
+  ON "ln_tabelaItem"
+  USING btree
+  (tab_in_codigo, tai_in_codigo);
+
+-- Sequence: seq_tabelaitem
+
+-- DROP SEQUENCE seq_tabelaitem;
+
+CREATE SEQUENCE seq_tabelaitem
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_tabelaitem
+  OWNER TO postgres;
 
 -------------------------------------------------------------------------------------------------------------------------
 

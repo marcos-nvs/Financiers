@@ -7,6 +7,7 @@ package br.com.ln.dao;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnTabela;
+import br.com.ln.entity.LnTabelaItem;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
 import java.util.Date;
@@ -21,7 +22,7 @@ import org.hibernate.Transaction;
  */
 public class IrrfDao extends GenericDao implements Serializable{
     
-    public static synchronized List<LnTabela> grabDescricaoTabela(){
+    public static synchronized List<LnTabela> grabTabela(){
         
         Session session = null;
         Transaction tx;
@@ -44,21 +45,19 @@ public class IrrfDao extends GenericDao implements Serializable{
         return listTabela;
     }
     
-    public static synchronized List<LnTabela> grabDetalheTabela(Integer tipoTabela, Date dtInicio, Date dtFinal){
+    public static synchronized List<LnTabelaItem> grabTabelaItem(Integer tabInCodigo){
         
         Session session = null;
         Transaction tx = null;
-        List<LnTabela> listTabela = null;
+        List<LnTabelaItem> listTabelaItem = null;
         
         try{
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
-            Query query = session.getNamedQuery("LnTabela.findByCodigoDetalheIRRF");
-            query.setInteger("ttbInCodigo", tipoTabela);
-            query.setDate("tabDtInicio", dtInicio);
-            query.setDate("tabDtFinal", dtFinal);
-            listTabela = query.list();
+            Query query = session.getNamedQuery("LnTabelaItem.findByTabInCodigo");
+            query.setInteger("tabInCodigo", tabInCodigo);
+            listTabelaItem = query.list();
             tx.commit();
             
         } finally {
@@ -67,11 +66,14 @@ public class IrrfDao extends GenericDao implements Serializable{
             }
         }
                 
-        return listTabela;
+        return listTabelaItem;
     }
     
     public static Integer grabLnTabelaNextId() {
         return new Integer(grabIdByNextValueStringSQL("select nextval('seq_tabela');"));
     }
     
+    public static Integer grabLnTabelaItemNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_tabelaitem');"));
+    }
 }
