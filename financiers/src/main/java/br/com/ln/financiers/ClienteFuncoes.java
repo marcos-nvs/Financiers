@@ -18,7 +18,7 @@ import java.util.List;
  * @author Marcos Naves
  */
 public class ClienteFuncoes {
-
+    
     public String mensagem;
     private boolean validado;
     private Historico historico;

@@ -9,7 +9,6 @@ import br.com.ln.dao.IrrfDao;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.entity.LnTabelaItem;
 import java.io.Serializable;
-import java.util.List;
 import org.hibernate.HibernateException;
 
 /**

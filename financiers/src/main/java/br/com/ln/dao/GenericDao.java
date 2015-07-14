@@ -6,7 +6,6 @@
 package br.com.ln.dao;
 
 import br.com.ln.comum.VarComuns;
-import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -15,6 +14,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 
@@ -25,6 +25,7 @@ import org.hibernate.HibernateException;
  */
 public class GenericDao implements Serializable{
 
+    final static Logger logger = Logger.getLogger(GenericDao.class);
     static SimpleDateFormat formatOnlyYear = new SimpleDateFormat("yyyy");
     
     /**
@@ -62,12 +63,14 @@ public class GenericDao implements Serializable{
      */
     public static void saveOrUpdateObject(Object obj) {
         Session session = null;
-        Transaction tx ;
+        Transaction tx;
         try {
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             session.saveOrUpdate(obj);
             tx.commit();
+        } catch (HibernateException ex){
+            logger.error("Ocorreu um erro durante a SaveOrUpdate");
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -97,7 +100,7 @@ public class GenericDao implements Serializable{
             }
 
         } catch (HibernateException xcp) {
-            System.out.println(xcp.getMessage());
+            System.out.println(xcp.getMessage()); 
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -114,11 +117,14 @@ public class GenericDao implements Serializable{
      */
     public static void saveObject(Object obj) {
         Session session = null;
+        Transaction tx;
         try {
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
-            Transaction tx = session.beginTransaction();
+            tx = session.beginTransaction();
             session.save(obj);
             tx.commit();
+        } catch (HibernateException ex){
+            logger.error("Ocorreu um erro durante a Save");
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -139,6 +145,8 @@ public class GenericDao implements Serializable{
             tx = session.beginTransaction();
             session.delete(obj);
             tx.commit();
+        } catch (HibernateException ex){
+            logger.error("Ocorreu um erro durante a Delete");
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

@@ -38,7 +38,7 @@ import org.primefaces.model.menu.MenuModel;
 @SessionScoped
 @ManagedBean(name = "financiersView")
 public class FnAcesso implements Serializable {
-    
+
     final static Logger logger = Logger.getLogger(FnAcesso.class);
 
     private String documento;
@@ -48,7 +48,7 @@ public class FnAcesso implements Serializable {
     private String rsenha;
     private String novaSenha;
     private String confirmaSenha;
-    
+
     private String mensagem;
     private LnUsuario lnUsuario;
     private LnCliente lnCliente;
@@ -346,13 +346,13 @@ public class FnAcesso implements Serializable {
     }
 
     public void btConfirmaSenha() {
-        if (documento != null && !documento.isEmpty()){
+        if (documento != null && !documento.isEmpty()) {
             UsuarioFuncoes usuarioFuncao = new UsuarioFuncoes();
             lnUsuario = UsuarioDao.grabUsuarioDocumento(documento);
             if (lnUsuario != null) {
                 System.out.println("rsenha : " + rsenha);
                 System.out.println("UsuSenha : " + lnUsuario.getUsuStSenha());
-                if (lnUsuario.getUsuStSenha().equals(rsenha)){
+                if (lnUsuario.getUsuStSenha().equals(rsenha)) {
                     if (!novaSenha.equals("")) {
                         if (novaSenha.equals(confirmaSenha)) {
                             Historico historico = new Historico();
@@ -394,7 +394,7 @@ public class FnAcesso implements Serializable {
         }
     }
 
-    public void btFechaTroca(){
+    public void btFechaTroca() {
         lnUsuario = new LnUsuario();
         RequestContext.getCurrentInstance().execute("PF('senha').hide()");
     }

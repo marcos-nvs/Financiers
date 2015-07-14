@@ -38,7 +38,6 @@ public class CategoriaFuncoes {
 
     private void incluirCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
-//            lnCategoria.setCatInCodigo(GenericDao.grabLnCategoriaNextId());
             CategoriaDao.saveObject(lnCategoria);
             historico.gravaHistoricoModulo("Inclusão da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";

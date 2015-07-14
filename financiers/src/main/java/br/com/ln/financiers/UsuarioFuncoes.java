@@ -68,7 +68,7 @@ public class UsuarioFuncoes implements Serializable{
                     lnUsuario.setUsuDtExpiracao(GenericDao.grabDateFromDB());
                 }
                 lnUsuario.setUsuDtCadastro(GenericDao.grabDateFromDB());
-                GenericDao.saveObject(lnUsuario);
+                UsuarioDao.saveObject(lnUsuario);
                 historico.gravaHistoricoModulo("Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
                 mensagem = "Sucesso";
             }
@@ -113,7 +113,7 @@ public class UsuarioFuncoes implements Serializable{
         if (verificaDadosUsuario(lnUsuario)) {
             LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
             lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
-            GenericDao.saveOrUpdateObject(lnUsuario);
+            UsuarioDao.saveOrUpdateObject(lnUsuario);
             historico.gravaHistoricoModulo("Alteracao do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
             mensagem = "Sucesso";
         }
@@ -122,7 +122,7 @@ public class UsuarioFuncoes implements Serializable{
     private void exclusaoUsuario(LnUsuario lnUsuario) {
 
         if (HistoricoDao.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {
-            GenericDao.deleteObject(lnUsuario);
+            UsuarioDao.deleteObject(lnUsuario);
             historico.gravaHistoricoModulo("Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
             mensagem = "Sucesso";
         } else {
