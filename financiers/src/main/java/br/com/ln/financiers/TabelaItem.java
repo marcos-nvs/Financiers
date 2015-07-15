@@ -14,8 +14,8 @@ import java.util.Objects;
  */
 public class TabelaItem implements Serializable{
     
-    private Integer codigoTabItem;
     private Integer codigoTabela;
+    private Integer codigoTabItem;
     private Double valorInicial;
     private Double valorFinal;
     private Double valorDependente;

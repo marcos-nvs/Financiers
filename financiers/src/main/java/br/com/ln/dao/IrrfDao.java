@@ -22,7 +22,7 @@ import org.hibernate.Transaction;
  */
 public class IrrfDao extends GenericDao implements Serializable{
     
-    public static synchronized List<LnTabela> grabTabela(){
+    public static synchronized List<LnTabela> grabTabela(Integer ttbInCodigo){
         
         Session session = null;
         Transaction tx;
@@ -33,7 +33,7 @@ public class IrrfDao extends GenericDao implements Serializable{
             tx = session.beginTransaction();
             
             Query query = session.getNamedQuery("LnTabela.findByTtbInCodigo");
-            query.setInteger("ttbInCodigo", 1);
+            query.setInteger("ttbInCodigo", ttbInCodigo);
             listTabela = query.list();
             tx.commit();
             

@@ -16,8 +16,8 @@ import java.util.Objects;
  */
 public class Tabela implements Serializable{
     
-    private Integer idCodigo;
     private Integer codigoTabela;
+    private Integer idCodigo;
     private String nomeTabela;
     private Date dataInicial;
     private Date dataFinal;

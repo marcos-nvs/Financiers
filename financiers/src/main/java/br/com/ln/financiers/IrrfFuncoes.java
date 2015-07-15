@@ -5,11 +5,8 @@
  */
 package br.com.ln.financiers;
 
-import br.com.ln.dao.IrrfDao;
 import br.com.ln.entity.LnTabela;
-import br.com.ln.entity.LnTabelaItem;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,51 +16,17 @@ import java.util.List;
 public class IrrfFuncoes implements Serializable {
 
     private Integer codigoTabItem = 0;
+    private Integer codigoTab = 0;
     public String mensagem;
 
-    public List<Tabela> buscaTabela() {
-        Tabela tabela;
-        TabelaItem tabelaItem;
-        
-        List<Tabela> listaTabela = new ArrayList<>();
-        List<TabelaItem> listTabelaItem = new ArrayList<>();
-
-        List<LnTabela> listLnTabela = IrrfDao.grabTabela();
-        List<LnTabelaItem> listLnTabelaItem;
-        
-        for (LnTabela lnTabela : listLnTabela) {
-            tabela = new Tabela();
-            
-            tabela.setCodigoTabela(lnTabela.getTabInCodigo());
-            tabela.setIdCodigo(lnTabela.getTtbInCodigo());
-            tabela.setNomeTabela(lnTabela.getTabStDescricao());
-            tabela.setDataInicial(lnTabela.getTabDtInicio());
-            tabela.setDataFinal(lnTabela.getTabDtFinal());
-            
-            listLnTabelaItem = IrrfDao.grabTabelaItem(lnTabela.getTabInCodigo());
-            
-            if (listLnTabelaItem != null && listLnTabelaItem.size() > 0){
-                for (LnTabelaItem lnTabelaItem : listLnTabelaItem) {
-                    tabelaItem = new TabelaItem();
-                    
-                    tabelaItem.setCodigoTabItem(lnTabelaItem.getTaiInCodigo());
-                    tabelaItem.setCodigoTabela(lnTabelaItem.getTabInCodigo());
-                    tabelaItem.setValorInicial(lnTabelaItem.getTaiFlInicio());
-                    tabelaItem.setValorFinal(lnTabelaItem.getTaiFlFinal());
-                    tabelaItem.setPercentual(lnTabelaItem.getTaiFlPercentual());
-                    tabelaItem.setQtdDependente(lnTabelaItem.getTaiInQtddependente());
-                    tabelaItem.setValorDependente(lnTabelaItem.getTaiFlDependente());
-                    tabelaItem.setValorDesconto(lnTabelaItem.getTaiFlDesconto());
-
-                    listTabelaItem.add(tabelaItem);
-                    
-                }
-            }
-            
-            tabela.setListTabelaItem(listTabelaItem);
-            listaTabela.add(tabela);
-        }
-        return listaTabela;
+    public List<Tabela> montaTabela() {
+        TabelaFuncoes tabelaFuncao = new TabelaFuncoes();
+        return tabelaFuncao.buscaTabela(1);
+    }
+    public Integer calcIdTabela() {
+        Integer i = codigoTab + 1;
+        codigoTab = i;
+        return codigoTab;
     }
 
     public Integer calcIdTabelaItem() {
@@ -115,12 +78,11 @@ public class IrrfFuncoes implements Serializable {
         }
         return validado;
     }
-    
-    public boolean tabela(LnTabela lnTabela){
+
+    public boolean tabela(LnTabela lnTabela) {
         TabelaFuncoes tabelafuncao = new TabelaFuncoes();
         mensagem = tabelafuncao.mensagem;
         return tabelafuncao.gravaTabela(lnTabela);
     }
-    
 
 }

@@ -9,6 +9,8 @@ import br.com.ln.dao.IrrfDao;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.entity.LnTabelaItem;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.HibernateException;
 
 /**
@@ -25,7 +27,7 @@ public class TabelaFuncoes implements Serializable{
 
         switch (lnTabela.getTipoFuncao()) {
             case Incluir:
-                bSalvo = incluirTabela(lnTabela);
+                lnTabela.setTabInCodigo(IrrfDao.grabLnTabelaNextId());
                 bSalvo = incluirTabelaItem(lnTabela);
                 break;
             case Alterar:
@@ -38,7 +40,6 @@ public class TabelaFuncoes implements Serializable{
     }
 
     private boolean incluirTabela(LnTabela lnTabela) {
-        lnTabela.setTabInCodigo(IrrfDao.grabLnTabelaNextId());
         
         try{
             IrrfDao.saveObject(lnTabela);
@@ -59,7 +60,7 @@ public class TabelaFuncoes implements Serializable{
             
             try{
                 IrrfDao.saveObject(lnTabelaItem);
-                bSalvo = true;
+                bSalvo = incluirTabela(lnTabela);
             } catch (HibernateException ex){
                 mensagem = "Ocorreu um erro na gravação!";
                 bSalvo = false;
@@ -71,9 +72,9 @@ public class TabelaFuncoes implements Serializable{
 
     private boolean excluirTabela(LnTabela lnTabela) {
         try{
-            for (LnTabelaItem lnTabelaItem : lnTabela.getListLnTabelaItem()){
+            lnTabela.getListLnTabelaItem().stream().forEach((lnTabelaItem) -> {
                 IrrfDao.deleteObject(lnTabelaItem);
-            }
+            });
             IrrfDao.deleteObject(lnTabela);
             return true;
         } catch (HibernateException ex){
@@ -83,5 +84,51 @@ public class TabelaFuncoes implements Serializable{
         
     }
 
+    public List<Tabela> buscaTabela(Integer ttbInCodigo){
+        Tabela tabela;
+        
+        List<Tabela> listaTabela = new ArrayList<>();
+        List<LnTabela> listTabelaDao = IrrfDao.grabTabela(ttbInCodigo);
+        
+        for (LnTabela lnTabela : listTabelaDao) {
+            lnTabela.setListLnTabelaItem(IrrfDao.grabTabelaItem(lnTabela.getTabInCodigo()));
+            
+            tabela = new Tabela();
+            tabela.setCodigoTabela(lnTabela.getTabInCodigo());
+            tabela.setNomeTabela(lnTabela.getTabStDescricao());
+            tabela.setDataInicial(lnTabela.getTabDtInicio());
+            tabela.setDataFinal(lnTabela.getTabDtFinal());
+            
+            tabela.setListTabelaItem(buscaTabelaItem(lnTabela.getListLnTabelaItem()));
+
+            listaTabela.add(tabela);
+        }
+
+        return listaTabela;
+    }
+    
+    private List<TabelaItem> buscaTabelaItem(List<LnTabelaItem> listTabelaItemDao){
+        
+        List<TabelaItem> listaTabelaItem = new ArrayList<>();
+        TabelaItem tabelaItem;
+        
+        for (LnTabelaItem lnTabelaItem : listTabelaItemDao) {
+            tabelaItem = new TabelaItem();
+            
+            tabelaItem.setCodigoTabela(lnTabelaItem.getTabInCodigo());
+            tabelaItem.setCodigoTabItem(lnTabelaItem.getTaiInCodigo());
+            tabelaItem.setPercentual(lnTabelaItem.getTaiFlPercentual());
+            tabelaItem.setQtdDependente(lnTabelaItem.getTaiInQtddependente());
+            tabelaItem.setValorDependente(lnTabelaItem.getTaiFlDependente());
+            tabelaItem.setValorDesconto(lnTabelaItem.getTaiFlDesconto());
+            tabelaItem.setValorFinal(lnTabelaItem.getTaiFlFinal());
+            tabelaItem.setValorInicial(lnTabelaItem.getTaiFlInicio());
+
+            listaTabelaItem.add(tabelaItem);
+        }
+        
+        return listaTabelaItem;
+    }
+    
     
 }

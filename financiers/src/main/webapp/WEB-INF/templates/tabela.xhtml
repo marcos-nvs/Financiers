@@ -82,7 +82,8 @@
                                      action="#{IrrfView.btAlterar}" process="btAlterarIrrf, :idFormCenter:tabIRRF:idTabelaIrrf"
                                      update=":idFormTop:growl" />
                     <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
-                                     action="#{IrrfView.btExcluir}" process="btExcluirIrrf" update=":idFormTop:growl,:idFormCenter:tabIRRF:idTabelaIrrf">
+                                     action="#{IrrfView.btExcluir}" process="btExcluirIrrf,:idFormCenter:tabIRRF:idTabelaIrrf"
+                                     update=":idFormTop:growl,:idFormCenter:tabIRRF:idTabelaIrrf">
                         <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
                     </p:commandButton>
                     <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
