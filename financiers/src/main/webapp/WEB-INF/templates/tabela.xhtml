@@ -77,10 +77,10 @@
                 <f:facet name="footer">
                     <p:commandButton id="btIncluirIrrf" value="#{msgs['node.include']}" icon="ui-icon-document" 
                                      action="#{IrrfView.btIncluir}" process="btIncluirIrrf" 
-                                     update=":idFormCenter:tabIRRF:idTabelaIrrf, :idFormTop:growl"/>
+                                     update=":idFormCenter:tabIRRF:idTabelaIrrf, :idFormTop:growl, :idFormCenter:dlgIRRF"/>
                     <p:commandButton id="btAlterarIrrf" value="#{msgs['template.change']}" icon="ui-icon-pencil"
                                      action="#{IrrfView.btAlterar}" process="btAlterarIrrf, :idFormCenter:tabIRRF:idTabelaIrrf"
-                                     update=":idFormTop:growl" />
+                                     update=":idFormTop:growl, :idFormCenter:dlgIRRF" />
                     <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
                                      action="#{IrrfView.btExcluir}" process="btExcluirIrrf,:idFormCenter:tabIRRF:idTabelaIrrf"
                                      update=":idFormTop:growl,:idFormCenter:tabIRRF:idTabelaIrrf">
@@ -113,7 +113,7 @@
         </p:tab>
     </p:tabView>
     
-    <p:dialog header="#{msgs['node.inclusion']} de IRRF" widgetVar="IrrfEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
+    <p:dialog id="dlgIRRF" header="#{msgs['node.inclusion']} de IRRF" widgetVar="IrrfEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
         
         <h:panelGrid id="idgridDataIrrf" columns="6" >

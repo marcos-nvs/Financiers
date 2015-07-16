@@ -233,6 +233,8 @@ public class IrrfView implements Serializable {
 
     public void btIncluir() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
+            clearVarTabela();
+            clearVarTabelaItem();
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
             RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
@@ -374,6 +376,7 @@ public class IrrfView implements Serializable {
         valorInicial = null;
         qtdDependente = null;
         percentual = null;
+        listTabelaItem.clear();
     }
 
     private void loadTabelaVarDesc() {
