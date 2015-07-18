@@ -314,7 +314,7 @@ public class IrrfView implements Serializable {
                 mensagem = "Registro marcado para exclusao com sucesso";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
             } else {
-                mensagem = "E ncessario ter pelo menos um valor na tabela.";
+                mensagem = "E necessario ter pelo menos um valor na tabela.";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
             }
         } else {
@@ -328,6 +328,7 @@ public class IrrfView implements Serializable {
         lnTabela = loadLnTabela();
         if (lnTabela != null) {
             bGravar = irrfFuncao.tabela(lnTabela);
+            mensagem = irrfFuncao.mensagem;
             if (bGravar) {
                 clearVarTabela();
                 clearVarTabelaItem();
@@ -384,25 +385,25 @@ public class IrrfView implements Serializable {
         dataInicial = tabela.getDataInicial();
         dataFinal = tabela.getDataFinal();
     }
-    
-    private LnTabela loadLnTabela(){
+
+    private LnTabela loadLnTabela() {
         boolean bGravar = true;
         LnTabelaItem lnTabelaItem;
         listTabelaItemLoad.clear();
-        
+
         lnTabela = new LnTabela();
         lnTabela.setTtbInCodigo(1);
         lnTabela.setTabStDescricao(tabela.getNomeTabela());
         lnTabela.setTabDtInicio(tabela.getDataInicial());
         lnTabela.setTabDtFinal(tabela.getDataFinal());
         lnTabela.setTipoFuncao(tabela.getTipoFuncao());
-        
+
         if (tabela.getCodigoTabela() != null && tabela.getCodigoTabela() > 0) {
             lnTabela.setTabInCodigo(tabela.getCodigoTabela());
         } else {
             lnTabela.setTabInCodigo(irrfFuncao.calcIdTabela());
         }
-        
+
         if (listTabelaItem != null) {
             for (TabelaItem tbItem : listTabelaItem) {
 
@@ -411,17 +412,22 @@ public class IrrfView implements Serializable {
 
                 if (tbItem.getCodigoTabItem() != null && tbItem.getCodigoTabItem() > 0) {
                     lnTabelaItem.setTaiInCodigo(tbItem.getCodigoTabItem());
-                } else{
+                } else {
                     lnTabelaItem.setTaiInCodigo(irrfFuncao.calcIdTabelaItem());
                 }
-                 
+
                 lnTabelaItem.setTaiFlDependente(tbItem.getValorDependente());
                 lnTabelaItem.setTaiFlDesconto(tbItem.getValorDesconto());
                 lnTabelaItem.setTaiFlFinal(tbItem.getValorFinal());
                 lnTabelaItem.setTaiFlInicio(tbItem.getValorInicial());
                 lnTabelaItem.setTaiFlPercentual(tbItem.getPercentual());
                 lnTabelaItem.setTaiInQtddependente(tbItem.getQtdDependente());
-                lnTabelaItem.setTipoFuncao(tbItem.getTipoFuncao());
+
+                if (tbItem.getTipoFuncao() != null) {
+                    lnTabelaItem.setTipoFuncao(tbItem.getTipoFuncao());
+                } else {
+                    lnTabelaItem.setTipoFuncao(TipoFuncao.Alterar);
+                }
 
                 if (!listTabelaItemLoad.contains(lnTabelaItem)) {
                     listTabelaItemLoad.add(lnTabelaItem);
@@ -433,7 +439,7 @@ public class IrrfView implements Serializable {
                     break;
                 }
             }
-            
+
             if (bGravar) {
                 if (listTabelaItemLoad.size() > 0) {
                     lnTabela.setListLnTabelaItem(listTabelaItemLoad);
@@ -448,9 +454,8 @@ public class IrrfView implements Serializable {
             mensagem = "Lista da tabela esta vazia!!";
             bGravar = false;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
-        }        
-        
+        }
+
         return lnTabela;
     }
 }
- 

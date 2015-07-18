@@ -28,9 +28,10 @@ public class TabelaFuncoes implements Serializable{
         switch (lnTabela.getTipoFuncao()) {
             case Incluir:
                 lnTabela.setTabInCodigo(IrrfDao.grabLnTabelaNextId());
-                bSalvo = incluirTabelaItem(lnTabela);
+                bSalvo = incluirTabela(lnTabela);
                 break;
             case Alterar:
+                bSalvo = AlterarTabela(lnTabela);
                 break;
             case Excluir:
                 bSalvo = excluirTabela(lnTabela);
@@ -39,37 +40,60 @@ public class TabelaFuncoes implements Serializable{
         return bSalvo;
     }
 
+    public boolean gravaTabelaItem(LnTabelaItem lnTabelaItem){
+        mensagem = "";
+        boolean bSalvo = false;
+
+        switch (lnTabelaItem.getTipoFuncao()) {
+            case Incluir:
+                lnTabelaItem.setTaiInCodigo(IrrfDao.grabLnTabelaItemNextId());
+                bSalvo = incluirTabelaItem(lnTabelaItem);
+                break;
+            case Alterar:
+                bSalvo = true;
+                break;
+            case Excluir:
+                bSalvo = excluirTabelaItem(lnTabelaItem);
+                break;
+        }
+        return bSalvo;
+    }
+
     private boolean incluirTabela(LnTabela lnTabela) {
-        
+        boolean bSalvo = false;
         try{
-            IrrfDao.saveObject(lnTabela);
-            return true;
+            for (LnTabelaItem lnTabelaItem : lnTabela.getListLnTabelaItem()){
+                lnTabelaItem.setTabInCodigo(lnTabela.getTabInCodigo());
+                bSalvo = gravaTabelaItem(lnTabelaItem);
+            }
+            
+            if (bSalvo) {
+                IrrfDao.saveObject(lnTabela);
+                return true;
+            } else {
+                return false;
+            }
         } catch (HibernateException ex){
             mensagem = "Ocorreu um erro na gravação!";
             return false;
         }
     }
 
-    private boolean incluirTabelaItem(LnTabela lnTabela) {
+    private boolean AlterarTabela(LnTabela lnTabela) {
         
-        boolean bSalvo = false;
-        
-        for (LnTabelaItem lnTabelaItem: lnTabela.getListLnTabelaItem()){
-            lnTabelaItem.setTabInCodigo(lnTabela.getTabInCodigo());
-            lnTabelaItem.setTaiInCodigo(IrrfDao.grabLnTabelaItemNextId());
-            
-            try{
-                IrrfDao.saveObject(lnTabelaItem);
-                bSalvo = incluirTabela(lnTabela);
-            } catch (HibernateException ex){
-                mensagem = "Ocorreu um erro na gravação!";
-                bSalvo = false;
-                break;
-            }
+        for (LnTabelaItem lnTabelaItem : lnTabela.getListLnTabelaItem()){
+            gravaTabelaItem(lnTabelaItem);
         }
-        return bSalvo;
-    }
 
+        try{
+            IrrfDao.saveOrUpdateObject(lnTabela);
+            return true;
+        } catch (HibernateException ex){
+            mensagem = "Ocorreu um erro na gravação!";
+            return false;
+        }
+    }
+    
     private boolean excluirTabela(LnTabela lnTabela) {
         try{
             lnTabela.getListLnTabelaItem().stream().forEach((lnTabelaItem) -> {
@@ -82,6 +106,28 @@ public class TabelaFuncoes implements Serializable{
             return false;
         }
         
+    }
+    
+    private boolean incluirTabelaItem(LnTabelaItem lnTabelaItem) {
+
+        try {
+            IrrfDao.saveObject(lnTabelaItem);
+            return true;
+        } catch (HibernateException ex) {
+            mensagem = "Ocorreu um erro na gravação!";
+            return false;
+        }
+    }
+
+    private boolean excluirTabelaItem(LnTabelaItem lnTabelaItem){
+        
+        try{
+            IrrfDao.deleteObject(lnTabelaItem);
+            return true;
+        } catch (HibernateException ex){
+            mensagem = "Ocorreu um erro na exclusao do item!";
+            return false;
+        }
     }
 
     public List<Tabela> buscaTabela(Integer ttbInCodigo){
@@ -129,6 +175,7 @@ public class TabelaFuncoes implements Serializable{
         
         return listaTabelaItem;
     }
+
     
     
 }
