@@ -10,6 +10,7 @@ import br.com.ln.entity.LnTabela;
 import br.com.ln.entity.LnTabelaItem;
 import br.com.ln.financiers.IrrfFuncoes;
 import br.com.ln.financiers.Tabela;
+import br.com.ln.financiers.TabelaFuncoes;
 import br.com.ln.financiers.TabelaItem;
 import br.com.ln.financiers.TipoFuncao;
 import java.io.Serializable;
@@ -49,6 +50,7 @@ public class IrrfView implements Serializable {
     private TabelaItem tabelaItem;
     private List<TabelaItem> listTabelaItem;
     private List<Tabela> listTabela;
+    private final TabelaFuncoes tabelaFuncao;
     private final IrrfFuncoes irrfFuncao;
 
     private List<LnTabelaItem> listTabelaItemLoad = new ArrayList<>(100);
@@ -59,8 +61,9 @@ public class IrrfView implements Serializable {
     public IrrfView() {
         tabela = new Tabela();
         tabelaItem = new TabelaItem();
+        tabelaFuncao = new TabelaFuncoes();
         irrfFuncao = new IrrfFuncoes();
-        listTabela = irrfFuncao.montaTabela();
+        listTabela = tabelaFuncao.montaTabela();
         listTabelaItem = new ArrayList<>();
     }
 
@@ -269,15 +272,15 @@ public class IrrfView implements Serializable {
                 boolean bExcluir;
                 lnTabela = loadLnTabela();
                 if (lnTabela != null) {
-                    bExcluir = irrfFuncao.tabela(lnTabela);
+                    bExcluir = tabelaFuncao.tabela(lnTabela);
                     if (bExcluir) {
                         clearVarTabela();
                         clearVarTabelaItem();
                         mensagem = "Tabela de Imposto incluida com sucesso!!!";
-                        listTabela = irrfFuncao.montaTabela();
+                        listTabela = tabelaFuncao.montaTabela();
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
                     } else {
-                        mensagem = irrfFuncao.mensagem;
+                        mensagem = tabelaFuncao.mensagem;
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
                     }
                 }
@@ -293,7 +296,7 @@ public class IrrfView implements Serializable {
 
     public void btIncluiDetalhe() {
         tabelaItem = new TabelaItem();
-        tabelaItem.setCodigoTabItem(irrfFuncao.calcIdTabelaItem());
+        tabelaItem.setCodigoTabItem(tabelaFuncao.calcIdTabelaItem());
         tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
         loadVarTabela();
         loadVarTabelaItem();
@@ -301,7 +304,7 @@ public class IrrfView implements Serializable {
             tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
             listTabelaItem.add(tabelaItem);
         } else {
-            mensagem = irrfFuncao.mensagem;
+            mensagem = tabelaFuncao.mensagem;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
         }
     }
@@ -327,12 +330,12 @@ public class IrrfView implements Serializable {
         boolean bGravar;
         lnTabela = loadLnTabela();
         if (lnTabela != null) {
-            bGravar = irrfFuncao.tabela(lnTabela);
-            mensagem = irrfFuncao.mensagem;
+            bGravar = tabelaFuncao.tabela(lnTabela);
+            mensagem = tabelaFuncao.mensagem;
             if (bGravar) {
                 clearVarTabela();
                 clearVarTabelaItem();
-                listTabela = irrfFuncao.montaTabela();
+                listTabela = tabelaFuncao.montaTabela();
                 RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
                 mensagem = "Tabela de Imposto incluida com sucesso!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
@@ -401,7 +404,7 @@ public class IrrfView implements Serializable {
         if (tabela.getCodigoTabela() != null && tabela.getCodigoTabela() > 0) {
             lnTabela.setTabInCodigo(tabela.getCodigoTabela());
         } else {
-            lnTabela.setTabInCodigo(irrfFuncao.calcIdTabela());
+            lnTabela.setTabInCodigo(tabelaFuncao.calcIdTabela());
         }
 
         if (listTabelaItem != null) {
@@ -413,7 +416,7 @@ public class IrrfView implements Serializable {
                 if (tbItem.getCodigoTabItem() != null && tbItem.getCodigoTabItem() > 0) {
                     lnTabelaItem.setTaiInCodigo(tbItem.getCodigoTabItem());
                 } else {
-                    lnTabelaItem.setTaiInCodigo(irrfFuncao.calcIdTabelaItem());
+                    lnTabelaItem.setTaiInCodigo(tabelaFuncao.calcIdTabelaItem());
                 }
 
                 lnTabelaItem.setTaiFlDependente(tbItem.getValorDependente());

@@ -16,25 +16,8 @@ import java.util.List;
  */
 public class IrrfFuncoes implements Serializable {
 
-    private Integer codigoTabItem = 0;
-    private Integer codigoTab = 0;
     public String mensagem;
 
-    public List<Tabela> montaTabela() {
-        TabelaFuncoes tabelaFuncao = new TabelaFuncoes();
-        return tabelaFuncao.buscaTabela(1);
-    }
-    public Integer calcIdTabela() {
-        Integer i = codigoTab + 1;
-        codigoTab = i;
-        return codigoTab;
-    }
-
-    public Integer calcIdTabelaItem() {
-        Integer i = codigoTabItem + 1;
-        codigoTabItem = i;
-        return codigoTabItem;
-    }
 
     public boolean verificaInformacoes(Tabela tabela, TabelaItem tabelaItem) {
         boolean validado = true;
@@ -77,17 +60,12 @@ public class IrrfFuncoes implements Serializable {
             mensagem = mensagem + "Valor do Dependente; ";
             validado = false;
         }
-        if (TabelaDao.grabLnTabelaDate(tabela.getCodigoTabela(), tabela.getDataInicial(), tabela.getDataFinal()) != null){
+        if (TabelaDao.grabLnTabelaDate(1, tabela.getDataInicial(), tabela.getDataFinal()) != null){
             mensagem = mensagem + "Verificar data de inicio e final, nao pode haver outra tabela com a mesma data; ";
             validado = false;
         }
         return validado;
     }
 
-    public boolean tabela(LnTabela lnTabela) {
-        TabelaFuncoes tabelafuncao = new TabelaFuncoes();
-        mensagem = tabelafuncao.mensagem;
-        return tabelafuncao.gravaTabela(lnTabela);
-    }
 
 }

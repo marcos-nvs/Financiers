@@ -19,6 +19,8 @@ import org.hibernate.HibernateException;
  */
 public class TabelaFuncoes implements Serializable{
     
+    private Integer codigoTabItem = 0;
+    private Integer codigoTab = 0;
     public String mensagem;
     
     public boolean gravaTabela(LnTabela lnTabela){
@@ -176,6 +178,27 @@ public class TabelaFuncoes implements Serializable{
         return listaTabelaItem;
     }
 
+    public List<Tabela> montaTabela() {
+        TabelaFuncoes tabelaFuncao = new TabelaFuncoes();
+        return tabelaFuncao.buscaTabela(1);
+    }
     
+    public Integer calcIdTabela() {
+        Integer i = codigoTab + 1;
+        codigoTab = i;
+        return codigoTab;
+    }
+
+    public Integer calcIdTabelaItem() {
+        Integer i = codigoTabItem + 1;
+        codigoTabItem = i;
+        return codigoTabItem;
+    }
+    
+    public boolean tabela(LnTabela lnTabela) {
+        TabelaFuncoes tabelafuncao = new TabelaFuncoes();
+        mensagem = tabelafuncao.mensagem;
+        return tabelafuncao.gravaTabela(lnTabela);
+    }
     
 }

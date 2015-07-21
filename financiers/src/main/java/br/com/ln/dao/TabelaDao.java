@@ -77,7 +77,7 @@ public class TabelaDao extends GenericDao implements Serializable{
         return new Integer(grabIdByNextValueStringSQL("select nextval('seq_tabelaitem');"));
     }
     
-    public static synchronized List<LnTabela> grabLnTabelaDate(Integer tabInCodigo, Date tabDtInicio, Date tabDtFinal){
+    public static synchronized List<LnTabela> grabLnTabelaDate(Integer ttbInCodigo, Date tabDtInicio, Date tabDtFinal){
         Session session = null;
         Transaction tx  = null;
         List<LnTabela> listaTabela = null;
