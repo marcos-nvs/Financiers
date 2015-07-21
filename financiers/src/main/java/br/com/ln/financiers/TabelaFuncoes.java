@@ -5,7 +5,7 @@
  */
 package br.com.ln.financiers;
 
-import br.com.ln.dao.IrrfDao;
+import br.com.ln.dao.TabelaDao;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.entity.LnTabelaItem;
 import java.io.Serializable;
@@ -27,7 +27,7 @@ public class TabelaFuncoes implements Serializable{
 
         switch (lnTabela.getTipoFuncao()) {
             case Incluir:
-                lnTabela.setTabInCodigo(IrrfDao.grabLnTabelaNextId());
+                lnTabela.setTabInCodigo(TabelaDao.grabLnTabelaNextId());
                 bSalvo = incluirTabela(lnTabela);
                 break;
             case Alterar:
@@ -46,7 +46,7 @@ public class TabelaFuncoes implements Serializable{
 
         switch (lnTabelaItem.getTipoFuncao()) {
             case Incluir:
-                lnTabelaItem.setTaiInCodigo(IrrfDao.grabLnTabelaItemNextId());
+                lnTabelaItem.setTaiInCodigo(TabelaDao.grabLnTabelaItemNextId());
                 bSalvo = incluirTabelaItem(lnTabelaItem);
                 break;
             case Alterar:
@@ -68,7 +68,7 @@ public class TabelaFuncoes implements Serializable{
             }
             
             if (bSalvo) {
-                IrrfDao.saveObject(lnTabela);
+                TabelaDao.saveObject(lnTabela);
                 return true;
             } else {
                 return false;
@@ -86,7 +86,7 @@ public class TabelaFuncoes implements Serializable{
         }
 
         try{
-            IrrfDao.saveOrUpdateObject(lnTabela);
+            TabelaDao.saveOrUpdateObject(lnTabela);
             return true;
         } catch (HibernateException ex){
             mensagem = "Ocorreu um erro na gravação!";
@@ -97,9 +97,9 @@ public class TabelaFuncoes implements Serializable{
     private boolean excluirTabela(LnTabela lnTabela) {
         try{
             lnTabela.getListLnTabelaItem().stream().forEach((lnTabelaItem) -> {
-                IrrfDao.deleteObject(lnTabelaItem);
+                TabelaDao.deleteObject(lnTabelaItem);
             });
-            IrrfDao.deleteObject(lnTabela);
+            TabelaDao.deleteObject(lnTabela);
             return true;
         } catch (HibernateException ex){
             mensagem = "Ocorreu um erro na gravação!";
@@ -111,7 +111,7 @@ public class TabelaFuncoes implements Serializable{
     private boolean incluirTabelaItem(LnTabelaItem lnTabelaItem) {
 
         try {
-            IrrfDao.saveObject(lnTabelaItem);
+            TabelaDao.saveObject(lnTabelaItem);
             return true;
         } catch (HibernateException ex) {
             mensagem = "Ocorreu um erro na gravação!";
@@ -122,7 +122,7 @@ public class TabelaFuncoes implements Serializable{
     private boolean excluirTabelaItem(LnTabelaItem lnTabelaItem){
         
         try{
-            IrrfDao.deleteObject(lnTabelaItem);
+            TabelaDao.deleteObject(lnTabelaItem);
             return true;
         } catch (HibernateException ex){
             mensagem = "Ocorreu um erro na exclusao do item!";
@@ -134,10 +134,10 @@ public class TabelaFuncoes implements Serializable{
         Tabela tabela;
         
         List<Tabela> listaTabela = new ArrayList<>();
-        List<LnTabela> listTabelaDao = IrrfDao.grabTabela(ttbInCodigo);
+        List<LnTabela> listTabelaDao = TabelaDao.grabTabela(ttbInCodigo);
         
         for (LnTabela lnTabela : listTabelaDao) {
-            lnTabela.setListLnTabelaItem(IrrfDao.grabTabelaItem(lnTabela.getTabInCodigo()));
+            lnTabela.setListLnTabelaItem(TabelaDao.grabTabelaItem(lnTabela.getTabInCodigo()));
             
             tabela = new Tabela();
             tabela.setCodigoTabela(lnTabela.getTabInCodigo());
