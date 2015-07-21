@@ -86,8 +86,8 @@ public class TabelaDao extends GenericDao implements Serializable{
             session  = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
-            Query query = session.createQuery("");
-            listaTabela = query.list();
+//            Query query = session.createQuery("");
+//            listaTabela = query.list();
             tx.commit();
             
         } finally{

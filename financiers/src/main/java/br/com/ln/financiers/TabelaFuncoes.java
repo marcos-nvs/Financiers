@@ -178,9 +178,9 @@ public class TabelaFuncoes implements Serializable{
         return listaTabelaItem;
     }
 
-    public List<Tabela> montaTabela() {
+    public List<Tabela> montaTabela(Integer tipoTabela) {
         TabelaFuncoes tabelaFuncao = new TabelaFuncoes();
-        return tabelaFuncao.buscaTabela(1);
+        return tabelaFuncao.buscaTabela(tipoTabela);
     }
     
     public Integer calcIdTabela() {

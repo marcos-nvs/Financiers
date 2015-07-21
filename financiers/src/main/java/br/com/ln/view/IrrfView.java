@@ -44,6 +44,7 @@ public class IrrfView implements Serializable {
     private Double valorDesconto;
     private Double percentual;
     private Integer qtdDependente;
+    private final Integer TIPOTABELA = 1;
 
     private LnTabela lnTabela;
     private Tabela tabela;
@@ -53,7 +54,7 @@ public class IrrfView implements Serializable {
     private final TabelaFuncoes tabelaFuncao;
     private final IrrfFuncoes irrfFuncao;
 
-    private List<LnTabelaItem> listTabelaItemLoad = new ArrayList<>(100);
+    private final List<LnTabelaItem> listTabelaItemLoad = new ArrayList<>(100);
     private String valor;
 
     private String mensagem;
@@ -63,7 +64,7 @@ public class IrrfView implements Serializable {
         tabelaItem = new TabelaItem();
         tabelaFuncao = new TabelaFuncoes();
         irrfFuncao = new IrrfFuncoes();
-        listTabela = tabelaFuncao.montaTabela();
+        listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
         listTabelaItem = new ArrayList<>();
     }
 
@@ -277,7 +278,7 @@ public class IrrfView implements Serializable {
                         clearVarTabela();
                         clearVarTabelaItem();
                         mensagem = "Tabela de Imposto incluida com sucesso!!!";
-                        listTabela = tabelaFuncao.montaTabela();
+                        listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
                     } else {
                         mensagem = tabelaFuncao.mensagem;
@@ -304,7 +305,7 @@ public class IrrfView implements Serializable {
             tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
             listTabelaItem.add(tabelaItem);
         } else {
-            mensagem = tabelaFuncao.mensagem;
+            mensagem = irrfFuncao.mensagem;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
         }
     }
@@ -335,7 +336,7 @@ public class IrrfView implements Serializable {
             if (bGravar) {
                 clearVarTabela();
                 clearVarTabelaItem();
-                listTabela = tabelaFuncao.montaTabela();
+                listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
                 RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
                 mensagem = "Tabela de Imposto incluida com sucesso!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));

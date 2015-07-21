@@ -6,9 +6,7 @@
 package br.com.ln.financiers;
 
 import br.com.ln.dao.TabelaDao;
-import br.com.ln.entity.LnTabela;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
@@ -17,7 +15,6 @@ import java.util.List;
 public class IrrfFuncoes implements Serializable {
 
     public String mensagem;
-
 
     public boolean verificaInformacoes(Tabela tabela, TabelaItem tabelaItem) {
         boolean validado = true;
