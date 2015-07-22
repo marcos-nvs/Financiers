@@ -150,8 +150,6 @@ public class TabelaFuncoes implements Serializable{
             
             tabela.setListTabelaItem(buscaTabelaItem(lnTabela.getListLnTabelaItem()));
             
-            System.out.println("tabela : " + tabela.toString());
-
             listaTabela.add(tabela);
         }
 
