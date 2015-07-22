@@ -29,7 +29,7 @@ import org.primefaces.context.RequestContext;
  * @author Marcos Naves
  */
 @SessionScoped
-@ManagedBean(name = "IrrfView")
+@ManagedBean(name = "irrfView")
 public class IrrfView implements Serializable {
 
     private Integer idCodigo;
@@ -329,6 +329,9 @@ public class IrrfView implements Serializable {
 
     public void btSalvar() {
         boolean bGravar;
+        if (tabela != null && tabela.getTipoFuncao().equals(TipoFuncao.Alterar)) {
+            loadVarTabela();
+        }
         lnTabela = loadLnTabela();
         if (lnTabela != null) {
             bGravar = tabelaFuncao.tabela(lnTabela);
@@ -394,7 +397,6 @@ public class IrrfView implements Serializable {
         boolean bGravar = true;
         LnTabelaItem lnTabelaItem;
         listTabelaItemLoad.clear();
-
         lnTabela = new LnTabela();
         lnTabela.setTtbInCodigo(1);
         lnTabela.setTabStDescricao(tabela.getNomeTabela());
@@ -462,4 +464,5 @@ public class IrrfView implements Serializable {
 
         return lnTabela;
     }
+    
 }

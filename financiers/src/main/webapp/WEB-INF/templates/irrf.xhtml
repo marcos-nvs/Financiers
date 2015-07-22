@@ -5,8 +5,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <p:dataTable id="idTabelaIrrf" var="Irrf" value="#{IrrfView.listTabela}" selection="#{IrrfView.tabela}" selectionMode="single"
-                 rowKey="#{Irrf.codigoTabela}" paginator="true" rows="20" paginatorPosition="bottom">
+    <p:dataTable id="idTabelaIrrf" var="irrf" value="#{irrfView.listTabela}" selection="#{irrfView.tabela}" selectionMode="single"
+                 rowKey="#{irrf.codigoTabela}" paginator="true" rows="20" paginatorPosition="bottom">
         <f:facet name="header">
             <p:outputLabel value="Lista de IRRF"/>
         </f:facet>
@@ -14,48 +14,48 @@
             <p:rowToggler />
         </p:column>
         <p:column headerText="#{msgs['tabbedHeadings.description']}">
-            <h:outputText value="#{Irrf.nomeTabela}"/>
+            <h:outputText value="#{irrf.nomeTabela}"/>
         </p:column>
         <p:column headerText="Data Inicio">
-            <h:outputText value="#{Irrf.dataInicial}">
+            <h:outputText value="#{irrf.dataInicial}">
                 <f:convertDateTime pattern="dd-MM-yyyy"/>
             </h:outputText>
         </p:column>
         <p:column headerText="Data Final">
-            <h:outputText value="#{Irrf.dataFinal}">
+            <h:outputText value="#{irrf.dataFinal}">
                 <f:convertDateTime pattern="dd-MM-yyyy"/>
             </h:outputText>
         </p:column>
         <p:rowExpansion>
-            <p:dataTable id="idTabelaIrrfDetalhe" var="IrrfDetalhe" value="#{Irrf.listTabelaItem}"
+            <p:dataTable id="idTabelaIrrfDetalhe" var="irrfDetalhe" value="#{irrf.listTabelaItem}"
                          paginator="true" rows="20" paginatorPosition="bottom">
                 <p:column headerText="Valor Inicial">
-                    <h:outputText value="#{IrrfDetalhe.valorInicial}">
+                    <h:outputText value="#{irrfDetalhe.valorInicial}">
                         <f:convertNumber pattern="R$ ###,##0.00" currencySymbol="R$" type="currency"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Valor Final">
-                    <h:outputText value="#{IrrfDetalhe.valorFinal}">
+                    <h:outputText value="#{irrfDetalhe.valorFinal}">
                         <f:convertNumber pattern="R$ ###,##0.00" currencySymbol="R$" type="currency"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Percentual %">
-                    <h:outputText value="#{IrrfDetalhe.percentual}">
+                    <h:outputText value="#{irrfDetalhe.percentual}">
                         <f:convertNumber pattern="##0.00" type="percent" />
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Valor Desconto">
-                    <h:outputText value="#{IrrfDetalhe.valorDesconto}">
+                    <h:outputText value="#{irrfDetalhe.valorDesconto}">
                         <f:convertNumber pattern="R$ ###,##0.00" currencySymbol="R$" type="currency"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Valor Dependente">
-                    <h:outputText value="#{IrrfDetalhe.valorDependente}">
+                    <h:outputText value="#{irrfDetalhe.valorDependente}">
                         <f:convertNumber pattern="R$ ###,##0.00" currencySymbol="R$" type="currency"/>
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Qtd Dependente">
-                    <h:outputText value="#{IrrfDetalhe.qtdDependente}">
+                    <h:outputText value="#{irrfDetalhe.qtdDependente}">
                         <f:convertNumber pattern="##0"/>
                     </h:outputText>
                 </p:column>
@@ -63,13 +63,13 @@
         </p:rowExpansion>
         <f:facet name="footer">
             <p:commandButton id="btIncluirIrrf" value="#{msgs['node.include']}" icon="ui-icon-document" 
-                             action="#{IrrfView.btIncluir}" process="btIncluirIrrf" 
+                             action="#{irrfView.btIncluir}" process="btIncluirIrrf" 
                              update=":idFormCenter:tabIRRF:idTabelaIrrf, :idFormTop:growl, :idFormCenter:tabIRRF:dlgIRRF"/>
             <p:commandButton id="btAlterarIrrf" value="#{msgs['template.change']}" icon="ui-icon-pencil"
-                             action="#{IrrfView.btAlterar}" process="btAlterarIrrf, :idFormCenter:tabIRRF:idTabelaIrrf"
+                             action="#{irrfView.btAlterar}" process="btAlterarIrrf, :idFormCenter:tabIRRF:idTabelaIrrf"
                              update=":idFormTop:growl, :idFormCenter:tabIRRF:dlgIRRF" />
             <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
-                             action="#{IrrfView.btExcluir}" process="btExcluirIrrf,:idFormCenter:tabIRRF:idTabelaIrrf"
+                             action="#{irrfView.btExcluir}" process="btExcluirIrrf,:idFormCenter:tabIRRF:idTabelaIrrf"
                              update=":idFormTop:growl,:idFormCenter:tabIRRF:idTabelaIrrf">
                 <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
             </p:commandButton>
@@ -85,46 +85,46 @@
 
         <h:panelGrid id="idgridDataIrrf" columns="6" >
             <p:outputLabel value="#{msgs['template.profile.description']}"/>
-            <p:inputText id="idIrrfDescricao" value="#{IrrfView.nomeTabela}" size="50"/>
+            <p:inputText id="idIrrfDescricao" value="#{irrfView.nomeTabela}" size="50"/>
             <p:outputLabel for="dtirrfInicio" value="Data Inicial"/>
-            <p:calendar id="dtirrfInicio" showOn="button" value="#{IrrfView.dataInicial}" pattern="dd/MM/yyyy"/>
+            <p:calendar id="dtirrfInicio" showOn="button" value="#{irrfView.dataInicial}" pattern="dd/MM/yyyy"/>
             <p:outputLabel for="dtirrfFinal" value="Data Final"/>
-            <p:calendar id="dtirrfFinal" showOn="button" value="#{IrrfView.dataFinal}" pattern="dd/MM/yyyy"/>
+            <p:calendar id="dtirrfFinal" showOn="button" value="#{irrfView.dataFinal}" pattern="dd/MM/yyyy"/>
         </h:panelGrid>
         <h:panelGrid id="idgridValorIrrf" columns="6" style="margin-left: 35px;">
             <p:outputLabel value="Valor Inicial R$"/>
-            <p:inputText id="idinputvlrinicial" value="#{IrrfView.valorInicial}" style="width: 80px;" size="20">
+            <p:inputText id="idinputvlrinicial" value="#{irrfView.valorInicial}" style="width: 80px;" size="20">
                 <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
                 <p:ajax update="idinputvlrinicial" process="idinputvlrinicial" event="change"/>
             </p:inputText>
             <p:outputLabel value="Valor Final R$"/>
-            <p:inputText id="idvlrFinal" value="#{IrrfView.valorFinal}" style="width: 80px;" size="20">
+            <p:inputText id="idvlrFinal" value="#{irrfView.valorFinal}" style="width: 80px;" size="20">
                 <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
                 <p:ajax update="idvlrFinal" process="idvlrFinal" event="change"/>
             </p:inputText>
             <p:outputLabel value="Qtde Dependente"/>
-            <p:inputText id="idqtdDep" value="#{IrrfView.qtdDependente}" style="width: 80px;" size="20">
+            <p:inputText id="idqtdDep" value="#{irrfView.qtdDependente}" style="width: 80px;" size="20">
                 <f:convertNumber pattern="0"/>
                 <p:ajax update="idqtdDep" process="idqtdDep" event="change"/>
             </p:inputText>
 
             <p:outputLabel value="% Imposto"/>
-            <p:inputText id="idpercImposto" value="#{IrrfView.percentual}" style="width: 80px;" size="20">
+            <p:inputText id="idpercImposto" value="#{irrfView.percentual}" style="width: 80px;" size="20">
                 <f:convertNumber pattern="##0.00" type="percent"/>
                 <p:ajax update="idpercImposto" process="idpercImposto" event="change"/>
             </p:inputText>
             <p:outputLabel value="Valor Desconto R$"/>
-            <p:inputText id="idvlrDesconto" value="#{IrrfView.valorDesconto}" style="width: 80px;" size="20">
+            <p:inputText id="idvlrDesconto" value="#{irrfView.valorDesconto}" style="width: 80px;" size="20">
                 <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
                 <p:ajax update="idvlrDesconto" process="idvlrDesconto" event="change"/>
             </p:inputText>
             <p:outputLabel value="Valor por Dependente R$"/>
-            <p:inputText id="idvlrDependente"  value="#{IrrfView.valorDependente}" style="width: 80px;" size="20">
+            <p:inputText id="idvlrDependente"  value="#{irrfView.valorDependente}" style="width: 80px;" size="20">
                 <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
                 <p:ajax update="idvlrDependente" process="idvlrDependente" event="change"/>
             </p:inputText>
         </h:panelGrid>
-        <p:dataTable id="idDTIRRF" var="incluiTabelaIR" value="#{IrrfView.listTabelaItem}" paginator="true" rows="10" paginatorPosition="bottom">
+        <p:dataTable id="idDTIRRF" var="incluiTabelaIR" value="#{irrfView.listTabelaItem}" paginator="true" rows="10" paginatorPosition="bottom">
             <f:facet name="header">
                 <p:outputLabel value="Imposto de Renda retindo na Fonte"/>
             </f:facet>
@@ -159,21 +159,22 @@
                 </h:outputText>
             </p:column>
             <p:column style="width: 20px; text-align: center">
-                <p:commandButton id='idBtEditaIRRF' icon="ui-icon-trash" action="#{IrrfView.btExcluiDetalhe}"
+                <p:commandButton id='idBtEditaIRRF' icon="ui-icon-trash" action="#{irrfView.btExcluiDetalhe}"
                                  process="idBtEditaIRRF, idDTIRRF" update="idDTIRRF, :idFormTop:growl">
-                    <f:setPropertyActionListener value="#{incluiTabelaIR}" target="#{IrrfView.tabelaItem}"/>
+                    <f:setPropertyActionListener value="#{incluiTabelaIR}" target="#{irrfView.tabelaItem}"/>
                 </p:commandButton>
             </p:column>
         </p:dataTable>
         <f:facet name="footer">
             <p:commandButton id="idbtincluirirrf" value="#{msgs['node.include']}" icon="ui-icon-document"
-                             action="#{IrrfView.btIncluiDetalhe()}" process="idbtincluirirrf, idgridDataIrrf, idgridValorIrrf, idIrrfDescricao,
+                             action="#{irrfView.btIncluiDetalhe()}" process="idbtincluirirrf, idgridDataIrrf, idgridValorIrrf, idIrrfDescricao,
                              dtirrfInicio, dtirrfFinal, idinputvlrinicial, idvlrFinal, idqtdDep, idpercImposto, idvlrDesconto, idvlrDependente"
                              update="idDTIRRF :idFormTop:growl"/>
             <p:commandButton id="idbtsalvarirrf" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
-                             action="#{IrrfView.btSalvar}" process="idbtsalvarirrf" update=":idFormTop:growl, :idFormCenter:tabIRRF:idTabelaIrrf"/>
+                             action="#{irrfView.btSalvar}" process="idbtsalvarirrf, idgridDataIrrf, idIrrfDescricao, dtirrfInicio, dtirrfFinal, idDTIRRF" 
+                             update=":idFormTop:growl, :idFormCenter:tabIRRF:idTabelaIrrf, idgridDataIrrf"/>
             <p:commandButton id="idbtfecharirrf" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-cancel"
-                             action="#{IrrfView.btFechar()}" process="idbtfecharirrf" update="idbtfecharirrf"/>
+                             action="#{irrfView.btFechar()}" process="idbtfecharirrf" update="idbtfecharirrf"/>
         </f:facet>
 
     </p:dialog>

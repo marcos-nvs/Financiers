@@ -33,6 +33,7 @@ public class TabelaFuncoes implements Serializable{
                 bSalvo = incluirTabela(lnTabela);
                 break;
             case Alterar:
+                System.out.println("alterar");
                 bSalvo = AlterarTabela(lnTabela);
                 break;
             case Excluir:
@@ -83,9 +84,9 @@ public class TabelaFuncoes implements Serializable{
 
     private boolean AlterarTabela(LnTabela lnTabela) {
         
-        for (LnTabelaItem lnTabelaItem : lnTabela.getListLnTabelaItem()){
+        lnTabela.getListLnTabelaItem().stream().forEach((lnTabelaItem) -> {
             gravaTabelaItem(lnTabelaItem);
-        }
+        });
 
         try{
             TabelaDao.saveOrUpdateObject(lnTabela);
@@ -148,6 +149,8 @@ public class TabelaFuncoes implements Serializable{
             tabela.setDataFinal(lnTabela.getTabDtFinal());
             
             tabela.setListTabelaItem(buscaTabelaItem(lnTabela.getListLnTabelaItem()));
+            
+            System.out.println("tabela : " + tabela.toString());
 
             listaTabela.add(tabela);
         }

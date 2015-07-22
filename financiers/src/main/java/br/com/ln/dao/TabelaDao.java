@@ -86,8 +86,10 @@ public class TabelaDao extends GenericDao implements Serializable{
             session  = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
-//            Query query = session.createQuery("");
-//            listaTabela = query.list();
+            Query query = session.createQuery("select l from LnTabela l where l.ttbInCodigo = :ttbInCodigo and l.tabDtFinal >= :tabDtFinal");
+            query.setInteger("ttbInCodigo", ttbInCodigo);
+            query.setDate("tabDtFinal", tabDtFinal);
+            listaTabela = query.list();
             tx.commit();
             
         } finally{

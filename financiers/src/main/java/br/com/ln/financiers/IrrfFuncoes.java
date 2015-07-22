@@ -6,7 +6,9 @@
 package br.com.ln.financiers;
 
 import br.com.ln.dao.TabelaDao;
+import br.com.ln.entity.LnTabela;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -57,8 +59,11 @@ public class IrrfFuncoes implements Serializable {
             mensagem = mensagem + "Valor do Dependente; ";
             validado = false;
         }
-        if (TabelaDao.grabLnTabelaDate(1, tabela.getDataInicial(), tabela.getDataFinal()) != null){
-            mensagem = mensagem + "Verificar data de inicio e final, nao pode haver outra tabela com a mesma data; ";
+        
+        List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(1, tabela.getDataInicial(), tabela.getDataFinal());
+        
+        if (listaTabela != null && !listaTabela.isEmpty() ){
+            mensagem = mensagem + "Verificar as datas, nao pode haver outra tabela com aa mesmas datas ou intercaladas; ";
             validado = false;
         }
         return validado;
