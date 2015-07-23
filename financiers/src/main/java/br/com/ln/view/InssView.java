@@ -7,8 +7,7 @@ package br.com.ln.view;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnTabela;
-import br.com.ln.entity.LnTabelaItem;
-import br.com.ln.financiers.IrrfFuncoes;
+import br.com.ln.financiers.InssFuncoes;
 import br.com.ln.financiers.Tabela;
 import br.com.ln.financiers.TabelaFuncoes;
 import br.com.ln.financiers.TabelaItem;
@@ -51,9 +50,8 @@ public class InssView implements Serializable{
     private List<TabelaItem> listTabelaItem;
     private List<Tabela> listTabela;
     private final TabelaFuncoes tabelaFuncao;
-    private final IrrfFuncoes irrfFuncao;
+    private final InssFuncoes inssFuncao;
 
-    private final List<LnTabelaItem> listTabelaItemLoad = new ArrayList<>(100);
     private String valor;
 
     private String mensagem;
@@ -62,7 +60,7 @@ public class InssView implements Serializable{
         tabela = new Tabela();
         tabelaItem = new TabelaItem();
         tabelaFuncao = new TabelaFuncoes();
-        irrfFuncao = new IrrfFuncoes();
+        inssFuncao = new InssFuncoes();
         listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
         listTabelaItem = new ArrayList<>();
     }

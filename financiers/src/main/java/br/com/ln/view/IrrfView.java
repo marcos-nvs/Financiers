@@ -53,8 +53,6 @@ public class IrrfView implements Serializable {
     private List<Tabela> listTabela;
     private final TabelaFuncoes tabelaFuncao;
     private final IrrfFuncoes irrfFuncao;
-
-    private final List<LnTabelaItem> listTabelaItemLoad = new ArrayList<>(100);
     private String valor;
 
     private String mensagem;
