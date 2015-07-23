@@ -394,75 +394,21 @@ public class IrrfView implements Serializable {
     }
 
     private LnTabela loadLnTabela() {
-        boolean bGravar = true;
-        LnTabelaItem lnTabelaItem;
-        listTabelaItemLoad.clear();
-        lnTabela = new LnTabela();
-        lnTabela.setTtbInCodigo(1);
-        lnTabela.setTabStDescricao(tabela.getNomeTabela());
-        lnTabela.setTabDtInicio(tabela.getDataInicial());
-        lnTabela.setTabDtFinal(tabela.getDataFinal());
-        lnTabela.setTipoFuncao(tabela.getTipoFuncao());
+        boolean bGravar;
+        
+        if (listTabelaItem != null && !listTabelaItem.isEmpty()) {
+            lnTabela = tabelaFuncao.loadLnTabela(tabela, listTabelaItem);
+            bGravar = tabelaFuncao.bGravar;
 
-        if (tabela.getCodigoTabela() != null && tabela.getCodigoTabela() > 0) {
-            lnTabela.setTabInCodigo(tabela.getCodigoTabela());
-        } else {
-            lnTabela.setTabInCodigo(tabelaFuncao.calcIdTabela());
-        }
-
-        if (listTabelaItem != null) {
-            for (TabelaItem tbItem : listTabelaItem) {
-
-                lnTabelaItem = new LnTabelaItem();
-                lnTabelaItem.setTabInCodigo(lnTabela.getTabInCodigo());
-
-                if (tbItem.getCodigoTabItem() != null && tbItem.getCodigoTabItem() > 0) {
-                    lnTabelaItem.setTaiInCodigo(tbItem.getCodigoTabItem());
-                } else {
-                    lnTabelaItem.setTaiInCodigo(tabelaFuncao.calcIdTabelaItem());
-                }
-
-                lnTabelaItem.setTaiFlDependente(tbItem.getValorDependente());
-                lnTabelaItem.setTaiFlDesconto(tbItem.getValorDesconto());
-                lnTabelaItem.setTaiFlFinal(tbItem.getValorFinal());
-                lnTabelaItem.setTaiFlInicio(tbItem.getValorInicial());
-                lnTabelaItem.setTaiFlPercentual(tbItem.getPercentual());
-                lnTabelaItem.setTaiInQtddependente(tbItem.getQtdDependente());
-
-                if (tbItem.getTipoFuncao() != null) {
-                    lnTabelaItem.setTipoFuncao(tbItem.getTipoFuncao());
-                } else {
-                    lnTabelaItem.setTipoFuncao(TipoFuncao.Alterar);
-                }
-
-                if (!listTabelaItemLoad.contains(lnTabelaItem)) {
-                    listTabelaItemLoad.add(lnTabelaItem);
-                    bGravar = true;
-                } else {
-                    mensagem = "Exitem valores na tabela iguais, por favor verifique!!";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
-                    bGravar = false;
-                    break;
-                }
-            }
-
-            if (bGravar) {
-                if (listTabelaItemLoad.size() > 0) {
-                    lnTabela.setListLnTabelaItem(listTabelaItemLoad);
-                    bGravar = true;
-                } else {
-                    mensagem = "Nao ha alteracoes a serem realizadas!!";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
-                    bGravar = false;
-                }
+            if (!bGravar) {
+                mensagem = tabelaFuncao.mensagem;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
             }
         } else {
+            lnTabela = null;
             mensagem = "Lista da tabela esta vazia!!";
-            bGravar = false;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
         }
-
         return lnTabela;
     }
-    
 }

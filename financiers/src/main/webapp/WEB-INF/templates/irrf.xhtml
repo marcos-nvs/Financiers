@@ -8,7 +8,7 @@
     <p:dataTable id="idTabelaIrrf" var="irrf" value="#{irrfView.listTabela}" selection="#{irrfView.tabela}" selectionMode="single"
                  rowKey="#{irrf.codigoTabela}" paginator="true" rows="20" paginatorPosition="bottom">
         <f:facet name="header">
-            <p:outputLabel value="Lista de IRRF"/>
+            <p:outputLabel value="Tabela de IRRF"/>
         </f:facet>
         <p:column style="width: 16px">
             <p:rowToggler />
@@ -71,7 +71,7 @@
             <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
                              action="#{irrfView.btExcluir}" process="btExcluirIrrf,:idFormCenter:tabIRRF:idTabelaIrrf"
                              update=":idFormTop:growl,:idFormCenter:tabIRRF:idTabelaIrrf">
-                <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
+                <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} desta tabela?" icon="ui-icon-alert"/>
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />

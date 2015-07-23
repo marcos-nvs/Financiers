@@ -5,6 +5,7 @@
  */
 package br.com.ln.financiers;
 
+import br.com.ln.comum.Historico;
 import br.com.ln.dao.TabelaDao;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.entity.LnTabelaItem;
@@ -22,6 +23,8 @@ public class TabelaFuncoes implements Serializable{
     private Integer codigoTabItem = 0;
     private Integer codigoTab = 0;
     public String mensagem;
+    public boolean bGravar;
+    private Historico historico;
     
     public boolean gravaTabela(LnTabela lnTabela){
         mensagem = "";
@@ -72,7 +75,8 @@ public class TabelaFuncoes implements Serializable{
             
             if (bSalvo) {
                 TabelaDao.saveObject(lnTabela);
-                return true;
+                historico.gravaHistoricoModulo("Inclusão do Tabela : " + lnTabela.getTabStDescricao());
+            return true;
             } else {
                 return false;
             }
@@ -90,6 +94,7 @@ public class TabelaFuncoes implements Serializable{
 
         try{
             TabelaDao.saveOrUpdateObject(lnTabela);
+            historico.gravaHistoricoModulo("Alteração do Tabela : " + lnTabela.getTabStDescricao());
             return true;
         } catch (HibernateException ex){
             mensagem = "Ocorreu um erro na gravação!";
@@ -103,12 +108,12 @@ public class TabelaFuncoes implements Serializable{
                 TabelaDao.deleteObject(lnTabelaItem);
             });
             TabelaDao.deleteObject(lnTabela);
+            historico.gravaHistoricoModulo("Exclusão do Tabela : " + lnTabela.getTabStDescricao());
             return true;
         } catch (HibernateException ex){
             mensagem = "Ocorreu um erro na gravação!";
             return false;
         }
-        
     }
     
     private boolean incluirTabelaItem(LnTabelaItem lnTabelaItem) {
@@ -201,5 +206,69 @@ public class TabelaFuncoes implements Serializable{
         mensagem = tabelafuncao.mensagem;
         return tabelafuncao.gravaTabela(lnTabela);
     }
+    
+    public LnTabela loadLnTabela(Tabela tabela, List<TabelaItem> listTabelaItem) {
+        LnTabelaItem lnTabelaItem;
+        List<LnTabelaItem> listTabelaItemLoad = new ArrayList<>();
+        LnTabela lnTabela = new LnTabela();
+        lnTabela.setTtbInCodigo(1);
+        lnTabela.setTabStDescricao(tabela.getNomeTabela());
+        lnTabela.setTabDtInicio(tabela.getDataInicial());
+        lnTabela.setTabDtFinal(tabela.getDataFinal());
+        lnTabela.setTipoFuncao(tabela.getTipoFuncao());
+
+        if (tabela.getCodigoTabela() != null && tabela.getCodigoTabela() > 0) {
+            lnTabela.setTabInCodigo(tabela.getCodigoTabela());
+        } else {
+            lnTabela.setTabInCodigo(calcIdTabela());
+        }
+
+        if (listTabelaItem != null) {
+            for (TabelaItem tbItem : listTabelaItem) {
+
+                lnTabelaItem = new LnTabelaItem();
+                lnTabelaItem.setTabInCodigo(lnTabela.getTabInCodigo());
+
+                if (tbItem.getCodigoTabItem() != null && tbItem.getCodigoTabItem() > 0) {
+                    lnTabelaItem.setTaiInCodigo(tbItem.getCodigoTabItem());
+                } else {
+                    lnTabelaItem.setTaiInCodigo(calcIdTabelaItem());
+                }
+
+                lnTabelaItem.setTaiFlDependente(tbItem.getValorDependente());
+                lnTabelaItem.setTaiFlDesconto(tbItem.getValorDesconto());
+                lnTabelaItem.setTaiFlFinal(tbItem.getValorFinal());
+                lnTabelaItem.setTaiFlInicio(tbItem.getValorInicial());
+                lnTabelaItem.setTaiFlPercentual(tbItem.getPercentual());
+                lnTabelaItem.setTaiInQtddependente(tbItem.getQtdDependente());
+
+                if (tbItem.getTipoFuncao() != null) {
+                    lnTabelaItem.setTipoFuncao(tbItem.getTipoFuncao());
+                } else {
+                    lnTabelaItem.setTipoFuncao(TipoFuncao.Alterar);
+                }
+
+                if (!listTabelaItemLoad.contains(lnTabelaItem)) {
+                    listTabelaItemLoad.add(lnTabelaItem);
+                    bGravar = true;
+                } else {
+                    mensagem = "Exitem valores na tabela iguais, por favor verifique!!";
+                    bGravar = false;
+                    break;
+                }
+            }
+
+            if (bGravar) {
+                if (listTabelaItemLoad.size() > 0) {
+                    lnTabela.setListLnTabelaItem(listTabelaItemLoad);
+                } else {
+                    mensagem = "Nao ha alteracoes a serem realizadas!!";
+                }
+            }
+        } else {
+            mensagem = "Lista da tabela esta vazia!!";
+        }
+        return lnTabela;
+    }    
     
 }
