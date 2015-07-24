@@ -68,6 +68,4 @@ public class IrrfFuncoes implements Serializable {
         }
         return validado;
     }
-
-
 }

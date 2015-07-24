@@ -277,7 +277,18 @@ public class InssView implements Serializable{
     }
     
     public void btIncluirItem(){
-        
+        tabelaItem = new TabelaItem();
+        tabelaItem.setCodigoTabItem(tabelaFuncao.calcIdTabelaItem());
+        tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
+        loadVarTabela();
+        loadVarTabelaItem();
+        if (inssFuncao.verificaInformacoes(tabela, tabelaItem)) {
+            tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
+            listTabelaItem.add(tabelaItem);
+        } else {
+            mensagem = inssFuncao.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+        }
     }
     
     public void btExcluirItem(){
@@ -328,4 +339,17 @@ public class InssView implements Serializable{
         }
         return lnTabela;
     }
+    private void loadVarTabela() {
+        tabela.setDataFinal(dataFinal);
+        tabela.setDataInicial(dataInicial);
+        tabela.setNomeTabela(nomeTabela);
+    }
+
+    private void loadVarTabelaItem() {
+        tabelaItem.setPercentual(percentual);
+        tabelaItem.setValorDesconto(valorDesconto);
+        tabelaItem.setValorFinal(valorFinal);
+        tabelaItem.setValorInicial(valorInicial);
+    }
+
 }
