@@ -7,7 +7,6 @@ package br.com.ln.view;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnTabela;
-import br.com.ln.entity.LnTabelaItem;
 import br.com.ln.financiers.IrrfFuncoes;
 import br.com.ln.financiers.Tabela;
 import br.com.ln.financiers.TabelaFuncoes;
