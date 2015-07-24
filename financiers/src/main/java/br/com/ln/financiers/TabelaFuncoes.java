@@ -24,7 +24,13 @@ public class TabelaFuncoes implements Serializable{
     private Integer codigoTab = 0;
     public String mensagem;
     public boolean bGravar;
-    private Historico historico;
+    private final Historico historico;
+
+    public TabelaFuncoes() {
+        historico = new Historico();
+    }
+    
+    
     
     public boolean gravaTabela(LnTabela lnTabela){
         mensagem = "";
@@ -36,7 +42,6 @@ public class TabelaFuncoes implements Serializable{
                 bSalvo = incluirTabela(lnTabela);
                 break;
             case Alterar:
-                System.out.println("alterar");
                 bSalvo = AlterarTabela(lnTabela);
                 break;
             case Excluir:
@@ -207,11 +212,11 @@ public class TabelaFuncoes implements Serializable{
         return tabelafuncao.gravaTabela(lnTabela);
     }
     
-    public LnTabela loadLnTabela(Tabela tabela, List<TabelaItem> listTabelaItem) {
+    public LnTabela loadLnTabela(Tabela tabela, List<TabelaItem> listTabelaItem, Integer ttbInCodigo) {
         LnTabelaItem lnTabelaItem;
         List<LnTabelaItem> listTabelaItemLoad = new ArrayList<>();
         LnTabela lnTabela = new LnTabela();
-        lnTabela.setTtbInCodigo(1);
+        lnTabela.setTtbInCodigo(ttbInCodigo);
         lnTabela.setTabStDescricao(tabela.getNomeTabela());
         lnTabela.setTabDtInicio(tabela.getDataInicial());
         lnTabela.setTabDtFinal(tabela.getDataFinal());

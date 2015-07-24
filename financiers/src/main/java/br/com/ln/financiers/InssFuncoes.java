@@ -52,7 +52,7 @@ public class InssFuncoes implements Serializable{
             validado = false;
         }
         
-        List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(1, tabela.getDataInicial(), tabela.getDataFinal());
+        List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(2, tabela.getDataInicial(), tabela.getDataFinal());
         
         if (listaTabela != null && !listaTabela.isEmpty() ){
             mensagem = mensagem + "Verificar as datas, nao pode haver outra tabela com aa mesmas datas ou intercaladas; ";

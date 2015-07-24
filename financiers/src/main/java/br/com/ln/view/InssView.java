@@ -292,11 +292,46 @@ public class InssView implements Serializable{
     }
     
     public void btExcluirItem(){
-    
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
+            if (listTabelaItem.size() > 1) {
+                tabelaItem.setTipoFuncao(TipoFuncao.Excluir);
+                mensagem = "Registro marcado para exclusao com sucesso";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+            } else {
+                mensagem = "E necessario ter pelo menos um valor na tabela.";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+            }
+        } else {
+            mensagem = "Usuario sem permissao para excluir tabela.";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+        }
     }
     
     public void btSalvar(){
-        
+        boolean bGravar;
+        if (tabela != null && tabela.getTipoFuncao().equals(TipoFuncao.Alterar)) {
+            loadVarTabela();
+        }
+        lnTabela = loadLnTabela();
+        if (lnTabela != null) {
+            bGravar = tabelaFuncao.tabela(lnTabela);
+            mensagem = tabelaFuncao.mensagem;
+            if (bGravar) {
+                clearVarTabela();
+                clearVarTabelaItem();
+                listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
+                RequestContext.getCurrentInstance().execute("PF('InssEdit').hide()");
+                mensagem = "Tabela de Imposto incluida com sucesso!!!";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+            } else {
+                mensagem = inssFuncao.mensagem;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela INSS", mensagem));
+            }
+        }
+    }
+
+    public void btFechar() {
+        RequestContext.getCurrentInstance().execute("PF('InssEdit').hide()");
     }
 
     private void clearVarTabela() {
@@ -325,7 +360,7 @@ public class InssView implements Serializable{
         boolean bGravar;
         
         if (listTabelaItem != null && !listTabelaItem.isEmpty()) {
-            lnTabela = tabelaFuncao.loadLnTabela(tabela, listTabelaItem);
+            lnTabela = tabelaFuncao.loadLnTabela(tabela, listTabelaItem, TIPOTABELA);
             bGravar = tabelaFuncao.bGravar;
 
             if (!bGravar) {

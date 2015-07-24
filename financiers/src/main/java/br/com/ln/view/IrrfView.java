@@ -312,7 +312,6 @@ public class IrrfView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (listTabelaItem.size() > 1) {
                 tabelaItem.setTipoFuncao(TipoFuncao.Excluir);
-//                listTabelaItem.remove(tabelaItem);
                 mensagem = "Registro marcado para exclusao com sucesso";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
             } else {
@@ -395,7 +394,7 @@ public class IrrfView implements Serializable {
         boolean bGravar;
         
         if (listTabelaItem != null && !listTabelaItem.isEmpty()) {
-            lnTabela = tabelaFuncao.loadLnTabela(tabela, listTabelaItem);
+            lnTabela = tabelaFuncao.loadLnTabela(tabela, listTabelaItem, TIPOTABELA);
             bGravar = tabelaFuncao.bGravar;
 
             if (!bGravar) {

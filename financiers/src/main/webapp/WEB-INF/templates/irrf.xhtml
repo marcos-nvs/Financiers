@@ -64,13 +64,13 @@
         <f:facet name="footer">
             <p:commandButton id="btIncluirIrrf" value="#{msgs['node.include']}" icon="ui-icon-document" 
                              action="#{irrfView.btIncluir}" process="btIncluirIrrf" 
-                             update=":idFormCenter:tabIRRF:idTabelaIrrf, :idFormTop:growl, :idFormCenter:tabIRRF:dlgIRRF"/>
+                             update=":idFormCenter:idtabelas:idTabelaIrrf, :idFormTop:growl, :idFormCenter:idtabelas:dlgIRRF"/>
             <p:commandButton id="btAlterarIrrf" value="#{msgs['template.change']}" icon="ui-icon-pencil"
-                             action="#{irrfView.btAlterar}" process="btAlterarIrrf, :idFormCenter:tabIRRF:idTabelaIrrf"
-                             update=":idFormTop:growl, :idFormCenter:tabIRRF:dlgIRRF" />
+                             action="#{irrfView.btAlterar}" process="btAlterarIrrf, :idFormCenter:idtabelas:idTabelaIrrf"
+                             update=":idFormTop:growl, :idFormCenter:idtabelas:dlgIRRF" />
             <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
-                             action="#{irrfView.btExcluir}" process="btExcluirIrrf,:idFormCenter:tabIRRF:idTabelaIrrf"
-                             update=":idFormTop:growl,:idFormCenter:tabIRRF:idTabelaIrrf">
+                             action="#{irrfView.btExcluir}" process="btExcluirIrrf,:idFormCenter:idtabelas:idTabelaIrrf"
+                             update=":idFormTop:growl,:idFormCenter:idtabelas:idTabelaIrrf">
                 <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} desta tabela?" icon="ui-icon-alert"/>
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -169,10 +169,10 @@
             <p:commandButton id="idbtincluirirrf" value="#{msgs['node.include']}" icon="ui-icon-document"
                              action="#{irrfView.btIncluiDetalhe()}" process="idbtincluirirrf, idgridDataIrrf, idgridValorIrrf, idIrrfDescricao,
                              dtirrfInicio, dtirrfFinal, idinputvlrinicial, idvlrFinal, idqtdDep, idpercImposto, idvlrDesconto, idvlrDependente"
-                             update="idDTIRRF :idFormTop:growl"/>
+                             update="idDTIRRF, :idFormTop:growl"/>
             <p:commandButton id="idbtsalvarirrf" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
                              action="#{irrfView.btSalvar}" process="idbtsalvarirrf, idgridDataIrrf, idIrrfDescricao, dtirrfInicio, dtirrfFinal, idDTIRRF" 
-                             update=":idFormTop:growl, :idFormCenter:tabIRRF:idTabelaIrrf, idgridDataIrrf"/>
+                             update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaIrrf, idgridDataIrrf"/>
             <p:commandButton id="idbtfecharirrf" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-cancel"
                              action="#{irrfView.btFechar()}" process="idbtfecharirrf" update="idbtfecharirrf"/>
         </f:facet>

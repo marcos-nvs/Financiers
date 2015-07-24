@@ -209,40 +209,45 @@ public class FnAcesso implements Serializable {
         if (VarComuns.strDbName != null) {
             if (usuario != null && senha != null) {
                 lnUsuario = EjbMap.grabUsuario(usuario);
-                lnCliente = EjbMap.grabCliente(lnUsuario.getCliInCodigo());
-                VarComuns.lnCliente = lnCliente;
-                if (lnUsuario != null) {
-                    if (!lnUsuario.getUsuStSenha().equals(senha)) {
-                        lnUsuario = null;
-                        mensagem = "Usuario ou senha invalido";
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
-                    } else {
-                        UsuarioFuncoes usuarioFuncoes = new UsuarioFuncoes();
-                        if (usuarioFuncoes.verificaExpiracaoSenha(lnUsuario)) {
-                            VarComuns.strDbName = lnCliente.getCliStBanco();
-                            VarComuns.lnUsusario = lnUsuario;
-                            LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName);
-                            model = lnMenuModel.getModel();
-                            if (model != null && model.getElements().size() > 0) {
-                                beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
-                                LnHistorico lnHistorico = new LnHistorico(new Integer("0"), GenericDao.grabDateFromDB(), usuario, "Acesso ao Sistema");
-                                GenericDao.saveObject(lnHistorico);
+                if (lnUsuario != null){
+                    lnCliente = EjbMap.grabCliente(lnUsuario.getCliInCodigo());
+                    VarComuns.lnCliente = lnCliente;
+                    if (lnUsuario != null) {
+                        if (!lnUsuario.getUsuStSenha().equals(senha)) {
+                            lnUsuario = null;
+                            mensagem = "Usuario ou senha invalido";
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
+                        } else {
+                            UsuarioFuncoes usuarioFuncoes = new UsuarioFuncoes();
+                            if (usuarioFuncoes.verificaExpiracaoSenha(lnUsuario)) {
+                                VarComuns.strDbName = lnCliente.getCliStBanco();
+                                VarComuns.lnUsusario = lnUsuario;
+                                LnMenuModel lnMenuModel = new LnMenuModel(lnUsuario, VarComuns.strDbName);
+                                model = lnMenuModel.getModel();
+                                if (model != null && model.getElements().size() > 0) {
+                                    beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+                                    LnHistorico lnHistorico = new LnHistorico(new Integer("0"), GenericDao.grabDateFromDB(), usuario, "Acesso ao Sistema");
+                                    GenericDao.saveObject(lnHistorico);
+                                } else {
+                                    lnUsuario = null;
+                                    beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+                                    mensagem = "Ocorreu um problema na montagem do Menu. Favor entrar em contato como Administrador";
+                                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login/Menu", mensagem));
+                                }
                             } else {
                                 lnUsuario = null;
                                 beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
-                                mensagem = "Ocorreu um problema na montagem do Menu. Favor entrar em contato como Administrador";
+                                mensagem = "Sua senha expirou!!!";
                                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login/Menu", mensagem));
                             }
-                        } else {
-                            lnUsuario = null;
-                            beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
-                            mensagem = "Sua senha expirou!!!";
-                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login/Menu", mensagem));
                         }
+                    } else {
+                        mensagem = "Usuario e Senha vazio ou ocorreu um problema na autenciacao do sistema - Favor entrar em contato como o Administrador!!!";
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login/Menu", mensagem));
                     }
                 } else {
-                    mensagem = "Usuario e Senha vazio ou ocorreu um problema na autenciacao do sistema - Favor entrar em contato como o Administrador!!!";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login/Menu", mensagem));
+                    mensagem = "Usuario ou senha invalido";
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario e Senha", mensagem));
                 }
             } else {
                 mensagem = "Usuario ou senha em Branco.";
