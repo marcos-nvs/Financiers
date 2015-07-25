@@ -10,6 +10,8 @@ import br.com.ln.comum.Historico;
 import br.com.ln.dao.TabelaDao;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.entity.LnTabelaItem;
+import br.com.ln.financiers.Tabela;
+import br.com.ln.financiers.TabelaItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
