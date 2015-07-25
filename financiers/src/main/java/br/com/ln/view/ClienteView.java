@@ -18,7 +18,7 @@ import br.com.ln.financiers.ClienteFuncoes;
 import br.com.ln.financiers.EnderecoFuncoes;
 import br.com.ln.financiers.TelefoneFuncoes;
 import br.com.ln.financiers.TipoEndereco;
-import br.com.ln.financiers.TipoFuncao;
+import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.financiers.TipoTelefone;
 import java.io.Serializable;
 import java.net.ConnectException;

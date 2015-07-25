@@ -12,7 +12,7 @@ import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnPerfilacessoPK;
 import br.com.ln.financiers.PerfilFuncoes;
-import br.com.ln.financiers.TipoFuncao;
+import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.dao.ModuloDao;
 import java.io.Serializable;

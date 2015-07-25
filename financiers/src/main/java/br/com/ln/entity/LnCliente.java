@@ -5,7 +5,7 @@
  */
 package br.com.ln.entity;
 
-import br.com.ln.financiers.TipoFuncao;
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;

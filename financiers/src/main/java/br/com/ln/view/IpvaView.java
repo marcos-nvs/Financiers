@@ -10,7 +10,7 @@ import br.com.ln.entity.LnTabela;
 import br.com.ln.financiers.Tabela;
 import br.com.ln.financiers.TabelaFuncoes;
 import br.com.ln.financiers.TabelaItem;
-import br.com.ln.financiers.TipoFuncao;
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

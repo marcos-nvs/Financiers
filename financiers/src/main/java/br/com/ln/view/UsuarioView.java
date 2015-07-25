@@ -14,7 +14,7 @@ import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.UsuarioFuncoes;
-import br.com.ln.financiers.TipoFuncao;
+import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;

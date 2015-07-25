@@ -5,6 +5,7 @@
  */
 package br.com.ln.financiers;
 
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.Objects;
 
