@@ -10,8 +10,5 @@ package br.com.ln.tipos;
  * @author Marcos Naves
  */
 public enum TipoFuncao {
-    
     Incluir, Alterar, Excluir, Pesquisar;
-    
-    
 }
