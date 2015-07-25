@@ -46,6 +46,9 @@ public class IpvaView implements Serializable{
     private List<TabelaItem> listTabelaItem;
     private List<Tabela> listTabela;
     private final TabelaFuncoes tabelaFuncao;
+    
+    private String origemCarro;
+    private String tipoCombustivel;
 
     private String mensagem;
 
@@ -143,6 +146,22 @@ public class IpvaView implements Serializable{
 
     public void setListTabela(List<Tabela> listTabela) {
         this.listTabela = listTabela;
+    }
+
+    public String getOrigemCarro() {
+        return origemCarro;
+    }
+
+    public void setOrigemCarro(String origemCarro) {
+        this.origemCarro = origemCarro;
+    }
+
+    public String getTipoCombustivel() {
+        return tipoCombustivel;
+    }
+
+    public void setTipoCombustivel(String tipoCombustivel) {
+        this.tipoCombustivel = tipoCombustivel;
     }
 
     @Override
@@ -302,6 +321,8 @@ public class IpvaView implements Serializable{
 
     private void loadVarTabelaItem() {
         tabelaItem.setPercentual(percentual);
+        tabelaItem.setOrigem(origemCarro);
+        tabelaItem.setTipo(tipoCombustivel);
     }
 
     private void clearVarTabela() {
@@ -314,6 +335,8 @@ public class IpvaView implements Serializable{
     private void clearVarTabelaItem() {
         codigoTabItem = null;
         percentual = null;
+        origemCarro = null;
+        tipoCombustivel = null;
         listTabelaItem.clear();
     }
 

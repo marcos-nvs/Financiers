@@ -23,6 +23,8 @@ public class TabelaItem implements Serializable{
     private Double valorDesconto;
     private Double percentual;
     private Integer qtdDependente;
+    private String origem;
+    private String tipo;
     
     private TipoFuncao tipoFuncao;
 
@@ -93,6 +95,22 @@ public class TabelaItem implements Serializable{
         this.qtdDependente = qtdDependente;
     }
 
+    public String getOrigem() {
+        return origem;
+    }
+
+    public void setOrigem(String origem) {
+        this.origem = origem;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public TipoFuncao getTipoFuncao() {
         return tipoFuncao;
     }
@@ -145,8 +163,6 @@ public class TabelaItem implements Serializable{
 
     @Override
     public String toString() {
-        return "TabelaItem{" + "codigoTabItem=" + codigoTabItem + ", codigoTabela=" + codigoTabela + ", valorInicial=" + valorInicial + ", valorFinal=" + valorFinal + ", valorDependente=" + valorDependente + ", valorDesconto=" + valorDesconto + ", percentual=" + percentual + ", qtdDependente=" + qtdDependente + ", tipoFuncao=" + tipoFuncao + '}';
+        return "TabelaItem{" + "codigoTabela=" + codigoTabela + ", codigoTabItem=" + codigoTabItem + ", valorInicial=" + valorInicial + ", valorFinal=" + valorFinal + ", valorDependente=" + valorDependente + ", valorDesconto=" + valorDesconto + ", percentual=" + percentual + ", qtdDependente=" + qtdDependente + ", origem=" + origem + ", tipo=" + tipo + ", tipoFuncao=" + tipoFuncao + '}';
     }
-
-
 }
