@@ -21,6 +21,7 @@ import br.com.ln.dao.UsuarioDao;
 import br.com.ln.entity.LnCliente;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -56,7 +57,10 @@ public class FnAcesso implements Serializable {
     private MenuModel model;
     private String cpf;
     private final TratamentoEspecial tratamentoEspecial;
-
+    
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+            
     public FnAcesso() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tratamentoEspecial = new TratamentoEspecial();
@@ -215,9 +219,9 @@ public class FnAcesso implements Serializable {
                     if (lnUsuario != null) {
                         if (!lnUsuario.getUsuStSenha().equals(senha)) {
                             lnUsuario = null;
-                            mensagem = beanVar.getBundle().getString("ln.mb.frase.usuarioinvalido");
+                            mensagem = bundle.getString("ln.mb.frase.usuarioinvalido");
                             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                    beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                                    bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                         } else {
                             UsuarioFuncoes usuarioFuncoes = new UsuarioFuncoes();
                             if (usuarioFuncoes.verificaExpiracaoSenha(lnUsuario)) {
@@ -228,37 +232,37 @@ public class FnAcesso implements Serializable {
                                 if (model != null && model.getElements().size() > 0) {
                                     beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
                                     LnHistorico lnHistorico = new LnHistorico(new Integer("0"), GenericDao.grabDateFromDB(), usuario,
-                                            beanVar.getBundle().getString("ln.mb.historico.acessosistema"));
+                                            bundle.getString("ln.mb.historico.acessosistema"));
                                     GenericDao.saveObject(lnHistorico);
                                 } else {
                                     lnUsuario = null;
                                     beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
-                                    mensagem = beanVar.getBundle().getString("ln.mb.frase.problemamenu");
+                                    mensagem = bundle.getString("ln.mb.frase.problemamenu");
                                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                            beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                                            bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                                 }
                             } else {
                                 lnUsuario = null;
                                 beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
-                                mensagem = beanVar.getBundle().getString("ln.mb.titulo.senhaexpira");
+                                mensagem = bundle.getString("ln.mb.titulo.senhaexpira");
                                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                        beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                                        bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                             }
                         }
                     } else {
-                        mensagem = beanVar.getBundle().getString("ln.mb.frase.autenticacaoproblema");
+                        mensagem = bundle.getString("ln.mb.frase.autenticacaoproblema");
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                                bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                     }
                 } else {
-                    mensagem = beanVar.getBundle().getString("ln.mb.frase.usuarioinvalido");
+                    mensagem = bundle.getString("ln.mb.frase.usuarioinvalido");
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                            bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                 }
             } else {
-                mensagem = beanVar.getBundle().getString("ln.mb.frase.usuariobranco");
+                mensagem = bundle.getString("ln.mb.frase.usuariobranco");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                        bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
             }
         }
     }
@@ -309,55 +313,55 @@ public class FnAcesso implements Serializable {
                         email.setHostName("mail.dasa.com.br");
                         email.addTo(lnUsuario.getUsuStEmail(), lnUsuario.getUsuStNome());
                         email.setFrom("marcos.naves@dasa.com.br");
-                        email.setSubject(beanVar.getBundle().getString("ln.frase.recuperaaceso"));
-                        email.setMsg(beanVar.getBundle().getString("ln.mb.texto.recuperaacesso") + lnUsuario.getUsuStSenha());
+                        email.setSubject(bundle.getString("ln.frase.recuperaaceso"));
+                        email.setMsg(bundle.getString("ln.mb.texto.recuperaacesso") + lnUsuario.getUsuStSenha());
                         email.send();
 
                         lnUsuario = null;
-                        mensagem = beanVar.getBundle().getString("ln.mb.texto.enviaemail");
+                        mensagem = bundle.getString("ln.mb.texto.enviaemail");
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                                bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                         beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
                         beanVar.setNomeTela("ln.frase.sistemafinanceiro");
 
                     } else {
                         lnUsuario = null;
                         beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
-                        beanVar.setNomeTela(beanVar.getBundle().getString("ln.frase.recuperaaceso"));
-                        mensagem = beanVar.getBundle().getString("ln.mb.texto.usuarionaoencontradobase");
+                        beanVar.setNomeTela(bundle.getString("ln.frase.recuperaaceso"));
+                        mensagem = bundle.getString("ln.mb.texto.usuarionaoencontradobase");
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                                bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                     }
                 } else {
                     lnUsuario = null;
                     beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
-                    beanVar.setNomeTela(beanVar.getBundle().getString("ln.frase.recuperaaceso"));
-                    mensagem = beanVar.getBundle().getString("ln.mb.frase.invalidocpf");
+                    beanVar.setNomeTela(bundle.getString("ln.frase.recuperaaceso"));
+                    mensagem = bundle.getString("ln.mb.frase.invalidocpf");
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                            bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                 }
             } catch (EmailException ex) {
                 lnUsuario = null;
                 beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
                 beanVar.setNomeTela("ln.frase.sistemafinanceiro");
-                mensagem = beanVar.getBundle().getString("ln.mb.frase.invalidocpf") + " " + ex.getMessage();
+                mensagem = bundle.getString("ln.mb.frase.invalidocpf") + " " + ex.getMessage();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                        bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                 logger.error(mensagem);
             } catch (NumberFormatException ex) {
                 lnUsuario = null;
                 beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
-                beanVar.setNomeTela(beanVar.getBundle().getString("ln.frase.recuperaaceso"));
-                mensagem = beanVar.getBundle().getString("ln.mb.frase.invalidocpf");
+                beanVar.setNomeTela(bundle.getString("ln.frase.recuperaaceso"));
+                mensagem = bundle.getString("ln.mb.frase.invalidocpf");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                        bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                 logger.error(mensagem);
             }
         } else {
             lnUsuario = null;
-            mensagem = beanVar.getBundle().getString("ln.mb.texto.usuarionaoencontradobase");
+            mensagem = bundle.getString("ln.mb.texto.usuarionaoencontradobase");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                    bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
             beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
             beanVar.setNomeTela("ln.frase.recuperaaceso");
         }
@@ -381,39 +385,39 @@ public class FnAcesso implements Serializable {
                                 EjbMap.updateUsuario(lnUsuario);
                             }
 
-                            historico.gravaHistorico(lnUsuario, beanVar.getBundle().getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " " + 
-                                   beanVar.getBundle().getString("ln.mb.frase.alterada"));
+                            historico.gravaHistorico(lnUsuario, bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " " + 
+                                   bundle.getString("ln.mb.frase.alterada"));
                             RequestContext.getCurrentInstance().execute("PF('senha').hide()");
-                            mensagem = beanVar.getBundle().getString("ln.mb.frase.senhasucesso");
+                            mensagem = bundle.getString("ln.mb.frase.senhasucesso");
                             rusuario = null;
                             rsenha = null;
                             lnUsuario = new LnUsuario();
                             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                    beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                                    bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                         } else {
-                            mensagem = beanVar.getBundle().getString("ln.mb.frase.senhanaoconfere");
+                            mensagem = bundle.getString("ln.mb.frase.senhanaoconfere");
                             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                    beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                                    bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                         }
                     } else {
-                        mensagem = beanVar.getBundle().getString("ln.mb.frase.senhavazia");
+                        mensagem = bundle.getString("ln.mb.frase.senhavazia");
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                                beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                                bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                     }
                 } else {
-                    mensagem = beanVar.getBundle().getString("ln.mb.frase.usuarioinvalido");
+                    mensagem = bundle.getString("ln.mb.frase.usuarioinvalido");
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                            beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                            bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                 }
             } else {
-                mensagem = beanVar.getBundle().getString("ln.mb.texto.usuarionaoencontradobase");
+                mensagem = bundle.getString("ln.mb.texto.usuarionaoencontradobase");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                        beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                        bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
             }
         } else {
             mensagem = "Por favor, entre com o documento (CPF)!!";
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    beanVar.getBundle().getString("ln.mb.titulo.usuariosenha"), mensagem));
+                    bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
         }
     }
 
