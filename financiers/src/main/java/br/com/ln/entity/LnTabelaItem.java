@@ -140,6 +140,10 @@ public class LnTabelaItem implements Serializable {
         this.taiInQtddependente = taiInQtddependente;
     }
 
+    public String getTaiStOrigem() {
+        return taiStOrigem;
+    }
+
     public void setTaiStOrigem(String taiStOrigem) {
         this.taiStOrigem = taiStOrigem;
     }

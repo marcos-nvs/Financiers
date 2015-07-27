@@ -264,7 +264,7 @@ public class IpvaView implements Serializable{
         tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
         loadVarTabela();
         loadVarTabelaItem();
-        if (ipvaFuncao.verificaInformacoes(tabela, tabelaItem)) {
+        if (ipvaFuncao.verificaInformacoes(tabela, tabelaItem) && ipvaFuncao.verificaListaRepetida(listTabelaItem, tabelaItem)) {
             tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
             listTabelaItem.add(tabelaItem);
         } else {

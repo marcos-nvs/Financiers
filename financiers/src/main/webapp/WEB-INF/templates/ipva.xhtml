@@ -14,15 +14,15 @@
             <p:rowToggler/>
         </p:column>
         <p:column headerText="#{msgs['tabbedHeadings.description']}">
-            <h:outputText value="#{ipvaView.nomeTabela}"/>
+            <h:outputText value="#{ipva.nomeTabela}"/>
         </p:column>
         <p:column headerText="Data Inicio">
-            <h:outputText value="#{ipvaView.dataInicial}">
+            <h:outputText value="#{ipva.dataInicial}">
                 <f:convertDateTime pattern="dd-MM-yyyy"/>
             </h:outputText>
         </p:column>
         <p:column headerText="Data Final">
-            <h:outputText value="#{ipvaView.dataFinal}">
+            <h:outputText value="#{ipva.dataFinal}">
                 <f:convertDateTime pattern="dd-MM-yyyy"/>
             </h:outputText>
         </p:column>
@@ -30,10 +30,10 @@
             <p:dataTable id="idTabelaIpvaDetalhe" var="ipvaDetalhe" value="#{ipva.listTabelaItem}"
                          paginator="true" rows="20" paginatorPosition="bottom">
                 <p:column headerText="Origem Carro">
-                    <h:outputText value="#{ipvaDetalhe.origemCarro}"/>
+                    <h:outputText value="#{ipvaDetalhe.origem}"/>
                 </p:column>
                 <p:column headerText="Tipo Combustivel">
-                    <h:outputText value="#{ipvaDetalhe.tipoCombustivel}"/>
+                    <h:outputText value="#{ipvaDetalhe.tipo}"/>
                 </p:column>
                 <p:column headerText="Percentual %">
                     <h:outputText value="#{ipvaDetalhe.percentual}" >
@@ -47,7 +47,7 @@
                              action="#{ipvaView.btIncluir()}" process="btIncluirIpva"
                              update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl, :idFormCenter:idtabelas:dlgIpva"/>
             <p:commandButton id="btAlterarIpva" value="#{msgs['template.change']}" icon="ui-icon-pencil" 
-                             action="#{ipvaView.btAlterar()}" process="btAlterarIpva"
+                             action="#{ipvaView.btAlterar()}" process="btAlterarIpva, :idFormCenter:idtabelas:idTabelaIpva"
                              update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl, :idFormCenter:idtabelas:dlgIpva"/>
             <p:commandButton id="btExcluirIpva" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
                              action="#{ipvaView.btExcluir()}" process="btExcluirIpva, :idFormCenter:idtabelas:idTabelaIpva"
@@ -76,7 +76,7 @@
             <p:outputLabel value="Orgiem Carro"/>
             <p:selectOneMenu id="idipvaordem" value="#{ipvaView.origemCarro}" style="width: 200px;" effect="fade">
                 <f:selectItem itemLabel="Nacional" itemValue="Nacional"/>
-                <f:selectItem itemLabel="Importado" itemValue="Impoprtado"/>
+                <f:selectItem itemLabel="Importado" itemValue="Importado"/>
             </p:selectOneMenu>
             <p:outputLabel value="Tipo Combustivel"/>
             <p:selectOneMenu id="idipvatipo" value="#{ipvaView.tipoCombustivel}" style="width: 200px;" effect="fade">

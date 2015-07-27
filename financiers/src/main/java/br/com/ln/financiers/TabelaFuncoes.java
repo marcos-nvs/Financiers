@@ -183,6 +183,8 @@ public class TabelaFuncoes implements Serializable{
             tabelaItem.setValorDesconto(lnTabelaItem.getTaiFlDesconto());
             tabelaItem.setValorFinal(lnTabelaItem.getTaiFlFinal());
             tabelaItem.setValorInicial(lnTabelaItem.getTaiFlInicio());
+            tabelaItem.setOrigem(lnTabelaItem.getTaiStOrigem());
+            tabelaItem.setTipo(lnTabelaItem.getTaiStTipo());
 
             listaTabelaItem.add(tabelaItem);
         }

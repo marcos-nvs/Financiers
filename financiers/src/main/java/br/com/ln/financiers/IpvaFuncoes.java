@@ -48,7 +48,7 @@ public class IpvaFuncoes {
         
         List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(3, tabela.getDataInicial(), tabela.getDataFinal());
         
-        if (listaTabela == null && !listaTabela.isEmpty() && listaTabela.size() > 0){
+        if (listaTabela == null && listaTabela.isEmpty() && listaTabela.size() > 0){
             mensagem = mensagem + "Verificar as datas, nao pode haver outra tabela com aa mesmas datas ou intercaladas; ";
             validado = false;
         }
@@ -56,14 +56,14 @@ public class IpvaFuncoes {
     }
     
     public boolean verificaListaRepetida(List<TabelaItem> listTabelaItem, TabelaItem NTabelaItem){
-        boolean validado = listTabelaItem.contains(NTabelaItem);
-
-        if (validado) {
-            mensagem = "Item ja existe na tabela";
-            return false;
-        } else {
-            return true;
+        
+        for (TabelaItem tbItem : listTabelaItem) {
+            if (tbItem.getOrigem().equals(NTabelaItem.getOrigem()) && tbItem.getTipo().equals(NTabelaItem.getTipo())){
+                mensagem = "Item ja existe na tabela";
+                return false;
+            }
         }
+        return true;
     }
 }
  
