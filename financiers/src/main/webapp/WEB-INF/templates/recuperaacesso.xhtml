@@ -4,16 +4,17 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:outputLabel value="Recuperacao de acesso, dentro de instantes voce recebera um e-mail com a nova senha."/>
+    <p:outputLabel value="#{msgs['ln.frase.recuperasenha']}"/>
     <h:panelGrid columns="2">
-        <p:outputLabel value="Entre com o seu usuario"/>
+        <p:outputLabel value="#{msgs['ln.frase.entreusuario']}"/>
         <p:inputText id="idUsuarioR" value="#{financiersView.usuario}" />
-        <p:outputLabel value="Entre com o seu CPF"/>
+        <p:outputLabel value="#{msgs['ln.frase.entradocumento']}"/>
         <p:inputMask id="idCPFR" mask="999.999.999-99" value="#{financiersView.cpf}" />
         <f:facet name="footer">
-            <p:commandButton id="idEnviaEmailAcesso" value="Enviar" process="idEnviaEmailAcesso, idUsuarioR, idCPFR" update=":idFormCenter" 
+            <p:commandButton id="idEnviaEmailAcesso" value="#{msgs['ln.bt.enviar']}" process="idEnviaEmailAcesso, idUsuarioR, idCPFR" 
+                             update=":idFormCenter" 
                              ajax="false" action="#{financiersView.btEnviaEmailAcesso}"/>
-            <p:commandButton id="idVoltarTela" value="Voltar" process="idVoltarTela" ajax="false"
+            <p:commandButton id="idVoltarTela" value="#{msgs['ln.bt.voltar']}" process="idVoltarTela" ajax="false"
                              update="@this" action="#{financiersView.btVoltar}"/>
         </f:facet>
     </h:panelGrid>

@@ -30,6 +30,7 @@ public class BeanVar implements Serializable{
     public BeanVar() {
         this.localizacao = VarComuns.local();
         this.novaTela = "WEB-INF/templates/login.xhtml";
+        this.nomeTela = "ln.frase.sistemafinanceiro";
         this.apresenta = false;
         this.bloquear = true;
     }

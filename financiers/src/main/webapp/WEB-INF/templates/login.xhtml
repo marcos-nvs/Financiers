@@ -8,23 +8,23 @@
         <h:panelGrid columns="4" style="margin-left: 50px;">
             <h:graphicImage url="img/barracinza.jpg"/>
             <h:panelGrid columns="1" style="margin-left: 0px;">
-                <p:panel header="Identificação">
+                <p:panel header="#{msgs['ln.texto.identificacao']}">
                     <h:panelGrid columns="2" style="margin-left: 10px;">
-                        <p:outputLabel id="idUsuario" value="#{msgs['template.user']}"/>
+                        <p:outputLabel id="idUsuario" value="#{msgs['ln.texto.usuario']}"/>
                         <p:inputText id="idInUsuario" maxlength="40" value="#{financiersView.usuario}" />
-                        <p:outputLabel value="#{msgs['page.textFields.password']}"/>
+                        <p:outputLabel value="#{msgs['ln.texto.senha']}"/>
                         <p:password id="idPassword" value="#{financiersView.senha}"/>
                         <f:facet name="footer">
-                            <p:commandButton id="idBtLogin" value="#{msgs['template.login']}" icon="ui-icon-check" ajax="false"
-                                             action="#{financiersView.sistemaLogin}"  partialSubmit="false" style="margin-left: 10px;"
+                            <p:commandButton id="idBtLogin" value="#{msgs['ln.bt.entrar']}" icon="ui-icon-check" ajax="false"
+                                             action="#{financiersView.sistemaLogin}"  partialSubmit="false" style="margin-left: 5px;"
                                              process="idBtLogin, idInUsuario, idPassword" update=":idFormTop:growl"/>
-                            <p:commandButton id="idBtTrocaSenha" value="Trocar Senha" onclick="PF('senha').show()" style="margin-left: 10px;"/>
+                            <p:commandButton id="idBtTrocaSenha" value="#{msgs['ln.bt.trocarsenha']}" onclick="PF('senha').show()" style="margin-left: 25px;"/>
                         </f:facet>
                     </h:panelGrid>
-                    <p:commandLink id="btRecuperaSenha" value="Esqueceu a senha?" style="margin-left: 20px;"
+                    <p:commandLink id="btRecuperaSenha" value="#{msgs['ln.link.esqueceusenha']}" style="margin-left: 20px;"
                                    action="#{financiersView.recuperaAcesso}" 
                                    process="btRecuperaSenha" ajax="false" update=":idFormCenter"/>
-                    <p:commandLink id="btCadastroCliente" value="Cadastre-se" style="margin-left: 20px;" 
+                    <p:commandLink id="btCadastroCliente" value="#{msgs['ln.link.cadastrar']}" style="margin-left: 20px;" 
                                    action="#{financiersView.cadastroCliente()}" 
                                    process="btCadastroCliente" ajax="false" update=":idFormCenter"/>
                     <p:focus for="idInUsuario"/>
