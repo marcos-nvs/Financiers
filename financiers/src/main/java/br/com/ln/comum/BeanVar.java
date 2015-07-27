@@ -7,8 +7,10 @@
 package br.com.ln.comum;
 
 import java.io.Serializable;
+import java.util.ResourceBundle;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 //import java.util.Locale;
 
 /**
@@ -26,6 +28,10 @@ public class BeanVar implements Serializable{
     private String nomeTela;
     private boolean apresenta;
     private boolean bloquear;
+    
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+    
 
     public BeanVar() {
         this.localizacao = VarComuns.local();
@@ -82,5 +88,10 @@ public class BeanVar implements Serializable{
     public void setTelaOrigem(String telaOrigem) {
         this.telaOrigem = telaOrigem;
     }
+
+    public ResourceBundle getBundle() {
+        return bundle;
+    }
+    
 }
     
