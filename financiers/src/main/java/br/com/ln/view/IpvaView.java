@@ -7,6 +7,7 @@ package br.com.ln.view;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnTabela;
+import br.com.ln.financiers.IpvaFuncoes;
 import br.com.ln.financiers.Tabela;
 import br.com.ln.financiers.TabelaFuncoes;
 import br.com.ln.financiers.TabelaItem;
@@ -46,6 +47,7 @@ public class IpvaView implements Serializable{
     private List<TabelaItem> listTabelaItem;
     private List<Tabela> listTabela;
     private final TabelaFuncoes tabelaFuncao;
+    private final IpvaFuncoes ipvaFuncao;
     
     private String origemCarro;
     private String tipoCombustivel;
@@ -56,6 +58,7 @@ public class IpvaView implements Serializable{
         tabela = new Tabela();
         tabelaItem = new TabelaItem();
         tabelaFuncao = new TabelaFuncoes();
+        ipvaFuncao = new IpvaFuncoes();
         listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
         listTabelaItem = new ArrayList<>();
     }
@@ -261,13 +264,13 @@ public class IpvaView implements Serializable{
         tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
         loadVarTabela();
         loadVarTabelaItem();
-//        if (ipvaFuncao.verificaInformacoes(tabela, tabelaItem)) {
-//            tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
-//            listTabelaItem.add(tabelaItem);
-//        } else {
-//            mensagem = ipvaFuncao.mensagem;
-//            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
-//        }
+        if (ipvaFuncao.verificaInformacoes(tabela, tabelaItem)) {
+            tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
+            listTabelaItem.add(tabelaItem);
+        } else {
+            mensagem = ipvaFuncao.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+        }
     }
 
     public void btExcluiDetalhe() {
@@ -303,7 +306,7 @@ public class IpvaView implements Serializable{
                 mensagem = "Tabela de Imposto incluida com sucesso!!!";
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
             } else {
-//                mensagem = ipvaFuncao.mensagem;
+                mensagem = ipvaFuncao.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IPVA", mensagem));
             }
         }

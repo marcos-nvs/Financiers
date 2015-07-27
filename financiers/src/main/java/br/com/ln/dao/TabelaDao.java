@@ -79,7 +79,7 @@ public class TabelaDao extends GenericDao implements Serializable{
     
     public static synchronized List<LnTabela> grabLnTabelaDate(Integer ttbInCodigo, Date tabDtInicio, Date tabDtFinal){
         Session session = null;
-        Transaction tx  = null;
+        Transaction tx;
         List<LnTabela> listaTabela = null;
         
         try{
