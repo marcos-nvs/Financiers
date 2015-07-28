@@ -25,7 +25,7 @@
             <p:column headerText="#{msgs['ln.texto.tipo']}" style="width: 100px;">
                 <h:outputLabel value ="#{clienteView.buscaDescricaoTipoEndereco(dtendereco.endChTipo)}"/>
             </p:column>
-            <p:column headerText="ln.texto.endereco" style="width: 300px;">
+            <p:column headerText="#{msgs['ln.texto.endereco']}" style="width: 300px;">
                 <h:outputLabel value ="#{dtendereco.endStEndereco}"/>
             </p:column>
             <p:column headerText="#{msgs['ln.texto.bairro']}" style="width: 200px;">
@@ -48,7 +48,7 @@
                                  update="idbtalterarendereco, :idFormCenter:iddlgendereco"/>
                 <p:commandButton id="idbtexcluirendereco" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
                                  action="#{clienteView.btExcluirEndereco()}" process="idbtexcluirendereco" update="idbtexcluirendereco, iddtendereco">
-                    <p:confirm header="Confirmação" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
+                    <p:confirm header="#{msgs['ln.texto.confirmacao']}" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
                 </p:commandButton>
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
                     <p:commandButton value="#{msgs['ln.bt.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -59,64 +59,64 @@
         <p:dataTable id="iddttelefone" var="telefone" style="margin-top: 20px;" value="#{clienteView.listTelefone}" selectionMode="single"
                      selection="#{clienteView.lnTelefone}" rowKey="#{telefone.telInCodigo}">
             <f:facet name="header">
-                <h:outputLabel value="Telefone"/>
+                <h:outputLabel value="#{msgs['ln.texto.telefone']}"/>
             </f:facet>
-            <p:column headerText="Tipo Telefone">
+            <p:column headerText="#{msgs['ln.texto.tipo']}">
                 <h:outputLabel value ="#{clienteView.buscaDescricaoTipoTelefone(telefone.telChTipo)}"/>
             </p:column>
-            <p:column headerText="Código País">
+            <p:column headerText="#{msgs['ln.texto.codigopais']}">
                 <h:outputLabel value ="#{telefone.telStPais}"/>
             </p:column>
-            <p:column headerText="DDD">
+            <p:column headerText="#{msgs['ln.texto.ddd']}">
                 <h:outputLabel value ="#{telefone.telStDdd}"/>
             </p:column>
-            <p:column headerText="Telefone">
+            <p:column headerText="#{msgs['ln.texto.telefone']}">
                 <h:outputLabel value ="#{telefone.telStTelefone}"/>
             </p:column>
             <f:facet name="footer">
-                <p:commandButton id="idbtincluitelefone" value="#{msgs['node.include']}" icon="ui-icon-document"
+                <p:commandButton id="idbtincluitelefone" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
                                  action="#{clienteView.btIncluirTelefone()}" process="idbtincluitelefone" update="idbtincluitelefone"/>
-                <p:commandButton id="idbtalterartelefone" value="#{msgs['template.change']}" icon="ui-icon-pencil"
+                <p:commandButton id="idbtalterartelefone" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"
                                  action="#{clienteView.btAlterarTelefone()}" process="idbtalterartelefone, iddttelefone" 
                                  update="idbtalterartelefone, :idFormCenter:iddlgtelefone"/>
-                <p:commandButton id="idbtexcluirtelefone" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
+                <p:commandButton id="idbtexcluirtelefone" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
                                  action="#{clienteView.btExcluirTelefone()}" process="idbtexcluirtelefone, iddttelefone" 
                                  update="iddttelefone, :idFormTop:growl">
-                    <p:confirm header="Confirmação" message="Confirma a exclusão deste usuário?" icon="ui-icon-alert"/>
+                    <p:confirm header="#{msgs['ln.texto.confirmacao']}" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
                 </p:commandButton>
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    <p:commandButton value="#{msgs['ln.bt.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="#{msgs['ln.bt.nao']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                 </p:confirmDialog>    
             </f:facet>
         </p:dataTable>
     </p:panel>
     <f:facet name="footer">
-        <p:commandButton id="idbtsalvarcliente" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
+        <p:commandButton id="idbtsalvarcliente" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                          action="#{clienteView.btSalvarCliente()}" process="idbtsalvarcliente,idgrdcliente, idinputdocumento, idinputnome,
                          idinputbanco, idinputemail"
                          update="idbtsalvarcliente, :idFormTop:growl,idgrdcliente"/>
-        <p:commandButton id="idbtfecharcliente" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-close"
+        <p:commandButton id="idbtfecharcliente" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-close"
                          action="#{clienteView.btFecharCliente()}" process="idbtfecharcliente"
                          update="idFormCenter"/>
     </f:facet>
     
-    <p:dialog id="iddlgendereco" header="#{msgs['node.inclusion']} de Endereco" widgetVar="DlgEndereco" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
+    <p:dialog id="iddlgendereco" header="#{msgs['ln.frase.inclusaoendereco']}" widgetVar="DlgEndereco" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idgridcep" columns="3" style="margin-left: 50px;">
-            <p:outputLabel value="CEP"/>
+            <p:outputLabel value="#{msgs['ln.texto.cep']}"/>
             <p:inputText id="idinputcep" value="#{clienteView.cep}" size="10" />
             <p:commandButton id="idbtbuscacep" icon="ui-icon-search" action="#{clienteView.btPesquisaCEP()}"
                              process="idbtbuscacep, idinputcep" update="idgridendereco,idgriddetalhe, idgridcep,:idFormTop:growl"/>
         </h:panelGrid>
-        <h:panelGrid id="idgridendereco" columns="4">
-            <p:outputLabel value="Tipo Endereço"/>
+        <h:panelGrid id="idgridendereco" columns="4" style="margin-left: 50px;">
+            <p:outputLabel value="#{msgs['ln.texto.tipo']}"/>
             <p:selectOneMenu id="idtipoendereco" value="#{clienteView.tipoEndereco}">
-                <f:selectItem itemLabel="Residêncial" itemValue="Residencial"/>
-                <f:selectItem itemLabel="Comercial" itemValue="Comercial"/>
-                <f:selectItem itemLabel="Cobrança" itemValue="Cobranca"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.residencia']}" itemValue="#{msgs['ln.texto.residencia']}"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.comercial']}" itemValue="#{msgs['ln.texto.comercial']}"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.cobranca']}" itemValue="#{msgs['ln.texto.cobranca']}"/>
             </p:selectOneMenu>
-            <p:outputLabel value="Logradouro"/>
+            <p:outputLabel value="#{msgs['ln.texto.endereco']}"/>
             <p:inputText value="#{clienteView.endereco}" size="50" />
         </h:panelGrid>
         <h:panelGrid id="idgridcomplemento" columns="2" style="margin-left: 4px;">
@@ -124,45 +124,45 @@
             <p:inputText value="#{clienteView.complemento}" size="50" />
         </h:panelGrid>
         <h:panelGrid id="idgriddetalhe" columns="6" style="margin-left: 40px;">
-            <p:outputLabel value="Bairro"/>
+            <p:outputLabel value="#{msgs['ln.texto.bairro']}"/>
             <p:inputText value="#{clienteView.bairro}" size="20" />
-            <p:outputLabel value="Cidade"/>
+            <p:outputLabel value="#{msgs['ln.texto.cidade']}"/>
             <p:inputText value="#{clienteView.cidade}" size="20" />
-            <p:outputLabel value="Estado"/>
+            <p:outputLabel value="#{msgs['ln.texto.estado']}"/>
             <p:inputText value="#{clienteView.estado}" size="20" />
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton id="idbtsalvarendereco" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
+            <p:commandButton id="idbtsalvarendereco" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                              action="#{clienteView.btSalvarEndereco()}" 
                              process="idbtsalvarendereco, idgridendereco, idgridcomplemento, idgriddetalhe"
                              update="iddtendereco, :idFormTop:growl, idgridendereco, idgridcomplemento, idgriddetalhe"/>
-            <p:commandButton id="idbtfecharendereco" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-close"
+            <p:commandButton id="idbtfecharendereco" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-close"
                              action="#{clienteView.btFecharEndereco()}" process="idbtfecharendereco" update="idbtfecharendereco"/>
         </f:facet>
     </p:dialog>
     
-    <p:dialog id="iddlgtelefone" header="#{msgs['node.inclusion']} de Telefone" widgetVar="DlgTelefone" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
+    <p:dialog id="iddlgtelefone" header="#{msgs['ln.frase.inclusaotelefone']}" widgetVar="DlgTelefone" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idgridtelefone" columns="8">
-            <p:outputLabel value="Tipo Telefone"/>
+            <p:outputLabel value="#{msgs['ln.texto.tipo']}"/>
             <p:selectOneMenu id="idtipotelefone" value="#{clienteView.tipoTelefone}">
-                <f:selectItem itemLabel="Residêncial" itemValue="Residencial"/>
-                <f:selectItem itemLabel="Comercial" itemValue="Comercial"/>
-                <f:selectItem itemLabel="Celular" itemValue="Celular"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.residencia']}" itemValue="#{msgs['ln.texto.residencia']}"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.comercial']}" itemValue="#{msgs['ln.texto.comercial']}"/>
+                <f:selectItem itemLabel="#{msgs['ln.frase.inclusaotelefone']}" itemValue="#{msgs['ln.frase.inclusaotelefone']}"/>
             </p:selectOneMenu>
-            <p:outputLabel value="Código País"/>
+            <p:outputLabel value="#{msgs['ln.texto.codigopais']}"/>
             <p:inputText id="idinputcodpais" value="#{clienteView.codigoPais}" size="4" />
-            <p:outputLabel value="DDD"/>
+            <p:outputLabel value="#{msgs['ln.texto.ddd']}"/>
             <p:inputText id="idinputddd" value="#{clienteView.ddd}" size="4" />
-            <p:outputLabel value="Telefone"/>
+            <p:outputLabel value="#{msgs['ln.texto.telefone']}"/>
             <p:inputText id="idinputtelefone" value="#{clienteView.telefone}" size="20" />
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton id="idbtsalvartelefone" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
+            <p:commandButton id="idbtsalvartelefone" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                              action="#{clienteView.btSalvarTelefone()}" 
                              process="idbtsalvartelefone, idgridtelefone"
                              update="idbtsalvartelefone, :idFormTop:growl, idgridtelefone, iddttelefone"/>
-            <p:commandButton id="idbtfechartelefone" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-close"
+            <p:commandButton id="idbtfechartelefone" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-close"
                              action="#{clienteView.btFecharTelefone()}" process="idbtfechartelefone" update="idbtfechartelefone"/>
         </f:facet>
     </p:dialog>
