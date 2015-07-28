@@ -10,6 +10,8 @@ import br.com.ln.dao.TelefoneDao;
 import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnTelefone;
 import java.util.List;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -17,49 +19,61 @@ import java.util.List;
  */
 public class EnderecoFuncoes {
     
-    private String mensagem;
+    public String mensagem;
     private boolean validado;
     private Integer codigo = 0;
     
-    public String validacao(LnEndereco lnEndereco){
-        mensagem = "";
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+
+    public boolean validacao(LnEndereco lnEndereco){
+        
+        boolean validado = true;
+        mensagem = bundle.getString("ln.mb.frase.preenchercampos") + ": ";
+        
         
         if (lnEndereco != null){
             if (lnEndereco.getEndStEndereco() != null && lnEndereco.getEndStEndereco().isEmpty()){
-                mensagem = mensagem + "Por favor, preencher o Logradouro - ";
+                mensagem = mensagem + bundle.getString("ln.texto.endereco")  + "; ";
+                validado = false;
             }
             if (lnEndereco.getEndStBairro() != null && lnEndereco.getEndStBairro().isEmpty()){
-                mensagem = mensagem + "Por favor, preencher o Bairro - ";
+                mensagem = mensagem + bundle.getString("ln.texto.bairro")  + "; ";
+                validado = false;
             }
             if (lnEndereco.getEndStCidade() != null && lnEndereco.getEndStCidade().isEmpty()){
-                mensagem = mensagem + "Por favor, preencher o Cidade - ";
+                mensagem = mensagem + bundle.getString("ln.texto.cidade")  + "; ";
+                validado = false;
             }
             if (lnEndereco.getEndStEstado() != null && lnEndereco.getEndStEstado().isEmpty()){
-                mensagem = mensagem + "Por favor, preencher o Estado - ";
+                mensagem = mensagem + bundle.getString("ln.texto.estado")  + "; ";
+                validado = false;
             }
             if (lnEndereco.getEndStCep() != null && lnEndereco.getEndStCep().isEmpty()){
-                mensagem = mensagem + "Por favor, preencher o CEP - ";
+                mensagem = mensagem + bundle.getString("ln.texto.cep")  + "; ";
+                validado = false;
             }
         } else {
-            mensagem="Endereço vazio, por favor preencher";
+            mensagem = bundle.getString("ln.mb.frase.preenchercampos");
+            validado = false;
         }
         
-        if (mensagem.equals("")){
-            mensagem = "Sucesso";
+        if (validado){
+            mensagem = bundle.getString("ln.mb.texto.sucesso");
         }
         
-        return mensagem;
+        return validado;
     }
     
     public String descricaoTipo(Character tipoEndereco){
         
         switch (tipoEndereco){
             case '1':
-                return "Residêncial";
+                return bundle.getString("ln.texto.residencia");
             case '2':
-                return "Comercial";
+                return bundle.getString("ln.texto.comercial");
             case '3':
-                return "Cobrança";
+                return bundle.getString("ln.texto.cobranca");
         }
         return null;
     }
