@@ -317,6 +317,7 @@ public class UsuarioView implements Serializable {
             }
 
         } else {
+            mensagem = usuarioFuncoes.mensagem;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("ln.texto.usuario"), mensagem));
         }

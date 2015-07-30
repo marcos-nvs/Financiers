@@ -77,7 +77,7 @@ public class UsuarioFuncoes implements Serializable {
 
         if (lnUsuario.getUsuStNome() == null || lnUsuario.getUsuStNome().isEmpty()) {
             validado = false;
-            mensagem = mensagem + bundle.getString("ln.texto.nome") + "; ";
+            mensagem = mensagem + bundle.getString("ln.texto.usuario") + "; ";
         }
         if (lnUsuario.getUsuStEmail() == null || lnUsuario.getUsuStEmail().isEmpty()) {
             validado = false;
@@ -87,14 +87,14 @@ public class UsuarioFuncoes implements Serializable {
         if (lnUsuario.getTipoFuncao().equals(TipoFuncao.Incluir)) {
             if (lnUsuario.getUsuStCodigo() == null || lnUsuario.getUsuStCodigo().isEmpty()) {
                 validado = false;
-                mensagem = mensagem + bundle.getString("ln.texto.usuario") + "; ";
+                mensagem = mensagem + bundle.getString("ln.texto.nome") + "; ";
             }
             if (lnUsuario.getUsuStSenha() == null || lnUsuario.getUsuStSenha().isEmpty()) {
                 validado = false;
                 mensagem = mensagem + bundle.getString("ln.texto.senha") + "; ";
             }
         }
-        if (lnUsuario.getUsuStCpf() != null && !lnUsuario.getUsuStCpf().equals("")) {
+        if (lnUsuario.getUsuStCpf() != null && lnUsuario.getUsuStCpf().equals("")) {
             if (!Utilitarios.calculaCPF(lnUsuario.getUsuStCpf())) {
                 mensagem = mensagem + bundle.getString("ln.texto.documento") + "; ";
                 validado = false;

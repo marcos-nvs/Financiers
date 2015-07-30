@@ -18,6 +18,7 @@ import br.com.ln.dao.ModuloDao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -48,6 +49,9 @@ public class PerfilView implements Serializable {
     private String mensagem;
     private final PerfilFuncoes perfilFuncoes;
     private final TratamentoEspecial tratativa;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public PerfilView() {
         listPerfil = PerfilDao.grabListObject(LnPerfil.class);

@@ -14,6 +14,8 @@ import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
 import java.util.List;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -23,6 +25,9 @@ public class PerfilFuncoes {
 
     private String mensagem;
     private Historico historico;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public String perfil(LnPerfil lnPerfil) {
         mensagem = "";

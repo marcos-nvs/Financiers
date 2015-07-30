@@ -38,11 +38,11 @@
                          disabled="#{not beanVar.apresenta}" action="#{usuarioView.btSalvar}" 
                          process="btSalvar, cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3" 
                          update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
-                         btAlteraSenha, btHistorico, cadUsuarioButton, :idFormTop:growl"/>
+                         btAlteraSenha, idusuariobtHistorico, cadUsuarioButton, :idFormTop:growl"/>
         <p:commandButton id="btCancelar" value="#{msgs['ln.bt.cancelar']}" icon="ui-icon-document" disabled="#{not beanVar.apresenta}" 
                          process="btCancelar" action="#{usuarioView.btCancelar}"
                          update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
-                         btAlteraSenha, btHistorico, cadUsuarioButton, :idFormTop:growl"/>
+                         btAlteraSenha, idusuariobtHistorico, cadUsuarioButton, :idFormTop:growl"/>
     </h:panelGrid>
 
     <p:dataTable id="cadUsuarioGrid" var="cadUsuario" style="position: relative;width: 100%;" value="#{usuarioView.listUsuario}"
@@ -77,12 +77,12 @@
                          process="cadUsuarioGrid, btIncluir" 
                          action="#{usuarioView.btIncluir}"
                          update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar,
-                         btAlteraSenha, btHistorico, :idFormTop:growl"/>
+                         btAlteraSenha, idusuariobtHistorico, :idFormTop:growl"/>
         <p:commandButton id="btAlterar" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil" disabled="#{beanVar.apresenta}" 
                          process="cadUsuarioGrid, btAlterar" 
                          action="#{usuarioView.btAlterar}"
                          update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar,
-                         btAlteraSenha, btHistorico, :idFormTop:growl"/>
+                         btAlteraSenha, idusuariobtHistorico, :idFormTop:growl"/>
         <p:commandButton id="btDeletar" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash" disabled="#{beanVar.apresenta}" 
                          process="btDeletar, cadUsuarioGrid" action="#{usuarioView.btExcluir}" update="cadUsuarioGrid, :idFormTop:growl">
             <p:confirm header="#{msgs['ln.texto.confirmacao']}" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
@@ -94,7 +94,7 @@
         <p:commandButton id="btAlteraSenha" value="#{msgs['ln.bt.trocarsenha']}"  icon="ui-icon-gear" 
                          disabled="#{beanVar.apresenta}" update=":idFormTop:growl"
                          action="#{usuarioView.btAlteraSenha}"/>
-        <p:commandButton id="btHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"
+        <p:commandButton id="idusuariobtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"
                          onclick="PF('historico').show()"/>
     </f:facet>
     
