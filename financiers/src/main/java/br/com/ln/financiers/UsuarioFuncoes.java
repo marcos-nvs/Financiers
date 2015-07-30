@@ -15,119 +15,114 @@ import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Marcos Naves
  */
-public class UsuarioFuncoes implements Serializable{
+public class UsuarioFuncoes implements Serializable {
 
-    private String mensagem;
+    public String mensagem;
     private Historico historico;
     private String cpf;
 
-    public String getMensagem() {
-        return mensagem;
-    }
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
-    }
-
-    
-    public String usuario(LnUsuario lnUsuario) {
+    public boolean gravaUsuario(LnUsuario lnUsuario) {
         mensagem = "";
         historico = new Historico();
 
         switch (lnUsuario.getTipoFuncao()) {
             case Incluir:
-                inclusaoUsuario(lnUsuario);
-                break;
+                return inclusaoUsuario(lnUsuario);
             case Alterar:
-                alteracaoUsuario(lnUsuario);
-                break;
+                return alteracaoUsuario(lnUsuario);
             case Excluir:
-                exclusaoUsuario(lnUsuario);
-                break;
+                return exclusaoUsuario(lnUsuario);
             case Pesquisar:
                 break;
         }
 
-        return mensagem;
+        return true;
     }
 
-    private void inclusaoUsuario(LnUsuario lnUsuario) {
+    private boolean inclusaoUsuario(LnUsuario lnUsuario) {
         LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
 
         if (pUsuario != null) {
-            mensagem = "Usuário já cadastrado!!!";
+            mensagem = bundle.getString("ln.mb.frase.usuariocadastrado");
+            return false;
         } else {
-            if (verificaDadosUsuario(lnUsuario)) {
-                if (lnUsuario.getUsuChExpirasenha().equals('S')) {
-                    lnUsuario.setUsuInDia(30);
-                    lnUsuario.setUsuStAdmin('N');
-                    lnUsuario.setUsuDtExpiracao(GenericDao.grabDateFromDB());
-                }
-                lnUsuario.setUsuDtCadastro(GenericDao.grabDateFromDB());
-                UsuarioDao.saveObject(lnUsuario);
-                historico.gravaHistoricoModulo("Inclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
-                mensagem = "Sucesso";
+            if (lnUsuario.getUsuChExpirasenha().equals('S')) {
+                lnUsuario.setUsuInDia(30);
+                lnUsuario.setUsuStAdmin('N');
+                lnUsuario.setUsuDtExpiracao(GenericDao.grabDateFromDB());
             }
+            lnUsuario.setUsuDtCadastro(GenericDao.grabDateFromDB());
+            UsuarioDao.saveObject(lnUsuario);
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaousuario") + " " + lnUsuario.getUsuStCodigo()
+                    + " - " + lnUsuario.getUsuStNome());
+            mensagem = bundle.getString("ln.mb.texto.sucesso");
+            return true;
         }
     }
 
-    private boolean verificaDadosUsuario(LnUsuario lnUsuario) {
+    public boolean verificaDadosUsuario(LnUsuario lnUsuario) {
 
-        mensagem = "Por favor preencha as seguintes informações: ";
+        mensagem = bundle.getString("ln.mb.frase.preenchercampos");
         boolean validado = true;
 
         if (lnUsuario.getUsuStNome() == null || lnUsuario.getUsuStNome().isEmpty()) {
             validado = false;
-            mensagem = mensagem + "Nome - ";
+            mensagem = mensagem + bundle.getString("ln.texto.nome") + "; ";
         }
         if (lnUsuario.getUsuStEmail() == null || lnUsuario.getUsuStEmail().isEmpty()) {
             validado = false;
-            mensagem = mensagem + "E-mail - ";
+            mensagem = mensagem + "E-mail; ";
         }
 
         if (lnUsuario.getTipoFuncao().equals(TipoFuncao.Incluir)) {
             if (lnUsuario.getUsuStCodigo() == null || lnUsuario.getUsuStCodigo().isEmpty()) {
                 validado = false;
-                mensagem = mensagem + "Usuário - ";
+                mensagem = mensagem + bundle.getString("ln.texto.usuario") + "; ";
             }
             if (lnUsuario.getUsuStSenha() == null || lnUsuario.getUsuStSenha().isEmpty()) {
                 validado = false;
-                mensagem = mensagem + "Senha";
+                mensagem = mensagem + bundle.getString("ln.texto.senha") + "; ";
             }
         }
         if (lnUsuario.getUsuStCpf() != null && !lnUsuario.getUsuStCpf().equals("")) {
             if (!Utilitarios.calculaCPF(lnUsuario.getUsuStCpf())) {
-                mensagem = mensagem + " " + "CPF invalido";
+                mensagem = mensagem + bundle.getString("ln.texto.documento") + "; ";
                 validado = false;
             }
         }
         return validado;
     }
 
-    private void alteracaoUsuario(LnUsuario lnUsuario) {
+    private boolean alteracaoUsuario(LnUsuario lnUsuario) {
 
-        if (verificaDadosUsuario(lnUsuario)) {
-            LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
-            lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
-            UsuarioDao.saveOrUpdateObject(lnUsuario);
-            historico.gravaHistoricoModulo("Alteracao do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
-            mensagem = "Sucesso";
-        }
+        LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
+        lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
+        UsuarioDao.saveOrUpdateObject(lnUsuario);
+        historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaousuario") + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
+        mensagem = bundle.getString("ln.mb.texto.sucesso");
+        return true;
     }
 
-    private void exclusaoUsuario(LnUsuario lnUsuario) {
+    private boolean exclusaoUsuario(LnUsuario lnUsuario) {
 
         if (HistoricoDao.grabVerificaHistorico(lnUsuario.getUsuStCodigo())) {
             UsuarioDao.deleteObject(lnUsuario);
-            historico.gravaHistoricoModulo("Exclusão do usuário : " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
-            mensagem = "Sucesso";
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaousuario") + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());
+            mensagem = bundle.getString("ln.mb.texto.sucesso");
+            return true;
         } else {
-            mensagem = "O usuário " + lnUsuario.getUsuStCodigo() + " não pode ser excluído apenas cancelado.!!!!";
+            mensagem = bundle.getString("ln.texto.usuario") + " " + lnUsuario.getUsuStCodigo() + " " + bundle.getString("ln.mb.historico.naoexcluirusuario");
+            return false;
         }
     }
 
