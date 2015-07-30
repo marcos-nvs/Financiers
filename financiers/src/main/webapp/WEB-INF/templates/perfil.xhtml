@@ -7,54 +7,54 @@
     <p:dataTable id="idTbPerfil" var="perfil" value="#{perfilView.listPerfil}" selectionMode="single" selection="#{perfilView.lnPerfil}"
                  rowKey="#{perfil.perInCodigo}" paginator="true" rows="20" paginatorPosition="bottom">
         <f:facet name="header">
-            <p:outputLabel value="Lista de Perfis"/>
+            <p:outputLabel value="#{msgs['ln.texto.listaperfil']}"/>
         </f:facet>
         <p:column style="width: 16px">
             <p:rowToggler />
         </p:column>
-        <p:column headerText="#{msgs['template.profile.description']}">
+        <p:column headerText="#{msgs['ln.texto.descricao']}">
             <h:outputText value="#{perfil.perStDescricao}"/>
         </p:column>
-        <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
+        <p:column headerText="#{msgs['ln.texto.ativo']}">
             <h:outputText value="#{tratativa.tratamentoTextoString(perfil.perChAtivo)}"/>
         </p:column>
-        <p:column headerText="#{msgs['node.user.changes.password']}">
+        <p:column headerText="#{msgs['ln.texto.usuarioalterasenha']}">
             <h:outputText value="#{tratativa.tratamentoTextoString(perfil.perChAlterasenha)}"/>
         </p:column>
 
         <p:rowExpansion>
             <p:dataTable var="acesso" value="#{perfil.listPerfilAcesso}" paginator="true" rows="10" paginatorPosition="bottom">
-                <p:column headerText="#{msgs['node.module']}">
+                <p:column headerText="#{msgs['ln.texto.modulo']}">
                     <h:outputText value="#{perfilView.buscaDescModulo(acesso.lnPerfilacessoPK.modInCodigo)}"/>
                 </p:column>
-                <p:column headerText="#{msgs['node.include']}">
+                <p:column headerText="#{msgs['ln.texto.incluir']}">
                     <h:outputText value="#{tratativa.tratamentoTextoString(acesso.pacChIncluir)}"/>
                 </p:column>
-                <p:column headerText="#{msgs['template.change']}">
+                <p:column headerText="#{msgs['ln.texto.alterar']}">
                     <h:outputText value="#{tratativa.tratamentoTextoString(acesso.pacChAlterar)}"/>
                 </p:column>
-                <p:column headerText="#{msgs['page.panelConfirmation.deleteButtonLabel']}">
+                <p:column headerText="#{msgs['ln.texto.excluir']}">
                     <h:outputText value="#{tratativa.tratamentoTextoString(acesso.pacChExcluir)}"/>
                 </p:column>
-                <p:column headerText="#{msgs['template.search']}">
+                <p:column headerText="#{msgs['ln.texto.pesquisar']}">
                     <h:outputText value="#{tratativa.tratamentoTextoString(acesso.pacChPesquisar)}"/>
                 </p:column>
             </p:dataTable>
         </p:rowExpansion>
         <f:facet name="footer">
-            <p:commandButton id="btIncluirPerfil" value="#{msgs['node.include']}" icon="ui-icon-document" action="#{perfilView.btIncluirPerfil}"
+            <p:commandButton id="btIncluirPerfil" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document" action="#{perfilView.btIncluirPerfil}"
                              process="btIncluirPerfil" update=":idFormTop:growl, idTbPerfil, btIncluirPerfil, :idFormCenter:iddlgPerfil" />
-            <p:commandButton id="btAlterarPerfil" value="#{msgs['template.change']}" icon="ui-icon-pencil" action="#{perfilView.btAlterarPerfil}"
+            <p:commandButton id="btAlterarPerfil" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil" action="#{perfilView.btAlterarPerfil}"
                              process="btAlterarPerfil, idTbPerfil" update=":idFormTop:growl, :idFormCenter:iddlgPerfil" />
-            <p:commandButton id="btExcluirPerfil" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
+            <p:commandButton id="btExcluirPerfil" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
                              action="#{perfilView.btExcluirPerfil()}" process="idTbPerfil" update="idTbPerfil, :idFormTop:growl">
-                <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
+                <p:confirm header="#{msgs['ln.texto.confirmacao']}" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="Nao" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                <p:commandButton value="#{msgs['ln.bt.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msgs['ln.bt.nao']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
-            <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"
+            <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
                              onclick="PF('historico').show()"/>
         </f:facet>
     </p:dataTable>
