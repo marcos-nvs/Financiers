@@ -24,7 +24,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class VarComuns implements Serializable{
     
-    public static String strDbName= "Public";
+    public static String strDbName= VarComuns.strDbName;
     public static LnPerfil lnPerfil;
     public static LnPerfilacesso lnPerfilacesso;
     public static LnUsuario lnUsusario;

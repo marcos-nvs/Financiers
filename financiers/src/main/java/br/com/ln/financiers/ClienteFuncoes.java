@@ -12,16 +12,21 @@ import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnTelefone;
 import java.util.List;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Marcos Naves
  */
 public class ClienteFuncoes {
-    
+
     public String mensagem;
     private boolean validado;
     private Historico historico;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public String cliente(LnCliente lnCliente, List<LnEndereco> listEndereco, List<LnTelefone> listTelefone) {
 
@@ -44,50 +49,55 @@ public class ClienteFuncoes {
 
     public boolean validacao(LnCliente lnCliente, List<LnEndereco> listEndereco, List<LnTelefone> listTelefone) {
 
-        mensagem = "";
+        mensagem = bundle.getString("ln.mb.frase.preenchercampos") + ": ";
         validado = true;
-        
+
         if (lnCliente != null) {
             if (lnCliente.getCliStDocumento() != null && !lnCliente.getCliStDocumento().isEmpty()) {
                 if (!Utilitarios.calculaCPF(lnCliente.getCliStDocumento())) {
-                    mensagem = mensagem + "CPF invalido,";
+                    mensagem = mensagem + bundle.getString("ln.mb.frase.invalidocpf") + "; ";
+                    validado = false;
                 } else {
                     LnCliente lnClienteCpf = ClienteDao.grabClienteCpf(lnCliente.getCliStDocumento());
                     if (lnClienteCpf != null) {
-                        mensagem = "Cliente ja cadastrado!";
+                        mensagem = bundle.getString("ln.mb.frase.clientecadastrado");
                         return false;
                     }
                 }
             } else {
-                mensagem = mensagem + "Preencher o CPF!,";
+                mensagem = mensagem + "CPF; ";
+                validado = false;
             }
 
             if (lnCliente.getCliStNome() != null && lnCliente.getCliStNome().isEmpty()) {
-                mensagem = mensagem + "Preencher o Nome,";
+                mensagem = mensagem + bundle.getString("ln.texto.nome") +  "; ";
+                validado = false;
             }
 
             if (lnCliente.getCliStBanco() != null && lnCliente.getCliStBanco().isEmpty()) {
-                mensagem = mensagem + "Preencher a identificacao do sistema,";
+                mensagem = mensagem + bundle.getString("ln.texto.identificacaosistema") + "; ";
+                validado = false;
             }
             if (lnCliente.getCliStEmail() != null && lnCliente.getCliStEmail().isEmpty()) {
-                mensagem = mensagem + "Preencher o e-mail";
+                mensagem = mensagem + "E-Mail";
+                validado = false;
             }
 
             if (listEndereco.size() == 0 && listEndereco.isEmpty()) {
-                mensagem = mensagem + "Preencher um endereco";
+                mensagem = mensagem + bundle.getString("ln.texto.endereco") +  "; ";
+                validado = false;
             }
 
             if (listTelefone.size() == 0 && listTelefone.isEmpty()) {
-                mensagem = mensagem + "Preencher um telefone";
+                mensagem = mensagem + bundle.getString("ln.texto.telefone") +  "; ";
+                validado = false;
             }
 
         } else {
-            mensagem = "Por favor, preencher todos os campos.";
-        }
-
-        if (!mensagem.equals("")) {
+            mensagem = bundle.getString("ln.mb.frase.preenchercampos");
             validado = false;
         }
+
         return validado;
     }
 
@@ -95,23 +105,22 @@ public class ClienteFuncoes {
 
         if (lnCliente != null) {
             ClienteDao.saveObject(lnCliente);
-            historico.gravaHistorico("Web", "Inclusao do Cliente : " + lnCliente.getCliStNome());
+            historico.gravaHistorico("Web", bundle.getString("ln.mb.historico.inclusaocliente") + " " + lnCliente.getCliStNome());
 
             for (LnEndereco lnEndereco : listEndereco) {
                 lnEndereco.setCliInCodigo(lnCliente.getCliInCodigo());
                 ClienteDao.saveObject(lnEndereco);
-                historico.gravaHistorico("Web", "Inclusso do Endereco do Cliente: " + lnCliente.getCliStNome());
+                historico.gravaHistorico("Web", bundle.getString("ln.mb.historico.inclusaoendereco") + " " + lnCliente.getCliStNome());
             }
 
             for (LnTelefone lnTelefone : listTelefone) {
                 lnTelefone.setCliInCodigo(lnCliente.getCliInCodigo());
                 ClienteDao.saveObject(lnTelefone);
-                historico.gravaHistorico("Web", "Inclusao do Telefone do Cliente: " + lnCliente.getCliStNome());
+                historico.gravaHistorico("Web", bundle.getString("ln.mb.historico.inclusaotelefone") + " " + lnCliente.getCliStNome());
             }
-
-            mensagem = "Sucesso";
+            mensagem = bundle.getString("ln.mb.texto.sucesso");
         } else {
-            mensagem = "Inicie o cadastro novamente, ocorreu um erro!!!";
+            mensagem = bundle.getString("ln.mb.frase.erro");
         }
     }
 

@@ -14,8 +14,8 @@ import java.util.List;
  *
  * @author Marcos Naves
  */
-public class IrrfFuncoes implements Serializable {
-
+public class InssFuncoes implements Serializable{
+    
     public String mensagem;
 
     public boolean verificaInformacoes(Tabela tabela, TabelaItem tabelaItem) {
@@ -43,10 +43,6 @@ public class IrrfFuncoes implements Serializable {
             mensagem = mensagem + "Valor Final nao pode igual ou menor que o inicial e nao pode ser Zero; ";
             validado = false;
         }
-        if (tabelaItem.getQtdDependente() == null) {
-            mensagem = mensagem + "Qtde Dependente; ";
-            validado = false;
-        }
         if (tabelaItem.getPercentual() == null) {
             mensagem = mensagem + "Percentual; ";
             validado = false;
@@ -55,12 +51,8 @@ public class IrrfFuncoes implements Serializable {
             mensagem = mensagem + "Valor do Desconto; ";
             validado = false;
         }
-        if (tabelaItem.getValorDependente() == null) {
-            mensagem = mensagem + "Valor do Dependente; ";
-            validado = false;
-        }
         
-        List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(1, tabela.getDataInicial(), tabela.getDataFinal());
+        List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(2, tabela.getDataInicial(), tabela.getDataFinal());
         
         if (listaTabela != null && !listaTabela.isEmpty() ){
             mensagem = mensagem + "Verificar as datas, nao pode haver outra tabela com aa mesmas datas ou intercaladas; ";

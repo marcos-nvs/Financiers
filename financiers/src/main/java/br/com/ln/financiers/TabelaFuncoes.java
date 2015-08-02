@@ -5,7 +5,9 @@
  */
 package br.com.ln.financiers;
 
-import br.com.ln.dao.IrrfDao;
+import br.com.ln.tipos.TipoFuncao;
+import br.com.ln.comum.Historico;
+import br.com.ln.dao.TabelaDao;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.entity.LnTabelaItem;
 import java.io.Serializable;
@@ -19,7 +21,17 @@ import org.hibernate.HibernateException;
  */
 public class TabelaFuncoes implements Serializable{
     
+    private Integer codigoTabItem = 0;
+    private Integer codigoTab = 0;
     public String mensagem;
+    public boolean bGravar;
+    private final Historico historico;
+
+    public TabelaFuncoes() {
+        historico = new Historico();
+    }
+    
+    
     
     public boolean gravaTabela(LnTabela lnTabela){
         mensagem = "";
@@ -27,7 +39,7 @@ public class TabelaFuncoes implements Serializable{
 
         switch (lnTabela.getTipoFuncao()) {
             case Incluir:
-                lnTabela.setTabInCodigo(IrrfDao.grabLnTabelaNextId());
+                lnTabela.setTabInCodigo(TabelaDao.grabLnTabelaNextId());
                 bSalvo = incluirTabela(lnTabela);
                 break;
             case Alterar:
@@ -46,7 +58,7 @@ public class TabelaFuncoes implements Serializable{
 
         switch (lnTabelaItem.getTipoFuncao()) {
             case Incluir:
-                lnTabelaItem.setTaiInCodigo(IrrfDao.grabLnTabelaItemNextId());
+                lnTabelaItem.setTaiInCodigo(TabelaDao.grabLnTabelaItemNextId());
                 bSalvo = incluirTabelaItem(lnTabelaItem);
                 break;
             case Alterar:
@@ -68,8 +80,9 @@ public class TabelaFuncoes implements Serializable{
             }
             
             if (bSalvo) {
-                IrrfDao.saveObject(lnTabela);
-                return true;
+                TabelaDao.saveObject(lnTabela);
+                historico.gravaHistoricoModulo("Inclusão do Tabela : " + lnTabela.getTabStDescricao());
+            return true;
             } else {
                 return false;
             }
@@ -81,12 +94,13 @@ public class TabelaFuncoes implements Serializable{
 
     private boolean AlterarTabela(LnTabela lnTabela) {
         
-        for (LnTabelaItem lnTabelaItem : lnTabela.getListLnTabelaItem()){
+        lnTabela.getListLnTabelaItem().stream().forEach((lnTabelaItem) -> {
             gravaTabelaItem(lnTabelaItem);
-        }
+        });
 
         try{
-            IrrfDao.saveOrUpdateObject(lnTabela);
+            TabelaDao.saveOrUpdateObject(lnTabela);
+            historico.gravaHistoricoModulo("Alteração do Tabela : " + lnTabela.getTabStDescricao());
             return true;
         } catch (HibernateException ex){
             mensagem = "Ocorreu um erro na gravação!";
@@ -97,21 +111,21 @@ public class TabelaFuncoes implements Serializable{
     private boolean excluirTabela(LnTabela lnTabela) {
         try{
             lnTabela.getListLnTabelaItem().stream().forEach((lnTabelaItem) -> {
-                IrrfDao.deleteObject(lnTabelaItem);
+                TabelaDao.deleteObject(lnTabelaItem);
             });
-            IrrfDao.deleteObject(lnTabela);
+            TabelaDao.deleteObject(lnTabela);
+            historico.gravaHistoricoModulo("Exclusão do Tabela : " + lnTabela.getTabStDescricao());
             return true;
         } catch (HibernateException ex){
             mensagem = "Ocorreu um erro na gravação!";
             return false;
         }
-        
     }
     
     private boolean incluirTabelaItem(LnTabelaItem lnTabelaItem) {
 
         try {
-            IrrfDao.saveObject(lnTabelaItem);
+            TabelaDao.saveObject(lnTabelaItem);
             return true;
         } catch (HibernateException ex) {
             mensagem = "Ocorreu um erro na gravação!";
@@ -122,7 +136,7 @@ public class TabelaFuncoes implements Serializable{
     private boolean excluirTabelaItem(LnTabelaItem lnTabelaItem){
         
         try{
-            IrrfDao.deleteObject(lnTabelaItem);
+            TabelaDao.deleteObject(lnTabelaItem);
             return true;
         } catch (HibernateException ex){
             mensagem = "Ocorreu um erro na exclusao do item!";
@@ -134,10 +148,10 @@ public class TabelaFuncoes implements Serializable{
         Tabela tabela;
         
         List<Tabela> listaTabela = new ArrayList<>();
-        List<LnTabela> listTabelaDao = IrrfDao.grabTabela(ttbInCodigo);
+        List<LnTabela> listTabelaDao = TabelaDao.grabTabela(ttbInCodigo);
         
         for (LnTabela lnTabela : listTabelaDao) {
-            lnTabela.setListLnTabelaItem(IrrfDao.grabTabelaItem(lnTabela.getTabInCodigo()));
+            lnTabela.setListLnTabelaItem(TabelaDao.grabTabelaItem(lnTabela.getTabInCodigo()));
             
             tabela = new Tabela();
             tabela.setCodigoTabela(lnTabela.getTabInCodigo());
@@ -146,7 +160,7 @@ public class TabelaFuncoes implements Serializable{
             tabela.setDataFinal(lnTabela.getTabDtFinal());
             
             tabela.setListTabelaItem(buscaTabelaItem(lnTabela.getListLnTabelaItem()));
-
+            
             listaTabela.add(tabela);
         }
 
@@ -169,6 +183,8 @@ public class TabelaFuncoes implements Serializable{
             tabelaItem.setValorDesconto(lnTabelaItem.getTaiFlDesconto());
             tabelaItem.setValorFinal(lnTabelaItem.getTaiFlFinal());
             tabelaItem.setValorInicial(lnTabelaItem.getTaiFlInicio());
+            tabelaItem.setOrigem(lnTabelaItem.getTaiStOrigem());
+            tabelaItem.setTipo(lnTabelaItem.getTaiStTipo());
 
             listaTabelaItem.add(tabelaItem);
         }
@@ -176,6 +192,93 @@ public class TabelaFuncoes implements Serializable{
         return listaTabelaItem;
     }
 
+    public List<Tabela> montaTabela(Integer tipoTabela) {
+        TabelaFuncoes tabelaFuncao = new TabelaFuncoes();
+        return tabelaFuncao.buscaTabela(tipoTabela);
+    }
     
+    public Integer calcIdTabela() {
+        Integer i = codigoTab + 1;
+        codigoTab = i;
+        return codigoTab;
+    }
+
+    public Integer calcIdTabelaItem() {
+        Integer i = codigoTabItem + 1;
+        codigoTabItem = i;
+        return codigoTabItem;
+    }
+    
+    public boolean tabela(LnTabela lnTabela) {
+        TabelaFuncoes tabelafuncao = new TabelaFuncoes();
+        mensagem = tabelafuncao.mensagem;
+        return tabelafuncao.gravaTabela(lnTabela);
+    }
+    
+    public LnTabela loadLnTabela(Tabela tabela, List<TabelaItem> listTabelaItem, Integer ttbInCodigo) {
+        LnTabelaItem lnTabelaItem;
+        List<LnTabelaItem> listTabelaItemLoad = new ArrayList<>();
+        LnTabela lnTabela = new LnTabela();
+        lnTabela.setTtbInCodigo(ttbInCodigo);
+        lnTabela.setTabStDescricao(tabela.getNomeTabela());
+        lnTabela.setTabDtInicio(tabela.getDataInicial());
+        lnTabela.setTabDtFinal(tabela.getDataFinal());
+        lnTabela.setTipoFuncao(tabela.getTipoFuncao());
+
+        if (tabela.getCodigoTabela() != null && tabela.getCodigoTabela() > 0) {
+            lnTabela.setTabInCodigo(tabela.getCodigoTabela());
+        } else {
+            lnTabela.setTabInCodigo(calcIdTabela());
+        }
+
+        if (listTabelaItem != null) {
+            for (TabelaItem tbItem : listTabelaItem) {
+
+                lnTabelaItem = new LnTabelaItem();
+                lnTabelaItem.setTabInCodigo(lnTabela.getTabInCodigo());
+
+                if (tbItem.getCodigoTabItem() != null && tbItem.getCodigoTabItem() > 0) {
+                    lnTabelaItem.setTaiInCodigo(tbItem.getCodigoTabItem());
+                } else {
+                    lnTabelaItem.setTaiInCodigo(calcIdTabelaItem());
+                }
+
+                lnTabelaItem.setTaiFlDependente(tbItem.getValorDependente());
+                lnTabelaItem.setTaiFlDesconto(tbItem.getValorDesconto());
+                lnTabelaItem.setTaiFlFinal(tbItem.getValorFinal());
+                lnTabelaItem.setTaiFlInicio(tbItem.getValorInicial());
+                lnTabelaItem.setTaiFlPercentual(tbItem.getPercentual());
+                lnTabelaItem.setTaiInQtddependente(tbItem.getQtdDependente());
+                lnTabelaItem.setTaiStOrigem(tbItem.getOrigem());
+                lnTabelaItem.setTaiStTipo(tbItem.getTipo());
+
+                if (tbItem.getTipoFuncao() != null) {
+                    lnTabelaItem.setTipoFuncao(tbItem.getTipoFuncao());
+                } else {
+                    lnTabelaItem.setTipoFuncao(TipoFuncao.Alterar);
+                }
+
+                if (!listTabelaItemLoad.contains(lnTabelaItem)) {
+                    listTabelaItemLoad.add(lnTabelaItem);
+                    bGravar = true;
+                } else {
+                    mensagem = "Exitem valores na tabela iguais, por favor verifique!!";
+                    bGravar = false;
+                    break;
+                }
+            }
+
+            if (bGravar) {
+                if (listTabelaItemLoad.size() > 0) {
+                    lnTabela.setListLnTabelaItem(listTabelaItemLoad);
+                } else {
+                    mensagem = "Nao ha alteracoes a serem realizadas!!";
+                }
+            }
+        } else {
+            mensagem = "Lista da tabela esta vazia!!";
+        }
+        return lnTabela;
+    }    
     
 }

@@ -12,7 +12,7 @@ import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnTelefone;
 import br.com.ln.financiers.ClienteAdminFuncoes;
 import br.com.ln.financiers.EnderecoFuncoes;
-import br.com.ln.financiers.TipoFuncao;
+import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import java.io.Serializable;
 import java.util.List;

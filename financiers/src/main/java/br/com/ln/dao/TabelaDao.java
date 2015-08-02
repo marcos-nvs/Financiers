@@ -20,7 +20,7 @@ import org.hibernate.Transaction;
  *
  * @author Marcos Naves
  */
-public class IrrfDao extends GenericDao implements Serializable{
+public class TabelaDao extends GenericDao implements Serializable{
     
     public static synchronized List<LnTabela> grabTabela(Integer ttbInCodigo){
         
@@ -69,11 +69,35 @@ public class IrrfDao extends GenericDao implements Serializable{
         return listTabelaItem;
     }
     
-    public static Integer grabLnTabelaNextId() {
+    public static synchronized Integer grabLnTabelaNextId() {
         return new Integer(grabIdByNextValueStringSQL("select nextval('seq_tabela');"));
     }
     
-    public static Integer grabLnTabelaItemNextId() {
+    public static synchronized Integer grabLnTabelaItemNextId() {
         return new Integer(grabIdByNextValueStringSQL("select nextval('seq_tabelaitem');"));
+    }
+    
+    public static synchronized List<LnTabela> grabLnTabelaDate(Integer ttbInCodigo, Date tabDtInicio, Date tabDtFinal){
+        Session session = null;
+        Transaction tx;
+        List<LnTabela> listaTabela = null;
+        
+        try{
+            session  = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.createQuery("select l from LnTabela l where l.ttbInCodigo = :ttbInCodigo and l.tabDtFinal >= :tabDtFinal");
+            query.setInteger("ttbInCodigo", ttbInCodigo);
+            query.setDate("tabDtFinal", tabDtFinal);
+            listaTabela = query.list();
+            tx.commit();
+            
+        } finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listaTabela;
     }
 }

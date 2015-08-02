@@ -14,7 +14,7 @@ import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.UsuarioFuncoes;
-import br.com.ln.financiers.TipoFuncao;
+import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.dao.UsuarioDao;
 import java.io.Serializable;
@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -53,11 +54,14 @@ public class UsuarioView implements Serializable {
     private LnUsuario lnUsuario;
     private String cpf;
     private final TratamentoEspecial tratamentoEspecial;
-    private final UsuarioFuncoes functions;
+    private final UsuarioFuncoes usuarioFuncoes;
 
     private boolean bAtivo = false;
     private boolean bAlteraSenha = false;
     private boolean bExpiraSenha = false;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public UsuarioView() {
         listPerfil = PerfilDao.grabListPerfilAtivo('S');
@@ -65,7 +69,7 @@ public class UsuarioView implements Serializable {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         lnUsuario = new LnUsuario();
         tratamentoEspecial = new TratamentoEspecial();
-        functions = new UsuarioFuncoes();
+        usuarioFuncoes = new UsuarioFuncoes();
     }
 
     public String getUsuario() {
@@ -203,7 +207,7 @@ public class UsuarioView implements Serializable {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -240,8 +244,9 @@ public class UsuarioView implements Serializable {
             lnUsuario.setTipoFuncao(TipoFuncao.Incluir);
             lnUsuario.setUsuStAdmin('N');
         } else {
-            mensagem = "Usuario sem perimissao para incluir";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
 
@@ -253,51 +258,68 @@ public class UsuarioView implements Serializable {
                 dataLoadVar();
                 lnUsuario.setTipoFuncao(TipoFuncao.Alterar);
             } else {
-                mensagem = "Por favor, escolha um Usuario para alterar.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.texto.usuario"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem perimissao para alterar";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
 
-    public void btDeletar() {
+    public void btExcluir() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             try {
                 if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
                     lnUsuario.setTipoFuncao(TipoFuncao.Excluir);
-                    functions.usuario(lnUsuario);
+                    usuarioFuncoes.gravaUsuario(lnUsuario);
                     listUsuario = UsuarioDao.grabListObject(LnUsuario.class);
                     beanVar.setApresenta(true);
-                    mensagem = functions.getMensagem();
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                    mensagem = usuarioFuncoes.mensagem;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.texto.usuario"), mensagem));
                 } else {
-                    mensagem = "Por favor, escolha um Usuario para excluir.";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                    mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.texto.usuario"), mensagem));
                 }
             } catch (NullPointerException ex) {
-                mensagem = "Ocorreu um problema durante a exclusÃ£o.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.problema");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.texto.usuario"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem perimissao para excluir";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
 
     public void btSalvar() {
+        boolean bSalvo;
         dataLoadUsuario();
-        mensagem = functions.usuario(lnUsuario);
 
-        if (mensagem.equals("Sucesso")) {
-            listUsuario = UsuarioDao.grabListObject(LnUsuario.class);
-            dataClean();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
-            beanVar.setApresenta(false);
-            beanVar.setBloquear(true);
+        if (usuarioFuncoes.verificaDadosUsuario(lnUsuario)) {
+            bSalvo = usuarioFuncoes.gravaUsuario(lnUsuario);
+            mensagem = usuarioFuncoes.mensagem;
+
+            if (bSalvo) {
+                listUsuario = UsuarioDao.grabListObject(LnUsuario.class);
+                dataClean();
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.texto.usuario"), mensagem));
+                beanVar.setApresenta(false);
+                beanVar.setBloquear(true);
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.texto.usuario"), mensagem));
+            }
+
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            mensagem = usuarioFuncoes.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
 
@@ -313,20 +335,22 @@ public class UsuarioView implements Serializable {
                 if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
                     RequestContext.getCurrentInstance().execute("PF('novaSenha').show()");
                 } else {
-                    mensagem = "Por favor, escolha um usuario para realizar a alteracao!!!";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                    mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.texto.usuario"), mensagem));
                 }
             } catch (NullPointerException ex) {
-                mensagem = "Por favor, escolha um usuario para realizar a alteracao!!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        bundle.getString("ln.texto.usuario"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem perimissao para alterar senha";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                    bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
 
-    
     public void dataClean() {
         usuario = "";
         senha = "";
@@ -365,7 +389,7 @@ public class UsuarioView implements Serializable {
         dia = lnUsuario.getUsuInDia();
         cpf = lnUsuario.getUsuStCpf();
     }
-    
+
     public void btConfirmaSenha(String tela) {
         if (!novaSenha.equals("")) {
             if (novaSenha.equals(confirmaSenha)) {
@@ -379,7 +403,8 @@ public class UsuarioView implements Serializable {
                     if (VarComuns.lnUsusario.getUsuStCodigo().equals(lnUsuario.getUsuStCodigo())) {
                         VarComuns.lnUsusario = lnUsuario;
                         EjbMap.updateUsuario(lnUsuario);
-                        historico.gravaHistoricoModulo("Senha do usuario: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada.");
+                        historico.gravaHistoricoModulo(bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + 
+                                lnUsuario.getUsuStNome() + " " + bundle.getString("ln.mb.frase.alterada"));
                         RequestContext.getCurrentInstance().execute("PF('novaSenha').hide()");
                     }
                 } else {
@@ -387,18 +412,22 @@ public class UsuarioView implements Serializable {
                         VarComuns.lnUsusario = lnUsuario;
                         EjbMap.updateUsuario(lnUsuario);
                     }
-                    historico.gravaHistorico(lnUsuario, "Senha do usuario: " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " foi alterada, no Login.");
+                    historico.gravaHistoricoModulo(bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - "
+                            + lnUsuario.getUsuStNome() + " " + bundle.getString("ln.mb.frase.alterada"));
                     RequestContext.getCurrentInstance().execute("PF('senha').hide()");
                 }
-                mensagem = "Senha alterada com sucesso!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.senhasucesso");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        bundle.getString("ln.texto.usuario"), mensagem));
             } else {
-                mensagem = "Senha nao confere, por favor verifique!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.senhanaoconfere");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        bundle.getString("ln.texto.usuario"), mensagem));
             }
         } else {
-            mensagem = "Senha nao pode estar em branco!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuario", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.senhavazia");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                    bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
 

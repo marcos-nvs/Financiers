@@ -6,54 +6,63 @@
 package br.com.ln.financiers;
 
 import br.com.ln.entity.LnTelefone;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Marcos Naves
  */
 public class TelefoneFuncoes {
-    
-    private String mensagem;
+
+    public String mensagem;
     private boolean validado;
     private Integer codigo = 0;
-    
-    public String validacao(LnTelefone lnTelefone){
-        mensagem = "";
-        
-        if (lnTelefone != null){
-            if (lnTelefone.getTelStDdd() != null && lnTelefone.getTelStDdd().isEmpty()){
-                mensagem = "Por favor, entre com o DDD - ";
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+
+    public boolean validacao(LnTelefone lnTelefone) {
+        mensagem = bundle.getString("ln.mb.frase.preenchercampos") + ": ";
+        boolean validacao = true;
+
+        if (lnTelefone != null) {
+            if (lnTelefone.getTelStDdd() != null && lnTelefone.getTelStDdd().isEmpty()) {
+                mensagem = mensagem + bundle.getString("ln.texto.ddd") + "; ";
+                validacao = false;
             }
-            if (lnTelefone.getTelStTelefone() != null && lnTelefone.getTelStTelefone().isEmpty()){
-                mensagem = "Por favor, entre com o Telefone - ";
+            if (lnTelefone.getTelStTelefone() != null && lnTelefone.getTelStTelefone().isEmpty()) {
+                mensagem = mensagem + bundle.getString("ln.texto.telefone") + "; ";
+                validacao = false;
             }
         } else {
-                mensagem = "Telefone vazio!!!";
+            mensagem = bundle.getString("ln.texto.telefone");
+            validacao = false;
         }
-        
-        if (mensagem.equals("")){
-            mensagem = "Sucesso";
+
+        if (validacao) {
+            mensagem = bundle.getString("ln.texto.sucesso");
         }
-        
-        return mensagem;
+
+        return validacao;
     }
-    
-    public String descricaoTipo(Character tipoTelefone){
-        switch (tipoTelefone){
+
+    public String descricaoTipo(Character tipoTelefone) {
+        switch (tipoTelefone) {
             case '1':
-                return "Residêncial";
+                return bundle.getString("ln.texto.residencia");
             case '2':
-                return "Comercial";
+                return bundle.getString("ln.texto.comercial");
             case '3':
-                return "Celular";
+                return bundle.getString("ln.texto.celular");
         }
         return null;
     }
-    
-    public Integer calculaCodigo(){
+
+    public Integer calculaCodigo() {
         Integer codigoNovo;
-        codigoNovo = codigo +1;
-        
+        codigoNovo = codigo + 1;
+
         codigo = codigoNovo;
         return codigo;
     }

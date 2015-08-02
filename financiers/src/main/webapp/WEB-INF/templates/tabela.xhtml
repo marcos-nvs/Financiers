@@ -5,88 +5,15 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
     
-    <p:tabView id="tabIRRF" style="border: 0px;">
+    <p:tabView id="idtabelas" style="border: 0px;">
         <p:tab title="IRRF" closable="false" >
-            <p:dataTable id="idTabelaIrrf" var="Irrf" value="#{IrrfView.listTabela}" selection="#{IrrfView.tabela}" selectionMode="single"
-                         rowKey="#{Irrf.codigoTabela}" paginator="true" rows="20" paginatorPosition="bottom">
-                <f:facet name="header">
-                    <p:outputLabel value="Lista de IRRF"/>
-                </f:facet>
-                <p:column style="width: 16px">
-                    <p:rowToggler />
-                </p:column>
-                <p:column headerText="#{msgs['tabbedHeadings.description']}">
-                    <h:outputText value="#{Irrf.nomeTabela}"/>
-                </p:column>
-                <p:column headerText="Data Inicio">
-                    <h:outputText value="#{Irrf.dataInicial}">
-                        <f:convertDateTime pattern="dd-MM-yyyy"/>
-                    </h:outputText>
-                </p:column>
-                <p:column headerText="Data Final">
-                    <h:outputText value="#{Irrf.dataFinal}">
-                        <f:convertDateTime pattern="dd-MM-yyyy"/>
-                    </h:outputText>
-                </p:column>
-                <p:rowExpansion>
-                    <p:dataTable id="idTabelaIrrfDetalhe" var="IrrfDetalhe" value="#{Irrf.listTabelaItem}"
-                                 paginator="true" rows="20" paginatorPosition="bottom">
-                        <p:column headerText="Valor Inicial">
-                            <h:outputText value="#{IrrfDetalhe.valorInicial}">
-                                <f:convertNumber pattern="R$ ###,##0.00" currencySymbol="R$" type="currency"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Valor Final">
-                            <h:outputText value="#{IrrfDetalhe.valorFinal}">
-                                <f:convertNumber pattern="R$ ###,##0.00" currencySymbol="R$" type="currency"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Percentual %">
-                            <h:outputText value="#{IrrfDetalhe.percentual}">
-                                <f:convertNumber pattern="##0.00" type="percent" />
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Valor Desconto">
-                            <h:outputText value="#{IrrfDetalhe.valorDesconto}">
-                                <f:convertNumber pattern="R$ ###,##0.00" currencySymbol="R$" type="currency"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Valor Dependente">
-                            <h:outputText value="#{IrrfDetalhe.valorDependente}">
-                                <f:convertNumber pattern="R$ ###,##0.00" currencySymbol="R$" type="currency"/>
-                            </h:outputText>
-                        </p:column>
-                        <p:column headerText="Qtd Dependente">
-                            <h:outputText value="#{IrrfDetalhe.qtdDependente}">
-                                <f:convertNumber pattern="##0"/>
-                            </h:outputText>
-                        </p:column>
-                    </p:dataTable>
-                </p:rowExpansion>
-                <f:facet name="footer">
-                    <p:commandButton id="btIncluirIrrf" value="#{msgs['node.include']}" icon="ui-icon-document" 
-                                     action="#{IrrfView.btIncluir}" process="btIncluirIrrf" 
-                                     update=":idFormCenter:tabIRRF:idTabelaIrrf, :idFormTop:growl, :idFormCenter:dlgIRRF"/>
-                    <p:commandButton id="btAlterarIrrf" value="#{msgs['template.change']}" icon="ui-icon-pencil"
-                                     action="#{IrrfView.btAlterar}" process="btAlterarIrrf, :idFormCenter:tabIRRF:idTabelaIrrf"
-                                     update=":idFormTop:growl, :idFormCenter:dlgIRRF" />
-                    <p:commandButton id="btExcluirIrrf" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
-                                     action="#{IrrfView.btExcluir}" process="btExcluirIrrf,:idFormCenter:tabIRRF:idTabelaIrrf"
-                                     update=":idFormTop:growl,:idFormCenter:tabIRRF:idTabelaIrrf">
-                        <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} deste perfil?" icon="ui-icon-alert"/>
-                    </p:commandButton>
-                    <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-                        <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                        <p:commandButton value="Nao" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                    </p:confirmDialog>
-                </f:facet>
-            </p:dataTable>
+            <ui:include src="irrf.xhtml" />
         </p:tab>
         <p:tab title="INSS">
-            <h:outputText value="INSS - Em Desenvolvimento"/>
+            <ui:include src="inss.xhtml" />
         </p:tab>
         <p:tab title="IPVA">
-            <h:outputText value="IPVA - Em Desenvolvimento"/>
+            <ui:include src="ipva.xhtml" />
         </p:tab>
         <p:tab title="IOF">
             <h:outputText value="IOF - Em Desenvolvimento"/>
@@ -102,101 +29,4 @@
         </p:tab>
     </p:tabView>
     
-    <p:dialog id="dlgIRRF" header="#{msgs['node.inclusion']} de IRRF" widgetVar="IrrfEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
-              style="background-color: activeborder" width="1000" dynamic="true">
-        
-        <h:panelGrid id="idgridDataIrrf" columns="6" >
-            <p:outputLabel value="#{msgs['template.profile.description']}"/>
-            <p:inputText id="idIrrfDescricao" value="#{IrrfView.nomeTabela}" size="50"/>
-            <p:outputLabel for="dtirrfInicio" value="Data Inicial"/>
-            <p:calendar id="dtirrfInicio" showOn="button" value="#{IrrfView.dataInicial}" pattern="dd/MM/yyyy"/>
-            <p:outputLabel for="dtirrfFinal" value="Data Final"/>
-            <p:calendar id="dtirrfFinal" showOn="button" value="#{IrrfView.dataFinal}" pattern="dd/MM/yyyy"/>
-        </h:panelGrid>
-        <h:panelGrid id="idgridValorIrrf" columns="6" style="margin-left: 35px;">
-            <p:outputLabel value="Valor Inicial R$"/>
-            <p:inputText id="idinputvlrinicial" value="#{IrrfView.valorInicial}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
-                <p:ajax update="idinputvlrinicial" process="idinputvlrinicial" event="change"/>
-            </p:inputText>
-            <p:outputLabel value="Valor Final R$"/>
-            <p:inputText id="idvlrFinal" value="#{IrrfView.valorFinal}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
-                <p:ajax update="idvlrFinal" process="idvlrFinal" event="change"/>
-            </p:inputText>
-            <p:outputLabel value="Qtde Dependente"/>
-            <p:inputText id="idqtdDep" value="#{IrrfView.qtdDependente}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="0"/>
-                <p:ajax update="idqtdDep" process="idqtdDep" event="change"/>
-            </p:inputText>
-                
-            <p:outputLabel value="% Imposto"/>
-            <p:inputText id="idpercImposto" value="#{IrrfView.percentual}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="##0.00" type="percent"/>
-                <p:ajax update="idpercImposto" process="idpercImposto" event="change"/>
-            </p:inputText>
-            <p:outputLabel value="Valor Desconto R$"/>
-            <p:inputText id="idvlrDesconto" value="#{IrrfView.valorDesconto}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
-                <p:ajax update="idvlrDesconto" process="idvlrDesconto" event="change"/>
-            </p:inputText>
-            <p:outputLabel value="Valor por Dependente R$"/>
-            <p:inputText id="idvlrDependente"  value="#{IrrfView.valorDependente}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="#,##0.00" currencySymbol="R$" type="currency"/>
-                <p:ajax update="idvlrDependente" process="idvlrDependente" event="change"/>
-            </p:inputText>
-        </h:panelGrid>
-        <p:dataTable id="idDTIRRF" var="incluiTabelaIR" value="#{IrrfView.listTabelaItem}" paginator="true" rows="10" paginatorPosition="bottom">
-            <f:facet name="header">
-                <p:outputLabel value="Imposto de Renda retindo na Fonte"/>
-            </f:facet>
-            <p:column headerText="Valor Inicio" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.valorInicial}">
-                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="R$"/>
-                </h:outputText>
-            </p:column>
-            <p:column headerText="Valor Final" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.valorFinal}">
-                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="R$"/>
-                </h:outputText>
-            </p:column>
-            <p:column headerText="Qtde Dependente" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.qtdDependente}">
-                    <f:convertNumber pattern="##0" type="number"/>
-                </h:outputText>
-            </p:column>
-            <p:column headerText="Imposto(%)" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.percentual}">
-                    <f:convertNumber pattern="##0.00" type="percent"/>
-                </h:outputText>
-            </p:column>
-            <p:column headerText="Valor Desconto" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.valorDesconto}">
-                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="R$"/>
-                </h:outputText>
-            </p:column>
-            <p:column headerText="Valor por Dependente" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.valorDependente}">
-                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="R$"/>
-                </h:outputText>
-            </p:column>
-            <p:column style="width: 20px; text-align: center">
-                <p:commandButton id='idBtEditaIRRF' icon="ui-icon-trash" action="#{IrrfView.btExcluiDetalhe}"
-                                 process="idBtEditaIRRF, idDTIRRF" update="idDTIRRF, :idFormTop:growl">
-                    <f:setPropertyActionListener value="#{incluiTabelaIR}" target="#{IrrfView.tabelaItem}"/>
-                </p:commandButton>
-            </p:column>
-        </p:dataTable>
-        <f:facet name="footer">
-            <p:commandButton id="idbtincluirirrf" value="#{msgs['node.include']}" icon="ui-icon-document"
-                             action="#{IrrfView.btIncluiDetalhe()}" process="idbtincluirirrf, idgridDataIrrf, idgridValorIrrf, idIrrfDescricao,
-                             dtirrfInicio, dtirrfFinal, idinputvlrinicial, idvlrFinal, idqtdDep, idpercImposto, idvlrDesconto, idvlrDependente"
-                             update="idDTIRRF :idFormTop:growl"/>
-            <p:commandButton id="idbtsalvarirrf" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
-                             action="#{IrrfView.btSalvar}" process="idbtsalvarirrf" update=":idFormTop:growl, :idFormCenter:tabIRRF:idTabelaIrrf"/>
-            <p:commandButton id="idbtfecharirrf" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-cancel"
-                             action="#{IrrfView.btFechar()}" process="idbtfecharirrf" update="idbtfecharirrf"/>
-        </f:facet>
-        
-    </p:dialog>
 </ui:composition>

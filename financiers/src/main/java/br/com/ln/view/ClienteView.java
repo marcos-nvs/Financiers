@@ -10,20 +10,20 @@ import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.Correios;
 import br.com.ln.comum.EnderecoCep;
 import br.com.ln.comum.JsfHelper;
-import br.com.ln.comum.Utilitarios;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnTelefone;
 import br.com.ln.financiers.ClienteFuncoes;
 import br.com.ln.financiers.EnderecoFuncoes;
 import br.com.ln.financiers.TelefoneFuncoes;
-import br.com.ln.financiers.TipoEndereco;
-import br.com.ln.financiers.TipoFuncao;
-import br.com.ln.financiers.TipoTelefone;
+import br.com.ln.tipos.TipoEndereco;
+import br.com.ln.tipos.TipoFuncao;
+import br.com.ln.tipos.TipoTelefone;
 import java.io.Serializable;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -67,6 +67,9 @@ public class ClienteView implements Serializable {
 
     private List<LnEndereco> listEndereco;
     private List<LnTelefone> listTelefone;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public ClienteView() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
@@ -250,8 +253,9 @@ public class ClienteView implements Serializable {
             listEndereco.remove(lnEndereco);
             RequestContext.getCurrentInstance().execute("PF('DlgEndereco').show()");
         } else {
-            mensagem = "Para alterar é necessário escolher um endereço!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }
     }
 
@@ -259,21 +263,23 @@ public class ClienteView implements Serializable {
         if (lnEndereco != null) {
             listEndereco.remove(lnEndereco);
         } else {
-            mensagem = "Para excluir é necessário escolher um endereço!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }
     }
 
     public void btSalvarEndereco() {
         dataLoadEndereco();
-        mensagem = enderecoFuncoes.validacao(lnEndereco);
 
-        if (mensagem.equals("Sucesso")) {
+        if (enderecoFuncoes.validacao(lnEndereco)) {
             listEndereco.add(lnEndereco);
             clearVarEndereco();
             RequestContext.getCurrentInstance().execute("PF('DlgEndereco').hide()");
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            mensagem = enderecoFuncoes.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }
     }
 
@@ -293,8 +299,9 @@ public class ClienteView implements Serializable {
             listTelefone.remove(lnTelefone);
             RequestContext.getCurrentInstance().execute("PF('DlgTelefone').show()");
         } else {
-            mensagem = "Para alterar é necessário escolher um telefone!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }
     }
 
@@ -302,22 +309,24 @@ public class ClienteView implements Serializable {
         if (lnTelefone != null) {
             listTelefone.remove(lnTelefone);
         } else {
-            mensagem = "Para excluir é necessário escolher um telefone!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }
 
     }
 
     public void btSalvarTelefone() {
         dataLoadTelefone();
-        mensagem = telefoneFuncoes.validacao(lnTelefone);
 
-        if (mensagem.equals("Sucesso")) {
+        if (telefoneFuncoes.validacao(lnTelefone)) {
             listTelefone.add(lnTelefone);
             clearVarTelefone();
             RequestContext.getCurrentInstance().execute("PF('DlgTelefone').hide()");
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            mensagem = telefoneFuncoes.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }
 
     }
@@ -333,7 +342,8 @@ public class ClienteView implements Serializable {
             btFecharCliente();
         } else {
             mensagem = clienteFuncoes.mensagem;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }
     }
 
@@ -347,7 +357,6 @@ public class ClienteView implements Serializable {
         lnCliente.setCliStBanco(banco);
         lnCliente.setCliStEmail(email);
         lnCliente.setCliChAtivo('N');
-//        lnCliente.setTipoFuncao(TipoFuncao.Incluir);
     }
 
     private void dataLoadEndereco() {
@@ -405,13 +414,13 @@ public class ClienteView implements Serializable {
 
     private void tipoLoadEndereco() {
         switch (tipoEndereco) {
-            case Residencial:
+            case Residêncial:
                 lnEndereco.setEndChTipo('1');
                 break;
             case Comercial:
                 lnEndereco.setEndChTipo('2');
                 break;
-            case Cobranca:
+            case Cobrança:
                 lnEndereco.setEndChTipo('3');
                 break;
         }
@@ -419,7 +428,7 @@ public class ClienteView implements Serializable {
 
     private void tipoLoadTelefone() {
         switch (tipoTelefone) {
-            case Residencial:
+            case Residêncial:
                 lnTelefone.setTelChTipo('1');
                 break;
             case Comercial:
@@ -434,13 +443,13 @@ public class ClienteView implements Serializable {
     private void tipoLoadVarEndereco() {
         switch (lnEndereco.getEndChTipo()) {
             case '1':
-                tipoEndereco = tipoEndereco.Residencial;
+                tipoEndereco = tipoEndereco.Residêncial;
                 break;
             case '2':
                 tipoEndereco = tipoEndereco.Comercial;
                 break;
             case '3':
-                tipoEndereco = tipoEndereco.Cobranca;
+                tipoEndereco = tipoEndereco.Cobrança;
                 break;
         }
     }
@@ -448,7 +457,7 @@ public class ClienteView implements Serializable {
     private void tipoLoadVarTelefone() {
         switch (lnTelefone.getTelChTipo()) {
             case '1':
-                tipoTelefone = tipoTelefone.Residencial;
+                tipoTelefone = tipoTelefone.Residêncial;
                 break;
             case '2':
                 tipoTelefone = tipoTelefone.Comercial;
@@ -476,6 +485,8 @@ public class ClienteView implements Serializable {
         System.setProperty("http.proxySet", "true");
         System.setProperty("http.nonProxyHosts", "localhost|127.0.0.1");
     }
+    
+    //TODO procurar um site para pesquisa mundial;
 
     public void btPesquisaCEP() {
         try {
@@ -492,19 +503,23 @@ public class ClienteView implements Serializable {
                         estado = enderecoCep.getEstado();
                     } else {
                         mensagem = "Cep não localizado!!!";
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.cliente"), mensagem));
                     }
                 } else {
                     mensagem = "Cep em branco, por favor entre com o CEP!!!";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.mb.titulo.cliente"), mensagem));
                 }
             } else {
                 mensagem = "Não foi possível pesquisar o CEP, computador fora da internet ou site indisponível!!!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.cliente"), mensagem));
             }
         } catch (ConnectException ex) {
             mensagem = "Não foi possível pesquisar o CEP, computador fora da internet ou site indisponível!!!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Cliente", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }
     }
 

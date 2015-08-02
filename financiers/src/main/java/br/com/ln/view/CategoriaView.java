@@ -13,7 +13,7 @@ import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.entity.LnTipoconta;
 import br.com.ln.financiers.CategoriaFuncoes;
-import br.com.ln.financiers.TipoFuncao;
+import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import java.io.Serializable;
 import java.util.List;

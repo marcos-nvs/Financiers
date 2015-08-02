@@ -1,0 +1,131 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <p:dataTable id="idTabelaIpva" var="ipva" value="#{ipvaView.listTabela}" selection="#{ipvaView.tabela}" selectionMode="single"
+                 rowKey="#{ipva.codigoTabela}" paginator="true" rows="20" paginatorPosition="bottom">
+        <f:facet name="header">
+            <p:outputLabel value="Tabela de IPVA"/>
+        </f:facet>
+        <p:column style="width: 16px;">
+            <p:rowToggler/>
+        </p:column>
+        <p:column headerText="#{msgs['tabbedHeadings.description']}">
+            <h:outputText value="#{ipva.nomeTabela}"/>
+        </p:column>
+        <p:column headerText="Data Inicio">
+            <h:outputText value="#{ipva.dataInicial}">
+                <f:convertDateTime pattern="dd-MM-yyyy"/>
+            </h:outputText>
+        </p:column>
+        <p:column headerText="Data Final">
+            <h:outputText value="#{ipva.dataFinal}">
+                <f:convertDateTime pattern="dd-MM-yyyy"/>
+            </h:outputText>
+        </p:column>
+        <p:rowExpansion>
+            <p:dataTable id="idTabelaIpvaDetalhe" var="ipvaDetalhe" value="#{ipva.listTabelaItem}"
+                         paginator="true" rows="20" paginatorPosition="bottom">
+                <p:column headerText="Origem Carro">
+                    <h:outputText value="#{ipvaDetalhe.origem}"/>
+                </p:column>
+                <p:column headerText="Tipo Combustivel">
+                    <h:outputText value="#{ipvaDetalhe.tipo}"/>
+                </p:column>
+                <p:column headerText="Percentual %">
+                    <h:outputText value="#{ipvaDetalhe.percentual}" >
+                        <f:convertNumber pattern="##0.00" type="percent" />
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:rowExpansion>
+        <f:facet name="footer">
+            <p:commandButton id="btIncluirIpva" value="#{msgs['node.include']}" icon="ui-icon-document"
+                             action="#{ipvaView.btIncluir()}" process="btIncluirIpva"
+                             update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl, :idFormCenter:idtabelas:dlgIpva"/>
+            <p:commandButton id="btAlterarIpva" value="#{msgs['template.change']}" icon="ui-icon-pencil" 
+                             action="#{ipvaView.btAlterar()}" process="btAlterarIpva, :idFormCenter:idtabelas:idTabelaIpva"
+                             update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl, :idFormCenter:idtabelas:dlgIpva"/>
+            <p:commandButton id="btExcluirIpva" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
+                             action="#{ipvaView.btExcluir()}" process="btExcluirIpva, :idFormCenter:idtabelas:idTabelaIpva"
+                             update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl">
+                <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} desta Tabela?" icon="ui-icon-alert"/>
+            </p:commandButton>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="Nao" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </f:facet>
+    </p:dataTable>
+
+    <p:dialog id="dlgIpva" header="#{msgs['node.inclusion']} de IPVA" widgetVar="ipvaEdit" modal="false" showEffect="fade" 
+              hideEffect="fade" closable="false" style="background-color: activeborder" width="1000" dynamic="true">
+
+        <h:panelGrid id="idgridDataIpva" columns="6" >
+            <p:outputLabel value="#{msgs['template.profile.description']}"/>
+            <p:inputText id="idipvaDescricao" value="#{ipvaView.nomeTabela}" size="50"/>
+            <p:outputLabel for="dtipvaInicio" value="Data Inicial"/>
+            <p:calendar id="dtipvaInicio" value="#{ipvaView.dataInicial}" showOn="button"  pattern="dd/MM/yyyy"/>
+            <p:outputLabel for="dtipvaFinal" value="Data Final"/>
+            <p:calendar id="dtipvaFinal" value="#{ipvaView.dataFinal}" showOn="button" pattern="dd/MM/yyyy"/>
+        </h:panelGrid>
+        <h:panelGrid id="idgridValorIpva" columns="8" style="margin-left: 25px;">
+            <p:outputLabel value="Orgiem Carro"/>
+            <p:selectOneMenu id="idipvaordem" value="#{ipvaView.origemCarro}" style="width: 200px;" effect="fade">
+                <f:selectItem itemLabel="Nacional" itemValue="Nacional"/>
+                <f:selectItem itemLabel="Importado" itemValue="Importado"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="Tipo Combustivel"/>
+            <p:selectOneMenu id="idipvatipo" value="#{ipvaView.tipoCombustivel}" style="width: 200px;" effect="fade">
+                <f:selectItem itemLabel="Flex" itemValue="Flex"/>
+                <f:selectItem itemLabel="Alcool" itemValue="Alcool"/>
+                <f:selectItem itemLabel="Gasolina" itemValue="Gasolina"/>
+            </p:selectOneMenu>
+            <p:outputLabel value="% Imposto"/>
+            <p:inputText id="idipvapercImposto" value="#{ipvaView.percentual}" style="width: 80px;" size="20">
+                <f:convertNumber pattern="##0.00" type="percent"/>
+                <p:ajax update="idipvapercImposto" process="idipvapercImposto" event="change"/>
+            </p:inputText>
+        </h:panelGrid>
+        <p:dataTable id="idDTIpva" var="incluiTabelaIpva" value="#{ipvaView.listTabelaItem}"
+                     paginator="true" rows="10" paginatorPosition="bottom">
+            <f:facet name="header">
+                <p:outputLabel value="IPVA"/>
+            </f:facet>
+            <p:column headerText="Origem Carro" style="width: 40px">
+                <h:outputText value="#{incluiTabelaIpva.origem}"/>
+            </p:column>
+            <p:column headerText="Tipo Combustivel" style="width: 40px">
+                <h:outputText value="#{incluiTabelaIpva.tipo}"/>
+            </p:column>
+            <p:column headerText="Imposto(%)" style="width: 40px">
+                <h:outputText value="#{incluiTabelaIpva.percentual}">
+                    <f:convertNumber pattern="##0.00" type="percent"/>
+                </h:outputText>
+            </p:column>
+            <p:column style="width: 20px; text-align: center">
+                <p:commandButton id='idBtEditaIPVA' icon="ui-icon-trash" action="#{ipvaView.btExcluiDetalhe()}"
+                                 process="idBtEditaIPVA, idDTIpva" update="idDTIpva, :idFormTop:growl">
+                    <f:setPropertyActionListener value="#{incluiTabelaIpva}" target="#{ipvaView.tabelaItem}"/>
+                </p:commandButton>
+            </p:column>
+        </p:dataTable>
+        <f:facet name="footer">
+            <p:commandButton id="idbtincluiripva" value="#{msgs['node.include']}" icon="ui-icon-document"
+                             action="#{ipvaView.btIncluiDetalhe}" 
+                             process="idbtincluiripva, idipvaDescricao, dtipvaInicio, dtipvaFinal, idipvaordem, idipvatipo, idipvapercImposto" 
+                             update="idDTIpva, :idFormTop:growl"/>
+            <p:commandButton id="idbtsalvaripva" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
+                             action="#{ipvaView.btSalvar}" 
+                             process="idbtsalvaripva, idipvaDescricao, dtipvaInicio, dtipvaFinal, idipvaordem, idipvatipo, idipvapercImposto,
+                                      idDTIpva" 
+                             update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaIpva, idTabelaIpva"/>
+            <p:commandButton id="idbtfecharipva" value="#{msgs['page.panelPopup.closeText']}" icon="ui-icon-cancel"
+                             action="#{ipvaView.btFechar()}" process="idbtfecharipva" update="idbtfecharipva"/>
+        </f:facet>
+    </p:dialog>
+
+</ui:composition>
