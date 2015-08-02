@@ -18,6 +18,7 @@ import br.com.ln.financiers.TratamentoEspecial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -28,11 +29,10 @@ import org.primefaces.context.RequestContext;
  *
  * @author Marcos Naves
  */
-
 @SessionScoped
 @ManagedBean(name = "categoriaView")
-public class CategoriaView implements Serializable{
-    
+public class CategoriaView implements Serializable {
+
     private Integer codigo;
     private String descricao;
     private Integer tipo;
@@ -46,6 +46,9 @@ public class CategoriaView implements Serializable{
     private List<LnTipoconta> listTipoconta;
     private boolean bTipoConta;
     private final BeanVar beanVar;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public CategoriaView() {
         listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
@@ -126,7 +129,7 @@ public class CategoriaView implements Serializable{
     public void setbTipoConta(boolean bTipoConta) {
         this.bTipoConta = bTipoConta;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -173,81 +176,89 @@ public class CategoriaView implements Serializable{
         return true;
     }
 
-    public void btIncluirCategoria(){
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
+    public void btIncluirCategoria() {
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             lnCategoria = new LnCategoria();
             lnCategoria.setTipoFuncao(TipoFuncao.Incluir);
             bTipoConta = false;
             RequestContext.getCurrentInstance().execute("PF('categoriaEdit').show()");
         } else {
-            mensagem = "Usuario sem permissao para incluir categorias.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.categoria"), mensagem));
         }
     }
-    
-    public void btAlterarCategoria(){
-        if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')){
+
+    public void btAlterarCategoria() {
+        if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             if (lnCategoria != null) {
                 lnCategoria.setTipoFuncao(TipoFuncao.Alterar);
                 bTipoConta = true;
                 RequestContext.getCurrentInstance().execute("PF('categoriaEdit').show()");
                 loadDataVar();
             } else {
-                mensagem = "Por favor, selectione uma categoria para Alterar.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.categoria"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para alterar categorias.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.categoria"), mensagem));
         }
     }
-    
-    public void btExcluirCategoria(){
-        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')){
-            if (lnCategoria != null){
+
+    public void btExcluirCategoria() {
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
+            if (lnCategoria != null) {
                 lnCategoria.setTipoFuncao(TipoFuncao.Excluir);
-                mensagem = categoriaFuncoes.categoria(lnCategoria);
-                
-                if (mensagem.equals("Sucesso")) {
+
+                if (categoriaFuncoes.categoria(lnCategoria)) {
                     listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
-                    mensagem = "Categoria excluida com sucesso.";
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+                    mensagem = categoriaFuncoes.mensagem;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.mb.titulo.categoria"), mensagem));
                 }
             } else {
-                mensagem = "Por favor, selectione uma categoria para Alterar.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.categoria"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para excluir categorias.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.categoria"), mensagem));
         }
     }
-    
-    public void btSalvarCategoria(){
-        if (descricao != null && !descricao.equals("")){
+
+    public void btSalvarCategoria() {
+        if (descricao != null && !descricao.equals("")) {
             dataLoadVar();
-            mensagem = categoriaFuncoes.categoria(lnCategoria);
-            
-            if (mensagem.equals("Sucesso")){
+
+            if (categoriaFuncoes.categoria(lnCategoria)) {
                 listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
                 RequestContext.getCurrentInstance().execute("PF('categoriaEdit').hide()");
                 listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
-                mensagem = "Gravação realizada com sucesso.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+                mensagem = categoriaFuncoes.mensagem;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.categoria"), mensagem));
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+                mensagem = categoriaFuncoes.mensagem;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.categoria"), mensagem));
             }
         } else {
-            mensagem = "Por favor, entrar com a descrição da categoria.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Categoria", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.categoria"), mensagem));
         }
     }
-    
+
     public void btCancelarCategoria() {
         RequestContext.getCurrentInstance().execute("PF('categoriaEdit').hide()");
     }
-    
-    private void dataLoadVar(){
+
+    private void dataLoadVar() {
         lnCategoria.setCatStDescricao(descricao);
         lnCategoria.setTipInCodigo(tipo);
         lnCategoria.setCatChAtivo(tratativa.tratamentoTextoCharacter(bAtivo));
@@ -259,10 +270,10 @@ public class CategoriaView implements Serializable{
         bAtivo = tratativa.tratamentoTextoBoolean(lnCategoria.getCatChAtivo());
         ativo = lnCategoria.getCatChAtivo();
     }
-    
+
     public String tipoContaDescricao(Integer tipInCodigo) {
         LnTipoconta lnTipoconta = EjbMap.grabTipoConta(tipInCodigo);
         return lnTipoconta.getTipStDescricao();
     }
- 
+
 }

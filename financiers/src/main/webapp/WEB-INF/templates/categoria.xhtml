@@ -7,53 +7,53 @@
     <p:dataTable id="idTbCategoria" var="categoria" value="#{categoriaView.listCategoria}" selectionMode="single" selection="#{categoriaView.lnCategoria}"
                  rowKey="#{categoria.catInCodigo}" paginator="true" rows="30" paginatorPosition="bottom">
         <f:facet name="header">
-            <p:outputLabel value="Lista de Categorias"/>
+            <p:outputLabel value="#{msgs['ln.texto.listacategorias']}"/>
         </f:facet>
-        <p:column headerText="Tipo de Conta"  style="width: 200px;">
+        <p:column headerText="#{msgs['ln.texto.tipo']}"  style="width: 200px;">
             <h:outputText value="#{categoriaView.tipoContaDescricao(categoria.tipInCodigo)}"/>
         </p:column>
-        <p:column headerText="#{msgs['tabbedHeadings.description']}">
+        <p:column headerText="#{msgs['ln.texto.descricao']}">
             <h:outputText value="#{categoria.catStDescricao}"/>
         </p:column>
-        <p:column headerText="#{msgs['page.connectionStatus.status2.value']}">
+        <p:column headerText="#{msgs['ln.texto.ativo']}">
             <h:outputText value="#{tratativa.tratamentoTextoString(categoria.catChAtivo)}"/>
         </p:column>
         <f:facet name="footer">
-            <p:commandButton id="idBtIncluirCat" value="#{msgs['node.include']}" icon="ui-icon-document" action="#{categoriaView.btIncluirCategoria}"
+            <p:commandButton id="idBtIncluirCat" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document" action="#{categoriaView.btIncluirCategoria}"
                              process="idTbCategoria" update="idTbCategoria, :idFormCenter:idCatDialog"/>
-            <p:commandButton id="idBtAlterarCat" value="#{msgs['template.change']}" icon="ui-icon-pencil" action="#{categoriaView.btAlterarCategoria}"
+            <p:commandButton id="idBtAlterarCat" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil" action="#{categoriaView.btAlterarCategoria}"
                              process="idBtAlterarCat, idTbCategoria" update = "idTbCategoria, :idFormCenter:idCatDialog, :idFormTop:growl" />
-            <p:commandButton id="idBtExcluirCat" value="#{msgs['page.panelConfirmation.deleteButtonLabel']}" icon="ui-icon-trash"
+            <p:commandButton id="idBtExcluirCat" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
                              action="#{categoriaView.btExcluirCategoria}" process="idBtExcluirCat, idTbCategoria"
                              update="idBtExcluirCat, :idFormTop:growl, idTbCategoria">
-                <p:confirm header="#{msgs['template.confirmation']}" message="Confirma a #{msgs['node.exclusion']} desta categoria?" icon="ui-icon-alert"/>
+                <p:confirm header="#{msgs['ln.texto.confirmacao']}" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="Nao" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                <p:commandButton value="#{msgs['ln.bt.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msgs['ln.bt.nao']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
         </f:facet>
     </p:dataTable>
 
-    <p:dialog id="idCatDialog" header="#{msgs['node.inclusion']} de Categoria" widgetVar="categoriaEdit" modal="false" showEffect="fade" hideEffect="fade" 
+    <p:dialog id="idCatDialog" header="#{msgs['ln.texto.cadastrodecategoriascontas']}" widgetVar="categoriaEdit" modal="false" showEffect="fade" hideEffect="fade" 
               closable="false" style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idPanelCategoria" columns="6">
-            <p:outputLabel value="Tipo de Conta"/>
+            <p:outputLabel value="#{msgs['ln.texto.tipo']}"/>
             <p:selectOneMenu id="idListTipoConta" value="#{categoriaView.tipo}" style="margin-left: 60px" disabled="#{categoriaView.bTipoConta}">
                 <f:selectItems value="#{categoriaView.listTipoconta}" var="categoriaTipo" itemLabel="#{categoriaTipo.tipStDescricao}"
                                itemValue="#{categoriaTipo.tipInCodigo}"/>
             </p:selectOneMenu>
-            <p:outputLabel value="#{msgs['tabbedHeadings.description']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
             <p:inputText id="idCategoriaDescricao" value="#{categoriaView.descricao}" size="50"/>
             <p:selectBooleanCheckbox id="idCategoriaAtivo" value="#{categoriaView.bAtivo}" />
-            <p:outputLabel  value="#{msgs['page.connectionStatus.status2.value']}"/>
+            <p:outputLabel  value="#{msgs['ln.texto.ativo']}"/>
         </h:panelGrid>
         <f:facet name="footer">
-            <p:commandButton id="idCategoriaGravar" value="#{msgs['page.panelConfirmation.saveButtonLabel']}" icon="ui-icon-disk"
+            <p:commandButton id="idCategoriaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                              action="#{categoriaView.btSalvarCategoria()}" 
                              process ="idCategoriaGravar, idPanelCategoria, idListTipoConta, idCategoriaDescricao, idCategoriaAtivo"
                              update = ":idFormTop:growl,idTbCategoria "/>
-            <p:commandButton id="idCategoriaCancelar" value="#{msgs['node.cancel']}" icon="ui-icon-cancel" 
+            <p:commandButton id="idCategoriaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
                              action="#{categoriaView.btCancelarCategoria()}"
                              process ="idCategoriaCancelar"
                              update = "idTbCategoria, :idFormTop:growl"/>

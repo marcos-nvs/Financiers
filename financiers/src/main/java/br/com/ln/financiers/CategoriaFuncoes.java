@@ -8,6 +8,8 @@ package br.com.ln.financiers;
 import br.com.ln.comum.Historico;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -15,54 +17,60 @@ import br.com.ln.entity.LnCategoria;
  */
 public class CategoriaFuncoes {
     
-    private String mensagem;
+    public String mensagem;
     private Historico historico;
     
-    public String categoria(LnCategoria lnCategoria){
-        mensagem = "";
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+
+    public boolean categoria(LnCategoria lnCategoria){
         historico = new Historico();
         
         switch (lnCategoria.getTipoFuncao()){
             case Incluir:
-                incluirCategoria(lnCategoria);
-                break;
+                return incluirCategoria(lnCategoria);
             case Alterar:
-                alterarCategoria(lnCategoria);
-                break;
+                return alterarCategoria(lnCategoria);
             case Excluir:
-                excluirCategoria(lnCategoria);
-                break;
+                return excluirCategoria(lnCategoria);
+            default:
+                return false;
         }
-        return mensagem;
     }
 
-    private void incluirCategoria(LnCategoria lnCategoria) {
+    private boolean incluirCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
             CategoriaDao.saveObject(lnCategoria);
             historico.gravaHistoricoModulo("Inclusão da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
+            return true;
         } else {
             mensagem = "Ocorreu um problema durante a gravação.";
+            return false;
         }
     }
 
-    private void alterarCategoria(LnCategoria lnCategoria) {
+    private boolean alterarCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
             CategoriaDao.saveOrUpdateObject(lnCategoria);
             historico.gravaHistoricoModulo("Alteração da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
+            return true;
         } else {
             mensagem = "Ocorreu um problema durante a gravação";
+            return false;
         }
     }
 
-    private void excluirCategoria(LnCategoria lnCategoria) {
+    private boolean excluirCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
             CategoriaDao.deleteObject(lnCategoria);
             historico.gravaHistoricoModulo("Exclusão da Categoria : " + lnCategoria.getCatStDescricao());
             mensagem = "Sucesso";
+            return true;
         } else {
             mensagem = "Ocorreu um problema durante a exclusão";
+            return false;
         }
     }
 }
