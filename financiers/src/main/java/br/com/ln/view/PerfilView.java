@@ -214,12 +214,18 @@ public class PerfilView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (lnPerfil != null) {
                 lnPerfil.setTipoFuncao(TipoFuncao.Excluir);
-                mensagem = perfilFuncoes.perfil(lnPerfil);
-                listPerfil = PerfilDao.grabListObject(LnPerfil.class);
-                listaPerfilAcesso();
-                lnPerfil = new LnPerfil();
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                        bundle.getString("ln.mb.titulo.perfil"), mensagem));
+                if (perfilFuncoes.perfil(lnPerfil)) {
+                    mensagem = perfilFuncoes.mensagem;
+                    listPerfil = PerfilDao.grabListObject(LnPerfil.class);
+                    listaPerfilAcesso();
+                    lnPerfil = new LnPerfil();
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.mb.titulo.perfil"), mensagem));
+                } else {
+                    mensagem = perfilFuncoes.mensagem;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.mb.titulo.perfil"), mensagem));
+                }
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -251,15 +257,39 @@ public class PerfilView implements Serializable {
             for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
                 lnPerfil.getListPerfilAcesso().add(lnPerfilacessog);
             }
-            mensagem = perfilFuncoes.perfil(lnPerfil);
+            
+            if (perfilFuncoes.perfil(lnPerfil)){
+                mensagem = perfilFuncoes.mensagem;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.perfil"), mensagem));
+            } else {
+                mensagem = perfilFuncoes.mensagem;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.perfil"), mensagem));
+            }
+            
         } else if (lnPerfil.getTipoFuncao().equals(TipoFuncao.Alterar)) {
             dataLoadVarPerfil();
-            mensagem = perfilFuncoes.perfil(lnPerfil);
-            for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
-                if (lnPerfilacessog.getTipoFuncao() != null) {
-                    lnPerfilacessog.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
-                    mensagem = perfilFuncoes.perfilAcesso(lnPerfilacessog);
+            if (perfilFuncoes.perfil(lnPerfil)){
+                mensagem = perfilFuncoes.mensagem;
+                for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
+                    if (lnPerfilacessog.getTipoFuncao() != null) {
+                        lnPerfilacessog.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
+                        if (perfilFuncoes.perfilAcesso(lnPerfilacessog)){
+                            mensagem = perfilFuncoes.mensagem;
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                    bundle.getString("ln.mb.titulo.perfil"), mensagem));
+                        } else {
+                            mensagem = perfilFuncoes.mensagem;
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                    bundle.getString("ln.mb.titulo.perfil"), mensagem));
+                        }
+                    }
                 }
+            } else {
+                mensagem = perfilFuncoes.mensagem;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.perfil"), mensagem));
             }
         }
 

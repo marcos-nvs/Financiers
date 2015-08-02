@@ -143,7 +143,7 @@ public class LnMenuModel implements Serializable {
                     break;
                 case "Perfil":
                     beanVar.setNovaTela("WEB-INF/templates/perfil.xhtml");
-                    beanVar.setNomeTela("Cadastro de Perfil");
+                    beanVar.setNomeTela("ln.texto.cadastrodeperfil");
                     VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
                     break;
                 case "Categoria":

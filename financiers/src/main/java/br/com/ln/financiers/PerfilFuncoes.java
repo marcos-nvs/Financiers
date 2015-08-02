@@ -30,46 +30,42 @@ public class PerfilFuncoes {
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public boolean perfil(LnPerfil lnPerfil) {
-        mensagem = "";
         historico = new Historico();
 
         switch (lnPerfil.getTipoFuncao()) {
             case Incluir:
-                inclusaoPerfil(lnPerfil);
-                break;
+                return inclusaoPerfil(lnPerfil);
             case Alterar:
-                alteracaoPerfil(lnPerfil);
-                break;
+                return alteracaoPerfil(lnPerfil);
             case Excluir:
-                exclusaoPerfil(lnPerfil);
-                break;
+                return exclusaoPerfil(lnPerfil);
             case Pesquisar:
-                break;
+                return true;
+            default:
+                return false;
         }
-
-        return mensagem;
     }
 
-    public String perfilAcesso(LnPerfilacesso lnPerfilacesso) {
-        mensagem = "";
+    public boolean perfilAcesso(LnPerfilacesso lnPerfilacesso) {
         historico = new Historico();
 
         switch (lnPerfilacesso.getTipoFuncao()) {
             case Incluir:
-                inclusaoPerfilAcesso(lnPerfilacesso);
-                break;
+                return inclusaoPerfilAcesso(lnPerfilacesso);
             case Alterar:
-                break;
+                return false;
             case Excluir:
-                exclusaoPerfilAcesso(lnPerfilacesso);
-                break;
+                return exclusaoPerfilAcesso(lnPerfilacesso);
             case Pesquisar:
-                break;
+                return false;
+            default:
+                return false;
         }
-        return mensagem;
     }
 
     private boolean inclusaoPerfil(LnPerfil lnPerfil) {
+
+        historico = new Historico();
 
         if (lnPerfil != null) {
             if (verificaPerfil(lnPerfil)) {
@@ -83,11 +79,14 @@ public class PerfilFuncoes {
                 EjbMap.grabPerfil(lnPerfil.getPerInCodigo(), VarComuns.strDbName);
                 historico.gravaHistoricoModulo("Inclusão do Perfil : " + lnPerfil.getPerStDescricao());
                 mensagem = "Sucesso";
+                return true;
+            } else{
+                return false;
             }
         } else {
             mensagem = "Inicie novamente o processo de inclusão de Perfil";
+            return false;
         }
-
     }
 
     private boolean verificaPerfil(LnPerfil lnPerfil) {
@@ -113,9 +112,13 @@ public class PerfilFuncoes {
                 EjbMap.updatePerfil(lnPerfil, VarComuns.strDbName);
                 historico.gravaHistoricoModulo("Alteração do Perfil : " + lnPerfil.getPerStDescricao());
                 mensagem = "Sucesso";
+                return true;
+            } else {
+                return false;
             }
         } else {
             mensagem = "Inicie novamente o processo de alteracao de Perfil";
+            return false;
         }
     }
 
@@ -123,12 +126,14 @@ public class PerfilFuncoes {
         PerfilDao.saveObject(lnPerfilacesso);
         historico.gravaHistoricoModulo("Inclusão de Acesso Perfil");
         mensagem = "Sucesso";
+        return true;
     }
 
     private boolean exclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
         PerfilDao.deleteObject(lnPerfilacesso);
         historico.gravaHistoricoModulo("Exclusão de Acesso Perfil ");
         mensagem = "Sucesso";
+        return true;
     }
 
     private boolean exclusaoPerfil(LnPerfil lnPerfil) {
@@ -142,6 +147,9 @@ public class PerfilFuncoes {
             PerfilDao.deleteObject(lnPerfil);
             historico.gravaHistoricoModulo("Exclusão de todo o perfil : " + lnPerfil.getPerStDescricao());
             mensagem = "Sucesso";
+            return true;
+        } else {
+            return false;
         }
     }
 

@@ -67,7 +67,7 @@
             <p:selectBooleanCheckbox id="idPerfilAtivo" value="#{perfilView.bAtivo}" />
             <p:outputLabel  value="#{msgs['ln.texto.ativo']}"/>
             <p:selectBooleanCheckbox id="idPerfilSenha" value="#{perfilView.bAlteraSenha}" style="margin-left: 5px"/>
-            <p:outputLabel  value="#{msgs['node.user.changes.password']}"/>
+            <p:outputLabel  value="#{msgs['ln.texto.usuarioalterasenha']}"/>
         </h:panelGrid>
         <h:panelGrid id="idPerfilAcessoDialog" columns="10">
             <p:outputLabel value="#{msgs['ln.texto.modulo']}"/>
@@ -88,7 +88,7 @@
             <f:facet name="header">
                 <p:outputLabel value="#{msgs['ln.texto.listaperfil']}"/>
             </f:facet>
-            <p:column headerText="#{msgs['template.code']}" style="width: 40px">
+            <p:column headerText="#{msgs['ln.texto.codigo']}" style="width: 40px">
                 <h:outputText value="#{incluiAcesso.lnPerfilacessoPK.modInCodigo}"/>
             </p:column>
             <p:column headerText="#{msgs['ln.texto.modulo']}" style="width: 40px">
