@@ -59,51 +59,51 @@
         </f:facet>
     </p:dataTable>
 
-    <p:dialog id="iddlgPerfil" header="#{msgs['node.inclusion']} de Perfil" widgetVar="PerfilEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
+    <p:dialog id="iddlgPerfil" header="#{msgs['ln.texto.cadastrodeperfil']}" widgetVar="PerfilEdit" modal="false" showEffect="fade" hideEffect="fade" closable="false" 
               style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idPerfilDialog" columns="6">
-            <p:outputLabel value="#{msgs['template.profile.description']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
             <p:inputText id="idPerfilDescricao" value="#{perfilView.perfilDescricao}" size="50"/>
             <p:selectBooleanCheckbox id="idPerfilAtivo" value="#{perfilView.bAtivo}" />
-            <p:outputLabel  value="#{msgs['page.connectionStatus.status2.value']}"/>
+            <p:outputLabel  value="#{msgs['ln.texto.ativo']}"/>
             <p:selectBooleanCheckbox id="idPerfilSenha" value="#{perfilView.bAlteraSenha}" style="margin-left: 5px"/>
             <p:outputLabel  value="#{msgs['node.user.changes.password']}"/>
         </h:panelGrid>
         <h:panelGrid id="idPerfilAcessoDialog" columns="10">
-            <p:outputLabel value="#{msgs['node.module']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.modulo']}"/>
             <p:selectOneMenu id="idListModulo" value="#{perfilView.modInCodigo}" style="margin-left: 60px">
                 <f:selectItems value="#{perfilView.listModulo}" var="perfilAcesso" itemLabel="#{perfilAcesso.modStDescricao}"
                                itemValue="#{perfilAcesso.modInCodigo}"/>
             </p:selectOneMenu>
             <p:selectBooleanCheckbox value="#{perfilView.bIncluirAcesso}" style="margin-left: 83px"/>
-            <p:outputLabel value="#{msgs['node.include']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.incluir']}"/>
             <p:selectBooleanCheckbox value="#{perfilView.bAlterarAcesso}"/>
-            <p:outputLabel value="#{msgs['template.change']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.alterar']}"/>
             <p:selectBooleanCheckbox value="#{perfilView.bExcluirAcesso}"/>
-            <p:outputLabel value="#{msgs['page.panelConfirmation.deleteButtonLabel']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.excluir']}"/>
             <p:selectBooleanCheckbox value="#{perfilView.bPesquisarAcesso}"/>
-            <p:outputLabel value="#{msgs['template.search']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.pesquisar']}"/>
         </h:panelGrid>
         <p:dataTable id="idDtAcesso" var="incluiAcesso" value="#{perfilView.listPerfilacesso}" paginator="true" rows="10" paginatorPosition="bottom">
             <f:facet name="header">
-                <p:outputLabel value="Acessos do Perfil"/>
+                <p:outputLabel value="#{msgs['ln.texto.listaperfil']}"/>
             </f:facet>
             <p:column headerText="#{msgs['template.code']}" style="width: 40px">
                 <h:outputText value="#{incluiAcesso.lnPerfilacessoPK.modInCodigo}"/>
             </p:column>
-            <p:column headerText="#{msgs['node.module']}" style="width: 40px">
+            <p:column headerText="#{msgs['ln.texto.modulo']}" style="width: 40px">
                 <h:outputText value="#{perfilView.buscaDescModulo(incluiAcesso.lnPerfilacessoPK.modInCodigo)}"/>
             </p:column>
-            <p:column headerText="#{msgs['node.include']}" style="width: 40px">
+            <p:column headerText="#{msgs['ln.texto.incluir']}" style="width: 40px">
                 <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChIncluir)}"/>
             </p:column>
-            <p:column headerText="#{msgs['template.change']}" style="width: 40px">
+            <p:column headerText="#{msgs['ln.texto.alterar']}" style="width: 40px">
                 <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChAlterar)}"/>
             </p:column>
-            <p:column headerText="#{msgs['page.panelConfirmation.deleteButtonLabel']}" style="width: 40px">
+            <p:column headerText="#{msgs['ln.texto.excluir']}" style="width: 40px">
                 <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChExcluir)}"/>
             </p:column>
-            <p:column headerText="#{msgs['template.search']}" style="width: 40px">
+            <p:column headerText="#{msgs['ln.texto.pesquisar']}" style="width: 40px">
                 <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChPesquisar)}"/>
             </p:column>
             <p:column style="width: 20px; text-align: center">
@@ -114,16 +114,16 @@
             </p:column>
         </p:dataTable>
         <f:facet name="footer">
-            <p:commandButton id="idIncluirPerfilAcesso" value="#{msgs['node.include']}" action="#{perfilView.btIncluirPerfilAcesso()}"
+            <p:commandButton id="idIncluirPerfilAcesso" value="#{msgs['ln.bt.incluir']}" action="#{perfilView.btIncluirPerfilAcesso()}"
                              process="idIncluirPerfilAcesso, idDtAcesso,idPerfilAcessoDialog,idPerfilDialog, idPerfilDescricao,idPerfilAtivo,
                                       idPerfilSenha,idPerfilDescricao, idPerfilSenha" 
                              update="idDtAcesso, :idFormTop:growl"/>
-            <p:commandButton id="idGravarPerfilAcesso" value="#{msgs['page.panelConfirmation.saveButtonLabel']}"
+            <p:commandButton id="idGravarPerfilAcesso" value="#{msgs['ln.bt.salvar']}"
                              action="#{perfilView.btGravarPerfilAcesso()}" 
                              process="idGravarPerfilAcesso, idPerfilDescricao,idPerfilAtivo, idPerfilSenha, idPerfilAcessoDialog, idPerfilDescricao,
                                       idPerfilSenha" 
                              update="idDtAcesso,idPerfilAcessoDialog,idPerfilDialog, :idFormTop:growl, idTbPerfil "/>
-            <p:commandButton id="idFecharPerfilAcesso" value="#{msgs['page.panelPopup.closeText']}" action="#{perfilView.btFecharPerfilAcesso()}"
+            <p:commandButton id="idFecharPerfilAcesso" value="#{msgs['ln.bt.fechar']}" action="#{perfilView.btFecharPerfilAcesso()}"
                              process="idFecharPerfilAcesso" update="idTbPerfil"/>
         </f:facet>
     </p:dialog>

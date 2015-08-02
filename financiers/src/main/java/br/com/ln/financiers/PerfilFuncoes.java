@@ -23,13 +23,13 @@ import javax.faces.context.FacesContext;
  */
 public class PerfilFuncoes {
 
-    private String mensagem;
+    public String mensagem;
     private Historico historico;
 
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
-    public String perfil(LnPerfil lnPerfil) {
+    public boolean perfil(LnPerfil lnPerfil) {
         mensagem = "";
         historico = new Historico();
 
@@ -69,7 +69,7 @@ public class PerfilFuncoes {
         return mensagem;
     }
 
-    private void inclusaoPerfil(LnPerfil lnPerfil) {
+    private boolean inclusaoPerfil(LnPerfil lnPerfil) {
 
         if (lnPerfil != null) {
             if (verificaPerfil(lnPerfil)) {
@@ -106,7 +106,7 @@ public class PerfilFuncoes {
         return validado;
     }
 
-    private void alteracaoPerfil(LnPerfil lnPerfil) {
+    private boolean alteracaoPerfil(LnPerfil lnPerfil) {
         if (lnPerfil != null) {
             if (verificaPerfil(lnPerfil)) {
                 PerfilDao.saveOrUpdateObject(lnPerfil);
@@ -119,19 +119,19 @@ public class PerfilFuncoes {
         }
     }
 
-    private void inclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
+    private boolean inclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
         PerfilDao.saveObject(lnPerfilacesso);
         historico.gravaHistoricoModulo("Inclusão de Acesso Perfil");
         mensagem = "Sucesso";
     }
 
-    private void exclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
+    private boolean exclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
         PerfilDao.deleteObject(lnPerfilacesso);
         historico.gravaHistoricoModulo("Exclusão de Acesso Perfil ");
         mensagem = "Sucesso";
     }
 
-    private void exclusaoPerfil(LnPerfil lnPerfil) {
+    private boolean exclusaoPerfil(LnPerfil lnPerfil) {
 
         if (verificaExclusaoPerfil(lnPerfil)) {
             if (lnPerfil.getListPerfilAcesso() != null) {
