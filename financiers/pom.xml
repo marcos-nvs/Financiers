@@ -41,8 +41,8 @@
             <artifactId>hibernate-validator-cdi</artifactId>
             <version>5.1.3.Final</version>
         </dependency>
-        <dependency>
-            <groupId>hibernate-commons-annotations</groupId>
+<!--        <dependency>
+            <groupId>org.hibernate.common</groupId>
             <artifactId>hibernate-commons-annotations</artifactId>
             <version>4.0.5.Final</version>
         </dependency>
@@ -52,7 +52,7 @@
             <version>2.1-api</version>
             <classifier>1.0.0</classifier>
             <type>Final.jar</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-ehcache</artifactId>
