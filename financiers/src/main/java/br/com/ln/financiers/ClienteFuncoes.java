@@ -53,6 +53,9 @@ public class ClienteFuncoes {
         mensagem = bundle.getString("ln.mb.frase.preenchercampos") + ": ";
         validado = true;
         
+        System.out.println("usuario :  " + lnUsuario.toString());
+        System.out.println("Clilente : " + lnCliente.toString());
+        
         if (lnUsuario != null){
             UsuarioFuncoes usuarioFuncoes = new UsuarioFuncoes();
             validado = usuarioFuncoes.verificaDadosUsuario(lnUsuario);

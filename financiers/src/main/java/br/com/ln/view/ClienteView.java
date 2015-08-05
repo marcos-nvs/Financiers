@@ -17,6 +17,7 @@ import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.ClienteFuncoes;
 import br.com.ln.financiers.EnderecoFuncoes;
 import br.com.ln.financiers.TelefoneFuncoes;
+import br.com.ln.financiers.UsuarioFuncoes;
 import br.com.ln.tipos.TipoEndereco;
 import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.tipos.TipoTelefone;
@@ -360,6 +361,9 @@ public class ClienteView implements Serializable {
         dataLoadCliente();
         if (clienteFuncoes.validacao(lnUsuario, lnCliente, listEndereco, listTelefone)) {
             clienteFuncoes.cliente(lnCliente, listEndereco, listTelefone);
+            lnUsuario.setCliInCodigo(lnCliente.getCliInCodigo());
+            UsuarioFuncoes usuarioFuncao = new UsuarioFuncoes();
+            usuarioFuncao.gravaUsuario(lnUsuario);
             btFecharCliente();
         } else {
             mensagem = clienteFuncoes.mensagem;

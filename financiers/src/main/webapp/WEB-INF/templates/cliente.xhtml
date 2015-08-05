@@ -7,9 +7,9 @@
     <p:panel header="#{msgs['ln.texto.cadastrocliente']}">
         <h:panelGrid id="idgrdusuario" columns="4">
             <p:outputLabel value="#{msgs['ln.texto.usuario']}" style="margin-left: 10px;"/>
-            <p:inputText id="idinputdocumento" value="#{clienteView.usuario}" />
+            <p:inputText id="idinputusuario" value="#{clienteView.usuario}" />
             <p:outputLabel value="#{msgs['ln.texto.senha']}"/>
-            <p:inputText id="idinputnome" value ="#{clienteView.senha}" size="50"/>
+            <p:password id="idinputsenha" value ="#{clienteView.senha}" size="20"/>
         </h:panelGrid>
         <h:panelGrid id="idgrdcliente" columns="6">
             <p:outputLabel value="CPF" style="margin-left: 10px;"/>
@@ -100,7 +100,7 @@
     <f:facet name="footer">
         <p:commandButton id="idbtsalvarcliente" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                          action="#{clienteView.btSalvarCliente()}" process="idbtsalvarcliente,idgrdcliente, idinputdocumento, idinputnome,
-                         idinputbanco, idinputemail"
+                         idinputbanco, idinputemail, idinputusuario, idinputsenha"
                          update="idbtsalvarcliente, :idFormTop:growl,idgrdcliente"/>
         <p:commandButton id="idbtfecharcliente" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-close"
                          action="#{clienteView.btFecharCliente()}" process="idbtfecharcliente"

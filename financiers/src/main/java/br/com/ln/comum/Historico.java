@@ -20,9 +20,17 @@ public class Historico {
     public Historico() {
     }
     
-    public void gravaHistoricoModulo(String descricao){
-        LnHistorico lnHistorico = new LnHistorico(lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
-                                                GenericDao.grabDateFromDB(),lnUsusario.getUsuStCodigo(),descricao);
+    public void gravaHistoricoModulo(String descricao) {
+        LnHistorico lnHistorico;
+
+        if (VarComuns.lnPerfilacesso != null) {
+            lnHistorico = new LnHistorico(VarComuns.lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo(),
+                    GenericDao.grabDateFromDB(), VarComuns.lnUsusario.getUsuStCodigo(), descricao);
+
+        } else {
+            lnHistorico = new LnHistorico(0, GenericDao.grabDateFromDB(), "Sistema Financeiro", descricao);
+        }
+
         GenericDao.saveObject(lnHistorico);
     }
     
