@@ -9,6 +9,8 @@ import br.com.ln.dao.TabelaDao;
 import br.com.ln.entity.LnTabela;
 import java.io.Serializable;
 import java.util.List;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -17,6 +19,9 @@ import java.util.List;
 public class IrrfFuncoes implements Serializable {
 
     public String mensagem;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public boolean verificaInformacoes(Tabela tabela, TabelaItem tabelaItem) {
         boolean validado = true;

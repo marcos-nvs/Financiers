@@ -13,6 +13,8 @@ import br.com.ln.entity.LnTabelaItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 
 /**
@@ -26,6 +28,9 @@ public class TabelaFuncoes implements Serializable{
     public String mensagem;
     public boolean bGravar;
     private final Historico historico;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public TabelaFuncoes() {
         historico = new Historico();

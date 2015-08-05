@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -55,6 +56,8 @@ public class IrrfView implements Serializable {
     private String valor;
 
     private String mensagem;
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public IrrfView() {
         tabela = new Tabela();
@@ -240,8 +243,9 @@ public class IrrfView implements Serializable {
             tabela.setTipoFuncao(TipoFuncao.Incluir);
             RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
         } else {
-            mensagem = "Usuario sem premissao para incluir tabela de IRRF.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -253,12 +257,14 @@ public class IrrfView implements Serializable {
                 loadTabelaVarDesc();
                 RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
             } else {
-                mensagem = "Para alterar a tabela e necessario escolher um.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para alterar a tabela de IRRF";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -274,21 +280,25 @@ public class IrrfView implements Serializable {
                     if (bExcluir) {
                         clearVarTabela();
                         clearVarTabelaItem();
-                        mensagem = "Tabela de Imposto incluida com sucesso!!!";
+                        mensagem = bundle.getString("ln.mb.texto.sucesso");
                         listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.tabela"), mensagem));
                     } else {
                         mensagem = tabelaFuncao.mensagem;
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.tabela"), mensagem));
                     }
                 }
             } else {
-                mensagem = "Para excluir a tabela e necessario escolher um.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para excluir a tabela de IRRF";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -303,7 +313,8 @@ public class IrrfView implements Serializable {
             listTabelaItem.add(tabelaItem);
         } else {
             mensagem = irrfFuncao.mensagem;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -311,15 +322,18 @@ public class IrrfView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (listTabelaItem.size() > 1) {
                 tabelaItem.setTipoFuncao(TipoFuncao.Excluir);
-                mensagem = "Registro marcado para exclusao com sucesso";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                mensagem = bundle.getString("ln.mb.texto.sucesso");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             } else {
-                mensagem = "E necessario ter pelo menos um valor na tabela.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para excluir tabela.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -337,11 +351,13 @@ public class IrrfView implements Serializable {
                 clearVarTabelaItem();
                 listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
                 RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
-                mensagem = "Tabela de Imposto incluida com sucesso!!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                mensagem = bundle.getString("ln.mb.texto.sucesso");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             } else {
                 mensagem = irrfFuncao.mensagem;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         }
     }
@@ -391,19 +407,21 @@ public class IrrfView implements Serializable {
 
     private LnTabela loadLnTabela() {
         boolean bGravar;
-        
+
         if (listTabelaItem != null && !listTabelaItem.isEmpty()) {
             lnTabela = tabelaFuncao.loadLnTabela(tabela, listTabelaItem, TIPOTABELA);
             bGravar = tabelaFuncao.bGravar;
 
             if (!bGravar) {
                 mensagem = tabelaFuncao.mensagem;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
             lnTabela = null;
-            mensagem = "Lista da tabela esta vazia!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.listavazia");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
         return lnTabela;
     }
