@@ -41,11 +41,11 @@ public class CategoriaFuncoes {
     private boolean incluirCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
             CategoriaDao.saveObject(lnCategoria);
-            historico.gravaHistoricoModulo("Inclusão da Categoria : " + lnCategoria.getCatStDescricao());
-            mensagem = "Sucesso";
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaocategoria") + " " + lnCategoria.getCatStDescricao());
+            mensagem = bundle.getString("ln.mb.texto.sucesso");
             return true;
         } else {
-            mensagem = "Ocorreu um problema durante a gravação.";
+            mensagem = bundle.getString("ln.mb.frase.problema");
             return false;
         }
     }
@@ -53,11 +53,11 @@ public class CategoriaFuncoes {
     private boolean alterarCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
             CategoriaDao.saveOrUpdateObject(lnCategoria);
-            historico.gravaHistoricoModulo("Alteração da Categoria : " + lnCategoria.getCatStDescricao());
-            mensagem = "Sucesso";
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaousuario") + " " + lnCategoria.getCatStDescricao());
+            mensagem = bundle.getString("ln.mb.texto.sucesso");
             return true;
         } else {
-            mensagem = "Ocorreu um problema durante a gravação";
+            mensagem = bundle.getString("ln.mb.frase.problema");
             return false;
         }
     }
@@ -65,11 +65,11 @@ public class CategoriaFuncoes {
     private boolean excluirCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
             CategoriaDao.deleteObject(lnCategoria);
-            historico.gravaHistoricoModulo("Exclusão da Categoria : " + lnCategoria.getCatStDescricao());
-            mensagem = "Sucesso";
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaocategoria") + " "  + lnCategoria.getCatStDescricao());
+            mensagem = bundle.getString("ln.mb.texto.sucesso");
             return true;
         } else {
-            mensagem = "Ocorreu um problema durante a exclusão";
+            mensagem = bundle.getString("ln.mb.frase.problema");
             return false;
         }
     }
