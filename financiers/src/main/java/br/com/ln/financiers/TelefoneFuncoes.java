@@ -41,7 +41,7 @@ public class TelefoneFuncoes {
         }
 
         if (validacao) {
-            mensagem = bundle.getString("ln.texto.sucesso");
+            mensagem = bundle.getString("ln.mb.texto.sucesso");
         }
 
         return validacao;

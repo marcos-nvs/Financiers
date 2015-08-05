@@ -357,6 +357,7 @@ public class ClienteView implements Serializable {
         lnCliente.setCliStBanco(banco);
         lnCliente.setCliStEmail(email);
         lnCliente.setCliChAtivo('N');
+        lnCliente.setTipoFuncao(TipoFuncao.Incluir);
     }
 
     private void dataLoadEndereco() {

@@ -77,8 +77,8 @@ public class PerfilFuncoes {
                 }
                 PerfilDao.saveObject(lnPerfil);
                 EjbMap.grabPerfil(lnPerfil.getPerInCodigo(), VarComuns.strDbName);
-                historico.gravaHistoricoModulo("Inclusão do Perfil : " + lnPerfil.getPerStDescricao());
-                mensagem = "Sucesso";
+                historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaoperfil") + " " + lnPerfil.getPerStDescricao());
+                mensagem = bundle.getString("ln.mb.texto.sucesso");
                 return true;
             } else{
                 return false;
@@ -111,7 +111,7 @@ public class PerfilFuncoes {
                 PerfilDao.saveOrUpdateObject(lnPerfil);
                 EjbMap.updatePerfil(lnPerfil, VarComuns.strDbName);
                 historico.gravaHistoricoModulo("Alteração do Perfil : " + lnPerfil.getPerStDescricao());
-                mensagem = "Sucesso";
+                mensagem = bundle.getString("ln.mb.texto.sucesso");
                 return true;
             } else {
                 return false;
@@ -125,14 +125,14 @@ public class PerfilFuncoes {
     private boolean inclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
         PerfilDao.saveObject(lnPerfilacesso);
         historico.gravaHistoricoModulo("Inclusão de Acesso Perfil");
-        mensagem = "Sucesso";
+        mensagem = bundle.getString("ln.mb.texto.sucesso");
         return true;
     }
 
     private boolean exclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
         PerfilDao.deleteObject(lnPerfilacesso);
         historico.gravaHistoricoModulo("Exclusão de Acesso Perfil ");
-        mensagem = "Sucesso";
+        mensagem = bundle.getString("ln.mb.texto.sucesso");
         return true;
     }
 
@@ -146,7 +146,7 @@ public class PerfilFuncoes {
             }
             PerfilDao.deleteObject(lnPerfil);
             historico.gravaHistoricoModulo("Exclusão de todo o perfil : " + lnPerfil.getPerStDescricao());
-            mensagem = "Sucesso";
+            mensagem = bundle.getString("ln.mb.texto.sucesso");
             return true;
         } else {
             return false;

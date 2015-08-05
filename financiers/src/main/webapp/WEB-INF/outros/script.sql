@@ -43,8 +43,8 @@ CREATE SEQUENCE acessocontrol.seq_cliente
 ALTER TABLE acessocontrol.seq_cliente
   OWNER TO postgres;
 
-insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
-values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','public','m-nvs@uol.com.br');
+-- insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
+-- values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','public','m-nvs@uol.com.br');
 
 -- Table: acessocontrol.ln_endereco
 
@@ -91,8 +91,8 @@ CREATE SEQUENCE acessocontrol.seq_endereco
 ALTER TABLE acessocontrol.seq_endereco
   OWNER TO postgres;
 
-insert into acessocontrol.ln_endereco("end_in_codigo","cli_in_codigo","end_ch_tipo","end_st_endereco","end_st_complemento","end_st_bairro","end_st_cidade","end_st_estado","end_st_cep")
-values (nextval('acessocontrol.seq_endereco'),1, '1','Rua Diógenes Ribeiro de Lima, 801', null, 'Jardim Belval','Barueri','São Paulo','06420250');
+-- insert into acessocontrol.ln_endereco("end_in_codigo","cli_in_codigo","end_ch_tipo","end_st_endereco","end_st_complemento","end_st_bairro","end_st_cidade","end_st_estado","end_st_cep")
+-- values (nextval('acessocontrol.seq_endereco'),1, '1','Rua Diógenes Ribeiro de Lima, 801', null, 'Jardim Belval','Barueri','São Paulo','06420250');
 
 -- Table: acessocontrol.ln_telefone
 
@@ -130,8 +130,8 @@ CREATE SEQUENCE acessocontrol.seq_telefone
 ALTER TABLE acessocontrol.seq_telefone
   OWNER TO postgres;
 
-insert into acessocontrol.ln_telefone ("tel_in_codigo","cli_in_codigo","tel_ch_tipo","tel_st_pais","tel_st_ddd","tel_st_telefone")
-values (nextval('acessocontrol.seq_telefone'), 1, '3', null, '011','995046236');
+-- insert into acessocontrol.ln_telefone ("tel_in_codigo","cli_in_codigo","tel_ch_tipo","tel_st_pais","tel_st_ddd","tel_st_telefone")
+-- values (nextval('acessocontrol.seq_telefone'), 1, '3', null, '011','995046236');
 
 -- Table: acessocontrol.ln_usuario
 
@@ -185,9 +185,9 @@ CREATE INDEX ind_usuariocpf
   USING btree
   (usu_st_codigo COLLATE pg_catalog."default", usu_st_cpf COLLATE pg_catalog."default");
 
-insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
-                                 "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "cli_in_codigo", "usu_st_admin") values 
-                                ('Naves', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',1,'S');
+-- insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
+--                                  "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "cli_in_codigo", "usu_st_admin") values 
+--                                 ('Naves', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',1,'S');
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Schema: public
@@ -677,12 +677,12 @@ ALTER TABLE seq_tabelaitem
 
 -------------------------------------------------------------------------------------------------------------------------
 
-insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
-values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','naves','m-nvs@uol.com.br');
-insert into acessocontrol.ln_endereco ("end_in_codigo","cli_in_codigo", "end_ch_tipo","end_st_endereco","end_st_complemento","end_st_bairro","end_st_cidade","end_st_estado","end_st_cep")
-values (nextval('acessocontrol.seq_endereco'), 2, '1','Rua Diógenes Ribeiro de Lima ,801',null,'Jardim Belval','Barueri','São Paulo','06420250');
-insert into acessocontrol.ln_telefone ("tel_in_codigo","cli_in_codigo","tel_ch_tipo","tel_st_pais","tel_st_ddd","tel_st_telefone")
-values (nextval('acessocontrol.seq_telefone'), 2, '3', null, '011','995046236');
-insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
-                                 "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "cli_in_codigo", "usu_st_admin") values 
-                                ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',2,'N');
+-- insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
+-- values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','naves','m-nvs@uol.com.br');
+-- insert into acessocontrol.ln_endereco ("end_in_codigo","cli_in_codigo", "end_ch_tipo","end_st_endereco","end_st_complemento","end_st_bairro","end_st_cidade","end_st_estado","end_st_cep")
+-- values (nextval('acessocontrol.seq_endereco'), 2, '1','Rua Diógenes Ribeiro de Lima ,801',null,'Jardim Belval','Barueri','São Paulo','06420250');
+-- insert into acessocontrol.ln_telefone ("tel_in_codigo","cli_in_codigo","tel_ch_tipo","tel_st_pais","tel_st_ddd","tel_st_telefone")
+-- values (nextval('acessocontrol.seq_telefone'), 2, '3', null, '011','995046236');
+-- insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
+--                                  "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "cli_in_codigo", "usu_st_admin") values 
+--                                 ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',2,'N');
