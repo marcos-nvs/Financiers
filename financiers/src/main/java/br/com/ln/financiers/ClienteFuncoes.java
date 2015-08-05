@@ -11,6 +11,7 @@ import br.com.ln.dao.ClienteDao;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnTelefone;
+import br.com.ln.entity.LnUsuario;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.faces.context.FacesContext;
@@ -47,10 +48,16 @@ public class ClienteFuncoes {
         return mensagem;
     }
 
-    public boolean validacao(LnCliente lnCliente, List<LnEndereco> listEndereco, List<LnTelefone> listTelefone) {
+    public boolean validacao(LnUsuario lnUsuario, LnCliente lnCliente, List<LnEndereco> listEndereco, List<LnTelefone> listTelefone) {
 
         mensagem = bundle.getString("ln.mb.frase.preenchercampos") + ": ";
         validado = true;
+        
+        if (lnUsuario != null){
+            UsuarioFuncoes usuarioFuncoes = new UsuarioFuncoes();
+            validado = usuarioFuncoes.verificaDadosUsuario(lnUsuario);
+            mensagem = usuarioFuncoes.mensagem;
+        }
 
         if (lnCliente != null) {
             if (lnCliente.getCliStDocumento() != null && !lnCliente.getCliStDocumento().isEmpty()) {

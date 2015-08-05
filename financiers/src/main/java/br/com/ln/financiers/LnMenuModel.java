@@ -63,7 +63,7 @@ public class LnMenuModel implements Serializable {
 
         if (listMenu != null && !listMenu.isEmpty()) {
 
-            if (VarComuns.lnUsusario.getUsuStAdmin().equals('S')) {
+            if (VarComuns.lnUsusario.getUsuChAdmin().equals('S')) {
                 model.addElement(clienteControl());
             }
             for (LnMenu lnMenu : listMenu) {

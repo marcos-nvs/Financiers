@@ -5,6 +5,12 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <p:panel header="#{msgs['ln.texto.cadastrocliente']}">
+        <h:panelGrid id="idgrdusuario" columns="4">
+            <p:outputLabel value="#{msgs['ln.texto.usuario']}" style="margin-left: 10px;"/>
+            <p:inputText id="idinputdocumento" value="#{clienteView.usuario}" />
+            <p:outputLabel value="#{msgs['ln.texto.senha']}"/>
+            <p:inputText id="idinputnome" value ="#{clienteView.senha}" size="50"/>
+        </h:panelGrid>
         <h:panelGrid id="idgrdcliente" columns="6">
             <p:outputLabel value="CPF" style="margin-left: 10px;"/>
             <p:inputText id="idinputdocumento" value="#{clienteView.documento}" />
@@ -112,9 +118,9 @@
         <h:panelGrid id="idgridendereco" columns="4" style="margin-left: 50px;">
             <p:outputLabel value="#{msgs['ln.texto.tipo']}"/>
             <p:selectOneMenu id="idtipoendereco" value="#{clienteView.tipoEndereco}">
-                <f:selectItem itemLabel="#{msgs['ln.texto.residencia']}" itemValue="#{msgs['ln.texto.residencia']}"/>
-                <f:selectItem itemLabel="#{msgs['ln.texto.comercial']}" itemValue="#{msgs['ln.texto.comercial']}"/>
-                <f:selectItem itemLabel="#{msgs['ln.texto.cobranca']}" itemValue="#{msgs['ln.texto.cobranca']}"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.residencia']}" itemValue="Residêncial"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.comercial']}" itemValue="Cmercial"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.cobranca']}" itemValue="Cobrança"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.endereco']}"/>
             <p:inputText value="#{clienteView.endereco}" size="50" />
@@ -146,9 +152,9 @@
         <h:panelGrid id="idgridtelefone" columns="8">
             <p:outputLabel value="#{msgs['ln.texto.tipo']}"/>
             <p:selectOneMenu id="idtipotelefone" value="#{clienteView.tipoTelefone}">
-                <f:selectItem itemLabel="#{msgs['ln.texto.residencia']}" itemValue="#{msgs['ln.texto.residencia']}"/>
-                <f:selectItem itemLabel="#{msgs['ln.texto.comercial']}" itemValue="#{msgs['ln.texto.comercial']}"/>
-                <f:selectItem itemLabel="#{msgs['ln.frase.inclusaotelefone']}" itemValue="#{msgs['ln.frase.inclusaotelefone']}"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.residencia']}" itemValue="Residêncial"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.comercial']}" itemValue="Comercial"/>
+                <f:selectItem itemLabel="#{msgs['ln.frase.inclusaotelefone']}" itemValue="Celular"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.codigopais']}"/>
             <p:inputText id="idinputcodpais" value="#{clienteView.codigoPais}" size="4" />

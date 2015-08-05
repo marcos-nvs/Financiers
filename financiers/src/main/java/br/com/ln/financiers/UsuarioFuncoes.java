@@ -58,7 +58,7 @@ public class UsuarioFuncoes implements Serializable {
         } else {
             if (lnUsuario.getUsuChExpirasenha().equals('S')) {
                 lnUsuario.setUsuInDia(30);
-                lnUsuario.setUsuStAdmin('N');
+                lnUsuario.setUsuChAdmin('N');
                 lnUsuario.setUsuDtExpiracao(GenericDao.grabDateFromDB());
             }
             lnUsuario.setUsuDtCadastro(GenericDao.grabDateFromDB());

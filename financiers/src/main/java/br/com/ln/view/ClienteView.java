@@ -13,6 +13,7 @@ import br.com.ln.comum.JsfHelper;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnTelefone;
+import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.ClienteFuncoes;
 import br.com.ln.financiers.EnderecoFuncoes;
 import br.com.ln.financiers.TelefoneFuncoes;
@@ -40,7 +41,7 @@ public class ClienteView implements Serializable {
 
     private String documento;
     private String nome;
-    private String banco;
+    private String banco = "public";
     private String email;
     private TipoEndereco tipoEndereco;
     private String endereco;
@@ -53,6 +54,9 @@ public class ClienteView implements Serializable {
     private String codigoPais;
     private String ddd;
     private String telefone;
+    private String usuario;
+    private String senha;
+    private LnUsuario lnUsuario;
 
     private final BeanVar beanVar;
     private final ClienteFuncoes clienteFuncoes;
@@ -79,6 +83,7 @@ public class ClienteView implements Serializable {
         listEndereco = new ArrayList<>();
         listTelefone = new ArrayList<>();
         lnCliente = new LnCliente();
+        lnUsuario = new LnUsuario();
     }
 
     public String getDocumento() {
@@ -241,6 +246,22 @@ public class ClienteView implements Serializable {
         this.listTelefone = listTelefone;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public void btIncluirEndereco() {
         lnEndereco = new LnEndereco();
         lnEndereco.setTipoFuncao(TipoFuncao.Incluir);
@@ -337,7 +358,7 @@ public class ClienteView implements Serializable {
 
     public void btSalvarCliente() {
         dataLoadCliente();
-        if (clienteFuncoes.validacao(lnCliente, listEndereco, listTelefone)) {
+        if (clienteFuncoes.validacao(lnUsuario, lnCliente, listEndereco, listTelefone)) {
             clienteFuncoes.cliente(lnCliente, listEndereco, listTelefone);
             btFecharCliente();
         } else {
@@ -358,6 +379,18 @@ public class ClienteView implements Serializable {
         lnCliente.setCliStEmail(email);
         lnCliente.setCliChAtivo('N');
         lnCliente.setTipoFuncao(TipoFuncao.Incluir);
+        
+        lnUsuario.setUsuStCodigo(usuario);
+        lnUsuario.setUsuStSenha(senha);
+        lnUsuario.setPerInCodigo(1);
+        lnUsuario.setTipoFuncao(TipoFuncao.Incluir);
+        lnUsuario.setUsuChAlterasenha('S');
+        lnUsuario.setUsuChAtivo('S');
+        lnUsuario.setUsuChExpirasenha('S');
+        lnUsuario.setUsuInDia(30);
+        lnUsuario.setUsuStCpf(documento);
+        lnUsuario.setUsuStEmail(email);
+        lnUsuario.setUsuStNome(nome);
     }
 
     private void dataLoadEndereco() {

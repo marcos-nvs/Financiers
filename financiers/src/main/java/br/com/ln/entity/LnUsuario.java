@@ -83,8 +83,8 @@ public class LnUsuario implements Serializable {
     private String usuStCpf;
     @Column(name = "cli_in_codigo")
     private Integer cliInCodigo;
-    @Column(name = "usu_st_admin")
-    private Character usuStAdmin;
+    @Column(name = "usu_ch_admin")
+    private Character usuChAdmin;
     
     @Transient
     private TipoFuncao tipoFuncao;
@@ -212,12 +212,12 @@ public class LnUsuario implements Serializable {
         this.cliInCodigo = cliInCodigo;
     }
 
-    public Character getUsuStAdmin() {
-        return usuStAdmin;
+    public Character getUsuChAdmin() {
+        return usuChAdmin;
     }
 
-    public void setUsuStAdmin(Character usuStAdmin) {
-        this.usuStAdmin = usuStAdmin;
+    public void setUsuChAdmin(Character usuChAdmin) {
+        this.usuChAdmin = usuChAdmin;
     }
     
     public TipoFuncao getTipoFuncao() {
@@ -250,7 +250,7 @@ public class LnUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "LnUsuario{" + "usuStCodigo=" + usuStCodigo + ", usuStNome=" + usuStNome + ", usuStSenha=" + usuStSenha + ", usuStEmail=" + usuStEmail + ", usuChAtivo=" + usuChAtivo + ", usuInDia=" + usuInDia + ", usuChAlterasenha=" + usuChAlterasenha + ", usuChExpirasenha=" + usuChExpirasenha + ", usuDtExpiracao=" + usuDtExpiracao + ", usuDtCadastro=" + usuDtCadastro + ", perInCodigo=" + perInCodigo + ", usuStCpf=" + usuStCpf + ", cliInCodigo=" + cliInCodigo + ", usuStAdmin=" + usuStAdmin + ", tipoFuncao=" + tipoFuncao + '}';
+        return "LnUsuario{" + "usuStCodigo=" + usuStCodigo + ", usuStNome=" + usuStNome + ", usuStSenha=" + usuStSenha + ", usuStEmail=" + usuStEmail + ", usuChAtivo=" + usuChAtivo + ", usuInDia=" + usuInDia + ", usuChAlterasenha=" + usuChAlterasenha + ", usuChExpirasenha=" + usuChExpirasenha + ", usuDtExpiracao=" + usuDtExpiracao + ", usuDtCadastro=" + usuDtCadastro + ", perInCodigo=" + perInCodigo + ", usuStCpf=" + usuStCpf + ", cliInCodigo=" + cliInCodigo + ", usuChAdmin=" + usuChAdmin + ", tipoFuncao=" + tipoFuncao + '}';
     }
 
     
