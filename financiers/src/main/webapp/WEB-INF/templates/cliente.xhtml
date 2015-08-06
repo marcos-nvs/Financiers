@@ -101,7 +101,7 @@
         <p:commandButton id="idbtsalvarcliente" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                          action="#{clienteView.btSalvarCliente()}" process="idbtsalvarcliente,idgrdcliente, idinputdocumento, idinputnome,
                          idinputbanco, idinputemail, idinputusuario, idinputsenha"
-                         update="idbtsalvarcliente, :idFormTop:growl,idgrdcliente"/>
+                         update="idbtsalvarcliente, :idFormTop:growl,idgrdcliente, idFormCenter"/>
         <p:commandButton id="idbtfecharcliente" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-close"
                          action="#{clienteView.btFecharCliente()}" process="idbtfecharcliente"
                          update="idFormCenter"/>

@@ -514,15 +514,15 @@ public class ClienteView implements Serializable {
         return telefoneFuncoes.descricaoTipo(tipoTelefone);
     }
 
-    static {
-        String host = "proxy-sp.dasa.net";
-        String port = "3128";
-        System.out.println("Using proxy: " + host + ":" + port);
-        System.setProperty("http.proxyHost", host);
-        System.setProperty("http.proxyPort", port);
-        System.setProperty("http.proxySet", "true");
-        System.setProperty("http.nonProxyHosts", "localhost|127.0.0.1");
-    }
+//    static {
+//        String host = "proxy-sp.dasa.net";
+//        String port = "3128";
+//        System.out.println("Using proxy: " + host + ":" + port);
+//        System.setProperty("http.proxyHost", host);
+//        System.setProperty("http.proxyPort", port);
+//        System.setProperty("http.proxySet", "true");
+//        System.setProperty("http.nonProxyHosts", "localhost|127.0.0.1");
+//    }
     
     //TODO procurar um site para pesquisa mundial;
 

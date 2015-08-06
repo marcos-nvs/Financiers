@@ -81,6 +81,11 @@ public class EjbMap implements Serializable{
         mapUsuario.put(code, lnUsuario);
     }
     
+    public synchronized static void deleteUsuario(LnUsuario lnUsuario){
+        String code = lnUsuario.getUsuStCodigo();
+        mapUsuario.remove(code);
+    }
+    
     public synchronized static LnPerfil grabPerfil(Integer perInCodigo,String strDbName){
         mapPerfil.clear();
         LnPerfil lnPerfil = null;

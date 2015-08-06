@@ -375,6 +375,7 @@ public class FnAcesso implements Serializable {
                 if (lnUsuario.getUsuStSenha().equals(rsenha)) {
                     if (!novaSenha.equals("")) {
                         if (novaSenha.equals(confirmaSenha)) {
+                            System.out.println("usuario : " + lnUsuario.toString());
                             Historico historico = new Historico();
                             lnUsuario.setUsuStSenha(novaSenha);
                             lnUsuario.setUsuDtExpiracao(usuarioFuncao.calculaDataExpiracao(lnUsuario));
