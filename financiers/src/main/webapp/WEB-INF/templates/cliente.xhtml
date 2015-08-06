@@ -7,21 +7,21 @@
     <p:panel header="#{msgs['ln.texto.cadastrocliente']}">
         <h:panelGrid id="idgrdusuario" columns="4">
             <p:outputLabel value="#{msgs['ln.texto.usuario']}" style="margin-left: 10px;"/>
-            <p:inputText id="idinputusuario" value="#{clienteView.usuario}" />
+            <p:inputText id="idinputusuario" value="#{clienteView.usuario}" maxlength="30" />
             <p:outputLabel value="#{msgs['ln.texto.senha']}"/>
-            <p:password id="idinputsenha" value ="#{clienteView.senha}" size="20"/>
+            <p:password id="idinputsenha" value ="#{clienteView.senha}" size="20" maxlength="30"/>
         </h:panelGrid>
         <h:panelGrid id="idgrdcliente" columns="6">
             <p:outputLabel value="CPF" style="margin-left: 10px;"/>
             <p:inputText id="idinputdocumento" value="#{clienteView.documento}" />
             <p:outputLabel value="#{msgs['ln.texto.nome']}"/>
-            <p:inputText id="idinputnome" value ="#{clienteView.nome}" size="50"/>
+            <p:inputText id="idinputnome" value ="#{clienteView.nome}" size="50" maxlength="50"/>
             <p:outputLabel value="#{msgs['ln.texto.identificacaosistema']}"/>
-            <p:inputText id="idinputbanco" value="#{clienteView.banco}" size="20"/>
+            <p:inputText id="idinputbanco" value="#{clienteView.banco}" size="20" disabled="true" maxlength="30"/>
         </h:panelGrid>
         <h:panelGrid columns="2">
             <p:outputLabel value="E-mail"/>
-            <p:inputText id="idinputemail" value="#{clienteView.email}" size="100"/>
+            <p:inputText id="idinputemail" value="#{clienteView.email}" size="100" maxlength="100"/>
         </h:panelGrid>
         <p:dataTable id="iddtendereco" var="dtendereco" style="margin-top: 20px;" value="#{clienteView.listEndereco}" selectionMode="single"
                      selection="#{clienteView.lnEndereco}" rowKey="#{dtendereco.endInCodigo}">
