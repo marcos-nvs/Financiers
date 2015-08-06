@@ -99,7 +99,16 @@ public class UsuarioFuncoes implements Serializable {
                 mensagem = mensagem + bundle.getString("ln.texto.documento") + "; ";
                 validado = false;
             }
+            
+        } else {
+            LnUsuario lnUsuCPF = UsuarioDao.grabUsuarioDocumento(lnUsuario.getUsuStCpf());
+
+            if (lnUsuCPF != null) {
+                mensagem = mensagem + bundle.getString("ln.mb.frase.usuariocadastrado");
+                validado = false;
+            }
         }
+
         return validado;
     }
 
