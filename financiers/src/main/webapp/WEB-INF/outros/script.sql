@@ -626,45 +626,40 @@ CREATE SEQUENCE seq_tabela
 ALTER TABLE seq_tabela
   OWNER TO postgres;
 
--- Table: "ln_tabelaitem"
+-- Table: ln_tabelaitem
 
--- DROP TABLE "ln_tabelaitem";
+-- DROP TABLE ln_tabelaitem;
 
-CREATE TABLE "ln_tabelaitem"
+CREATE TABLE ln_tabelaitem
 (
-  tai_in_codigo integer NOT NULL, -- Item da tabela
-  tab_in_codigo integer NOT NULL, -- Tabela pai
+  tai_in_codigo integer NOT NULL,
+  tab_in_codigo integer NOT NULL,
   tai_fl_inicio double precision,
   tai_fl_final double precision,
   tai_fl_percentual double precision,
   tai_fl_desconto double precision,
   tai_fl_dependente double precision,
   tai_in_qtddependente integer,
-  CONSTRAINT "ln_tabelaitem_pkey" PRIMARY KEY (tai_in_codigo)
+  tai_st_origem character varying(50),
+  tai_st_tipo character varying(50),
+  CONSTRAINT ln_tabelaitem_pkey PRIMARY KEY (tai_in_codigo)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE "ln_tabelaitem"
+ALTER TABLE ln_tabelaitem
   OWNER TO postgres;
-COMMENT ON TABLE "ln_tabelaitem"
+COMMENT ON TABLE ln_tabelaitem
   IS 'Item da tabela de impostos, taxas, juros entre outros';
-COMMENT ON COLUMN "ln_tabelaItem".tai_in_codigo IS 'Item da tabela';
-COMMENT ON COLUMN "ln_tabelaItem".tab_in_codigo IS 'Tabela pai';
 
+-- Index: ln_tabelaitem_tab_in_codigo_tai_in_codigo_idx
 
--- Index: "ln_tabelaItem_tab_in_codigo_tai_in_codigo_idx"
+-- DROP INDEX ln_tabelaitem_tab_in_codigo_tai_in_codigo_idx;
 
--- DROP INDEX "ln_tabelaItem_tab_in_codigo_tai_in_codigo_idx";
-
-CREATE INDEX "ln_tabelaitem_tab_in_codigo_tai_in_codigo_idx"
-  ON "ln_tabelaitem"
+CREATE INDEX ln_tabelaitem_tab_in_codigo_tai_in_codigo_idx
+  ON ln_tabelaitem
   USING btree
   (tab_in_codigo, tai_in_codigo);
-
--- Sequence: seq_tabelaitem
-
--- DROP SEQUENCE seq_tabelaitem;
 
 CREATE SEQUENCE seq_tabelaitem
   INCREMENT 1
