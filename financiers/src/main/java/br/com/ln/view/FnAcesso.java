@@ -381,10 +381,8 @@ public class FnAcesso implements Serializable {
                             lnUsuario.setUsuDtExpiracao(usuarioFuncao.calculaDataExpiracao(lnUsuario));
                             UsuarioDao.saveOrUpdateObject(lnUsuario);
 
-                            if (VarComuns.lnUsusario != null) {
-                                VarComuns.lnUsusario = lnUsuario;
-                                EjbMap.updateUsuario(lnUsuario);
-                            }
+                            VarComuns.lnUsusario = lnUsuario;
+                            EjbMap.updateUsuario(lnUsuario);
 
                             historico.gravaHistorico(lnUsuario, bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " " + 
                                    bundle.getString("ln.mb.frase.alterada"));
