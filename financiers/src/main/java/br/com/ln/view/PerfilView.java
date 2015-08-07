@@ -279,10 +279,11 @@ public class PerfilView implements Serializable {
             }
         }
 
-            listPerfil = PerfilDao.grabListObject(LnPerfil.class);
-            listaPerfilAcesso();
-            lnPerfil = new LnPerfil();
-            RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
+        
+        listPerfil = PerfilDao.grabListObject(LnPerfil.class);
+        listaPerfilAcesso();
+        lnPerfil = new LnPerfil();
+        RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
     }
 
     public void btFecharPerfilAcesso() {

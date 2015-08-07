@@ -237,6 +237,7 @@ public class UsuarioView implements Serializable {
 
     public void btIncluir() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
+            listPerfil = PerfilDao.grabListPerfilAtivo('S');
             beanVar.setApresenta(true);
             beanVar.setBloquear(false);
             dataClean();
@@ -253,6 +254,7 @@ public class UsuarioView implements Serializable {
     public void btAlterar() {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
+                listPerfil = PerfilDao.grabListPerfilAtivo('S');
                 beanVar.setApresenta(true);
                 beanVar.setBloquear(true);
                 dataLoadVar();
