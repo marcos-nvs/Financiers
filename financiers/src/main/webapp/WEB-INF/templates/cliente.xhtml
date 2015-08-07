@@ -140,7 +140,7 @@
         <f:facet name="footer">
             <p:commandButton id="idbtsalvarendereco" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                              action="#{clienteView.btSalvarEndereco()}" 
-                             process="idbtsalvarendereco, idgridendereco, idgridcomplemento, idgriddetalhe"
+                             process="idbtsalvarendereco, idgridendereco, idgridcomplemento, idgriddetalhe, idinputcep"
                              update="iddtendereco, :idFormTop:growl, idgridendereco, idgridcomplemento, idgriddetalhe"/>
             <p:commandButton id="idbtfecharendereco" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-close"
                              action="#{clienteView.btFecharEndereco()}" process="idbtfecharendereco" update="idbtfecharendereco"/>

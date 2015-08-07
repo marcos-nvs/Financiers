@@ -420,7 +420,7 @@ public class FnAcesso implements Serializable {
     }
 
     public void btFechaTroca() {
-        lnUsuario = new LnUsuario();
+        lnUsuario = null;
         RequestContext.getCurrentInstance().execute("PF('senha').hide()");
     }
 

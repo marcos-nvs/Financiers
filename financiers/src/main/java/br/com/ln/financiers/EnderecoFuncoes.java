@@ -33,23 +33,23 @@ public class EnderecoFuncoes {
         
         
         if (lnEndereco != null){
-            if (lnEndereco.getEndStEndereco() != null && lnEndereco.getEndStEndereco().isEmpty()){
+            if (lnEndereco.getEndStEndereco() == null || lnEndereco.getEndStEndereco().isEmpty()){
                 mensagem = mensagem + bundle.getString("ln.texto.endereco")  + "; ";
                 validado = false;
             }
-            if (lnEndereco.getEndStBairro() != null && lnEndereco.getEndStBairro().isEmpty()){
+            if (lnEndereco.getEndStBairro() == null || lnEndereco.getEndStBairro().isEmpty()){
                 mensagem = mensagem + bundle.getString("ln.texto.bairro")  + "; ";
                 validado = false;
             }
-            if (lnEndereco.getEndStCidade() != null && lnEndereco.getEndStCidade().isEmpty()){
+            if (lnEndereco.getEndStCidade() == null || lnEndereco.getEndStCidade().isEmpty()){
                 mensagem = mensagem + bundle.getString("ln.texto.cidade")  + "; ";
                 validado = false;
             }
-            if (lnEndereco.getEndStEstado() != null && lnEndereco.getEndStEstado().isEmpty()){
+            if (lnEndereco.getEndStEstado() == null || lnEndereco.getEndStEstado().isEmpty()){
                 mensagem = mensagem + bundle.getString("ln.texto.estado")  + "; ";
                 validado = false;
             }
-            if (lnEndereco.getEndStCep() != null && lnEndereco.getEndStCep().isEmpty()){
+            if (lnEndereco.getEndStCep() == null || lnEndereco.getEndStCep().isEmpty()){
                 mensagem = mensagem + bundle.getString("ln.texto.cep")  + "; ";
                 validado = false;
             }
