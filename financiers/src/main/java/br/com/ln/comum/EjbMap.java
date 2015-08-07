@@ -77,13 +77,11 @@ public class EjbMap implements Serializable{
     }
     
     public synchronized static void updateUsuario(LnUsuario lnUsuario){
-        System.out.println("atualizando usuario do map");
         String code = lnUsuario.getUsuStCodigo();
         mapUsuario.put(code, lnUsuario);
     }
     
     public synchronized static void deleteUsuario(LnUsuario lnUsuario){
-        System.out.println("deletanto usuario do map");
         String code = lnUsuario.getUsuStCodigo();
         mapUsuario.remove(code,lnUsuario);
     }
