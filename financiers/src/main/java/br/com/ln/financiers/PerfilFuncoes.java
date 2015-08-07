@@ -13,6 +13,7 @@ import br.com.ln.dao.UsuarioDao;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
+import br.com.ln.tipos.TipoFuncao;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.faces.context.FacesContext;
@@ -53,7 +54,7 @@ public class PerfilFuncoes {
             case Incluir:
                 return inclusaoPerfilAcesso(lnPerfilacesso);
             case Alterar:
-                return false;
+                return true;
             case Excluir:
                 return exclusaoPerfilAcesso(lnPerfilacesso);
             case Pesquisar:
@@ -73,7 +74,9 @@ public class PerfilFuncoes {
 
                 for (LnPerfilacesso lnPerfilacesso : lnPerfil.getListPerfilAcesso()) {
                     lnPerfilacesso.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
-                    PerfilDao.saveObject(lnPerfilacesso);
+                    if (!perfilAcesso(lnPerfilacesso)) {
+                        return false;
+                    }
                 }
                 PerfilDao.saveObject(lnPerfil);
                 EjbMap.grabPerfil(lnPerfil.getPerInCodigo(), VarComuns.strDbName);
@@ -84,23 +87,23 @@ public class PerfilFuncoes {
                 return false;
             }
         } else {
-            mensagem = "Inicie novamente o processo de inclusão de Perfil";
+            mensagem = bundle.getString("ln.mb.frase.erro");
             return false;
         }
     }
 
     private boolean verificaPerfil(LnPerfil lnPerfil) {
-        mensagem = "Por favor preencha as seguintes informações: ";
+        mensagem = bundle.getString("ln.mb.frase.preenchercampos");
         boolean validado = true;
 
         if (lnPerfil.getPerStDescricao() == null || lnPerfil.getPerStDescricao().isEmpty()) {
             validado = false;
-            mensagem = mensagem + "Descricao do perfil - ";
+            mensagem = mensagem + bundle.getString("ln.texto.descricao") + " ";
         }
 
         if (lnPerfil.getListPerfilAcesso() == null || lnPerfil.getListPerfilAcesso().isEmpty()) {
             validado = false;
-            mensagem = mensagem + "Defina um tipo de acesso - ";
+            mensagem = mensagem + bundle.getString("ln.mb.frase.definatipoacesso");
         }
         return validado;
     }
@@ -108,30 +111,38 @@ public class PerfilFuncoes {
     private boolean alteracaoPerfil(LnPerfil lnPerfil) {
         if (lnPerfil != null) {
             if (verificaPerfil(lnPerfil)) {
+                for (LnPerfilacesso lnPerfilacesso : lnPerfil.getListPerfilAcesso()) {
+                    if (lnPerfilacesso.getTipoFuncao() == null){
+                        lnPerfilacesso.setTipoFuncao(TipoFuncao.Alterar);
+                    }
+                    if (!perfilAcesso(lnPerfilacesso)) {
+                        return false;
+                    }
+                }
                 PerfilDao.saveOrUpdateObject(lnPerfil);
                 EjbMap.updatePerfil(lnPerfil, VarComuns.strDbName);
-                historico.gravaHistoricoModulo("Alteração do Perfil : " + lnPerfil.getPerStDescricao());
+                historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaoperfil") + " " + lnPerfil.getPerStDescricao());
                 mensagem = bundle.getString("ln.mb.texto.sucesso");
                 return true;
             } else {
                 return false;
             }
         } else {
-            mensagem = "Inicie novamente o processo de alteracao de Perfil";
+            mensagem = bundle.getString("ln.mb.frase.erro");
             return false;
         }
     }
 
     private boolean inclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
         PerfilDao.saveObject(lnPerfilacesso);
-        historico.gravaHistoricoModulo("Inclusão de Acesso Perfil");
+        historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaoperfilacesso"));
         mensagem = bundle.getString("ln.mb.texto.sucesso");
         return true;
     }
 
     private boolean exclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
         PerfilDao.deleteObject(lnPerfilacesso);
-        historico.gravaHistoricoModulo("Exclusão de Acesso Perfil ");
+        historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaoperfilacesso"));
         mensagem = bundle.getString("ln.mb.texto.sucesso");
         return true;
     }
@@ -140,12 +151,15 @@ public class PerfilFuncoes {
 
         if (verificaExclusaoPerfil(lnPerfil)) {
             if (lnPerfil.getListPerfilAcesso() != null) {
-                for (LnPerfilacesso lnPerfAcesso : lnPerfil.getListPerfilAcesso()) {
-                    PerfilDao.deleteObject(lnPerfAcesso);
+                for (LnPerfilacesso lnPerfilacesso : lnPerfil.getListPerfilAcesso()) {
+                    lnPerfilacesso.setTipoFuncao(TipoFuncao.Excluir);
+                    if (!perfilAcesso(lnPerfilacesso)) {
+                        return false;
+                    }
                 }
             }
             PerfilDao.deleteObject(lnPerfil);
-            historico.gravaHistoricoModulo("Exclusão de todo o perfil : " + lnPerfil.getPerStDescricao());
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaoperfil") + " " + lnPerfil.getPerStDescricao());
             mensagem = bundle.getString("ln.mb.texto.sucesso");
             return true;
         } else {
@@ -158,7 +172,7 @@ public class PerfilFuncoes {
         List<LnUsuario> listUsuario = UsuarioDao.grabUsuarioPerfil(lnPerfil.getPerInCodigo());
 
         if (listUsuario != null && !listUsuario.isEmpty()) {
-            mensagem = "Perfil não pode ser excluído, está sendo utilizado";
+            mensagem = bundle.getString("ln.mb.frase.existehistorico");
             return false;
         } else {
             return true;
