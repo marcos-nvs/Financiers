@@ -45,11 +45,13 @@ public class EjbMap implements Serializable{
         
         if (usuStCodigo != null){
             if (mapUsuario.containsKey(code)){
+                System.out.println("usuario existe : " + lnUsuario.toString());
                 return mapUsuario.get(code);
             } else {
                 lnUsuario = UsuarioDao.grabUsuario(usuStCodigo, 'S');
                 
                 if (lnUsuario != null){
+                    System.out.println("usuario inclui : " + lnUsuario.toString());
                     mapUsuario.put(code, lnUsuario);
                     return lnUsuario;
                 }
