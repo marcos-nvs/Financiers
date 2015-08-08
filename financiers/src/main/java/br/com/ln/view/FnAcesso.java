@@ -344,7 +344,7 @@ public class FnAcesso implements Serializable {
                 lnUsuario = null;
                 beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
                 beanVar.setNomeTela("ln.frase.sistemafinanceiro");
-                mensagem = bundle.getString("ln.mb.frase.invalidocpf") + " " + ex.getMessage();
+                mensagem = bundle.getString("ln.mb.frase.emailcomproblema") + " " + ex.getMessage();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                 logger.error(mensagem);
@@ -352,7 +352,7 @@ public class FnAcesso implements Serializable {
                 lnUsuario = null;
                 beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
                 beanVar.setNomeTela(bundle.getString("ln.frase.recuperaaceso"));
-                mensagem = bundle.getString("ln.mb.frase.invalidocpf");
+                mensagem = bundle.getString("ln.mb.frase.emailcomproblema");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                 logger.error(mensagem);
@@ -418,7 +418,7 @@ public class FnAcesso implements Serializable {
     }
 
     public void btFechaTroca() {
-        lnUsuario = new LnUsuario();
+        lnUsuario = null;
         RequestContext.getCurrentInstance().execute("PF('senha').hide()");
     }
 

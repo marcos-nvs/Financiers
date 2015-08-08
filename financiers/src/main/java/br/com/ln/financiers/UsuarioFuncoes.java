@@ -99,13 +99,15 @@ public class UsuarioFuncoes implements Serializable {
                 mensagem = mensagem + bundle.getString("ln.texto.documento") + "; ";
                 validado = false;
             }
-            
-        } else {
-            LnUsuario lnUsuCPF = UsuarioDao.grabUsuarioDocumento(lnUsuario.getUsuStCpf());
 
-            if (lnUsuCPF != null) {
-                mensagem = mensagem + bundle.getString("ln.mb.frase.usuariocadastrado");
-                validado = false;
+        } else {
+            if (lnUsuario.getTipoFuncao().equals(TipoFuncao.Incluir)) {
+                LnUsuario lnUsuCPF = UsuarioDao.grabUsuarioDocumento(lnUsuario.getUsuStCpf());
+
+                if (lnUsuCPF != null) {
+                    mensagem = mensagem + bundle.getString("ln.mb.frase.usuariocadastrado");
+                    validado = false;
+                }
             }
         }
 
@@ -113,7 +115,6 @@ public class UsuarioFuncoes implements Serializable {
     }
 
     private boolean alteracaoUsuario(LnUsuario lnUsuario) {
-
         LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
         lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
         UsuarioDao.saveOrUpdateObject(lnUsuario);

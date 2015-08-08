@@ -257,7 +257,6 @@ public class PerfilView implements Serializable {
             for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
                 lnPerfil.getListPerfilAcesso().add(lnPerfilacessog);
             }
-            
             if (perfilFuncoes.perfil(lnPerfil)){
                 mensagem = perfilFuncoes.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -267,25 +266,12 @@ public class PerfilView implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.perfil"), mensagem));
             }
-            
         } else if (lnPerfil.getTipoFuncao().equals(TipoFuncao.Alterar)) {
             dataLoadVarPerfil();
             if (perfilFuncoes.perfil(lnPerfil)){
                 mensagem = perfilFuncoes.mensagem;
-                for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
-                    if (lnPerfilacessog.getTipoFuncao() != null) {
-                        lnPerfilacessog.getLnPerfilacessoPK().setPerInCodigo(lnPerfil.getPerInCodigo());
-                        if (perfilFuncoes.perfilAcesso(lnPerfilacessog)){
-                            mensagem = perfilFuncoes.mensagem;
-                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                    bundle.getString("ln.mb.titulo.perfil"), mensagem));
-                        } else {
-                            mensagem = perfilFuncoes.mensagem;
-                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                    bundle.getString("ln.mb.titulo.perfil"), mensagem));
-                        }
-                    }
-                }
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.perfil"), mensagem));
             } else {
                 mensagem = perfilFuncoes.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -293,17 +279,11 @@ public class PerfilView implements Serializable {
             }
         }
 
-        if (mensagem.equals("Sucesso")) {
-            listPerfil = PerfilDao.grabListObject(LnPerfil.class);
-            listaPerfilAcesso();
-            lnPerfil = new LnPerfil();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    bundle.getString("ln.mb.titulo.perfil"), mensagem));
-            RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    bundle.getString("ln.mb.titulo.perfil"), mensagem));
-        }
+        
+        listPerfil = PerfilDao.grabListObject(LnPerfil.class);
+        listaPerfilAcesso();
+        lnPerfil = new LnPerfil();
+        RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
     }
 
     public void btFecharPerfilAcesso() {
@@ -319,7 +299,7 @@ public class PerfilView implements Serializable {
             lnPerfilacesso.setTipoFuncao(TipoFuncao.Excluir);
             perfilFuncoes.perfilAcesso(lnPerfilacesso);
         } else {
-            mensagem = "O perfil deve ter pelo menos um tipo de acesso. Não excluido";
+            mensagem = bundle.getString("ln.mb.frase.perfilnaoexcluido");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("ln.mb.titulo.perfil"), mensagem));
         }
@@ -354,14 +334,6 @@ public class PerfilView implements Serializable {
         perfilDescricao = lnPerfil.getPerStDescricao();
         bAtivo = tratativa.tratamentoTextoBoolean(lnPerfil.getPerChAtivo());
         bAlteraSenha = tratativa.tratamentoTextoBoolean(lnPerfil.getPerChAlterasenha());
-
-//        if (lnPerfilacesso != null) {
-//            modInCodigo = lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo();
-//            bIncluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChIncluir());
-//            bAlterarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChAlterar());
-//            bExcluirAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChExcluir());
-//            bPesquisarAcesso = tratativa.tratamentoTextoBoolean(lnPerfilacesso.getPacChPesquisar());
-//        }
         listPerfilacesso = lnPerfil.getListPerfilAcesso();
     }
 
