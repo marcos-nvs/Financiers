@@ -375,15 +375,12 @@ public class FnAcesso implements Serializable {
                 if (lnUsuario.getUsuStSenha().equals(rsenha)) {
                     if (!novaSenha.equals("")) {
                         if (novaSenha.equals(confirmaSenha)) {
-                            System.out.println("usuario : " + lnUsuario.toString());
                             Historico historico = new Historico();
                             lnUsuario.setUsuStSenha(novaSenha);
                             lnUsuario.setUsuDtExpiracao(usuarioFuncao.calculaDataExpiracao(lnUsuario));
                             UsuarioDao.saveOrUpdateObject(lnUsuario);
-
                             VarComuns.lnUsusario = lnUsuario;
                             EjbMap.updateUsuario(lnUsuario);
-
                             historico.gravaHistorico(lnUsuario, bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " " + 
                                    bundle.getString("ln.mb.frase.alterada"));
                             RequestContext.getCurrentInstance().execute("PF('senha').hide()");
