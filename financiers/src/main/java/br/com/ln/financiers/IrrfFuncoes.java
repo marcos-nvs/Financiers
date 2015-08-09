@@ -7,6 +7,7 @@ package br.com.ln.financiers;
 
 import br.com.ln.dao.TabelaDao;
 import br.com.ln.entity.LnTabela;
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -65,12 +66,16 @@ public class IrrfFuncoes implements Serializable {
             validado = false;
         }
         
-        List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(1, tabela.getDataInicial(), tabela.getDataFinal());
-        
-        if (listaTabela != null && !listaTabela.isEmpty() ){
-            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfdataintercalada") + "; ";
-            validado = false;
+        if (tabela.getTipoFuncao().equals(TipoFuncao.Incluir)) {
+            
+            List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(1, tabela.getDataInicial(), tabela.getDataFinal());
+
+            if (listaTabela != null && !listaTabela.isEmpty()) {
+                mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfdataintercalada") + "; ";
+                validado = false;
+            }
         }
+        
         return validado;
     }
 }
