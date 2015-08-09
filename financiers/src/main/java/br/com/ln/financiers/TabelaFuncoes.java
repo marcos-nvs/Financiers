@@ -86,13 +86,13 @@ public class TabelaFuncoes implements Serializable{
             
             if (bSalvo) {
                 TabelaDao.saveObject(lnTabela);
-                historico.gravaHistoricoModulo("Inclusão do Tabela : " + lnTabela.getTabStDescricao());
+                historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaotabela") + " " + lnTabela.getTabStDescricao());
             return true;
             } else {
                 return false;
             }
         } catch (HibernateException ex){
-            mensagem = "Ocorreu um erro na gravação!";
+            mensagem = bundle.getString("ln.mb.frase.problema");
             return false;
         }
     }
@@ -105,10 +105,10 @@ public class TabelaFuncoes implements Serializable{
 
         try{
             TabelaDao.saveOrUpdateObject(lnTabela);
-            historico.gravaHistoricoModulo("Alteração do Tabela : " + lnTabela.getTabStDescricao());
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaotabela") + " " + lnTabela.getTabStDescricao());
             return true;
         } catch (HibernateException ex){
-            mensagem = "Ocorreu um erro na gravação!";
+            mensagem = bundle.getString("ln.mb.frase.problema");
             return false;
         }
     }
@@ -119,10 +119,10 @@ public class TabelaFuncoes implements Serializable{
                 TabelaDao.deleteObject(lnTabelaItem);
             });
             TabelaDao.deleteObject(lnTabela);
-            historico.gravaHistoricoModulo("Exclusão do Tabela : " + lnTabela.getTabStDescricao());
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaotabela") + " " + lnTabela.getTabStDescricao());
             return true;
         } catch (HibernateException ex){
-            mensagem = "Ocorreu um erro na gravação!";
+            mensagem = bundle.getString("ln.mb.frase.problema");
             return false;
         }
     }
@@ -133,7 +133,7 @@ public class TabelaFuncoes implements Serializable{
             TabelaDao.saveObject(lnTabelaItem);
             return true;
         } catch (HibernateException ex) {
-            mensagem = "Ocorreu um erro na gravação!";
+            mensagem = bundle.getString("ln.mb.frase.problema");
             return false;
         }
     }
@@ -144,7 +144,7 @@ public class TabelaFuncoes implements Serializable{
             TabelaDao.deleteObject(lnTabelaItem);
             return true;
         } catch (HibernateException ex){
-            mensagem = "Ocorreu um erro na exclusao do item!";
+            mensagem = bundle.getString("ln.mb.frase.problema");
             return false;
         }
     }
@@ -267,7 +267,7 @@ public class TabelaFuncoes implements Serializable{
                     listTabelaItemLoad.add(lnTabelaItem);
                     bGravar = true;
                 } else {
-                    mensagem = "Exitem valores na tabela iguais, por favor verifique!!";
+                    mensagem = bundle.getString("ln.mb.frase.valorestabelaigual");
                     bGravar = false;
                     break;
                 }
@@ -277,11 +277,11 @@ public class TabelaFuncoes implements Serializable{
                 if (listTabelaItemLoad.size() > 0) {
                     lnTabela.setListLnTabelaItem(listTabelaItemLoad);
                 } else {
-                    mensagem = "Nao ha alteracoes a serem realizadas!!";
+                    mensagem = bundle.getString("ln.mb.frase.naohaalteracao");
                 }
             }
         } else {
-            mensagem = "Lista da tabela esta vazia!!";
+            mensagem = bundle.getString("ln.mb.frase.tabelavazia");
         }
         return lnTabela;
     }    

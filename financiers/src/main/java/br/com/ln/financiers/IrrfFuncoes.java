@@ -25,10 +25,10 @@ public class IrrfFuncoes implements Serializable {
 
     public boolean verificaInformacoes(Tabela tabela, TabelaItem tabelaItem) {
         boolean validado = true;
-        mensagem = "Verifique os dados: ";
+        mensagem = bundle.getString("ln.mb.frase.preenchercampos") + " ";
 
         if (tabela.getNomeTabela() == null || tabela.getNomeTabela().equals("")) {
-            mensagem = mensagem + "Descricao da tabela; ";
+            mensagem = mensagem + bundle.getString("ln.texto.descricao") + ";";
             validado = false;
         }
         if ((tabela.getDataInicial() == null || tabela.getDataFinal() == null) || tabela.getDataInicial().after(tabela.getDataFinal())) {
