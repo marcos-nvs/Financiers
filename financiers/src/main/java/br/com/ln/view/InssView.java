@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -27,11 +28,10 @@ import org.primefaces.context.RequestContext;
  *
  * @author Marcos Naves
  */
-
 @SessionScoped
 @ManagedBean(name = "inssView")
-public class InssView implements Serializable{
-    
+public class InssView implements Serializable {
+
     private Integer idCodigo;
     private Integer codigoTabela;
     private String nomeTabela;
@@ -55,6 +55,9 @@ public class InssView implements Serializable{
     private String valor;
 
     private String mensagem;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public InssView() {
         tabela = new Tabela();
@@ -215,21 +218,22 @@ public class InssView implements Serializable{
     public String toString() {
         return "IrrfView{" + "tabela=" + tabela + ", listTabela=" + listTabela + '}';
     }
-    
-    public void btIncluir(){
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
+
+    public void btIncluir() {
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             clearVarTabela();
             clearVarTabelaItem();
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
             RequestContext.getCurrentInstance().execute("PF('InssEdit').show()");
         } else {
-            mensagem = "Usuario sem premissao para incluir tabela de INSS.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
-    
-    public void btAlterar(){
+
+    public void btAlterar() {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             if (tabela != null) {
                 tabela.setTipoFuncao(TipoFuncao.Alterar);
@@ -237,17 +241,19 @@ public class InssView implements Serializable{
                 loadTabelaVarDesc();
                 RequestContext.getCurrentInstance().execute("PF('InssEdit').show()");
             } else {
-                mensagem = "Para alterar a tabela e necessario escolher um.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para alterar a tabela de INSS";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
-    public void btExcluir(){
-        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')){
+    public void btExcluir() {
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (tabela != null) {
                 tabela.setTipoFuncao(TipoFuncao.Excluir);
                 listTabelaItem = tabela.getListTabelaItem();
@@ -258,25 +264,29 @@ public class InssView implements Serializable{
                     if (bExcluir) {
                         clearVarTabela();
                         clearVarTabelaItem();
-                        mensagem = "Tabela de Imposto incluida com sucesso!!!";
+                        mensagem = bundle.getString("ln.mb.texto.sucesso");
                         listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.tabela"), mensagem));
                     } else {
                         mensagem = tabelaFuncao.mensagem;
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IRRF", mensagem));
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                bundle.getString("ln.mb.titulo.tabela"), mensagem));
                     }
                 }
             } else {
-                mensagem = "Para excluir a tabela e necessario escolher um.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IRRF", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para alterar a tabela de INSS";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
-    
-    public void btIncluirItem(){
+
+    public void btIncluirItem() {
         tabelaItem = new TabelaItem();
         tabelaItem.setCodigoTabItem(tabelaFuncao.calcIdTabelaItem());
         tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
@@ -287,27 +297,31 @@ public class InssView implements Serializable{
             listTabelaItem.add(tabelaItem);
         } else {
             mensagem = inssFuncao.mensagem;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
-    
-    public void btExcluirItem(){
+
+    public void btExcluirItem() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (listTabelaItem.size() > 1) {
                 tabelaItem.setTipoFuncao(TipoFuncao.Excluir);
-                mensagem = "Registro marcado para exclusao com sucesso";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+                mensagem = bundle.getString("ln.mb.texto.sucesso");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             } else {
-                mensagem = "E necessario ter pelo menos um valor na tabela.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.perfilnaoexcluido");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para excluir tabela.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
-    
-    public void btSalvar(){
+
+    public void btSalvar() {
         boolean bGravar;
         if (tabela != null && tabela.getTipoFuncao().equals(TipoFuncao.Alterar)) {
             loadVarTabela();
@@ -321,11 +335,13 @@ public class InssView implements Serializable{
                 clearVarTabelaItem();
                 listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
                 RequestContext.getCurrentInstance().execute("PF('InssEdit').hide()");
-                mensagem = "Tabela de Imposto incluida com sucesso!!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela INSS", mensagem));
+                mensagem = bundle.getString("ln.mb.texto.sucesso");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             } else {
                 mensagem = inssFuncao.mensagem;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela INSS", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         }
     }
@@ -358,22 +374,25 @@ public class InssView implements Serializable{
 
     private LnTabela loadLnTabela() {
         boolean bGravar;
-        
+
         if (listTabelaItem != null && !listTabelaItem.isEmpty()) {
             lnTabela = tabelaFuncao.loadLnTabela(tabela, listTabelaItem, TIPOTABELA);
             bGravar = tabelaFuncao.bGravar;
 
             if (!bGravar) {
                 mensagem = tabelaFuncao.mensagem;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela INSS", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
             lnTabela = null;
-            mensagem = "Lista da tabela esta vazia!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela INSS", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.tabelavazia");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
         return lnTabela;
     }
+
     private void loadVarTabela() {
         tabela.setDataFinal(dataFinal);
         tabela.setDataInicial(dataInicial);
