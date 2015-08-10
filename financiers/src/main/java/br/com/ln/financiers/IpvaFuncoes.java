@@ -7,7 +7,10 @@ package br.com.ln.financiers;
 
 import br.com.ln.dao.TabelaDao;
 import br.com.ln.entity.LnTabela;
+import br.com.ln.tipos.TipoFuncao;
 import java.util.List;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -17,41 +20,47 @@ public class IpvaFuncoes {
     
     public String mensagem;
 
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+
     public boolean verificaInformacoes(Tabela tabela, TabelaItem tabelaItem) {
         boolean validado = true;
-        mensagem = "Verifique os dados: ";
+        mensagem = bundle.getString("ln.mb.frase.preenchercampos") + " ";
 
         if (tabela.getNomeTabela() == null || tabela.getNomeTabela().equals("")) {
-            mensagem = mensagem + "Descricao da tabela; ";
+            mensagem = mensagem + bundle.getString("ln.texto.descricao") +  "; ";
             validado = false;
         }
         if ((tabela.getDataInicial() == null || tabela.getDataFinal() == null) || tabela.getDataInicial().after(tabela.getDataFinal())) {
-            mensagem = mensagem + "Data Inicial nao pode ser maior que data final e ambas nao podem estar vazias; ";
+            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfvalorinicial") + "; ";
             validado = false;
         }
         if ((tabela.getDataFinal() == null || tabela.getDataInicial() == null) || tabela.getDataFinal().before(tabela.getDataInicial())) {
-            mensagem = mensagem + "Data Final nao pode ser menor que data inicial e ambas nao podem estar vazias; ";
+            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfvalorfinal") + "; ";
             validado = false;
         }
         if (tabelaItem.getOrigem() == null) {
-            mensagem = mensagem + "Origem do Carro; ";
+            mensagem = mensagem + bundle.getString("ln.texto.origemcarro") + "; ";
             validado = false;
         }
         if (tabelaItem.getTipo() == null) {
-            mensagem = mensagem + "Tipo Combustivel; ";
+            mensagem = mensagem + bundle.getString("ln.texto.tipocombustivel") + "; ";
             validado = false;
         }
         if (tabelaItem.getPercentual() == null) {
-            mensagem = mensagem + "Percentual; ";
+            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfpercentual") + "; ";
             validado = false;
         }
         
-        List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(3, tabela.getDataInicial(), tabela.getDataFinal());
-        
-        if (listaTabela == null && listaTabela.isEmpty() && listaTabela.size() > 0){
-            mensagem = mensagem + "Verificar as datas, nao pode haver outra tabela com aa mesmas datas ou intercaladas; ";
-            validado = false;
+        if (tabela.getTipoFuncao().equals(TipoFuncao.Incluir)) {
+            List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(3, tabela.getDataInicial(), tabela.getDataFinal());
+
+            if (listaTabela == null && listaTabela.isEmpty() && listaTabela.size() > 0) {
+                mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfdataintercalada") + " ";
+                validado = false;
+            }
         }
+
         return validado;
     }
     
@@ -59,7 +68,7 @@ public class IpvaFuncoes {
         
         for (TabelaItem tbItem : listTabelaItem) {
             if (tbItem.getOrigem().equals(NTabelaItem.getOrigem()) && tbItem.getTipo().equals(NTabelaItem.getTipo())){
-                mensagem = "Item ja existe na tabela";
+                mensagem = bundle.getString("ln.mb.frase.itemexistente");
                 return false;
             }
         }

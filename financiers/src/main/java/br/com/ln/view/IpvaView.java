@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -27,11 +28,10 @@ import org.primefaces.context.RequestContext;
  *
  * @author Marcos Naves
  */
-
 @SessionScoped
 @ManagedBean(name = "ipvaView")
-public class IpvaView implements Serializable{
-    
+public class IpvaView implements Serializable {
+
     private Integer idCodigo;
     private Integer codigoTabela;
     private String nomeTabela;
@@ -48,11 +48,14 @@ public class IpvaView implements Serializable{
     private List<Tabela> listTabela;
     private final TabelaFuncoes tabelaFuncao;
     private final IpvaFuncoes ipvaFuncao;
-    
+
     private String origemCarro;
     private String tipoCombustivel;
 
     private String mensagem;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public IpvaView() {
         tabela = new Tabela();
@@ -206,8 +209,9 @@ public class IpvaView implements Serializable{
             tabela.setTipoFuncao(TipoFuncao.Incluir);
             RequestContext.getCurrentInstance().execute("PF('ipvaEdit').show()");
         } else {
-            mensagem = "Usuario sem premissao para incluir tabela de IPVA.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -219,12 +223,14 @@ public class IpvaView implements Serializable{
                 loadTabelaVarDesc();
                 RequestContext.getCurrentInstance().execute("PF('ipvaEdit').show()");
             } else {
-                mensagem = "Para alterar a tabela e necessario escolher um.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para alterar a tabela de IPVA";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -240,21 +246,25 @@ public class IpvaView implements Serializable{
                     if (bExcluir) {
                         clearVarTabela();
                         clearVarTabelaItem();
-                        mensagem = "Tabela de Imposto incluida com sucesso!!!";
+                        mensagem = bundle.getString("ln.mb.texto.sucesso");
                         listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.tabela"), mensagem));
                     } else {
                         mensagem = tabelaFuncao.mensagem;
-                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IPVA", mensagem));
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.tabela"), mensagem));
                     }
                 }
             } else {
-                mensagem = "Para excluir a tabela e necessario escolher um.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para excluir a tabela de IPVA";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -269,7 +279,8 @@ public class IpvaView implements Serializable{
             listTabelaItem.add(tabelaItem);
         } else {
             mensagem = ipvaFuncao.mensagem;
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -277,15 +288,18 @@ public class IpvaView implements Serializable{
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             if (listTabelaItem.size() > 1) {
                 tabelaItem.setTipoFuncao(TipoFuncao.Excluir);
-                mensagem = "Registro marcado para exclusao com sucesso";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+                mensagem = bundle.getString("ln.mb.texto.sucesso");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             } else {
-                mensagem = "E necessario ter pelo menos um valor na tabela.";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
-            mensagem = "Usuario sem permissao para excluir tabela.";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
 
@@ -303,11 +317,13 @@ public class IpvaView implements Serializable{
                 clearVarTabelaItem();
                 listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
                 RequestContext.getCurrentInstance().execute("PF('ipvaEdit').hide()");
-                mensagem = "Tabela de Imposto incluida com sucesso!!!";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Tabela IPVA", mensagem));
+                mensagem = bundle.getString("ln.mb.texto.sucesso");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             } else {
                 mensagem = ipvaFuncao.mensagem;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IPVA", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         }
     }
@@ -351,19 +367,21 @@ public class IpvaView implements Serializable{
 
     private LnTabela loadLnTabela() {
         boolean bGravar;
-        
+
         if (listTabelaItem != null && !listTabelaItem.isEmpty()) {
             lnTabela = tabelaFuncao.loadLnTabela(tabela, listTabelaItem, TIPOTABELA);
             bGravar = tabelaFuncao.bGravar;
 
             if (!bGravar) {
                 mensagem = tabelaFuncao.mensagem;
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IPVA", mensagem));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
             }
         } else {
             lnTabela = null;
-            mensagem = "Lista da tabela esta vazia!!";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Tabela IPVA", mensagem));
+            mensagem = bundle.getString("ln.mb.frase.tabelavazia");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
         return lnTabela;
     }
