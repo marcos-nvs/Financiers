@@ -670,6 +670,91 @@ CREATE SEQUENCE seq_tabelaitem
 ALTER TABLE seq_tabelaitem
   OWNER TO postgres;
 
+-- Table: ln_tipofavorecido
+
+-- DROP TABLE ln_tipofavorecido;
+
+CREATE TABLE ln_tipofavorecido
+(
+  tfa_in_codigo integer NOT NULL,
+  tfa_st_descricao character varying(50) NOT NULL,
+  tfa_ch_ativo character(1) NOT NULL,
+  CONSTRAINT pk_tipofavorecido PRIMARY KEY (tfa_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_tipofavorecido
+  OWNER TO postgres;
+COMMENT ON TABLE ln_tipofavorecido
+  IS 'Tabela que define o tipo de pessoas, lojas, bancos';
+
+-- Sequence: seq_tipofavorecido
+
+-- DROP SEQUENCE seq_tipofavorecido;
+
+CREATE SEQUENCE seq_tipofavorecido
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_tipofavorecido
+  OWNER TO postgres;
+
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Amigo', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Banco', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Cartório', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Chaveiro', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Contabilidade', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Construção', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Empresa', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Farmácia', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Governo', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Lazer', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Loja', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Mecânico', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Médico/Dentista', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Outro', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Parente', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Posto de Combustível', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Restaurantes', 'S');
+insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Supermercado', 'S');
+
+-- Table: ln_favorecido
+
+-- DROP TABLE ln_favorecido;
+
+CREATE TABLE ln_favorecido
+(
+  fav_in_codigo integer NOT NULL,
+  fav_st_descricao character varying(50) NOT NULL,
+  fav_ch_ativo character(1) NOT NULL,
+  fav_st_documento character varying(15), -- CPF/CNPJ
+  tfa_in_codigo integer NOT NULL,
+  CONSTRAINT pk_favorecido PRIMARY KEY (fav_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_favorecido
+  OWNER TO postgres;
+COMMENT ON COLUMN ln_favorecido.fav_st_documento IS 'CPF/CNPJ';
+
+-- Sequence: seq_favorecido
+
+-- DROP SEQUENCE seq_favorecido;
+
+CREATE SEQUENCE seq_favorecido
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_favorecido
+  OWNER TO postgres;
+
+
 -------------------------------------------------------------------------------------------------------------------------
 
 -- insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
