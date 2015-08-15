@@ -171,7 +171,7 @@ public class JurosView implements Serializable {
             clearVarTabelaItem();
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
-            RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
+            RequestContext.getCurrentInstance().execute("PF('JurosEdit').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -185,7 +185,7 @@ public class JurosView implements Serializable {
                 tabela.setTipoFuncao(TipoFuncao.Alterar);
                 listTabelaItem = tabela.getListTabelaItem();
                 loadTabelaVarDesc();
-                RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
+                RequestContext.getCurrentInstance().execute("PF('JurosEdit').show()");
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -233,6 +233,7 @@ public class JurosView implements Serializable {
     }
 
     public void btIncluiDetalhe() {
+        System.out.println("teste");
         tabelaItem = new TabelaItem();
         tabelaItem.setCodigoTabItem(tabelaFuncao.calcIdTabelaItem());
         tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
@@ -280,7 +281,7 @@ public class JurosView implements Serializable {
                 clearVarTabela();
                 clearVarTabelaItem();
                 listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
-                RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
+                RequestContext.getCurrentInstance().execute("PF('JurosEdit').hide()");
                 mensagem = bundle.getString("ln.mb.texto.sucesso");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.tabela"), mensagem));
@@ -293,7 +294,7 @@ public class JurosView implements Serializable {
     }
 
     public void btFechar() {
-        RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
+        RequestContext.getCurrentInstance().execute("PF('JurosEdit').hide()");
     }
 
     private void loadVarTabela() {

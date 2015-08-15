@@ -40,29 +40,8 @@ public class JurosFuncoes implements Serializable {
             mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfdatafinalmenor") + "; ";
             validado = false;
         }
-        if (tabelaItem.getValorInicial() == null || (tabelaItem.getValorInicial() >= tabelaItem.getValorFinal())) {
-            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfvalorinicial") + "; ";
-            validado = false;
-        } else {
-        }
-        if (tabelaItem.getValorFinal() == null || (tabelaItem.getValorFinal().equals(0d) && tabelaItem.getValorFinal() <= tabelaItem.getValorInicial())) {
-            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfvalorfinal") + "; ";
-            validado = false;
-        }
-        if (tabelaItem.getQtdDependente() == null) {
-            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfqtddependente") + "; ";
-            validado = false;
-        }
         if (tabelaItem.getPercentual() == null) {
-            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfpercentual") + "; ";
-            validado = false;
-        }
-        if (tabelaItem.getValorDesconto() == null) {
-            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfvlrdesconto") + "; ";
-            validado = false;
-        }
-        if (tabelaItem.getValorDependente() == null) {
-            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfvlrdependente") + "; ";
+            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelajurospercentual") + "; ";
             validado = false;
         }
         
