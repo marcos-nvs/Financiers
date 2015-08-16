@@ -4,5 +4,32 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:outputText value="Em Desenvolvimento"/>
+    <p:dataTable id="iddtfavorecido" var="dtfavorecido">
+        <f:facet name="header">
+            <p:outputLabel value="#{msgs['ln.texto.listafavorecido']}"/>
+        </f:facet>
+        <p:column headerText="#{msgs['']}">
+            <p:outputLabel />
+        </p:column>
+        <p:column headerText="#{msgs['']}">
+            <p:outputLabel />
+        </p:column>
+        <p:column headerText="#{msgs['']}">
+            <p:outputLabel />
+        </p:column>
+        <p:column headerText="#{msgs['']}">
+            <p:outputLabel />
+        </p:column>
+        <f:facet name="footer">
+            <p:commandButton id="idincluirfavorito" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"/>
+            <p:commandButton id="idalterarfavorito" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"/>
+            <p:commandButton id="idexcluirfavorito" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash">
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
+                    <p:commandButton value="#{msgs['ln.bt.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="#{msgs['ln.bt.nao']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
+            </p:commandButton>
+            <p:commandButton id="idhistoricofavorito" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice"/>
+        </f:facet>
+    </p:dataTable>
 </ui:composition>
