@@ -8,18 +8,29 @@
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.texto.listafavorecido']}"/>
         </f:facet>
-        <p:column headerText="#{msgs['']}">
-            <p:outputLabel />
+        <p:column style="width: 16px">
+            <p:rowToggler />
         </p:column>
-        <p:column headerText="#{msgs['']}">
-            <p:outputLabel />
+        <p:column headerText="#{msgs['ln.texto.tipofavorecido']}">
+            <p:outputLabel value="#{favorecidoView.descricaoTipoFavorecido(idTipoFavorecido)}" />
         </p:column>
-        <p:column headerText="#{msgs['']}">
-            <p:outputLabel />
+        <p:column headerText="#{msgs['ln.texto.documento']}">
+            <p:outputLabel value="#{favorecidoView.documento}" />
         </p:column>
-        <p:column headerText="#{msgs['']}">
-            <p:outputLabel />
+        <p:column headerText="#{msgs['ln.texto.nome']}">
+            <p:outputLabel value="#{favorecidoView.nome}" />
         </p:column>
+        <p:column headerText="#{msgs['ln.texto.ativo']}">
+            <p:outputLabel value="#{favorecidoView.ativo}" />
+        </p:column>
+        <p:rowExpansion>
+            <p:dataTable id="idtbcadfavorecido" var="favorecidoEndereco" value=""
+                         paginator="true" rows="20" paginatorPosition="bottom">
+                <p:column headerText="">
+                    <h:outputText />
+                </p:column>
+            </p:dataTable>
+        </p:rowExpansion>
         <f:facet name="footer">
             <p:commandButton id="idincluirfavorito" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"/>
             <p:commandButton id="idalterarfavorito" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"/>
@@ -32,4 +43,22 @@
             <p:commandButton id="idhistoricofavorito" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice"/>
         </f:facet>
     </p:dataTable>
+
+    <p:dialog id="idgridfavorecido" header="#{msgs['ln.mb.titulo.favorecido']}" widgetVar="favorecido" modal="false" showEffect="fade"
+              hideEffect="fade" closable="false" style="background-color: activeborder" width="1000" dynamic="true">
+        <h:panelGrid id="idpanelfavorecido" columns="2">
+            <p:outputLabel/>
+            <p:selectOneMenu id="idListTipoFavorecido" value="" style="margin-left: 60px" >
+                <f:selectItems value="" var="tipofavorecido" itemLabel="" itemValue=""/>
+            </p:selectOneMenu>
+            <p:outputLabel value="#{msgs['ln.texto.documento']}"/>
+            <p:inputText id="idinputdocumentofavorecido" value="" size="15"/>
+            <p:outputLabel value="#{msgs['ln.texto.nome']}"/>
+            <p:inputText id="idinputnomefavorecido" value="" size="50"/>
+            <p:selectBooleanCheckbox id="idinputativofavorecido" value="" />
+            <p:outputLabel  value="#{msgs['ln.texto.ativo']}"/>
+        </h:panelGrid>
+        <p:commandButton id="idbtsalvarfavorecido" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
+        <p:commandButton id="idbtfecharfavorecido" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"/>
+    </p:dialog>
 </ui:composition>
