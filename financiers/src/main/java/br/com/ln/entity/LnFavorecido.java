@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -46,6 +48,9 @@ public class LnFavorecido implements Serializable {
     @Basic(optional = false)
     @Column(name = "tfa_in_codigo")
     private int tfaInCodigo;
+    
+    @Transient
+    private TipoFuncao tipoFuncao;
 
     public LnFavorecido() {
     }
@@ -101,6 +106,14 @@ public class LnFavorecido implements Serializable {
         this.tfaInCodigo = tfaInCodigo;
     }
 
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

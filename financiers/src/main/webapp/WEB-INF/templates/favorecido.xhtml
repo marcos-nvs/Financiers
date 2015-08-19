@@ -4,7 +4,8 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:dataTable id="iddtfavorecido" var="dtfavorecido">
+    <p:dataTable id="iddtfavorecido" var="dtfavorecido" value="#{favorecidoView.listaFavorecido}" selection="#{favorecidoView.lnFavorecido}"
+                 selectionMode="single" rowKey="#{dtfavorecido.favInCodigo}" paginator="true" rows="20" paginatorPosition="bottom">
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.texto.listafavorecido']}"/>
         </f:facet>
@@ -18,13 +19,19 @@
             <p:outputLabel value="#{favorecidoView.documento}" />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.nome']}">
-            <p:outputLabel value="#{favorecidoView.nome}" />
+            <p:outputLabel value="#{favorecidoView.nomeFavorecido}" />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.ativo']}">
             <p:outputLabel value="#{favorecidoView.ativo}" />
         </p:column>
         <p:rowExpansion>
-            <p:dataTable id="idtbcadfavorecido" var="favorecidoEndereco" value=""
+            <p:dataTable id="idtbenderecofavorecido" var="favorecidoEndereco" value="#{favorecidoView.listaEndereco}"
+                         paginator="true" rows="20" paginatorPosition="bottom">
+                <p:column headerText="">
+                    <h:outputText />
+                </p:column>
+            </p:dataTable>
+            <p:dataTable id="idtbtelefonefavorecido" var="favorecidoTelefone" value="#{favorecidoView.listaTelefone}"
                          paginator="true" rows="20" paginatorPosition="bottom">
                 <p:column headerText="">
                     <h:outputText />

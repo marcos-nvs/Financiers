@@ -8,14 +8,22 @@ package br.com.ln.view;
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
+import br.com.ln.comum.VarComuns;
+import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnFavorecido;
+import br.com.ln.entity.LnTelefone;
 import br.com.ln.entity.LnTipofavorecido;
 import br.com.ln.financiers.TratamentoEspecial;
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -33,12 +41,22 @@ public class FavorecidoView implements Serializable{
     private String documento;
     private Integer tipoFavorecido;
     
+    private LnFavorecido lnFavorecido;
+    private LnEndereco lnEndereco;
+    private LnTelefone lnTelefone;
+    
+    private String mensagem;
     private List<LnTipofavorecido> listaTipoFavorecido;
     private List<LnFavorecido> listaFavorecido;
+    private List<LnEndereco> listaEndereco;
+    private List<LnTelefone> listaTelefone;
     
     private final TratamentoEspecial tratativa;
     private final BeanVar beanVar;
 
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+    
     public FavorecidoView() {
         tratativa = new TratamentoEspecial();
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
@@ -108,6 +126,46 @@ public class FavorecidoView implements Serializable{
         this.listaFavorecido = listaFavorecido;
     }
 
+    public LnFavorecido getLnFavorecido() {
+        return lnFavorecido;
+    }
+
+    public void setLnFavorecido(LnFavorecido lnFavorecido) {
+        this.lnFavorecido = lnFavorecido;
+    }
+
+    public LnEndereco getLnEndereco() {
+        return lnEndereco;
+    }
+
+    public void setLnEndereco(LnEndereco lnEndereco) {
+        this.lnEndereco = lnEndereco;
+    }
+
+    public LnTelefone getLnTelefone() {
+        return lnTelefone;
+    }
+
+    public void setLnTelefone(LnTelefone lnTelefone) {
+        this.lnTelefone = lnTelefone;
+    }
+
+    public List<LnEndereco> getListaEndereco() {
+        return listaEndereco;
+    }
+
+    public void setListaEndereco(List<LnEndereco> listaEndereco) {
+        this.listaEndereco = listaEndereco;
+    }
+
+    public List<LnTelefone> getListaTelefone() {
+        return listaTelefone;
+    }
+
+    public void setListaTelefone(List<LnTelefone> listaTelefone) {
+        this.listaTelefone = listaTelefone;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -136,7 +194,15 @@ public class FavorecidoView implements Serializable{
     }
     
     public void btIncluirFavorecido(){
-        
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
+            lnFavorecido = new LnFavorecido();
+            lnFavorecido.setTipoFuncao(TipoFuncao.Incluir);
+            RequestContext.getCurrentInstance().execute("PF('favorecido').show()");
+        } else {
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+        }
     }
     
     public void btAlterarFavorecido(){
