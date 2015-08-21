@@ -6,13 +6,11 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.BeanVar;
-import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
-import br.com.ln.entity.LnEndereco;
 import br.com.ln.entity.LnFavorecido;
-import br.com.ln.entity.LnTelefone;
 import br.com.ln.entity.LnTipofavorecido;
+import br.com.ln.financiers.FavorecidoFuncoes;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
@@ -29,37 +27,35 @@ import org.primefaces.context.RequestContext;
  *
  * @author Marcos Naves
  */
-
 @SessionScoped
 @ManagedBean(name = "favorecidoView")
-public class FavorecidoView implements Serializable{
-    
+public class FavorecidoView implements Serializable {
+
     private Integer idFavorecido;
     private String nomeFavorecido;
     private Character ativo;
     private boolean bAtivo;
     private String documento;
     private Integer tipoFavorecido;
-    
+
     private LnFavorecido lnFavorecido;
-    private LnEndereco lnEndereco;
-    private LnTelefone lnTelefone;
-    
+
     private String mensagem;
     private List<LnTipofavorecido> listaTipoFavorecido;
     private List<LnFavorecido> listaFavorecido;
-    private List<LnEndereco> listaEndereco;
-    private List<LnTelefone> listaTelefone;
-    
+
+    private final FavorecidoFuncoes favorecidoFuncoes;
     private final TratamentoEspecial tratativa;
     private final BeanVar beanVar;
 
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
-    
+
     public FavorecidoView() {
+        favorecidoFuncoes = new FavorecidoFuncoes();
         tratativa = new TratamentoEspecial();
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        listaTipoFavorecido = favorecidoFuncoes.grabListaFavorecido();
     }
 
     public Integer getIdFavorecido() {
@@ -134,38 +130,6 @@ public class FavorecidoView implements Serializable{
         this.lnFavorecido = lnFavorecido;
     }
 
-    public LnEndereco getLnEndereco() {
-        return lnEndereco;
-    }
-
-    public void setLnEndereco(LnEndereco lnEndereco) {
-        this.lnEndereco = lnEndereco;
-    }
-
-    public LnTelefone getLnTelefone() {
-        return lnTelefone;
-    }
-
-    public void setLnTelefone(LnTelefone lnTelefone) {
-        this.lnTelefone = lnTelefone;
-    }
-
-    public List<LnEndereco> getListaEndereco() {
-        return listaEndereco;
-    }
-
-    public void setListaEndereco(List<LnEndereco> listaEndereco) {
-        this.listaEndereco = listaEndereco;
-    }
-
-    public List<LnTelefone> getListaTelefone() {
-        return listaTelefone;
-    }
-
-    public void setListaTelefone(List<LnTelefone> listaTelefone) {
-        this.listaTelefone = listaTelefone;
-    }
-    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -192,8 +156,8 @@ public class FavorecidoView implements Serializable{
     public String toString() {
         return "FavorecidoView{" + "idFavorecido=" + idFavorecido + ", nomeFavorecido=" + nomeFavorecido + ", ativo=" + ativo + ", bAtivo=" + bAtivo + ", documento=" + documento + ", tipoFavorecido=" + tipoFavorecido + ", listaTipoFavorecido=" + listaTipoFavorecido + ", listaFavorecido=" + listaFavorecido + ", tratativa=" + tratativa + ", beanVar=" + beanVar + '}';
     }
-    
-    public void btIncluirFavorecido(){
+
+    public void btIncluirFavorecido() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             lnFavorecido = new LnFavorecido();
             lnFavorecido.setTipoFuncao(TipoFuncao.Incluir);
@@ -204,25 +168,84 @@ public class FavorecidoView implements Serializable{
                     bundle.getString("ln.mb.titulo.favorecido"), mensagem));
         }
     }
-    
-    public void btAlterarFavorecido(){
-        
+
+    public void btAlterarFavorecido() {
+        if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
+            if (lnFavorecido != null) {
+                lnFavorecido.setTipoFuncao(TipoFuncao.Alterar);
+                RequestContext.getCurrentInstance().execute("PF('favorecido').show()");
+                loadDataVar();
+            } else {
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+            }
+        } else {
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+        }
+
     }
-    
-    public void btExcluirFavorecido(){
-        
+
+    public void btExcluirFavorecido() {
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
+            if (lnFavorecido != null) {
+                lnFavorecido.setTipoFuncao(TipoFuncao.Excluir);
+
+                if (favorecidoFuncoes.favorecido(lnFavorecido)) {
+                    listaFavorecido = favorecidoFuncoes.grablistaFavorecido();
+                    mensagem = favorecidoFuncoes.mensagem;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+                }
+            } else {
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+            }
+        } else {
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+        }
+
     }
-    
-    public void btSalvarFavorecido(){
-        
+
+    public void btSalvarFavorecido() {
+        if (favorecidoFuncoes.verificaInformacoes(lnFavorecido)) {
+            dataLoadVar();
+
+            if (favorecidoFuncoes.favorecido(lnFavorecido)) {
+                listaFavorecido = favorecidoFuncoes.grablistaFavorecido();
+                RequestContext.getCurrentInstance().execute("PF('categoriaEdit').hide()");
+                mensagem = favorecidoFuncoes.mensagem;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+            } else {
+                mensagem = favorecidoFuncoes.mensagem;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+            }
+        } else {
+            mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.categoria"), mensagem));
+        }
     }
-    
-    public void btFecharFavorecido(){
-        
+
+    private void dataLoadVar() {
+        lnFavorecido.setFavInCodigo(tipoFavorecido);
+        lnFavorecido.setFavStDescricao(nomeFavorecido);
+        lnFavorecido.setFavChAtivo(tratativa.tratamentoTextoCharacter(bAtivo));
+        lnFavorecido.setFavStDocumento(documento);
     }
-    
-    public String descricaoTipoFavorecido(Integer idTipoFavorecido){
-        LnTipofavorecido lnTipofavorecido = EjbMap.grabTipofavorecido(idTipoFavorecido);
-        return lnTipofavorecido.getTfaStDescricao();
+
+    private void loadDataVar() {
+        tipoFavorecido = lnFavorecido.getFavInCodigo();
+        nomeFavorecido = lnFavorecido.getFavStDescricao();
+        bAtivo = tratativa.tratamentoTextoBoolean(lnFavorecido.getFavChAtivo());
+        documento = lnFavorecido.getFavStDocumento();
     }
+
 }

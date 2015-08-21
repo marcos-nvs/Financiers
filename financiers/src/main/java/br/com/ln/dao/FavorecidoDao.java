@@ -14,4 +14,5 @@ import java.io.Serializable;
 public class FavorecidoDao extends GenericDao implements Serializable{
     
     
+    
 }
