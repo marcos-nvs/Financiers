@@ -111,4 +111,8 @@ public class FavorecidoFuncoes implements Serializable{
         return lnTipoFavorecido.getTfaStDescricao();
     }
 
+    public boolean verificaExclusaoFavorecido(LnFavorecido lnFavorecido) {
+        return false;
+    }
+
 }

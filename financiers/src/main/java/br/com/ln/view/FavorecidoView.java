@@ -193,12 +193,24 @@ public class FavorecidoView implements Serializable {
             if (lnFavorecido != null) {
                 lnFavorecido.setTipoFuncao(TipoFuncao.Excluir);
 
-                if (favorecidoFuncoes.favorecido(lnFavorecido)) {
-                    listaFavorecido = favorecidoFuncoes.grablistaFavorecido();
-                    mensagem = favorecidoFuncoes.mensagem;
+                if (favorecidoFuncoes.verificaExclusaoFavorecido(lnFavorecido)) {
+                    if (favorecidoFuncoes.favorecido(lnFavorecido)) {
+                        listaFavorecido = favorecidoFuncoes.grablistaFavorecido();
+                        mensagem = favorecidoFuncoes.mensagem;
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+                    } else {
+                        mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+                    }
+                } else {
+                    mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                             bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+
                 }
+
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
