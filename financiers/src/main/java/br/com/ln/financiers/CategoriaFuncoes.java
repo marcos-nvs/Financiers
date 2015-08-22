@@ -8,6 +8,7 @@ package br.com.ln.financiers;
 import br.com.ln.comum.Historico;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
+import br.com.ln.entity.LnFavorecido;
 import java.util.ResourceBundle;
 import javax.faces.context.FacesContext;
 
@@ -72,5 +73,9 @@ public class CategoriaFuncoes {
             mensagem = bundle.getString("ln.mb.frase.problema");
             return false;
         }
+    }
+
+    public boolean verificaExclusaoCategoria(LnCategoria lnCategoria) {
+            return true;
     }
 }

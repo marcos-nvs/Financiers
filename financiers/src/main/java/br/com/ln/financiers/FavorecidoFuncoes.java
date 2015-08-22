@@ -101,14 +101,7 @@ public class FavorecidoFuncoes implements Serializable {
     }
 
     public boolean verificaExclusaoFavorecido(LnFavorecido lnFavorecido) {
-
-        List<LnHistorico> listaHistorico = HistoricoDao.grabListHistorico(6);
-
-        if (listaHistorico != null && listaHistorico.size() > 0) {
-            return false;
-        } else {
             return true;
-        }
     }
 
 }
