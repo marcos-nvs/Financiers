@@ -504,7 +504,7 @@ COMMENT ON COLUMN public.ln_tipoconta.tip_st_tipo IS 'Define o tipo de conta D-D
 
 insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (1,'ATIVO','D');
 insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (2,'PASSIVO','C');
-insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (3'BANCO','D');
+insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (3,'BANCO','D');
 insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (4,'CARTÃO DE CRÉDITO','C');
 insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (5,'DINHEIRO','D');
 insert into public."ln_tipoconta" ("tip_in_codigo", "tip_st_descricao", "tip_st_tipo") values (6,'EMPRÉSTIMO','C');
