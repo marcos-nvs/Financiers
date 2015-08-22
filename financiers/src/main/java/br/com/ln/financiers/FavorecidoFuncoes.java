@@ -5,12 +5,11 @@
  */
 package br.com.ln.financiers;
 
-import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.Historico;
-import br.com.ln.dao.CategoriaDao;
 import br.com.ln.dao.FavorecidoDao;
+import br.com.ln.dao.HistoricoDao;
 import br.com.ln.entity.LnFavorecido;
-import br.com.ln.entity.LnTipoconta;
+import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnTipofavorecido;
 import java.io.Serializable;
 import java.util.List;
@@ -21,23 +20,23 @@ import javax.faces.context.FacesContext;
  *
  * @author Marcos Naves
  */
-public class FavorecidoFuncoes implements Serializable{
-    
+public class FavorecidoFuncoes implements Serializable {
+
     public String mensagem;
     private Historico historico;
-    
+
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
-    
-    public List<LnTipofavorecido> grabListaFavorecido(){
+
+    public List<LnTipofavorecido> grabListaTipoFavorecido() {
         return FavorecidoDao.grabListObject(LnTipofavorecido.class);
     }
 
     public boolean favorecido(LnFavorecido lnFavorecido) {
-        
+
         historico = new Historico();
-        
-        switch (lnFavorecido.getTipoFuncao()){
+
+        switch (lnFavorecido.getTipoFuncao()) {
             case Incluir:
                 return incluirFavorecido(lnFavorecido);
             case Alterar:
@@ -48,9 +47,9 @@ public class FavorecidoFuncoes implements Serializable{
                 return false;
         }
     }
-    
-    private boolean incluirFavorecido(LnFavorecido lnFavorecido){
-        if (lnFavorecido != null){
+
+    private boolean incluirFavorecido(LnFavorecido lnFavorecido) {
+        if (lnFavorecido != null) {
             FavorecidoDao.saveObject(lnFavorecido);
             historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaofavorecido") + " " + lnFavorecido.getFavStDescricao());
             mensagem = bundle.getString("ln.mb.texto.sucesso");
@@ -61,8 +60,8 @@ public class FavorecidoFuncoes implements Serializable{
         }
     }
 
-    private boolean alterarFavorecido(LnFavorecido lnFavorecido){
-        if (lnFavorecido != null){
+    private boolean alterarFavorecido(LnFavorecido lnFavorecido) {
+        if (lnFavorecido != null) {
             FavorecidoDao.saveOrUpdateObject(lnFavorecido);
             historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaofavorecido") + " " + lnFavorecido.getFavStDescricao());
             mensagem = bundle.getString("ln.mb.texto.sucesso");
@@ -73,10 +72,10 @@ public class FavorecidoFuncoes implements Serializable{
         }
     }
 
-    private boolean excluirFavorecido(LnFavorecido lnFavorecido){
-        if (lnFavorecido != null){
+    private boolean excluirFavorecido(LnFavorecido lnFavorecido) {
+        if (lnFavorecido != null) {
             FavorecidoDao.deleteObject(lnFavorecido);
-            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaofavorecido") + " "  + lnFavorecido.getFavStDescricao());
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaofavorecido") + " " + lnFavorecido.getFavStDescricao());
             mensagem = bundle.getString("ln.mb.texto.sucesso");
             return true;
         } else {
@@ -84,35 +83,32 @@ public class FavorecidoFuncoes implements Serializable{
             return false;
         }
     }
-    
-    public List<LnFavorecido> grablistaFavorecido() {
+
+    public List<LnFavorecido> grabListaFavorecido() {
         return FavorecidoDao.grabListObject(LnFavorecido.class);
     }
 
     public boolean verificaInformacoes(LnFavorecido lnFavorecido) {
         boolean validado = true;
         mensagem = bundle.getString("ln.mb.frase.preenchercampos") + " ";
-        
-        if (lnFavorecido.getTfaInCodigo() == 0 ){
-            mensagem = mensagem + bundle.getString("ln.mb.frase.tipofavorecido") + "";
-            validado = false;
-        }
 
-        if (lnFavorecido.getFavStDescricao() == null || lnFavorecido.getFavStDescricao().equals("")){
+        if (lnFavorecido.getFavStDescricao() == null || lnFavorecido.getFavStDescricao().equals("")) {
             mensagem = mensagem + bundle.getString("ln.texto.nome") + "";
             validado = false;
         }
-        
+
         return validado;
     }
 
-    public String tipoFavorecido(Integer tfaInCodigo) {
-        LnTipofavorecido lnTipoFavorecido = EjbMap.grabTipofavorecido(tfaInCodigo);
-        return lnTipoFavorecido.getTfaStDescricao();
-    }
-
     public boolean verificaExclusaoFavorecido(LnFavorecido lnFavorecido) {
-        return false;
+
+        List<LnHistorico> listaHistorico = HistoricoDao.grabListHistorico(6);
+
+        if (listaHistorico != null && listaHistorico.size() > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

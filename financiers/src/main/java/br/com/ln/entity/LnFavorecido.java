@@ -10,9 +10,12 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,6 +38,8 @@ public class LnFavorecido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @SequenceGenerator(name = "seqFavorecido", sequenceName = "seq_favorecido", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqFavorecido")
     @Column(name = "fav_in_codigo")
     private Integer favInCodigo;
     @Basic(optional = false)
@@ -136,7 +141,8 @@ public class LnFavorecido implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnFavorecido[ favInCodigo=" + favInCodigo + " ]";
+        return "LnFavorecido{" + "favInCodigo=" + favInCodigo + ", favStDescricao=" + favStDescricao + ", favChAtivo=" + favChAtivo + ", favStDocumento=" + favStDocumento + ", tfaInCodigo=" + tfaInCodigo + ", tipoFuncao=" + tipoFuncao + '}';
     }
+
     
 }

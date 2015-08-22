@@ -4,22 +4,22 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <p:dataTable id="iddtfavorecido" var="dtfavorecido" value="#{favorecidoView.listaFavorecido}" selection="#{favorecidoView.lnFavorecido}"
-                 selectionMode="single" rowKey="#{dtfavorecido.favInCodigo}" paginator="true" rows="20" paginatorPosition="bottom">
+    <p:dataTable id="iddtfavorecido" var="favorecido" value="#{favorecidoView.listaFavorecido}" selection="#{favorecidoView.lnFavorecido}"
+                 selectionMode="single" rowKey="#{favorecido.favInCodigo}" paginator="true" rows="20" paginatorPosition="bottom">
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.texto.listafavorecido']}"/>
         </f:facet>
         <p:column headerText="#{msgs['ln.texto.tipofavorecido']}">
-            <p:outputLabel value="#{favorecidoView.descricaoTipoFavorecido(idTipoFavorecido)}" />
+            <p:outputLabel value="#{favorecidoView.descricaoTipoFavorecido(favorecido.tfaInCodigo)}" />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.documento']}">
-            <p:outputLabel value="#{favorecidoView.documento}" />
+            <p:outputLabel value="#{favorecido.favStDocumento}" />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.nome']}">
-            <p:outputLabel value="#{favorecidoView.nomeFavorecido}" />
+            <p:outputLabel value="#{favorecido.favStDescricao}" />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.ativo']}">
-            <p:outputLabel value="#{favorecidoView.ativo}" />
+            <p:outputLabel value="#{favorecido.favChAtivo}" />
         </p:column>
         <f:facet name="footer">
             <p:commandButton id="idincluirfavorecido" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
@@ -30,13 +30,15 @@
                              update="iddtfavorecido, :idFormCenter:iddialogfavorecido, :idFormTop:growl"/>
             <p:commandButton id="idexcluirfavorecido" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
                              action="#{favorecidoView.btExcluirFavorecido()}" process="idexcluirfavorecido, iddtfavorecido"
-                             update="iddtfavorecido, :idFormTop:growl">
+                             update="idexcluirfavorecido, iddtfavorecido, :idFormTop:growl">
+                <p:confirm header="#{msgs['ln.texto.confirmacao']}" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
+            </p:commandButton>
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
                     <p:commandButton value="#{msgs['ln.bt.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                     <p:commandButton value="#{msgs['ln.bt.nao']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                 </p:confirmDialog>
-            </p:commandButton>
-            <p:commandButton id="idhistoricofavorecido" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice"/>
+            <p:commandButton id="idhistoricofavorecido" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice"
+                             onclick="PF('historico').show()"/>
         </f:facet>
     </p:dataTable>
 
@@ -61,7 +63,7 @@
                          action="#{favorecidoView.btSalvarFavorecido()}" process="idbtsalvarfavorecido, idListTipoFavorecido, idinputdocumentofavorecido,
                          idinputativofavorecido, idinputnomefavorecido" update="iddtfavorecido, :idFormTop:growl"/>
         <p:commandButton id="idbtfecharfavorecido" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
-                         action="#{favorecidoView.btFecharFavorecido}" process="idbtfecharfavorecido" update="idbtfecharfavorecido"/>
+                         action="#{favorecidoView.btFecharFavorecido()}" process="idbtfecharfavorecido" update="idbtfecharfavorecido"/>
     </p:dialog>
   
 </ui:composition>

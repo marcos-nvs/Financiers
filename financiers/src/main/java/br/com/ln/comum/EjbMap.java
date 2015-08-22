@@ -195,7 +195,7 @@ public class EjbMap implements Serializable{
     
     public synchronized static LnTipofavorecido grabTipofavorecido(Integer tfaInCodigo){
         
-        LnTipofavorecido lnTipofavorecido = null;
+        LnTipofavorecido lnTipofavorecido;
         String code = tfaInCodigo.toString();
         
         if (mapTipoFavorecido.containsKey(code)){

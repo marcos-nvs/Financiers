@@ -178,6 +178,7 @@ public class CategoriaView implements Serializable {
 
     public void btIncluirCategoria() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
+            clearVarCategoria();
             lnCategoria = new LnCategoria();
             lnCategoria.setTipoFuncao(TipoFuncao.Incluir);
             bTipoConta = false;
@@ -274,6 +275,12 @@ public class CategoriaView implements Serializable {
     public String tipoContaDescricao(Integer tipInCodigo) {
         LnTipoconta lnTipoconta = EjbMap.grabTipoConta(tipInCodigo);
         return lnTipoconta.getTipStDescricao();
+    }
+
+    private void clearVarCategoria() {
+        descricao = null;
+        tipo = null;
+        bAtivo = false;
     }
 
 }

@@ -23,17 +23,17 @@ public class TipoFavorecidoDao implements Serializable{
     public static LnTipofavorecido grabTipoFavorecido(Integer tfaInCodigo){
         
         Session session = null;
-        Transaction tx = null;
+        Transaction tx;
         
-        List<LnTipofavorecido> listFavorecido = null;
+        List<LnTipofavorecido> listFavorecido;
         LnTipofavorecido lnTipofavorecido = null;
         
         try{
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
-            Query query = session.getNamedQuery("");
-            query.setInteger("", tfaInCodigo);
+            Query query = session.getNamedQuery("LnTipofavorecido.findByTfaInCodigo");
+            query.setInteger("tfaInCodigo", tfaInCodigo);
             listFavorecido = query.list();
             lnTipofavorecido = listFavorecido.get(0);
             tx.commit();
