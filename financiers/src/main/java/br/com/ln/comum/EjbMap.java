@@ -6,6 +6,7 @@
 package br.com.ln.comum;
 
 import br.com.ln.dao.ClienteDao;
+import br.com.ln.dao.FavorecidoDao;
 import br.com.ln.dao.MenuDao;
 import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnMenu;
@@ -17,6 +18,7 @@ import br.com.ln.dao.TipoContaDao;
 import br.com.ln.dao.TipoFavorecidoDao;
 import br.com.ln.dao.UsuarioDao;
 import br.com.ln.entity.LnCliente;
+import br.com.ln.entity.LnFavorecido;
 import br.com.ln.entity.LnTipofavorecido;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -40,6 +42,7 @@ public class EjbMap implements Serializable{
     private static final Map<String, LnPerfilacesso> mapPerfilAcesso = new HashMap<>(100);
     private static final Map<String, LnTipoconta> mapTipoConta = new HashMap<>(20);
     private static final Map<String, LnTipofavorecido> mapTipoFavorecido = new HashMap<>(100);
+    private static final Map<String, LnFavorecido> mapFavorecidoBanco = new HashMap<>(100);
     
     
     public synchronized static LnUsuario grabUsuario(String usuStCodigo){
@@ -204,6 +207,20 @@ public class EjbMap implements Serializable{
             lnTipofavorecido = TipoFavorecidoDao.grabTipoFavorecido(tfaInCodigo);
             mapTipoFavorecido.put(code, lnTipofavorecido);
             return lnTipofavorecido;
+        }
+    }
+    
+    public synchronized static LnFavorecido grabFavorecidoBanco(Integer favInCodigo){
+        
+        LnFavorecido lnFavorecido;
+        String code = favInCodigo.toString();
+        
+        if (mapFavorecidoBanco.containsKey(code)){
+            return mapFavorecidoBanco.get(code);
+        } else{
+            lnFavorecido = FavorecidoDao.grabFavorecidoBanco(favInCodigo);
+            mapFavorecidoBanco.put(code, lnFavorecido);
+            return lnFavorecido;
         }
     }
 }

@@ -47,7 +47,7 @@ public class JurosFuncoes implements Serializable {
         
         if (tabela.getTipoFuncao().equals(TipoFuncao.Incluir)) {
             
-            List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(1, tabela.getDataInicial(), tabela.getDataFinal());
+            List<LnTabela> listaTabela = TabelaDao.grabLnTabelaDate(5, tabela.getDataInicial(), tabela.getDataFinal());
 
             if (listaTabela != null && !listaTabela.isEmpty()) {
                 mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfdataintercalada") + "; ";
@@ -57,5 +57,5 @@ public class JurosFuncoes implements Serializable {
         
         return validado;
     }
-
+    
 }

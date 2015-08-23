@@ -5,30 +5,32 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <p:dataTable id="idTabelaJuros" var="juros">
+    <p:dataTable id="idTabelaJuros" var="juros" value="#{jurosView.listTabela}" selection = "#{jurosView.tabela}" selectionMode="single"
+                 rowKey="#{juros.codigoTabela}" paginator="true" rows="20" paginatorPosition="bottom">
         <f:facet name="header">
-            <p:outputLabel value="#{msgs['ln.texto.tabelajuros']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.tabelajuros']}" />
         </f:facet>
         <p:column style="width: 16px">
             <p:rowToggler />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.descricao']}">
-            <p:outputLabel value="#{jurosView.nomeTabela}"/>
+            <p:outputLabel value="#{juros.nomeTabela}"/>
         </p:column>
         <p:column headerText="#{msgs['ln.texto.datainicio']}">
-            <h:outputText value="#{jurosView.dataInicial}">
+            <h:outputText value="#{juros.dataInicial}">
                 <f:convertDateTime pattern="dd-MM-yyyy"/>
             </h:outputText>
         </p:column>
         <p:column headerText="#{msgs['ln.texto.datafinal']}">
-            <h:outputText value="#{jurosView.dataFinal}">
+            <h:outputText value="#{juros.dataFinal}">
                 <f:convertDateTime pattern="dd-MM-yyyy"/>
             </h:outputText>
         </p:column>
         <p:rowExpansion>
-            <p:dataTable id="idTabelaJurosDetalhe" var="jurosDetalhe">
+            <p:dataTable id="idTabelaJurosDetalhe" var="jurosDetalhe" value="#{juros.listTabelaItem}" paginator="true"
+                         rows="20" paginatorPosition="bottom">
                 <p:column headerText="#{msgs['ln.texto.banco']}">
-                    <h:outputText value="#{jurosDetalhe.banco}" />
+                    <h:outputText value="#{jurosView.descricaoBanco(jurosDetalhe.origem)}" />
                 </p:column>
                 <p:column headerText="#{msgs['ln.texto.percentual']}">
                     <h:outputText value="#{jurosDetalhe.percentual}">
@@ -41,12 +43,16 @@
             <p:commandButton id="btIncluirJuros" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
                              action="#{jurosView.btIncluir}" process="btIncluirJuros" 
                              update=":idFormCenter:idtabelas:idTabelaJuros, :idFormTop:growl, :idFormCenter:idtabelas:dlgJuros"/>
-            <p:commandButton id="btAlterarJuros" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"/>
-            <p:commandButton id="btExcluirJuros" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash">
+            <p:commandButton id="btAlterarJuros" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"
+                             action="#{jurosView.btAlterar()}" process="btAlterarJuros,idTabelaJuros" 
+                             update=":idFormCenter:idtabelas:idTabelaJuros, :idFormTop:growl, :idFormCenter:idtabelas:dlgJuros"/>
+            <p:commandButton id="btExcluirJuros" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
+                             action="#{jurosView.btExcluir()}" process="btExcluirJuros,idTabelaJuros" 
+                             update=":idFormCenter:idtabelas:idTabelaJuros, :idFormTop:growl, :idFormCenter:idtabelas:dlgJuros">
                 <p:confirm header="#{msgs['ln.texto.confirmacao']}" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
-                <p:commandButton value="#{msgs['ln.bt.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="#{msgs['ln.bt.sim']}" type="buttzon" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                 <p:commandButton value="#{msgs['ln.bt.nao']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
             <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
@@ -67,19 +73,22 @@
         </h:panelGrid>
         <h:panelGrid id="idgridValorJuros" columns="6" style="margin-left: 18px;">
             <p:outputLabel value="#{msgs['ln.texto.banco']}"/>
-            <p:inputText id="idinputbanco" value="#{jurosView.banco}" style="width: 80px;" size="20"/>
+            <p:selectOneMenu id="idListBanco" value="#{jurosView.banco}">
+                <f:selectItems value="#{jurosView.listaBanco}" var="banco" itemLabel="#{banco.favStDescricao}"
+                               itemValue="#{banco.favInCodigo}"/>
+            </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.juros']}"/>
             <p:inputText id="idpercJuros" value="#{jurosView.percentual}" style="width: 80px;" size="20">
                 <f:convertNumber pattern="##0.00" type="percent"/>
                 <p:ajax update="idpercJuros" process="idpercJuros" event="change"/>
             </p:inputText>
         </h:panelGrid>
-        <p:dataTable id="idDTJuros" var="incluiTabelaJuros">
+        <p:dataTable id="idDTJuros" var="incluiTabelaJuros" value="#{jurosView.listTabelaItem}">
             <f:facet name="header">
                 <p:outputLabel value="#{msgs['ln.texto.juros']}"/>
             </f:facet>
             <p:column headerText="#{msgs['ln.texto.banco']}" style="width: 40px">
-                <h:outputText value="#{incluiTabelaJuros.banco}"/>
+                <h:outputText value="#{jurosView.descricaoBanco(incluiTabelaJuros.origem)}"/>
             </p:column>
             <p:column headerText="#{msgs['ln.texto.juros']}" style="width: 40px">
                 <h:outputText value="#{incluiTabelaJuros.percentual}">
@@ -95,11 +104,11 @@
         <f:facet name="footer">
             <p:commandButton id="idbtincluirjuros" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
                              action="#{jurosView.btIncluiDetalhe}" process="idbtincluirjuros, idgridDataJuros, idJurosDescricao, dtJurosInicio, 
-                             dtJurosFinal, idgridValorJuros, idinputbanco, idpercJuros"
+                             dtJurosFinal, idgridValorJuros, idListBanco, idpercJuros"
                              update="idDTJuros, :idFormTop:growl"/>
             <p:commandButton id="idbtsalvarjuros" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                              action="#{jurosView.btSalvar}" process="idbtsalvarjuros, idgridDataJuros, idJurosDescricao, dtJurosInicio, 
-                             dtJurosFinal, idgridValorJuros, idinputbanco, idpercJuros "
+                             dtJurosFinal, idgridValorJuros, idListBanco, idpercJuros "
                              update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaJuros, idgridDataJuros"/>
             <p:commandButton id="idbtfecharjuros" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
                              action="#{jurosView.btFechar}" process="idbtfecharjuros" update="idbtfecharjuros"/>

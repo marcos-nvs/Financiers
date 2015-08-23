@@ -6,6 +6,8 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.dao.FavorecidoDao;
+import br.com.ln.entity.LnFavorecido;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.financiers.JurosFuncoes;
 import br.com.ln.financiers.Tabela;
@@ -47,6 +49,7 @@ public class JurosView implements Serializable {
     private TabelaItem tabelaItem;
     private List<TabelaItem> listTabelaItem;
     private List<Tabela> listTabela;
+    private List<LnFavorecido> listaBanco;
     private final TabelaFuncoes tabelaFuncao;
     private final JurosFuncoes jurosFuncao;
 
@@ -61,6 +64,7 @@ public class JurosView implements Serializable {
         jurosFuncao = new JurosFuncoes();
         listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
         listTabelaItem = new ArrayList<>();
+        listaBanco = FavorecidoDao.grabBancos();
     }
 
     public Integer getIdCodigo() {
@@ -143,6 +147,31 @@ public class JurosView implements Serializable {
         this.listTabela = listTabela;
     }
 
+    public List<LnFavorecido> getListaBanco() {
+        return listaBanco;
+    }
+
+    public void setListaBanco(List<LnFavorecido> listaBanco) {
+        this.listaBanco = listaBanco;
+    }
+
+    public Tabela getTabela() {
+        return tabela;
+    }
+
+    public void setTabela(Tabela tabela) {
+        this.tabela = tabela;
+    }
+
+
+    public TabelaItem getTabelaItem() {
+        return tabelaItem;
+    }
+
+    public void setTabelaItem(TabelaItem tabelaItem) {
+        this.tabelaItem = tabelaItem;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -233,7 +262,6 @@ public class JurosView implements Serializable {
     }
 
     public void btIncluiDetalhe() {
-        System.out.println("teste");
         tabelaItem = new TabelaItem();
         tabelaItem.setCodigoTabItem(tabelaFuncao.calcIdTabelaItem());
         tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
@@ -349,5 +377,8 @@ public class JurosView implements Serializable {
         return lnTabela;
     }
     
+    public String descricaoBanco(String banco){
+        return FavorecidoDao.grabFavorecidoBanco(new Integer(banco)).getFavStDescricao();
+    } 
     
 }
