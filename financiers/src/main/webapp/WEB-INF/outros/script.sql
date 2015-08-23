@@ -755,6 +755,7 @@ ALTER TABLE seq_favorecido
   OWNER TO postgres;
 
 
+
 -------------------------------------------------------------------------------------------------------------------------
 
 -- insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
