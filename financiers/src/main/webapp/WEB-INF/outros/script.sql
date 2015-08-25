@@ -755,8 +755,188 @@ ALTER TABLE seq_favorecido
   OWNER TO postgres;
 
 
+-- Table: ln_tipoagenda
 
--------------------------------------------------------------------------------------------------------------------------
+-- DROP TABLE ln_tipoagenda;
+
+CREATE TABLE ln_tipoagenda
+(
+  tpa_in_codigo integer NOT NULL,
+  tpa_st_descricao character varying(50) NOT NULL,
+  tpa_in_qtdedias integer NOT NULL,
+  CONSTRAINT pk_tipoagenda PRIMARY KEY (tpa_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_tipoagenda
+  OWNER TO postgres;
+
+insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (1,'Anual',365);
+insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (2,'Semestral',180);
+insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (3,'Quadrimestral',120);
+insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (4,'Trimestral',90);
+insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (5,'Bimestral',60);
+insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (6,'Mensal',30);
+insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (7,'Quinzenal',15);
+insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (8,'Semanal',7);
+insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (9,'Diário',1);
+
+-- Table: ln_planoconta
+
+-- DROP TABLE ln_planoconta;
+
+CREATE TABLE ln_planoconta
+(
+  cta_in_codigo integer NOT NULL,
+  cta_st_descricao character varying(50) NOT NULL,
+  cat_in_codigo integer NOT NULL, -- Categoria
+  tip_in_codigo integer NOT NULL, -- Tipo de Conta
+  cta_ch_ativo character(1) NOT NULL,
+  cta_ch_imposto character(1) NOT NULL,
+  cta_ch_calculada character(1) NOT NULL,
+  cta_fl_percentual double precision NOT NULL,
+  cta_fl_limite double precision,
+  cta_ch_agenda character(1) NOT NULL,
+  CONSTRAINT pk_planoconta PRIMARY KEY (cta_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_planoconta
+  OWNER TO postgres;
+COMMENT ON TABLE ln_planoconta
+  IS 'Plano de contas';
+COMMENT ON COLUMN ln_planoconta.cat_in_codigo IS 'Categoria';
+COMMENT ON COLUMN ln_planoconta.tip_in_codigo IS 'Tipo de Conta';
+
+CREATE SEQUENCE seq_planoconta
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_planoconta
+  OWNER TO postgres;
+
+
+-- Table: ln_contadependente
+
+-- DROP TABLE ln_contadependente;
+
+CREATE TABLE ln_contadependente
+(
+  cta_in_codigo integer NOT NULL,
+  cta_in_calculada integer NOT NULL,
+  tbt_in_codigo integer NOT NULL,
+  ctd_in_ordem integer NOT NULL,
+  CONSTRAINT pk_contadependente PRIMARY KEY (cta_in_codigo, cta_in_calculada)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_contadependente
+  OWNER TO postgres;
+
+-- Table: ln_contasaldo
+
+-- DROP TABLE ln_contasaldo;
+
+CREATE TABLE ln_contasaldo
+(
+  cta_in_codigo integer NOT NULL,
+  csa_dt_data date NOT NULL,
+  csa_fl_saldoinical double precision NOT NULL,
+  csa_fl_debito double precision NOT NULL,
+  csa_fl_credito double precision NOT NULL,
+  csa_fl_saldofinal double precision NOT NULL,
+  CONSTRAINT pk_contasaldo PRIMARY KEY (cta_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_contasaldo
+  OWNER TO postgres;
+
+
+-- Table: ln_agendaconta
+
+-- DROP TABLE ln_agendaconta;
+
+CREATE TABLE ln_agendaconta
+(
+  act_in_codigo integer NOT NULL,
+  cta_in_codigo integer NOT NULL,
+  act_dt_inicio date NOT NULL,
+  act_dt_final date,
+  tpa_in_codigo integer NOT NULL,
+  act_ch_ativo character(1) NOT NULL,
+  act_in_dia integer,
+  act_ch_domingo character(1),
+  act_ch_segunda character(1),
+  act_ch_terca character(1),
+  act_ch_quarta character(1),
+  act_ch_quinta character(1),
+  act_ch_sexta character(1),
+  act_ch_sabado character(1),
+  act_ch_aviso character(1) NOT NULL,
+  act_ch_email character(1),
+  act_in_qtde integer,
+  CONSTRAINT pc_agendaconta PRIMARY KEY (act_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_agendaconta
+  OWNER TO postgres;
+
+-- Sequence: seq_agendaconta
+
+-- DROP SEQUENCE seq_agendaconta;
+
+CREATE SEQUENCE seq_agendaconta
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_agendaconta
+  OWNER TO postgres;
+
+-- Table: ln_agenda
+
+-- DROP TABLE ln_agenda;
+
+CREATE TABLE ln_agenda
+(
+  age_in_codigo integer NOT NULL,
+  act_in_codigo integer NOT NULL,
+  age_dt_data date NOT NULL,
+  age_fl_valor double precision NOT NULL,
+  age_ch_encerrado character(1) NOT NULL,
+  CONSTRAINT pk_agenda PRIMARY KEY (age_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_agenda
+  OWNER TO postgres;
+
+-- Sequence: seq_agenda
+
+-- DROP SEQUENCE seq_agenda;
+
+CREATE SEQUENCE seq_agenda
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_agenda
+  OWNER TO postgres;
+
+
+ -------------------------------------------------------------------------------------------------------------------------
 
 -- insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
 -- values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','naves','m-nvs@uol.com.br');
