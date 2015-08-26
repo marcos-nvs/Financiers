@@ -38,11 +38,15 @@ public class PlanoContaView implements Serializable{
     private Integer idCategoria;
     private Integer idTipoConta;
     private Character ativoConta;
+    private boolean bAtivoConta;
     private Character imposto;
+    private boolean bImposto;
     private Character calculada;
+    private boolean bCalculada;
     private Double percentual;
     private Double limite;
     private Character agendar;
+    private boolean bAgendar;
 
     private Integer idContaDependente;
     private Integer idTabela;
@@ -128,6 +132,38 @@ public class PlanoContaView implements Serializable{
         this.ativoConta = ativoConta;
     }
 
+    public boolean isbAtivoConta() {
+        return bAtivoConta;
+    }
+
+    public void setbAtivoConta(boolean bAtivoConta) {
+        this.bAtivoConta = bAtivoConta;
+    }
+
+    public boolean isbImposto() {
+        return bImposto;
+    }
+
+    public void setbImposto(boolean bImposto) {
+        this.bImposto = bImposto;
+    }
+
+    public boolean isbCalculada() {
+        return bCalculada;
+    }
+
+    public void setbCalculada(boolean bCalculada) {
+        this.bCalculada = bCalculada;
+    }
+
+    public boolean isbAgendar() {
+        return bAgendar;
+    }
+
+    public void setbAgendar(boolean bAgendar) {
+        this.bAgendar = bAgendar;
+    }
+    
     public Character getImposto() {
         return imposto;
     }

@@ -77,10 +77,22 @@
               closable="false" style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idpanelcontacategoria" columns="2">
             <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
-            <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" style="width: 250px;" effect="fade">
+            <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" style="width: 300px;" effect="fade">
                 <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
                                itemValue="#{itemCatConta.catInCodigo}"/>
             </p:selectOneMenu>
+        </h:panelGrid>
+        <h:panelGrid id="idpanelconta" columns="10">
+            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+            <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50"/>
+            <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}" />
+            <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
+            <p:selectBooleanCheckbox value="#{contaView.bImposto}" />
+            <p:outputLabel value="#{msgs['ln.text.calulaimposto']}"/>
+            <p:selectBooleanCheckbox value="#{contaView.bCalculada}" />
+            <p:outputLabel value="#{msgs['ln.texto.contacalculada']}"/>
+            <p:selectBooleanCheckbox value="#{contaView.bAgendar}" />
+            <p:outputLabel value="#{msgs['ln.texto.contaagendada']}"/>
         </h:panelGrid>
     </p:dialog>
 </ui:composition>
