@@ -157,7 +157,7 @@ public class LnMenuModel implements Serializable {
                     VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 4);
                     break;
                 case "Plano de Contas":
-                    beanVar.setNovaTela("WEB-INF/templates/conta.xhtml");
+                    beanVar.setNovaTela("WEB-INF/templates/planoconta.xhtml");
                     beanVar.setNomeTela("ln.mb.titulo.planoconta");
                     VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 5);
                     break;

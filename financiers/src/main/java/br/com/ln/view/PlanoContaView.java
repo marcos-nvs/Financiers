@@ -26,4 +26,6 @@ public class PlanoContaView implements Serializable{
     private Character agendada;
     
     
+    
+    
 }

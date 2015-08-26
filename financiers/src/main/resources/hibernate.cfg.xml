@@ -35,6 +35,11 @@
     <mapping class="br.com.ln.entity.LnTabelaItem"/>
     <mapping class="br.com.ln.entity.LnEndereco"/>
     <mapping class="br.com.ln.entity.LnTelefone"/>
+    <mapping class="br.com.ln.entity.LnAgenda"/>
+    <mapping class="br.com.ln.entity.LnAgendaconta"/>
+    <mapping class="br.com.ln.entity.LnContadependente"/>
+    <mapping class="br.com.ln.entity.LnPlanoconta"/>
+    <mapping class="br.com.ln.entity.LnTipoagenda"/>
     
     <mapping class="br.com.ln.entity.LnUsuario"/>
     <mapping class="br.com.ln.entity.LnCliente"/>
