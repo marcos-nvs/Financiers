@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -16,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -89,6 +91,9 @@ public class LnAgendaconta implements Serializable {
     private Character actChEmail;
     @Column(name = "act_in_qtde")
     private Integer actInQtde;
+
+    @Transient
+    private TipoFuncao tipoFuncao;
 
     public LnAgendaconta() {
     }

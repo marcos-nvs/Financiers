@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -16,6 +17,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -52,6 +54,9 @@ public class LnAgenda implements Serializable {
     @Column(name = "age_ch_encerrado")
     private Character ageChEncerrado;
 
+    @Transient
+    private TipoFuncao tipoFuncao;
+    
     public LnAgenda() {
     }
 
