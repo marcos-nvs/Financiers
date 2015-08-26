@@ -75,6 +75,12 @@
     
     <p:dialog id="iddialogconta" header="" widgetVar="dlgconta" modal="false" showEffect="fade" hideEffect="fade"
               closable="false" style="background-color: activeborder" width="1000" dynamic="true">
-        
+        <h:panelGrid id="idpanelcontacategoria" columns="2">
+            <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
+            <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" style="width: 250px;" effect="fade">
+                <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
+                               itemValue="#{itemCatConta.catInCodigo}"/>
+            </p:selectOneMenu>
+        </h:panelGrid>
     </p:dialog>
 </ui:composition>

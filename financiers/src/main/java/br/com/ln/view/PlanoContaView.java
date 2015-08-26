@@ -6,11 +6,15 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.VarComuns;
+import br.com.ln.dao.CategoriaDao;
+import br.com.ln.entity.LnCategoria;
 import br.com.ln.entity.LnPlanoconta;
+import br.com.ln.funcao.PlanoContaFuncoes;
 import br.com.ln.objeto.AgendaConta;
 import br.com.ln.objeto.Conta;
 import br.com.ln.objeto.ContaDependente;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -29,53 +33,100 @@ import org.primefaces.context.RequestContext;
 @ManagedBean(name = "contaView")
 public class PlanoContaView implements Serializable{
     
-    private Integer codigo;
-    private String descricao;
-    private Character ativo;
+    private Integer idConta;
+    private String nomeConta;
+    private Integer idCategoria;
+    private Integer idTipoConta;
+    private Character ativoConta;
     private Character imposto;
     private Character calculada;
-    private Character agendada;
+    private Double percentual;
+    private Double limite;
+    private Character agendar;
+
+    private Integer idContaDependente;
+    private Integer idTabela;
+    private Integer ordem;
+    
+    private Integer idAgenda;
+    private Integer idContaAgendada;
+    private Date dtInicio;
+    private Date DtFinal;
+    private Integer idTipoAgenda;
+    private Character ativoDependente;
+    private Integer diaVencimento;
+    private Character domingo;
+    private Character segunda;
+    private Character terca;
+    private Character quarta;
+    private Character quinta;
+    private Character sexta;
+    private Character sabado;
+    private Character avisar;
+    private Character porEmail;
+    private Integer qtdeRepeticao;
     
     private Conta conta;
     private ContaDependente contaDependente;
     private AgendaConta agendaConta;
     private List<Conta> listaContas;
+    private List<ContaDependente> listaContaDependente;
+    private List<AgendaConta> listaAgendaConta;
     
     private LnPlanoconta planoConta;
     private List<LnPlanoconta> listaPlanoConta;
+    private List<LnCategoria> listaCategoria;
 
     private String mensagem;
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+    private final PlanoContaFuncoes planoContaFuncoes;
 
     public PlanoContaView() {
-        
+        planoContaFuncoes = new PlanoContaFuncoes();
+        listaContas = planoContaFuncoes.buscaListaContas();
+        listaCategoria = CategoriaDao.grabCategoria('S');
     }
 
-    public Integer getCodigo() {
-        return codigo;
+    public Integer getIdConta() {
+        return idConta;
     }
 
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setIdConta(Integer idConta) {
+        this.idConta = idConta;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getNomeConta() {
+        return nomeConta;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setNomeConta(String nomeConta) {
+        this.nomeConta = nomeConta;
     }
 
-    public Character getAtivo() {
-        return ativo;
+    public Integer getIdCategoria() {
+        return idCategoria;
     }
 
-    public void setAtivo(Character ativo) {
-        this.ativo = ativo;
+    public void setIdCategoria(Integer idCategoria) {
+        this.idCategoria = idCategoria;
     }
 
+    public Integer getIdTipoConta() {
+        return idTipoConta;
+    }
+
+    public void setIdTipoConta(Integer idTipoConta) {
+        this.idTipoConta = idTipoConta;
+    }
+
+    public Character getAtivoConta() {
+        return ativoConta;
+    }
+
+    public void setAtivoConta(Character ativoConta) {
+        this.ativoConta = ativoConta;
+    }
 
     public Character getImposto() {
         return imposto;
@@ -93,12 +144,188 @@ public class PlanoContaView implements Serializable{
         this.calculada = calculada;
     }
 
-    public Character getAgendada() {
-        return agendada;
+    public Double getPercentual() {
+        return percentual;
     }
 
-    public void setAgendada(Character agendada) {
-        this.agendada = agendada;
+    public void setPercentual(Double percentual) {
+        this.percentual = percentual;
+    }
+
+    public Double getLimite() {
+        return limite;
+    }
+
+    public void setLimite(Double limite) {
+        this.limite = limite;
+    }
+
+    public Character getAgendar() {
+        return agendar;
+    }
+
+    public void setAgendar(Character agendar) {
+        this.agendar = agendar;
+    }
+
+    public Integer getIdContaDependente() {
+        return idContaDependente;
+    }
+
+    public void setIdContaDependente(Integer idContaDependente) {
+        this.idContaDependente = idContaDependente;
+    }
+
+    public Integer getIdTabela() {
+        return idTabela;
+    }
+
+    public void setIdTabela(Integer idTabela) {
+        this.idTabela = idTabela;
+    }
+
+    public Integer getOrdem() {
+        return ordem;
+    }
+
+    public void setOrdem(Integer ordem) {
+        this.ordem = ordem;
+    }
+
+    public Integer getIdAgenda() {
+        return idAgenda;
+    }
+
+    public void setIdAgenda(Integer idAgenda) {
+        this.idAgenda = idAgenda;
+    }
+
+    public Integer getIdContaAgendada() {
+        return idContaAgendada;
+    }
+
+    public void setIdContaAgendada(Integer idContaAgendada) {
+        this.idContaAgendada = idContaAgendada;
+    }
+
+    public Date getDtInicio() {
+        return dtInicio;
+    }
+
+    public void setDtInicio(Date dtInicio) {
+        this.dtInicio = dtInicio;
+    }
+
+    public Date getDtFinal() {
+        return DtFinal;
+    }
+
+    public void setDtFinal(Date DtFinal) {
+        this.DtFinal = DtFinal;
+    }
+
+    public Integer getIdTipoAgenda() {
+        return idTipoAgenda;
+    }
+
+    public void setIdTipoAgenda(Integer idTipoAgenda) {
+        this.idTipoAgenda = idTipoAgenda;
+    }
+
+    public Character getAtivoDependente() {
+        return ativoDependente;
+    }
+
+    public void setAtivoDependente(Character ativoDependente) {
+        this.ativoDependente = ativoDependente;
+    }
+
+    public Integer getDiaVencimento() {
+        return diaVencimento;
+    }
+
+    public void setDiaVencimento(Integer diaVencimento) {
+        this.diaVencimento = diaVencimento;
+    }
+
+    public Character getDomingo() {
+        return domingo;
+    }
+
+    public void setDomingo(Character domingo) {
+        this.domingo = domingo;
+    }
+
+    public Character getSegunda() {
+        return segunda;
+    }
+
+    public void setSegunda(Character segunda) {
+        this.segunda = segunda;
+    }
+
+    public Character getTerca() {
+        return terca;
+    }
+
+    public void setTerca(Character terca) {
+        this.terca = terca;
+    }
+
+    public Character getQuarta() {
+        return quarta;
+    }
+
+    public void setQuarta(Character quarta) {
+        this.quarta = quarta;
+    }
+
+    public Character getQuinta() {
+        return quinta;
+    }
+
+    public void setQuinta(Character quinta) {
+        this.quinta = quinta;
+    }
+
+    public Character getSexta() {
+        return sexta;
+    }
+
+    public void setSexta(Character sexta) {
+        this.sexta = sexta;
+    }
+
+    public Character getSabado() {
+        return sabado;
+    }
+
+    public void setSabado(Character sabado) {
+        this.sabado = sabado;
+    }
+
+    public Character getAvisar() {
+        return avisar;
+    }
+
+    public void setAvisar(Character avisar) {
+        this.avisar = avisar;
+    }
+
+    public Character getPorEmail() {
+        return porEmail;
+    }
+
+    public void setPorEmail(Character porEmail) {
+        this.porEmail = porEmail;
+    }
+
+    public Integer getQtdeRepeticao() {
+        return qtdeRepeticao;
+    }
+
+    public void setQtdeRepeticao(Integer qtdeRepeticao) {
+        this.qtdeRepeticao = qtdeRepeticao;
     }
 
     public Conta getConta() {
@@ -109,6 +336,22 @@ public class PlanoContaView implements Serializable{
         this.conta = conta;
     }
 
+    public ContaDependente getContaDependente() {
+        return contaDependente;
+    }
+
+    public void setContaDependente(ContaDependente contaDependente) {
+        this.contaDependente = contaDependente;
+    }
+
+    public AgendaConta getAgendaConta() {
+        return agendaConta;
+    }
+
+    public void setAgendaConta(AgendaConta agendaConta) {
+        this.agendaConta = agendaConta;
+    }
+
     public List<Conta> getListaContas() {
         return listaContas;
     }
@@ -117,10 +360,34 @@ public class PlanoContaView implements Serializable{
         this.listaContas = listaContas;
     }
 
+    public List<ContaDependente> getListaContaDependente() {
+        return listaContaDependente;
+    }
+
+    public void setListaContaDependente(List<ContaDependente> listaContaDependente) {
+        this.listaContaDependente = listaContaDependente;
+    }
+
+    public List<AgendaConta> getListaAgendaConta() {
+        return listaAgendaConta;
+    }
+
+    public void setListaAgendaConta(List<AgendaConta> listaAgendaConta) {
+        this.listaAgendaConta = listaAgendaConta;
+    }
+
+    public List<LnCategoria> getListaCategoria() {
+        return listaCategoria;
+    }
+
+    public void setListaCategoria(List<LnCategoria> listaCategoria) {
+        this.listaCategoria = listaCategoria;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + Objects.hashCode(this.codigo);
+        hash = 97 * hash + Objects.hashCode(this.idConta);
         return hash;
     }
 
@@ -133,7 +400,7 @@ public class PlanoContaView implements Serializable{
             return false;
         }
         final PlanoContaView other = (PlanoContaView) obj;
-        if (!Objects.equals(this.codigo, other.codigo)) {
+        if (!Objects.equals(this.idConta, other.idConta)) {
             return false;
         }
         return true;
@@ -168,12 +435,12 @@ public class PlanoContaView implements Serializable{
     }
 
     private void clearVarConta() {
-        codigo = null;
-        descricao = null;
-        ativo = null;
+        idConta = null;
+        nomeConta = null;
+        ativoConta = null;
         imposto = null;
         calculada = null;
-        agendada = null;
+        agendaConta = null;
     }
 
     private void clearVarContaDepdente() {

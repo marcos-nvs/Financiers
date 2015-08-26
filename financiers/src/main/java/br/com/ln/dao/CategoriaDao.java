@@ -23,7 +23,7 @@ public class CategoriaDao extends GenericDao implements Serializable{
     public static List<LnCategoria> grabCategoria(Character catChAtivo){
         
         Session session = null;
-        Transaction tx = null;
+        Transaction tx;
         List<LnCategoria> listCategoria = null;
         
         try{
@@ -31,7 +31,7 @@ public class CategoriaDao extends GenericDao implements Serializable{
             tx = session.beginTransaction();
             
             Query query = session.getNamedQuery("LnCategoria.findByCatChAtivo");
-            query.setInteger("catChAtivo", catChAtivo);
+            query.setCharacter("catChAtivo", catChAtivo);
             listCategoria = query.list();
             tx.commit();
             
