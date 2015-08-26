@@ -11,7 +11,7 @@ import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnFavorecido;
 import br.com.ln.entity.LnTipofavorecido;
-import br.com.ln.financiers.FavorecidoFuncoes;
+import br.com.ln.funcao.FavorecidoFuncoes;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;

@@ -7,10 +7,10 @@ package br.com.ln.view;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnTabela;
-import br.com.ln.financiers.InssFuncoes;
-import br.com.ln.financiers.Tabela;
-import br.com.ln.financiers.TabelaFuncoes;
-import br.com.ln.financiers.TabelaItem;
+import br.com.ln.funcao.InssFuncoes;
+import br.com.ln.objeto.Tabela;
+import br.com.ln.funcao.TabelaFuncoes;
+import br.com.ln.objeto.TabelaItem;
 import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.ArrayList;

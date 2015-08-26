@@ -13,7 +13,7 @@ import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnUsuario;
-import br.com.ln.financiers.UsuarioFuncoes;
+import br.com.ln.funcao.UsuarioFuncoes;
 import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.dao.UsuarioDao;

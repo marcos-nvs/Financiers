@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.ln.financiers;
+package br.com.ln.funcao;
 
 import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.comum.Historico;
 import br.com.ln.dao.TabelaDao;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.entity.LnTabelaItem;
+import br.com.ln.objeto.Tabela;
+import br.com.ln.objeto.TabelaItem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

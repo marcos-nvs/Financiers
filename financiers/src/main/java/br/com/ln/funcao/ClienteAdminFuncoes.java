@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.ln.financiers;
+package br.com.ln.funcao;
 
 import br.com.ln.dao.ClienteAdminDao;
 import br.com.ln.entity.LnCliente;

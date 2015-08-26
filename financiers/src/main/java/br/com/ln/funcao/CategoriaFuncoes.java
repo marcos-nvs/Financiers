@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.ln.financiers;
+package br.com.ln.funcao;
 
 import br.com.ln.comum.Historico;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
-import br.com.ln.entity.LnFavorecido;
 import java.util.ResourceBundle;
 import javax.faces.context.FacesContext;
 

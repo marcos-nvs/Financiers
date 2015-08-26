@@ -15,7 +15,7 @@ import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.LnMenuModel;
 import br.com.ln.financiers.TratamentoEspecial;
-import br.com.ln.financiers.UsuarioFuncoes;
+import br.com.ln.funcao.UsuarioFuncoes;
 import br.com.ln.dao.GenericDao;
 import br.com.ln.dao.UsuarioDao;
 import br.com.ln.entity.LnCliente;

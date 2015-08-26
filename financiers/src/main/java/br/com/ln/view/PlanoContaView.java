@@ -5,7 +5,9 @@
  */
 package br.com.ln.view;
 
+import br.com.ln.entity.LnPlanoconta;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -25,6 +27,7 @@ public class PlanoContaView implements Serializable{
     private Character calculada;
     private Character agendada;
     
+    private List<LnPlanoconta> listaContas;
     
     
     

@@ -12,7 +12,7 @@ import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.entity.LnTipoconta;
-import br.com.ln.financiers.CategoriaFuncoes;
+import br.com.ln.funcao.CategoriaFuncoes;
 import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import java.io.Serializable;
