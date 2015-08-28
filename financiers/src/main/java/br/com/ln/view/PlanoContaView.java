@@ -7,8 +7,10 @@ package br.com.ln.view;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
+import br.com.ln.dao.PlanoContaDao;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.entity.LnPlanoconta;
+import br.com.ln.entity.LnTipotabela;
 import br.com.ln.funcao.PlanoContaFuncoes;
 import br.com.ln.objeto.AgendaConta;
 import br.com.ln.objeto.Conta;
@@ -76,10 +78,12 @@ public class PlanoContaView implements Serializable{
     private List<Conta> listaContas;
     private List<ContaDependente> listaContaDependente;
     private List<AgendaConta> listaAgendaConta;
+    private List<LnPlanoconta> listaContaCalculada;
     
     private LnPlanoconta planoConta;
     private List<LnPlanoconta> listaPlanoConta;
     private List<LnCategoria> listaCategoria;
+    private List<LnTipotabela> listaTipoTabela;
 
     private String mensagem;
     private final FacesContext context = FacesContext.getCurrentInstance();
@@ -90,6 +94,8 @@ public class PlanoContaView implements Serializable{
         planoContaFuncoes = new PlanoContaFuncoes();
         listaContas = planoContaFuncoes.buscaListaContas();
         listaCategoria = CategoriaDao.grabCategoria('S');
+        listaTipoTabela = PlanoContaDao.grabListObject(LnTipotabela.class);
+        listaContaCalculada = PlanoContaDao.buscaListaContaDependente('S');
     }
 
     public Integer getIdConta() {
@@ -418,6 +424,22 @@ public class PlanoContaView implements Serializable{
 
     public void setListaCategoria(List<LnCategoria> listaCategoria) {
         this.listaCategoria = listaCategoria;
+    }
+
+    public List<LnTipotabela> getListaTipoTabela() {
+        return listaTipoTabela;
+    }
+
+    public void setListaTipoTabela(List<LnTipotabela> listaTipoTabela) {
+        this.listaTipoTabela = listaTipoTabela;
+    }
+
+    public List<LnPlanoconta> getListaContaCalculada() {
+        return listaContaCalculada;
+    }
+
+    public void setListaContaCalculada(List<LnPlanoconta> listaContaCalculada) {
+        this.listaContaCalculada = listaContaCalculada;
     }
 
     @Override

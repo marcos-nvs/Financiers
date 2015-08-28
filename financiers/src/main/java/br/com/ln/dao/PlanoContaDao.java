@@ -8,6 +8,7 @@ package br.com.ln.dao;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnAgendaconta;
 import br.com.ln.entity.LnContadependente;
+import br.com.ln.entity.LnPlanoconta;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import br.com.ln.objeto.Conta;
 import java.util.List;
@@ -45,6 +46,29 @@ public class PlanoContaDao extends GenericDao{
 
     public static List<LnAgendaconta> buscaListaAgendaConta(Conta conta) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public static List<LnPlanoconta> buscaListaContaDependente(Character ativo){
+        
+        List<LnPlanoconta> listaPlanoConta= null;
+        Session session = null;
+        Transaction tx;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            Query query  = session.getNamedQuery("LnPlanoconta.findByCtaChAtivo");
+            query.setCharacter("ctaChAtivo", ativo);
+            listaPlanoConta = query.list();
+            tx.commit();
+            
+        }finally{
+            if (session !=null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listaPlanoConta;
     }
     
     
