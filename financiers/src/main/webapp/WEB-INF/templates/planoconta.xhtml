@@ -94,17 +94,29 @@
             <p:selectBooleanCheckbox value="#{contaView.bAgendar}" />
             <p:outputLabel value="#{msgs['ln.texto.contaagendada']}"/>
         </h:panelGrid>
-        <h:panelGrid id="idpanelimposto" columns="4">
-            <p:outputLabel value="#{msgs['ln.texto.tabelacalculo']}" />
-            <p:selectOneMenu id="idtabelaimposto" value="#{contaView.idTipoConta}" style="width: 300px" effect="fade">
-                <f:selectItems var="itemimposto" value="#{contaView.listaTipoTabela}" itemLabel="#{itemimposto.ttbStDescricao}"
-                               itemValue="#{itemimposto.ttbInCodigo}"/>
-            </p:selectOneMenu>
-            <p:outputLabel value="#{msgs['ln.texto.tabelacalculo']}" />
-            <p:selectOneMenu id="idcontadependente" value="#{contaView.idContaDependente}" style="width: 300px" effect="fade">
-                <f:selectItems var="itemconta" value="#{contaView.listaContaCalculada}" itemLabel="#{itemconta.ctaStDescricao}"
-                               itemValue="#{itemconta.ctaInCodigo}"/>
-            </p:selectOneMenu>
+        <h:panelGrid id="idpanelcontacomplemento" columns="4" >
+            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+            <p:inputText id="idinputpercentual" value="#{contaView.nomeConta}" size="50" style="margin-left: 60px;"/>
+            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+            <p:inputText id="idinputlimite" value="#{contaView.nomeConta}" size="50" style="margin-left: 60px;"/>
         </h:panelGrid>
+        <p:tabView>
+            <p:tab title="Imposto">
+                <h:panelGrid id="idpanelimposto" columns="4">
+                    <p:outputLabel value="#{msgs['ln.texto.tabelacalculo']}" />
+                    <p:selectOneMenu id="idtabelaimposto" value="#{contaView.idTipoConta}" style="width: 300px" effect="fade">
+                        <f:selectItems var="itemimposto" value="#{contaView.listaTipoTabela}" itemLabel="#{itemimposto.ttbStDescricao}"
+                                       itemValue="#{itemimposto.ttbInCodigo}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="#{msgs['ln.texto.tabelacalculo']}" />
+                    <p:selectOneMenu id="idcontadependente" value="#{contaView.idContaDependente}" style="width: 300px" effect="fade">
+                        <f:selectItems var="itemconta" value="#{contaView.listaContaCalculada}" itemLabel="#{itemconta.ctaStDescricao}"
+                                       itemValue="#{itemconta.ctaInCodigo}"/>
+                    </p:selectOneMenu>
+                </h:panelGrid>
+            </p:tab>
+            <p:tab title="Agenda">
+            </p:tab>
+        </p:tabView>
     </p:dialog>
 </ui:composition>
