@@ -73,18 +73,18 @@
         </f:facet>
     </p:dataTable>
     
-    <p:dialog id="iddialogconta" header="#{msgs['teste']}" widgetVar="dlgconta" modal="false" showEffect="fade" hideEffect="fade"
+    <p:dialog id="iddialogconta" header="#{msgs['ln.texto.cadastroconta']}" widgetVar="dlgconta" modal="false" showEffect="fade" hideEffect="fade"
               closable="false" style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idpanelcontacategoria" columns="2">
             <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
-            <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" style="width: 300px; margin-left: 65px;" effect="fade">
+            <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" effect="fade">
                 <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
                                itemValue="#{itemCatConta.catInCodigo}" />
             </p:selectOneMenu>
         </h:panelGrid>
         <h:panelGrid id="idpanelconta" columns="10" >
             <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-            <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 60px;"/>
+            <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50"/>
             <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}" />
             <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
             <p:selectBooleanCheckbox value="#{contaView.bImposto}" />
@@ -95,13 +95,19 @@
             <p:outputLabel value="#{msgs['ln.texto.contaagendada']}"/>
         </h:panelGrid>
         <h:panelGrid id="idpanelcontacomplemento" columns="4" >
-            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-            <p:inputText id="idinputpercentual" value="#{contaView.nomeConta}" size="50" style="margin-left: 60px;"/>
-            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-            <p:inputText id="idinputlimite" value="#{contaView.nomeConta}" size="50" style="margin-left: 60px;"/>
+            <p:outputLabel value="#{msgs['t']}"/>
+            <p:inputText id="idinputpercentual" value="#{contaView.nomeConta}" size="20" >
+                <f:convertNumber pattern="##0.00" type="percent"/>
+                <p:ajax update="idinputpercentual" process="idinputpercentual" event="change"/>
+            </p:inputText>
+            <p:outputLabel value="#{msgs['t']}"/>
+            <p:inputText id="idinputlimite" value="#{contaView.nomeConta}" size="20" >
+                <f:convertNumber pattern="##0.00" type="percent"/>
+                <p:ajax update="idinputlimite" process="idinputlimite" event="change"/>
+            </p:inputText>
         </h:panelGrid>
         <p:tabView>
-            <p:tab title="Imposto">
+            <p:tab title="Imposto" >
                 <h:panelGrid id="idpanelimposto" columns="4">
                     <p:outputLabel value="#{msgs['ln.texto.tabelacalculo']}" />
                     <p:selectOneMenu id="idtabelaimposto" value="#{contaView.idTipoConta}" style="width: 300px" effect="fade">
