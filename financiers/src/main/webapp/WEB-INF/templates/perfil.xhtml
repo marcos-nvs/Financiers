@@ -56,6 +56,8 @@
             </p:confirmDialog>
             <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
                              onclick="PF('historico').show()"/>
+            <p:commandButton id="idperfilclose" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close" 
+                             action="#{usuarioView.btVoltar()}" process="idperfilclose" update="idperfilclose, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
 
@@ -125,6 +127,8 @@
                              update="idDtAcesso,idPerfilAcessoDialog,idPerfilDialog, :idFormTop:growl, idTbPerfil "/>
             <p:commandButton id="idFecharPerfilAcesso" value="#{msgs['ln.bt.fechar']}" action="#{perfilView.btFecharPerfilAcesso()}"
                              process="idFecharPerfilAcesso" update="idTbPerfil"/>
+            <p:commandButton id="idperfilclose" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close" 
+                             action="#{perfilView.btVoltar()}" process="idusuarioclose" update="idusuarioclose, :idFormCenter"/>
         </f:facet>
     </p:dialog>
 </ui:composition>

@@ -84,5 +84,6 @@ public class BeanVar implements Serializable{
     public void setTelaOrigem(String telaOrigem) {
         this.telaOrigem = telaOrigem;
     }
-}
+    
+ }
     

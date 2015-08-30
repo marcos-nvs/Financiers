@@ -96,6 +96,8 @@
                          action="#{usuarioView.btAlteraSenha}"/>
         <p:commandButton id="idusuariobtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" disabled="#{beanVar.apresenta}"
                          onclick="PF('historico').show()"/>
+        <p:commandButton id="idusuarioclose" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close" 
+                         action="#{usuarioView.btVoltar()}" process="idusuarioclose" update="idusuarioclose, :idFormCenter"/>
     </f:facet>
     
     <p:dialog id="idDialogSenha" header="Alterar Senha" widgetVar="novaSenha" modal="false" showEffect="fade" hideEffect="fade" closable="false"

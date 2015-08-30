@@ -5,6 +5,8 @@
  */
 package br.com.ln.view;
 
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnModulo;
@@ -49,6 +51,7 @@ public class PerfilView implements Serializable {
     private String mensagem;
     private final PerfilFuncoes perfilFuncoes;
     private final TratamentoEspecial tratativa;
+    private final BeanVar beanVar;
 
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
@@ -60,6 +63,7 @@ public class PerfilView implements Serializable {
         perfilFuncoes = new PerfilFuncoes();
         tratativa = new TratamentoEspecial();
         listPerfilacesso = new ArrayList<>();
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
     public List<LnPerfil> getListPerfil() {
@@ -347,4 +351,9 @@ public class PerfilView implements Serializable {
         bExcluirAcesso = false;
         bPesquisarAcesso = false;
     }
+
+    public void btVoltar(){
+        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+    }
+
 }

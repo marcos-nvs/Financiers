@@ -58,8 +58,10 @@
                 <p:commandButton value="#{msgs['ln.bt.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                 <p:commandButton value="#{msgs['ln.bt.nao']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
-            <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
+            <p:commandButton id="idipvabtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
                              onclick="PF('historico').show()"/>
+            <p:commandButton id="idipvaclose" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close" 
+                             action="#{ipvaView.btVoltar}" process="idipvaclose" update="idipvaclose, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
 

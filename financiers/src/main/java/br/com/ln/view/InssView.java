@@ -5,6 +5,8 @@
  */
 package br.com.ln.view;
 
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.funcao.InssFuncoes;
@@ -51,6 +53,7 @@ public class InssView implements Serializable {
     private List<Tabela> listTabela;
     private final TabelaFuncoes tabelaFuncao;
     private final InssFuncoes inssFuncao;
+    private final BeanVar beanVar;
 
     private String valor;
 
@@ -66,6 +69,7 @@ public class InssView implements Serializable {
         inssFuncao = new InssFuncoes();
         listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
         listTabelaItem = new ArrayList<>();
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
     public Integer getIdCodigo() {
@@ -406,4 +410,8 @@ public class InssView implements Serializable {
         tabelaItem.setValorInicial(valorInicial);
     }
 
+    public void btVoltar(){
+        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+    }
+    
 }

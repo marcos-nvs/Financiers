@@ -57,6 +57,8 @@
             </p:confirmDialog>
             <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
                              onclick="PF('historico').show()"/>
+            <p:commandButton id="idjurosclose" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close" 
+                             action="#{jurosView.btVoltar}" process="idjurosclose" update="idjurosclose, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
 
@@ -112,6 +114,7 @@
                              update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaJuros, idgridDataJuros"/>
             <p:commandButton id="idbtfecharjuros" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
                              action="#{jurosView.btFechar}" process="idbtfecharjuros" update="idbtfecharjuros"/>
+            <p:commandButton id="idusuarioclose" value="" icon="" action="" process="" update=""
         </f:facet>
     </p:dialog>
 </ui:composition>

@@ -283,4 +283,7 @@ public class CategoriaView implements Serializable {
         bAtivo = false;
     }
 
+    public void btVoltar(){
+        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+    }
 }

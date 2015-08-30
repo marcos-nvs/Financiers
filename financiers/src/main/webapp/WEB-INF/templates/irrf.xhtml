@@ -79,7 +79,8 @@
             </p:confirmDialog>
             <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
                              onclick="PF('historico').show()"/>
-
+            <p:commandButton id="idirrfclose" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close" 
+                             action="#{irrfView.btVoltar}" process="idperfilclose" update="idperfilclose, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
 

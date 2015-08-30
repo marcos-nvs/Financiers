@@ -5,6 +5,8 @@
  */
 package br.com.ln.view;
 
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.FavorecidoDao;
 import br.com.ln.entity.LnFavorecido;
@@ -52,6 +54,7 @@ public class JurosView implements Serializable {
     private List<LnFavorecido> listaBanco;
     private final TabelaFuncoes tabelaFuncao;
     private final JurosFuncoes jurosFuncao;
+    private final BeanVar beanVar;
 
     private String mensagem;
     private final FacesContext context = FacesContext.getCurrentInstance();
@@ -65,6 +68,7 @@ public class JurosView implements Serializable {
         listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
         listTabelaItem = new ArrayList<>();
         listaBanco = FavorecidoDao.grabBancos();
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
     public Integer getIdCodigo() {
@@ -381,4 +385,7 @@ public class JurosView implements Serializable {
         return FavorecidoDao.grabFavorecidoBanco(new Integer(banco)).getFavStDescricao();
     } 
     
+    public void btVoltar(){
+        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+    }
 }

@@ -5,6 +5,8 @@
  */
 package br.com.ln.view;
 
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.funcao.IrrfFuncoes;
@@ -53,6 +55,7 @@ public class IrrfView implements Serializable {
     private List<Tabela> listTabela;
     private final TabelaFuncoes tabelaFuncao;
     private final IrrfFuncoes irrfFuncao;
+    private final BeanVar beanVar;
     private String valor;
 
     private String mensagem;
@@ -66,6 +69,7 @@ public class IrrfView implements Serializable {
         irrfFuncao = new IrrfFuncoes();
         listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
         listTabelaItem = new ArrayList<>();
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
     public Integer getIdCodigo() {
@@ -424,5 +428,9 @@ public class IrrfView implements Serializable {
                     bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
         return lnTabela;
+    }
+
+    public void btVoltar(){
+        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
 }

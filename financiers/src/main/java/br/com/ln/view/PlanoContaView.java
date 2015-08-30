@@ -5,6 +5,8 @@
  */
 package br.com.ln.view;
 
+import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.dao.PlanoContaDao;
@@ -89,6 +91,7 @@ public class PlanoContaView implements Serializable{
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
     private final PlanoContaFuncoes planoContaFuncoes;
+    private final BeanVar beanVar;
 
     public PlanoContaView() {
         planoContaFuncoes = new PlanoContaFuncoes();
@@ -96,6 +99,7 @@ public class PlanoContaView implements Serializable{
         listaCategoria = CategoriaDao.grabCategoria('S');
         listaTipoTabela = PlanoContaDao.grabListObject(LnTipotabela.class);
         listaContaCalculada = PlanoContaDao.buscaListaContaDependente('S');
+        beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
     }
 
     public Integer getIdConta() {
@@ -505,6 +509,10 @@ public class PlanoContaView implements Serializable{
     }
 
     private void clearVarAgendaConta() {
+
     }
     
+    public void btVoltar(){
+        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+    }
 }

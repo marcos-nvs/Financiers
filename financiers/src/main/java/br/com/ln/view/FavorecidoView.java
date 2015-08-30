@@ -272,6 +272,8 @@ public class FavorecidoView implements Serializable {
         return lnTipoFavorecido.getTfaStDescricao();
     }
 
-
+    public void btVoltar(){
+        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+    }
 
 }

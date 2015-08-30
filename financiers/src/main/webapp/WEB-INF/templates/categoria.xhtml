@@ -34,6 +34,8 @@
             </p:confirmDialog>
             <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
                              onclick="PF('historico').show()"/>
+            <p:commandButton id="idcategoriaclose" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close" 
+                             action="#{categoriaView.btVoltar()}" process="idcategoriaclose" update="idcategoriaclose, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
 
