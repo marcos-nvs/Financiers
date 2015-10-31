@@ -161,7 +161,7 @@ WITH (
 ALTER TABLE acessocontrol.ln_usuario
   OWNER TO postgres;
 GRANT ALL ON TABLE acessocontrol.ln_usuario TO postgres;
-GRANT ALL ON TABLE acessocontrol.ln_usuario TO acessocontrol;
+--GRANT ALL ON TABLE acessocontrol.ln_usuario TO acessocontrol;
 COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
 COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_nome IS 'Define o nome do usuário';
 COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
@@ -390,21 +390,21 @@ insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,4
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,5);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,6);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,7);
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (2,8);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,8);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,9);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,10);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,11);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,12);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,13);
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (3,14);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,14);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,15);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,16);
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,10);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,17);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,18);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,19);
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,20);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,21);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,22);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,23);
 
 
 -- Table: ln_perfilacesso
