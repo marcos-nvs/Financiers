@@ -57,7 +57,7 @@ public class PerfilDao extends GenericDao implements Serializable {
     }
 
     /**
-     * grabListPerfilAtivo
+     * grabListPerfilAtivo Get list profile active
      * @param perChAtivo
      * @return List Object
      */
