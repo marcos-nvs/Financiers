@@ -157,11 +157,7 @@ public class UsuarioFuncoes implements Serializable {
             Calendar expira = Calendar.getInstance();
             expira.setTime(lnUsuario.getUsuDtExpiracao());
 
-            if (hoje.getTime().after(expira.getTime())) {
-                return false;
-            } else {
-                return true;
-            }
+            return !hoje.getTime().after(expira.getTime());
         } else {
             return true;
         }

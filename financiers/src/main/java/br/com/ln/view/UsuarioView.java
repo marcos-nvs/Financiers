@@ -224,10 +224,7 @@ public class UsuarioView implements Serializable {
             return false;
         }
         final UsuarioView other = (UsuarioView) obj;
-        if (!Objects.equals(this.usuario, other.usuario)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.usuario, other.usuario);
     }
 
     @Override
