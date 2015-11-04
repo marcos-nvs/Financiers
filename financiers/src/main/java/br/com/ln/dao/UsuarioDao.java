@@ -22,9 +22,9 @@ import org.hibernate.Transaction;
 public class UsuarioDao extends GenericDao implements Serializable {
     
     /**
-     * Pesquisa de usuario e senha para validacao.
+     * grabUsuario Get list user for code active.
      * @param usuStCodigo
-     * @param strDbName
+     * @param usuChAtivo
      * @return 
      */
     
@@ -62,9 +62,8 @@ public class UsuarioDao extends GenericDao implements Serializable {
     }
     
     /**
-     * Busca usuario especifico.
+     * grabUsuario Get list user for code.
      * @param usuStCodigo
-     * @param strDbName
      * @return 
      */
     public static LnUsuario grabUsuario(String usuStCodigo){
@@ -100,15 +99,14 @@ public class UsuarioDao extends GenericDao implements Serializable {
     }
     
     /**
-     * Busca Perfil do usuario.
-     * @param usuStCodigo
-     * @param strDbName
+     * Get profile in code profile.
+     * @param perInCodigo
      * @return 
      */
     public static List<LnUsuario> grabUsuarioPerfil(Integer perInCodigo){
         
         Session session = null;
-        Transaction tx = null;
+        Transaction tx;
         List<LnUsuario> listUsuario = null;
         
         try{
@@ -129,14 +127,14 @@ public class UsuarioDao extends GenericDao implements Serializable {
     }
     
     /**
-     * Pesquisa de usuario e senha para validacao.
+     * grabListUsuario Get list user for client.
      * @param cliente
      * @return 
      */
     public static List<LnUsuario> grabListUsuarioCliente(Integer cliente){
         
         Session session = null;
-        Transaction tx = null;
+        Transaction tx;
         List<LnUsuario> listUsuario = null;
         
         try{
@@ -157,10 +155,15 @@ public class UsuarioDao extends GenericDao implements Serializable {
         return listUsuario;
     }
     
+    /**
+     * grabListUsuario Get user for document.
+     * @param documento
+     * @return 
+     */
     public static LnUsuario grabUsuarioDocumento(String documento){
         
         Session session = null;
-        Transaction tx = null;
+        Transaction tx;
         LnUsuario lnUsuario = null;
         
         try {

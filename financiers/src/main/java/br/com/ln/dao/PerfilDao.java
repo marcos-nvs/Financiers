@@ -57,9 +57,8 @@ public class PerfilDao extends GenericDao implements Serializable {
     }
 
     /**
-     * Lista de Perfil Ativo
-     * @param clazz
-     * @param strDbName
+     * grabListPerfilAtivo
+     * @param perChAtivo
      * @return List Object
      */
 
@@ -75,7 +74,7 @@ public class PerfilDao extends GenericDao implements Serializable {
             listPerfil = query.list();
             tx.commit();
         }finally{
-            if (session != null && session.isOpen()){
+            if (session.isOpen()){
                 session.close();
             }
         }
