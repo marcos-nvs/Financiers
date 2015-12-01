@@ -28,6 +28,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.menu.MenuModel;
@@ -40,7 +41,7 @@ import org.primefaces.model.menu.MenuModel;
 @ManagedBean(name = "financiersView")
 public class FnAcesso implements Serializable {
 
-    final static Logger logger = Logger.getLogger(FnAcesso.class);
+    static final Logger logger = LogManager.getLogger(FnAcesso.class.getName());
 
     private String documento;
     private String usuario;
@@ -64,6 +65,7 @@ public class FnAcesso implements Serializable {
     public FnAcesso() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tratamentoEspecial = new TratamentoEspecial();
+        logger.warn("criado o fnacesso------------------------------------>");
     }
 
     public String getDocumento() {
