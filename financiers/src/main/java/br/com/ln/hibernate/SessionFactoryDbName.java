@@ -9,14 +9,12 @@ package br.com.ln.hibernate;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.tool.hbm2ddl.SchemaExport;
 
 /**
  * Fabrica de conexÃ£o
@@ -25,7 +23,6 @@ import org.hibernate.tool.hbm2ddl.SchemaExport;
 public class SessionFactoryDbName implements Serializable{
     
     static Map<String, SessionFactory> mapSessionFactory = new HashMap<>(2);
-    final static Logger logger = Logger.getLogger(SessionFactoryDbName.class);
     
     public static Session getCurrentSessionByName(String strDbName){
         return getSessionFactoryByName(strDbName).openSession();
@@ -61,7 +58,6 @@ public class SessionFactoryDbName implements Serializable{
             sessionFactory = cfg.buildSessionFactory(seviceRegistry);
 //           sessionFactory = cfg.configure().buildSessionFactory();
         } catch (HibernateException ex) {
-            logger.error(ex.getMessage());
             mapSessionFactory.clear();
         }
         return sessionFactory;

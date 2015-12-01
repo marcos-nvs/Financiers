@@ -28,8 +28,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.menu.MenuModel;
 
@@ -37,11 +37,10 @@ import org.primefaces.model.menu.MenuModel;
  *
  * @author Marcos Naves
  */
+
 @SessionScoped
 @ManagedBean(name = "financiersView")
 public class FnAcesso implements Serializable {
-
-    static final Logger logger = LogManager.getLogger(FnAcesso.class.getName());
 
     private String documento;
     private String usuario;
@@ -61,11 +60,11 @@ public class FnAcesso implements Serializable {
     
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+    static final Logger logger = LogManager.getLogger(FnAcesso.class.getClass());
             
     public FnAcesso() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tratamentoEspecial = new TratamentoEspecial();
-        logger.warn("criado o fnacesso------------------------------------>");
     }
 
     public String getDocumento() {
@@ -349,7 +348,6 @@ public class FnAcesso implements Serializable {
                 mensagem = bundle.getString("ln.mb.frase.emailcomproblema") + " " + ex.getMessage();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
-                logger.error(mensagem);
             } catch (NumberFormatException ex) {
                 lnUsuario = null;
                 beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
@@ -357,7 +355,6 @@ public class FnAcesso implements Serializable {
                 mensagem = bundle.getString("ln.mb.frase.emailcomproblema");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
-                logger.error(mensagem);
             }
         } else {
             lnUsuario = null;

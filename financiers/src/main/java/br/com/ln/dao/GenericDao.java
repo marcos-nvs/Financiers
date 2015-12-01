@@ -14,7 +14,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
-import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 
@@ -25,7 +24,7 @@ import org.hibernate.HibernateException;
  */
 public class GenericDao implements Serializable{
 
-    final static Logger logger = Logger.getLogger(GenericDao.class);
+//    final static Logger logger = Logger.getLogger(GenericDao.class);
     static SimpleDateFormat formatOnlyYear = new SimpleDateFormat("yyyy");
     
     /**
@@ -70,7 +69,6 @@ public class GenericDao implements Serializable{
             session.saveOrUpdate(obj);
             tx.commit();
         } catch (HibernateException ex){
-            logger.error("Ocorreu um erro durante a SaveOrUpdate");
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -124,7 +122,6 @@ public class GenericDao implements Serializable{
             session.save(obj);
             tx.commit();
         } catch (HibernateException ex){
-            logger.error("Ocorreu um erro durante a Save");
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -146,7 +143,6 @@ public class GenericDao implements Serializable{
             session.delete(obj);
             tx.commit();
         } catch (HibernateException ex){
-            logger.error("Ocorreu um erro durante a Delete");
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
