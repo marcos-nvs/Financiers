@@ -28,8 +28,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.menu.MenuModel;
 
@@ -60,11 +59,12 @@ public class FnAcesso implements Serializable {
     
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
-    static final Logger logger = LogManager.getLogger(FnAcesso.class.getClass());
+    Logger logger = Logger.getLogger(FnAcesso.class);
             
     public FnAcesso() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tratamentoEspecial = new TratamentoEspecial();
+        logger.info("Inicializando  FnAcesso");
     }
 
     public String getDocumento() {
