@@ -9,6 +9,7 @@ package br.com.ln.hibernate;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -23,6 +24,7 @@ import org.hibernate.cfg.Configuration;
 public class SessionFactoryDbName implements Serializable{
     
     static Map<String, SessionFactory> mapSessionFactory = new HashMap<>(2);
+    static Logger logger = Logger.getLogger(SessionFactoryDbName.class);
     
     public static Session getCurrentSessionByName(String strDbName){
         return getSessionFactoryByName(strDbName).openSession();
@@ -42,6 +44,7 @@ public class SessionFactoryDbName implements Serializable{
         
         SessionFactory sessionFactory = null;
         try {
+            logger.info("Looger - Buscando Session no banco dados : " + strDbName);
             System.out.println("Buscando Session no banco dados : " + strDbName);
             
             
