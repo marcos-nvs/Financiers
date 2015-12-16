@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpSession;
 public class LogoutSession implements Serializable{
     
     private String logout;
+    Logger logger = Logger.getLogger(LogoutSession.class);
 
     public LogoutSession() {
     }
@@ -36,7 +38,7 @@ public class LogoutSession implements Serializable{
             invalidateSession(session);        
             
         } catch (IOException ex) {
-            
+            logger.fatal(ex.getMessage());
             
         } finally{
             

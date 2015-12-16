@@ -30,6 +30,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -39,6 +40,8 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 @ManagedBean(name = "clienteView")
 public class ClienteView implements Serializable {
+    
+    Logger logger = Logger.getLogger(ClienteView.class);
 
     private String documento;
     private String nome;
@@ -556,6 +559,8 @@ public class ClienteView implements Serializable {
             }
         } catch (ConnectException ex) {
             mensagem = "Não foi possível pesquisar o CEP, computador fora da internet ou site indisponível!!!!";
+            logger.error(mensagem);
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }

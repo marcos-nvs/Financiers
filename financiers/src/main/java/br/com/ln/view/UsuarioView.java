@@ -286,6 +286,7 @@ public class UsuarioView implements Serializable {
                 }
             } catch (NullPointerException ex) {
                 mensagem = bundle.getString("ln.mb.frase.problema");
+                logger.error(mensagem + " : " + ex.getMessage() );
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.texto.usuario"), mensagem));
             }

@@ -277,6 +277,7 @@ public class FnAcesso implements Serializable {
             FacesContext externalcontext = FacesContext.getCurrentInstance();
             externalcontext.getExternalContext().redirect("/financiers/encerra.ln");
         } catch (Exception ex) {
+            logger.error(ex);
         } finally {
 
         }
@@ -347,6 +348,7 @@ public class FnAcesso implements Serializable {
                 beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
                 beanVar.setNomeTela("ln.frase.sistemafinanceiro");
                 mensagem = bundle.getString("ln.mb.frase.emailcomproblema") + " " + ex.getMessage();
+                logger.error(mensagem);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
             } catch (NumberFormatException ex) {
@@ -354,6 +356,7 @@ public class FnAcesso implements Serializable {
                 beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
                 beanVar.setNomeTela(bundle.getString("ln.frase.recuperaaceso"));
                 mensagem = bundle.getString("ln.mb.frase.emailcomproblema");
+                logger.error(mensagem);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                         bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
             }
