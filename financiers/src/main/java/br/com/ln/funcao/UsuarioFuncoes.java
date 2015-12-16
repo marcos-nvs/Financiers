@@ -117,7 +117,7 @@ public class UsuarioFuncoes implements Serializable {
 
     private boolean alteracaoUsuario(LnUsuario lnUsuario) {
         LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
-        EjbMap.deleteUsuario(pUsuario);
+//        EjbMap.deleteUsuario(pUsuario);
         lnUsuario.setUsuStSenha(pUsuario.getUsuStSenha());
         UsuarioDao.saveOrUpdateObject(lnUsuario);
         historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaousuario") + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome());

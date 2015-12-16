@@ -11,6 +11,7 @@ import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.Utilitarios;
 import br.com.ln.comum.VarComuns;
+import br.com.ln.dao.ClienteDao;
 import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.financiers.LnMenuModel;
@@ -213,9 +214,9 @@ public class FnAcesso implements Serializable {
     public void sistemaLogin() {
         if (VarComuns.strDbName != null) {
             if (usuario != null && senha != null) {
-                lnUsuario = EjbMap.grabUsuario(usuario);
+                lnUsuario = UsuarioDao.grabUsuario(usuario, 'S');
                 if (lnUsuario != null) {
-                    lnCliente = EjbMap.grabCliente(lnUsuario.getCliInCodigo());
+                    lnCliente = ClienteDao.grabClienteCodigo(lnUsuario.getCliInCodigo());
                     VarComuns.lnCliente = lnCliente;
                     if (lnUsuario != null) {
                         if (!lnUsuario.getUsuStSenha().equals(senha)) {
@@ -379,7 +380,7 @@ public class FnAcesso implements Serializable {
                             lnUsuario.setUsuDtExpiracao(usuarioFuncao.calculaDataExpiracao(lnUsuario));
                             UsuarioDao.saveOrUpdateObject(lnUsuario);
                             VarComuns.lnUsusario = lnUsuario;
-                            EjbMap.updateUsuario(lnUsuario);
+//                            EjbMap.updateUsuario(lnUsuario);
                             historico.gravaHistorico(lnUsuario, bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " " + 
                                    bundle.getString("ln.mb.frase.alterada"));
                             RequestContext.getCurrentInstance().execute("PF('senha').hide()");

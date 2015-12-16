@@ -406,7 +406,7 @@ public class UsuarioView implements Serializable {
                 if (tela.equals("Usuario")) {
                     if (VarComuns.lnUsusario.getUsuStCodigo().equals(lnUsuario.getUsuStCodigo())) {
                         VarComuns.lnUsusario = lnUsuario;
-                        EjbMap.updateUsuario(lnUsuario);
+//                        EjbMap.updateUsuario(lnUsuario);
                         historico.gravaHistoricoModulo(bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + 
                                 lnUsuario.getUsuStNome() + " " + bundle.getString("ln.mb.frase.alterada"));
                         RequestContext.getCurrentInstance().execute("PF('novaSenha').hide()");
@@ -414,7 +414,7 @@ public class UsuarioView implements Serializable {
                 } else {
                     if (VarComuns.lnUsusario != null) {
                         VarComuns.lnUsusario = lnUsuario;
-                        EjbMap.updateUsuario(lnUsuario);
+//                        EjbMap.updateUsuario(lnUsuario);
                     }
                     historico.gravaHistoricoModulo(bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - "
                             + lnUsuario.getUsuStNome() + " " + bundle.getString("ln.mb.frase.alterada"));

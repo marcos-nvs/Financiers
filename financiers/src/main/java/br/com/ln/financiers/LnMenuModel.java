@@ -10,6 +10,8 @@ import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
+import br.com.ln.dao.MenuDao;
+import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnMenu;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
@@ -55,7 +57,7 @@ public class LnMenuModel implements Serializable {
     private void montaMenu() {
         menuPerfil();
 
-        List<LnMenu> listMenu = EjbMap.grabMenu(VarComuns.strDbName);
+        List<LnMenu> listMenu = MenuDao.grabMenu('S');
 
         model = new DefaultMenuModel();
         DefaultSubMenu subMenu;
@@ -103,11 +105,11 @@ public class LnMenuModel implements Serializable {
 
     private void menuPerfil() {
         if (lnUsuario != null) {
-            lnPerfil = EjbMap.grabPerfil(lnUsuario.getPerInCodigo(),VarComuns.strDbName);
+            lnPerfil = PerfilDao.grabPerfil(lnUsuario.getPerInCodigo(),'S');
 
             VarComuns.lnPerfil = lnPerfil;
             
-            List<LnPerfilacesso> lnPerfilacesso = EjbMap.grabListPerfilAcesso(lnPerfil.getPerInCodigo(), strDbName);
+            List<LnPerfilacesso> lnPerfilacesso = PerfilDao.grabPerfilAcessoperInCodigo(lnPerfil.getPerInCodigo());
 
             for (LnPerfilacesso perfilAcesso : lnPerfilacesso) {
                 String Key = Integer.toString(perfilAcesso.getLnPerfilacessoPK().getModInCodigo());
@@ -139,37 +141,37 @@ public class LnMenuModel implements Serializable {
                 case "Usuário":
                     beanVar.setNovaTela("WEB-INF/templates/usuario.xhtml");
                     beanVar.setNomeTela("ln.mb.titulo.cadastrousuario");
-                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
+                    VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 1);
                     break;
                 case "Perfil":
                     beanVar.setNovaTela("WEB-INF/templates/perfil.xhtml");
                     beanVar.setNomeTela("ln.texto.cadastrodeperfil");
-                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+                    VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
                     break;
                 case "Tabelas":
                     beanVar.setNovaTela("WEB-INF/templates/tabela.xhtml");
                     beanVar.setNomeTela("ln.texto.tabelacalculo");
-                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 3);
+                    VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 3);
                     break;
                 case "Categoria":
                     beanVar.setNovaTela("WEB-INF/templates/categoria.xhtml");
                     beanVar.setNomeTela("ln.texto.cadastrodecategoriascontas");
-                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 4);
+                    VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 4);
                     break;
                 case "Plano de Contas":
                     beanVar.setNovaTela("WEB-INF/templates/planoconta.xhtml");
                     beanVar.setNomeTela("ln.mb.titulo.planoconta");
-                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 5);
+                    VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 5);
                     break;
                 case "Favorecidos":
                     beanVar.setNovaTela("WEB-INF/templates/favorecido.xhtml");
                     beanVar.setNomeTela("ln.mb.titulo.favorecido");
-                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 6);
+                    VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 6);
                     break;
                 case "Orçamento":
                     beanVar.setNovaTela("WEB-INF/templates/orcamento.xhtml");
                     beanVar.setNomeTela("Orçamentos");
-                    VarComuns.lnPerfilacesso = EjbMap.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
+                    VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
                     break;
                 case "Histórico":
                     beanVar.setNovaTela("WEB-INF/templates/historico.xhtml");

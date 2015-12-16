@@ -79,7 +79,7 @@ public class PerfilFuncoes {
                     }
                 }
                 PerfilDao.saveObject(lnPerfil);
-                EjbMap.grabPerfil(lnPerfil.getPerInCodigo(), VarComuns.strDbName);
+                PerfilDao.grabPerfil(lnPerfil.getPerInCodigo(), 'S');
                 historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaoperfil") + " " + lnPerfil.getPerStDescricao());
                 mensagem = bundle.getString("ln.mb.texto.sucesso");
                 return true;
@@ -120,7 +120,7 @@ public class PerfilFuncoes {
                     }
                 }
                 PerfilDao.saveOrUpdateObject(lnPerfil);
-                EjbMap.updatePerfil(lnPerfil, VarComuns.strDbName);
+//                EjbMap.updatePerfil(lnPerfil, VarComuns.strDbName);
                 historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaoperfil") + " " + lnPerfil.getPerStDescricao());
                 mensagem = bundle.getString("ln.mb.texto.sucesso");
                 return true;
