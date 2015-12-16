@@ -6,7 +6,6 @@
 
 package br.com.ln.comum;
 
-import java.io.Serializable;
 import java.util.Map;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;

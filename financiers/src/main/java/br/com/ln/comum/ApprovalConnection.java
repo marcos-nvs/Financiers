@@ -10,14 +10,16 @@ import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
+//import java.util.logging.Level;
 
 /**
  *
  * @author Marcos Naves
  */
 public class ApprovalConnection {
+
+    static Logger logger = Logger.getLogger(ApprovalConnection.class);
     
     public static boolean getConnectionApproval(String url) throws ConnectException{
         boolean retorno = false;
@@ -35,9 +37,9 @@ public class ApprovalConnection {
             }
             
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ApprovalConnection.class.getName()).log(Level.SEVERE, null, ex);
+            logger.fatal(ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(ApprovalConnection.class.getName()).log(Level.SEVERE, null, ex);
+            logger.fatal(ex.getMessage());
         }
         return retorno;
     }

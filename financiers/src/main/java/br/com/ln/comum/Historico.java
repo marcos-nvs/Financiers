@@ -5,8 +5,6 @@
  */
 package br.com.ln.comum;
 
-import static br.com.ln.comum.VarComuns.lnPerfilacesso;
-import static br.com.ln.comum.VarComuns.lnUsusario;
 import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.dao.GenericDao;
