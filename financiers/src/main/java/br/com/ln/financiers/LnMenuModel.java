@@ -7,7 +7,6 @@
 package br.com.ln.financiers;
 
 import br.com.ln.comum.BeanVar;
-import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.MenuDao;
@@ -23,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
+import org.apache.log4j.Logger;
 import org.primefaces.event.MenuActionEvent;
 import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
@@ -43,6 +43,7 @@ public class LnMenuModel implements Serializable {
     private String strDbName;
     private Map<String, LnPerfilacesso> mapPerfilUsuario = new HashMap<String, LnPerfilacesso>();
     private BeanVar beanVar;
+    Logger logger = Logger.getLogger(LnMenuModel.class);
 
     public LnMenuModel() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
@@ -98,7 +99,7 @@ public class LnMenuModel implements Serializable {
             }
             model.addElement(itemAll());
         } else {
-            System.out.println("Nao foi possivel montar o menu. Favor entrar em contato como o Administrador");
+            logger.warn("Nao foi possivel montar o menu. Favor entrar em contato como o Administrador");
         }
     }
 
