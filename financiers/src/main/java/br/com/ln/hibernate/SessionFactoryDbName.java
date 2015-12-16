@@ -44,8 +44,7 @@ public class SessionFactoryDbName implements Serializable{
         
         SessionFactory sessionFactory = null;
         try {
-            logger.info("Looger - Buscando Session no banco dados : " + strDbName);
-            System.out.println("Buscando Session no banco dados : " + strDbName);
+            logger.info("Buscando Session no banco dados : " + strDbName);
             
             
             Configuration cfg = new Configuration().configure();
@@ -62,6 +61,7 @@ public class SessionFactoryDbName implements Serializable{
 //           sessionFactory = cfg.configure().buildSessionFactory();
         } catch (HibernateException ex) {
             mapSessionFactory.clear();
+            logger.fatal(ex);
         }
         return sessionFactory;
     }
