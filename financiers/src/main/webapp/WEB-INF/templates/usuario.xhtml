@@ -34,12 +34,12 @@
         <p:inputMask id="idUsuStCPF" mask="999.999.999-99" value="#{usuarioView.cpf}" maxlength="40" size="11" disabled="#{not beanVar.apresenta}"/>
     </h:panelGrid>
     <h:panelGrid id="cadUsuarioButton" columns="2">
-        <p:commandButton id="btSalvar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-document" 
+        <p:commandButton id="btSalvar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk" 
                          disabled="#{not beanVar.apresenta}" action="#{usuarioView.btSalvar}" 
                          process="btSalvar, cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3" 
                          update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
                          btAlteraSenha, idusuariobtHistorico, cadUsuarioButton, :idFormTop:growl"/>
-        <p:commandButton id="btCancelar" value="#{msgs['ln.bt.cancelar']}" icon="ui-icon-document" disabled="#{not beanVar.apresenta}" 
+        <p:commandButton id="btCancelar" value="#{msgs['ln.bt.cancelar']}" icon="ui-icon-cancel" disabled="#{not beanVar.apresenta}" 
                          process="btCancelar" action="#{usuarioView.btCancelar}"
                          update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
                          btAlteraSenha, idusuariobtHistorico, cadUsuarioButton, :idFormTop:growl"/>
