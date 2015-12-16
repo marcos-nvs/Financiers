@@ -194,8 +194,8 @@ CREATE INDEX ind_usuariocpf
 
 -- DROP SCHEMA public;
 
-CREATE SCHEMA public
-  AUTHORIZATION postgres;
+-- CREATE SCHEMA public
+--   AUTHORIZATION postgres;
 
 GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO public;
@@ -402,9 +402,8 @@ insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,1
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,17);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,18);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,19);
+insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,20);
 insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,21);
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,22);
-insert into public."ln_menumodulo" ("men_in_codigo","mod_in_codigo") values (4,23);
 
 
 -- Table: ln_perfilacesso
