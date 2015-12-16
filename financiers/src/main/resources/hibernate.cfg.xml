@@ -4,7 +4,7 @@
   <session-factory>
     <property name="hibernate.connection.datasource">jdbc/Financiers</property>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-    <!--<property name="hibernate.default_schema">public</property>-->
+    <property name="hibernate.default_schema">public</property>
 
 
 <!--    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
