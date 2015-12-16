@@ -5,14 +5,7 @@
  */
 package br.com.ln.dao;
 
-import br.com.ln.entity.LnCliente;
-import br.com.ln.entity.LnEndereco;
-import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
-import java.util.List;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  *

@@ -5,7 +5,6 @@
  */
 package br.com.ln.dao;
 
-import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnCliente;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
