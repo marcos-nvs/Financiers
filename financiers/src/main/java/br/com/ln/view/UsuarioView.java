@@ -6,7 +6,6 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.BeanVar;
-import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
@@ -27,6 +26,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -62,6 +62,7 @@ public class UsuarioView implements Serializable {
 
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+    Logger logger = Logger.getLogger(UsuarioView.class);
 
     public UsuarioView() {
         listPerfil = PerfilDao.grabListPerfilAtivo('S');
