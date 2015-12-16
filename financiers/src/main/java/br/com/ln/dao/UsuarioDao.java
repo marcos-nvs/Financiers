@@ -10,6 +10,7 @@ import br.com.ln.entity.LnUsuario;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,6 +21,8 @@ import org.hibernate.Transaction;
  * @author Marcos Naves
  */
 public class UsuarioDao extends GenericDao implements Serializable {
+    
+    static Logger logger = Logger.getLogger(UsuarioDao.class);
     
     /**
      * grabUsuario Get list user for code active.
@@ -51,7 +54,7 @@ public class UsuarioDao extends GenericDao implements Serializable {
                 lnUsuario = null;
             }
         }catch(HibernateException ex){
-            System.out.println("Hibernate Exception : " + ex.getMessage());
+            logger.error("Hibernate Exception : " + ex.getMessage());
         }finally{
             
             if (session != null && session.isOpen()){
@@ -88,7 +91,7 @@ public class UsuarioDao extends GenericDao implements Serializable {
                 lnUsuario = null;
             }
         }catch(HibernateException ex){
-            System.out.println("Hibernate Exception : " + ex.getMessage());
+            logger.error("Hibernate Exception : " + ex.getMessage());
         }finally{
             
             if (session != null && session.isOpen()){

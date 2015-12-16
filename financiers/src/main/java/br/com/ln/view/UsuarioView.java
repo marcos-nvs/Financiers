@@ -343,6 +343,7 @@ public class UsuarioView implements Serializable {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
                         bundle.getString("ln.texto.usuario"), mensagem));
+                logger.error("ln.mb.frase.selecionaregistro : " + ex.getMessage());
             }
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");

@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -31,6 +32,7 @@ public class UsuarioFuncoes implements Serializable {
 
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+    Logger logger = Logger.getLogger(UsuarioFuncoes.class);
 
     public boolean gravaUsuario(LnUsuario lnUsuario) {
         mensagem = "";
