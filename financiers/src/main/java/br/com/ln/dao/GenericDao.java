@@ -14,6 +14,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 
@@ -26,6 +27,7 @@ public class GenericDao implements Serializable{
 
 //    final static Logger logger = Logger.getLogger(GenericDao.class);
     static SimpleDateFormat formatOnlyYear = new SimpleDateFormat("yyyy");
+    static Logger logger = Logger.getLogger(GenericDao.class);
     
     /**
      * Lista Objetos genericos
@@ -69,6 +71,7 @@ public class GenericDao implements Serializable{
             session.saveOrUpdate(obj);
             tx.commit();
         } catch (HibernateException ex){
+            logger.error("Problemas na gravação : " + ex.getMessage());
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -97,8 +100,8 @@ public class GenericDao implements Serializable{
                 }
             }
 
-        } catch (HibernateException xcp) {
-            System.out.println(xcp.getMessage()); 
+        } catch (HibernateException ex) {
+            logger.error("Problemas no acesso a data do banco de dados: " + ex.getMessage());
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -122,6 +125,7 @@ public class GenericDao implements Serializable{
             session.save(obj);
             tx.commit();
         } catch (HibernateException ex){
+            logger.error("Problemas na gravação : " + ex.getMessage());
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -143,6 +147,7 @@ public class GenericDao implements Serializable{
             session.delete(obj);
             tx.commit();
         } catch (HibernateException ex){
+            logger.error("Problemas no delete : " + ex.getMessage());
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

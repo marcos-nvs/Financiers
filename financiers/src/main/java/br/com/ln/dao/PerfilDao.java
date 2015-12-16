@@ -12,6 +12,7 @@ import static br.com.ln.dao.GenericDao.grabIdByNextValueStringSQL;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import java.io.Serializable;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -21,6 +22,8 @@ import org.hibernate.Transaction;
  * @author Marcos Naves
  */
 public class PerfilDao extends GenericDao implements Serializable {
+    
+    static Logger logger = Logger.getLogger(PerfilDao.class);
     
     /**
      * Perfil especifico

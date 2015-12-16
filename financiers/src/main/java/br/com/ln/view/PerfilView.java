@@ -25,6 +25,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -55,6 +56,7 @@ public class PerfilView implements Serializable {
 
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+    Logger logger = Logger.getLogger(PerfilFuncoes.class);
 
     public PerfilView() {
         listPerfil = PerfilDao.grabListObject(LnPerfil.class);

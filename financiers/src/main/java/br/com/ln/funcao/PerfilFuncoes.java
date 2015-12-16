@@ -5,9 +5,7 @@
  */
 package br.com.ln.funcao;
 
-import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.Historico;
-import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.PerfilDao;
 import br.com.ln.dao.UsuarioDao;
 import br.com.ln.entity.LnPerfil;
@@ -17,6 +15,7 @@ import br.com.ln.tipos.TipoFuncao;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -29,6 +28,7 @@ public class PerfilFuncoes {
 
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+    Logger logger = Logger.getLogger(PerfilFuncoes.class);
 
     public boolean perfil(LnPerfil lnPerfil) {
         historico = new Historico();
