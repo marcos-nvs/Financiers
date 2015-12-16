@@ -5,7 +5,6 @@
  */
 package br.com.ln.funcao;
 
-import br.com.ln.comum.EjbMap;
 import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.Utilitarios;

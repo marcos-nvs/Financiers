@@ -17,14 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.faces.context.FacesContext;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
 /**
  *
  * @author Marcos Naves
  */
-public class TabelaFuncoes implements Serializable{
-    
+public class TabelaFuncoes implements Serializable {
+
     private Integer codigoTabItem = 0;
     private Integer codigoTab = 0;
     public String mensagem;
@@ -33,14 +34,13 @@ public class TabelaFuncoes implements Serializable{
 
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
+    Logger logger = Logger.getLogger(TabelaFuncoes.class);
 
     public TabelaFuncoes() {
         historico = new Historico();
     }
-    
-    
-    
-    public boolean gravaTabela(LnTabela lnTabela){
+
+    public boolean gravaTabela(LnTabela lnTabela) {
         mensagem = "";
         boolean bSalvo = false;
 
@@ -59,7 +59,7 @@ public class TabelaFuncoes implements Serializable{
         return bSalvo;
     }
 
-    public boolean gravaTabelaItem(LnTabelaItem lnTabelaItem){
+    public boolean gravaTabelaItem(LnTabelaItem lnTabelaItem) {
         mensagem = "";
         boolean bSalvo = false;
 
@@ -80,55 +80,58 @@ public class TabelaFuncoes implements Serializable{
 
     private boolean incluirTabela(LnTabela lnTabela) {
         boolean bSalvo = false;
-        try{
-            for (LnTabelaItem lnTabelaItem : lnTabela.getListLnTabelaItem()){
+        try {
+            for (LnTabelaItem lnTabelaItem : lnTabela.getListLnTabelaItem()) {
                 lnTabelaItem.setTabInCodigo(lnTabela.getTabInCodigo());
                 bSalvo = gravaTabelaItem(lnTabelaItem);
             }
-            
+
             if (bSalvo) {
                 TabelaDao.saveObject(lnTabela);
                 historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaotabela") + " " + lnTabela.getTabStDescricao());
-            return true;
+                return true;
             } else {
                 return false;
             }
-        } catch (HibernateException ex){
+        } catch (HibernateException ex) {
             mensagem = bundle.getString("ln.mb.frase.problema");
+            logger.error(mensagem);
             return false;
         }
     }
 
     private boolean AlterarTabela(LnTabela lnTabela) {
-        
+
         lnTabela.getListLnTabelaItem().stream().forEach((lnTabelaItem) -> {
             gravaTabelaItem(lnTabelaItem);
         });
 
-        try{
+        try {
             TabelaDao.saveOrUpdateObject(lnTabela);
             historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaotabela") + " " + lnTabela.getTabStDescricao());
             return true;
-        } catch (HibernateException ex){
+        } catch (HibernateException ex) {
             mensagem = bundle.getString("ln.mb.frase.problema");
+            logger.error(mensagem);
             return false;
         }
     }
-    
+
     private boolean excluirTabela(LnTabela lnTabela) {
-        try{
+        try {
             lnTabela.getListLnTabelaItem().stream().forEach((lnTabelaItem) -> {
                 TabelaDao.deleteObject(lnTabelaItem);
             });
             TabelaDao.deleteObject(lnTabela);
             historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaotabela") + " " + lnTabela.getTabStDescricao());
             return true;
-        } catch (HibernateException ex){
+        } catch (HibernateException ex) {
             mensagem = bundle.getString("ln.mb.frase.problema");
+            logger.error(mensagem);
             return false;
         }
     }
-    
+
     private boolean incluirTabelaItem(LnTabelaItem lnTabelaItem) {
 
         try {
@@ -136,52 +139,54 @@ public class TabelaFuncoes implements Serializable{
             return true;
         } catch (HibernateException ex) {
             mensagem = bundle.getString("ln.mb.frase.problema");
+            logger.error(mensagem);
             return false;
         }
     }
 
-    private boolean excluirTabelaItem(LnTabelaItem lnTabelaItem){
-        
-        try{
+    private boolean excluirTabelaItem(LnTabelaItem lnTabelaItem) {
+
+        try {
             TabelaDao.deleteObject(lnTabelaItem);
             return true;
-        } catch (HibernateException ex){
+        } catch (HibernateException ex) {
             mensagem = bundle.getString("ln.mb.frase.problema");
+            logger.error(mensagem);
             return false;
         }
     }
 
-    public List<Tabela> buscaTabela(Integer ttbInCodigo){
+    public List<Tabela> buscaTabela(Integer ttbInCodigo) {
         Tabela tabela;
-        
+
         List<Tabela> listaTabela = new ArrayList<>();
         List<LnTabela> listTabelaDao = TabelaDao.grabTabela(ttbInCodigo);
-        
+
         for (LnTabela lnTabela : listTabelaDao) {
             lnTabela.setListLnTabelaItem(TabelaDao.grabTabelaItem(lnTabela.getTabInCodigo()));
-            
+
             tabela = new Tabela();
             tabela.setCodigoTabela(lnTabela.getTabInCodigo());
             tabela.setNomeTabela(lnTabela.getTabStDescricao());
             tabela.setDataInicial(lnTabela.getTabDtInicio());
             tabela.setDataFinal(lnTabela.getTabDtFinal());
-            
+
             tabela.setListTabelaItem(buscaTabelaItem(lnTabela.getListLnTabelaItem()));
-            
+
             listaTabela.add(tabela);
         }
 
         return listaTabela;
     }
-    
-    private List<TabelaItem> buscaTabelaItem(List<LnTabelaItem> listTabelaItemDao){
-        
+
+    private List<TabelaItem> buscaTabelaItem(List<LnTabelaItem> listTabelaItemDao) {
+
         List<TabelaItem> listaTabelaItem = new ArrayList<>();
         TabelaItem tabelaItem;
-        
+
         for (LnTabelaItem lnTabelaItem : listTabelaItemDao) {
             tabelaItem = new TabelaItem();
-            
+
             tabelaItem.setCodigoTabela(lnTabelaItem.getTabInCodigo());
             tabelaItem.setCodigoTabItem(lnTabelaItem.getTaiInCodigo());
             tabelaItem.setPercentual(lnTabelaItem.getTaiFlPercentual());
@@ -195,7 +200,7 @@ public class TabelaFuncoes implements Serializable{
 
             listaTabelaItem.add(tabelaItem);
         }
-        
+
         return listaTabelaItem;
     }
 
@@ -203,7 +208,7 @@ public class TabelaFuncoes implements Serializable{
         TabelaFuncoes tabelaFuncao = new TabelaFuncoes();
         return tabelaFuncao.buscaTabela(tipoTabela);
     }
-    
+
     public Integer calcIdTabela() {
         Integer i = codigoTab + 1;
         codigoTab = i;
@@ -215,13 +220,13 @@ public class TabelaFuncoes implements Serializable{
         codigoTabItem = i;
         return codigoTabItem;
     }
-    
+
     public boolean tabela(LnTabela lnTabela) {
         TabelaFuncoes tabelafuncao = new TabelaFuncoes();
         mensagem = tabelafuncao.mensagem;
         return tabelafuncao.gravaTabela(lnTabela);
     }
-    
+
     public LnTabela loadLnTabela(Tabela tabela, List<TabelaItem> listTabelaItem, Integer ttbInCodigo) {
         LnTabelaItem lnTabelaItem;
         List<LnTabelaItem> listTabelaItemLoad = new ArrayList<>();
@@ -270,6 +275,7 @@ public class TabelaFuncoes implements Serializable{
                     bGravar = true;
                 } else {
                     mensagem = bundle.getString("ln.mb.frase.valorestabelaigual");
+                    logger.warn(mensagem);
                     bGravar = false;
                     break;
                 }
@@ -280,12 +286,14 @@ public class TabelaFuncoes implements Serializable{
                     lnTabela.setListLnTabelaItem(listTabelaItemLoad);
                 } else {
                     mensagem = bundle.getString("ln.mb.frase.naohaalteracao");
+                    logger.warn(mensagem);
                 }
             }
         } else {
             mensagem = bundle.getString("ln.mb.frase.tabelavazia");
+            logger.warn(mensagem);
         }
         return lnTabela;
-    }    
-    
+    }
+
 }

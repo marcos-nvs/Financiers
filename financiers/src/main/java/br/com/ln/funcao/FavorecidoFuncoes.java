@@ -7,9 +7,7 @@ package br.com.ln.funcao;
 
 import br.com.ln.comum.Historico;
 import br.com.ln.dao.FavorecidoDao;
-import br.com.ln.dao.HistoricoDao;
 import br.com.ln.entity.LnFavorecido;
-import br.com.ln.entity.LnHistorico;
 import br.com.ln.entity.LnTipofavorecido;
 import java.io.Serializable;
 import java.util.List;

@@ -7,7 +7,6 @@ package br.com.ln.funcao;
 
 import br.com.ln.dao.ClienteAdminDao;
 import br.com.ln.entity.LnCliente;
-import br.com.ln.entity.LnEndereco;
 import java.util.List;
 
 /**
