@@ -121,5 +121,10 @@
             <p:tab title="Agenda">
             </p:tab>
         </p:tabView>
+        <f:facet name="footer">
+            <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
+            <p:commandButton id="idPlanoContaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
+                             action="PF('categoriaEdit').hide()"/>
+        </f:facet>
     </p:dialog>
 </ui:composition>
