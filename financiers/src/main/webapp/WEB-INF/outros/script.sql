@@ -139,20 +139,21 @@ ALTER TABLE acessocontrol.seq_telefone
 
 CREATE TABLE acessocontrol.ln_usuario
 (
-  usu_st_codigo character varying(30) NOT NULL,
-  usu_st_nome character varying(50) NOT NULL,
-  usu_st_senha character varying(30) NOT NULL,
-  usu_st_email character varying(100),
-  usu_ch_ativo character(1) NOT NULL,
-  usu_in_dia integer,
-  usu_ch_alterasenha character(1) NOT NULL,
-  usu_ch_expirasenha character(1) NOT NULL,
-  usu_dt_expiracao date,
-  usu_dt_cadastro date,
-  per_in_codigo integer NOT NULL,
-  usu_st_cpf character varying(11) NOT NULL,
+  usu_st_codigo character varying(30) NOT NULL, -- Define o código do usuário para acessar o sistema
+  usu_st_nome character varying(50) NOT NULL, -- Define o nome do usuário
+  usu_st_senha character varying(30) NOT NULL, -- Define a senha do usuário para acesso ao sistema
+  usu_st_email character varying(100), -- Define o e-mail do usuário
+  usu_ch_ativo character(1) NOT NULL, -- Define se o usuário está ativo ou inativo
+  usu_in_dia integer, -- Define o período em dias para a troca da senha
+  usu_ch_alterasenha character(1) NOT NULL, -- Define se o usuário pode ou não trocar a senha
+  usu_ch_expirasenha character(1) NOT NULL, -- Define se a senha do usuário expira
+  usu_dt_expiracao date, -- Define quando expira a senha do usuário
+  usu_dt_cadastro date, -- Define a data do cadastro do usuário
+  per_in_codigo integer NOT NULL, -- Define o perfil de acesso do usuario
+  usu_st_cpf character varying(11) NOT NULL, -- Define o cpf do usuário para poder resgatar a senha de acesso
   cli_in_codigo integer,
   usu_ch_admin character(1) NOT NULL,
+  usu_in_dependente integer,
   CONSTRAINT pk_usustcodigo PRIMARY KEY (usu_st_codigo)
 )
 WITH (
@@ -161,7 +162,6 @@ WITH (
 ALTER TABLE acessocontrol.ln_usuario
   OWNER TO postgres;
 GRANT ALL ON TABLE acessocontrol.ln_usuario TO postgres;
---GRANT ALL ON TABLE acessocontrol.ln_usuario TO acessocontrol;
 COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
 COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_nome IS 'Define o nome do usuário';
 COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
@@ -176,9 +176,9 @@ COMMENT ON COLUMN acessocontrol.ln_usuario.per_in_codigo IS 'Define o perfil de 
 COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
 
 
--- Index: ind_usuariocpf
+-- Index: acessocontrol.ind_usuariocpf
 
--- DROP INDEX ind_usuariocpf;
+-- DROP INDEX acessocontrol.ind_usuariocpf;
 
 CREATE INDEX ind_usuariocpf
   ON acessocontrol.ln_usuario
