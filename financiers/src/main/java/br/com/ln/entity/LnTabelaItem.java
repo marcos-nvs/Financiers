@@ -32,8 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnTabelaItem.findByTaiFlFinal", query = "SELECT l FROM LnTabelaItem l WHERE l.taiFlFinal = :taiFlFinal"),
     @NamedQuery(name = "LnTabelaItem.findByTaiFlPercentual", query = "SELECT l FROM LnTabelaItem l WHERE l.taiFlPercentual = :taiFlPercentual"),
     @NamedQuery(name = "LnTabelaItem.findByTaiFlDesconto", query = "SELECT l FROM LnTabelaItem l WHERE l.taiFlDesconto = :taiFlDesconto"),
-    @NamedQuery(name = "LnTabelaItem.findByTaiFlDependente", query = "SELECT l FROM LnTabelaItem l WHERE l.taiFlDependente = :taiFlDependente"),
-    @NamedQuery(name = "LnTabelaItem.findByTaiInQtddependente", query = "SELECT l FROM LnTabelaItem l WHERE l.taiInQtddependente = :taiInQtddependente")})
+    @NamedQuery(name = "LnTabelaItem.findByTaiFlDependente", query = "SELECT l FROM LnTabelaItem l WHERE l.taiFlDependente = :taiFlDependente")})
+
 public class LnTabelaItem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

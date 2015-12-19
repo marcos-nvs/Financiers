@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnTabela.findByTabStDescricao", query = "SELECT l FROM LnTabela l WHERE l.tabStDescricao = :tabStDescricao"),
     @NamedQuery(name = "LnTabela.findByTabDtInicio", query = "SELECT l FROM LnTabela l WHERE l.tabDtInicio = :tabDtInicio"),
     @NamedQuery(name = "LnTabela.findByTabDtFinal", query = "SELECT l FROM LnTabela l WHERE l.tabDtFinal = :tabDtFinal")})
+
 public class LnTabela implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

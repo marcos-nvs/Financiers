@@ -44,6 +44,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnUsuario.findByCliInCodigo", query = "SELECT l FROM LnUsuario l WHERE l.cliInCodigo = :cliInCodigo"),
     @NamedQuery(name = "LnUsuario.findByClienteUsuario", query = "SELECT l FROM LnUsuario l WHERE l.cliInCodigo = :cliInCodigo and l.usuStCodigo = :usuStCodigo"),
     @NamedQuery(name = "LnUsuario.findAllUsuStCodigoUsuChAtivo", query = "SELECT l FROM LnUsuario l WHERE l.usuStCodigo = :usuStCodigo and l.usuChAtivo = :usuChAtivo")})
+
 public class LnUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -85,6 +86,8 @@ public class LnUsuario implements Serializable {
     private Integer cliInCodigo;
     @Column(name = "usu_ch_admin")
     private Character usuChAdmin;
+    @Column(name = "usu_in_dependente")
+    private Character usuInDependente;
     
     @Transient
     private TipoFuncao tipoFuncao;
@@ -226,6 +229,14 @@ public class LnUsuario implements Serializable {
 
     public void setTipoFuncao(TipoFuncao tipoFuncao) {
         this.tipoFuncao = tipoFuncao;
+    }
+
+    public Character getUsuInDependente() {
+        return usuInDependente;
+    }
+
+    public void setUsuInDependente(Character usuInDependente) {
+        this.usuInDependente = usuInDependente;
     }
 
     @Override

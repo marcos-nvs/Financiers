@@ -190,7 +190,6 @@ public class TabelaFuncoes implements Serializable {
             tabelaItem.setCodigoTabela(lnTabelaItem.getTabInCodigo());
             tabelaItem.setCodigoTabItem(lnTabelaItem.getTaiInCodigo());
             tabelaItem.setPercentual(lnTabelaItem.getTaiFlPercentual());
-            tabelaItem.setQtdDependente(lnTabelaItem.getTaiInQtddependente());
             tabelaItem.setValorDependente(lnTabelaItem.getTaiFlDependente());
             tabelaItem.setValorDesconto(lnTabelaItem.getTaiFlDesconto());
             tabelaItem.setValorFinal(lnTabelaItem.getTaiFlFinal());
@@ -260,7 +259,6 @@ public class TabelaFuncoes implements Serializable {
                 lnTabelaItem.setTaiFlFinal(tbItem.getValorFinal());
                 lnTabelaItem.setTaiFlInicio(tbItem.getValorInicial());
                 lnTabelaItem.setTaiFlPercentual(tbItem.getPercentual());
-                lnTabelaItem.setTaiInQtddependente(tbItem.getQtdDependente());
                 lnTabelaItem.setTaiStOrigem(tbItem.getOrigem());
                 lnTabelaItem.setTaiStTipo(tbItem.getTipo());
 
