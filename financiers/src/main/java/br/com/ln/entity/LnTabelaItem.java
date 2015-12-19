@@ -54,8 +54,6 @@ public class LnTabelaItem implements Serializable {
     private Double taiFlDesconto;
     @Column(name = "tai_fl_dependente")
     private Double taiFlDependente;
-    @Column(name = "tai_in_qtddependente")
-    private Integer taiInQtddependente;
     @Column(name = "tai_st_origem")
     private String taiStOrigem;
     @Column(name = "tai_st_tipo")
@@ -132,14 +130,6 @@ public class LnTabelaItem implements Serializable {
         this.taiFlDependente = taiFlDependente;
     }
 
-    public Integer getTaiInQtddependente() {
-        return taiInQtddependente;
-    }
-
-    public void setTaiInQtddependente(Integer taiInQtddependente) {
-        this.taiInQtddependente = taiInQtddependente;
-    }
-
     public String getTaiStOrigem() {
         return taiStOrigem;
     }
@@ -186,7 +176,7 @@ public class LnTabelaItem implements Serializable {
 
     @Override
     public String toString() {
-        return "LnTabelaItem{" + "taiInCodigo=" + taiInCodigo + ", tabInCodigo=" + tabInCodigo + ", taiFlInicio=" + taiFlInicio + ", taiFlFinal=" + taiFlFinal + ", taiFlPercentual=" + taiFlPercentual + ", taiFlDesconto=" + taiFlDesconto + ", taiFlDependente=" + taiFlDependente + ", taiInQtddependente=" + taiInQtddependente + ", taiStOrigem=" + taiStOrigem + ", taiStTipo=" + taiStTipo + ", tipoFuncao=" + tipoFuncao + '}';
+        return "LnTabelaItem{" + "taiInCodigo=" + taiInCodigo + ", tabInCodigo=" + tabInCodigo + ", taiFlInicio=" + taiFlInicio + ", taiFlFinal=" + taiFlFinal + ", taiFlPercentual=" + taiFlPercentual + ", taiFlDesconto=" + taiFlDesconto + ", taiFlDependente=" + taiFlDependente + ", taiStOrigem=" + taiStOrigem + ", taiStTipo=" + taiStTipo + ", tipoFuncao=" + tipoFuncao + '}';
     }
 
 }

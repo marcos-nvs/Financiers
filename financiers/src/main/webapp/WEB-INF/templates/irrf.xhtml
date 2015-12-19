@@ -132,11 +132,6 @@
                     <f:convertNumber pattern="#{msgs['ln.texto.cifrao']} ###,##0.00" type="currency" currencySymbol="#{msgs['ln.texto.cifrao']}"/>
                 </h:outputText>
             </p:column>
-            <p:column headerText="#{msgs['ln.texto.qtddependente']}" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIR.qtdDependente}">
-                    <f:convertNumber pattern="##0" type="number"/>
-                </h:outputText>
-            </p:column>
             <p:column headerText="#{msgs['ln.texto.percentualimposto']}" style="width: 40px">
                 <h:outputText value="#{incluiTabelaIR.percentual}">
                     <f:convertNumber pattern="##0.00" type="percent"/>

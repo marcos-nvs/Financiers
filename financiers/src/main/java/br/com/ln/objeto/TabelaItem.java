@@ -22,7 +22,6 @@ public class TabelaItem implements Serializable{
     private Double valorDependente;
     private Double valorDesconto;
     private Double percentual;
-    private Integer qtdDependente;
     private String origem;
     private String tipo;
     
@@ -87,14 +86,6 @@ public class TabelaItem implements Serializable{
         this.percentual = percentual;
     }
 
-    public Integer getQtdDependente() {
-        return qtdDependente;
-    }
-
-    public void setQtdDependente(Integer qtdDependente) {
-        this.qtdDependente = qtdDependente;
-    }
-
     public String getOrigem() {
         return origem;
     }
@@ -127,7 +118,6 @@ public class TabelaItem implements Serializable{
         hash = 19 * hash + Objects.hashCode(this.valorDependente);
         hash = 19 * hash + Objects.hashCode(this.valorDesconto);
         hash = 19 * hash + Objects.hashCode(this.percentual);
-        hash = 19 * hash + Objects.hashCode(this.qtdDependente);
         return hash;
     }
 
@@ -155,14 +145,12 @@ public class TabelaItem implements Serializable{
         if (!Objects.equals(this.percentual, other.percentual)) {
             return false;
         }
-        if (!Objects.equals(this.qtdDependente, other.qtdDependente)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "TabelaItem{" + "codigoTabela=" + codigoTabela + ", codigoTabItem=" + codigoTabItem + ", valorInicial=" + valorInicial + ", valorFinal=" + valorFinal + ", valorDependente=" + valorDependente + ", valorDesconto=" + valorDesconto + ", percentual=" + percentual + ", qtdDependente=" + qtdDependente + ", origem=" + origem + ", tipo=" + tipo + ", tipoFuncao=" + tipoFuncao + '}';
+        return "TabelaItem{" + "codigoTabela=" + codigoTabela + ", codigoTabItem=" + codigoTabItem + ", valorInicial=" + valorInicial + ", valorFinal=" + valorFinal + ", valorDependente=" + valorDependente + ", valorDesconto=" + valorDesconto + ", percentual=" + percentual + ", origem=" + origem + ", tipo=" + tipo + ", tipoFuncao=" + tipoFuncao + '}';
     }
+
 }

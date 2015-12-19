@@ -51,10 +51,6 @@ public class IrrfFuncoes implements Serializable {
             mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfvalorfinal") + "; ";
             validado = false;
         }
-        if (tabelaItem.getQtdDependente() == null) {
-            mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfqtddependente") + "; ";
-            validado = false;
-        }
         if (tabelaItem.getPercentual() == null) {
             mensagem = mensagem + bundle.getString("ln.mb.frase.tabelairrfpercentual") + "; ";
             validado = false;
