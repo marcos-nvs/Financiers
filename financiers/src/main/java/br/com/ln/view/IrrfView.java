@@ -45,7 +45,6 @@ public class IrrfView implements Serializable {
     private Double valorDependente;
     private Double valorDesconto;
     private Double percentual;
-    private Integer qtdDependente;
     private final Integer TIPOTABELA = 1;
 
     private LnTabela lnTabela;
@@ -158,14 +157,6 @@ public class IrrfView implements Serializable {
 
     public void setPercentual(Double percentual) {
         this.percentual = percentual;
-    }
-
-    public Integer getQtdDependente() {
-        return qtdDependente;
-    }
-
-    public void setQtdDependente(Integer qtdDependente) {
-        this.qtdDependente = qtdDependente;
     }
 
     public Tabela getTabela() {
@@ -378,7 +369,6 @@ public class IrrfView implements Serializable {
 
     private void loadVarTabelaItem() {
         tabelaItem.setPercentual(percentual);
-        tabelaItem.setQtdDependente(qtdDependente);
         tabelaItem.setValorDependente(valorDependente);
         tabelaItem.setValorDesconto(valorDesconto);
         tabelaItem.setValorFinal(valorFinal);
@@ -398,7 +388,6 @@ public class IrrfView implements Serializable {
         valorDesconto = null;
         valorFinal = null;
         valorInicial = null;
-        qtdDependente = null;
         percentual = null;
         listTabelaItem.clear();
     }

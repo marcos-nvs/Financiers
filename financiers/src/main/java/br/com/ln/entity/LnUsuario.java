@@ -87,7 +87,7 @@ public class LnUsuario implements Serializable {
     @Column(name = "usu_ch_admin")
     private Character usuChAdmin;
     @Column(name = "usu_in_dependente")
-    private Character usuInDependente;
+    private Integer usuInDependente;
     
     @Transient
     private TipoFuncao tipoFuncao;
@@ -231,11 +231,11 @@ public class LnUsuario implements Serializable {
         this.tipoFuncao = tipoFuncao;
     }
 
-    public Character getUsuInDependente() {
+    public Integer getUsuInDependente() {
         return usuInDependente;
     }
 
-    public void setUsuInDependente(Character usuInDependente) {
+    public void setUsuInDependente(Integer usuInDependente) {
         this.usuInDependente = usuInDependente;
     }
 

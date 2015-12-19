@@ -54,11 +54,6 @@
                         <f:convertNumber pattern="#{msgs['ln.texto.cifrao']} ###,##0.00" type="currency"/>
                     </h:outputText>
                 </p:column>
-                <p:column headerText="#{msgs['ln.texto.qtddependente']}">
-                    <h:outputText value="#{irrfDetalhe.qtdDependente}">
-                        <f:convertNumber pattern="##0"/>
-                    </h:outputText>
-                </p:column>
             </p:dataTable>
         </p:rowExpansion>
         <f:facet name="footer">
@@ -105,11 +100,6 @@
             <p:inputText id="idvlrFinal" value="#{irrfView.valorFinal}" style="width: 80px;" size="20">
                 <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
                 <p:ajax update="idvlrFinal" process="idvlrFinal" event="change"/>
-            </p:inputText>
-            <p:outputLabel value="#{msgs['ln.texto.qtddependente']}"/>
-            <p:inputText id="idqtdDep" value="#{irrfView.qtdDependente}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="0"/>
-                <p:ajax update="idqtdDep" process="idqtdDep" event="change"/>
             </p:inputText>
 
             <p:outputLabel value="#{msgs['ln.texto.percentualimposto']}"/>
@@ -172,7 +162,7 @@
         <f:facet name="footer">
             <p:commandButton id="idbtincluirirrf" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
                              action="#{irrfView.btIncluiDetalhe()}" process="idbtincluirirrf, idgridDataIrrf, idgridValorIrrf, idIrrfDescricao,
-                             dtirrfInicio, dtirrfFinal, idinputvlrinicial, idvlrFinal, idqtdDep, idpercImposto, idvlrDesconto, idvlrDependente"
+                             dtirrfInicio, dtirrfFinal, idinputvlrinicial, idvlrFinal, idpercImposto, idvlrDesconto, idvlrDependente"
                              update="idDTIRRF, :idFormTop:growl"/>
             <p:commandButton id="idbtsalvarirrf" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                              action="#{irrfView.btSalvar}" process="idbtsalvarirrf, idgridDataIrrf, idIrrfDescricao, dtirrfInicio, dtirrfFinal, idDTIRRF" 

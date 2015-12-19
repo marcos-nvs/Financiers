@@ -36,7 +36,7 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 @ManagedBean(name = "usuarioView")
 public class UsuarioView implements Serializable {
-
+    
     private String usuario;
     private String nome;
     private String senha;
@@ -53,17 +53,18 @@ public class UsuarioView implements Serializable {
     private String mensagem;
     private LnUsuario lnUsuario;
     private String cpf;
+    private Integer dependente;
     private final TratamentoEspecial tratamentoEspecial;
     private final UsuarioFuncoes usuarioFuncoes;
-
+    
     private boolean bAtivo = false;
     private boolean bAlteraSenha = false;
     private boolean bExpiraSenha = false;
-
+    
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
     Logger logger = Logger.getLogger(UsuarioView.class);
-
+    
     public UsuarioView() {
         listPerfil = PerfilDao.grabListPerfilAtivo('S');
         listUsuario = UsuarioDao.grabListUsuarioCliente(VarComuns.lnCliente.getCliInCodigo());
@@ -72,150 +73,158 @@ public class UsuarioView implements Serializable {
         tratamentoEspecial = new TratamentoEspecial();
         usuarioFuncoes = new UsuarioFuncoes();
     }
-
+    
     public String getUsuario() {
         return usuario;
     }
-
+    
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-
+    
     public String getNome() {
         return nome;
     }
-
+    
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    
     public String getSenha() {
         return senha;
     }
-
+    
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
+    
     public String getEmail() {
         return email;
     }
-
+    
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
     public Integer getDia() {
         return dia;
     }
-
+    
     public void setDia(Integer dia) {
         this.dia = dia;
     }
-
+    
     public Date getDtExpira() {
         return dtExpira;
     }
-
+    
     public void setDtExpira(Date dtExpira) {
         this.dtExpira = dtExpira;
     }
-
+    
     public Date getDtCadastro() {
         return dtCadastro;
     }
-
+    
     public void setDtCadastro(Date dtCadastro) {
         this.dtCadastro = dtCadastro;
     }
-
+    
     public Integer getPerfil() {
         return perfil;
     }
-
+    
     public void setPerfil(Integer perfil) {
         this.perfil = perfil;
     }
-
+    
     public List<LnPerfil> getListPerfil() {
         return listPerfil;
     }
-
+    
     public void setListPerfil(List<LnPerfil> listPerfil) {
         this.listPerfil = listPerfil;
     }
-
+    
     public List<LnUsuario> getListUsuario() {
         return listUsuario;
     }
-
+    
     public void setListUsuario(List<LnUsuario> listUsuario) {
         this.listUsuario = listUsuario;
     }
-
+    
     public String getNovaSenha() {
         return novaSenha;
     }
-
+    
     public void setNovaSenha(String novaSenha) {
         this.novaSenha = novaSenha;
     }
-
+    
     public String getConfirmaSenha() {
         return confirmaSenha;
     }
-
+    
     public void setConfirmaSenha(String confirmaSenha) {
         this.confirmaSenha = confirmaSenha;
     }
-
+    
     public LnUsuario getLnUsuario() {
         return lnUsuario;
     }
-
+    
     public void setLnUsuario(LnUsuario lnUsuario) {
         this.lnUsuario = lnUsuario;
     }
-
+    
     public boolean isbAtivo() {
         return bAtivo;
     }
-
+    
     public void setbAtivo(boolean bAtivo) {
         this.bAtivo = bAtivo;
     }
-
+    
     public boolean isbAlteraSenha() {
         return bAlteraSenha;
     }
-
+    
     public void setbAlteraSenha(boolean bAlteraSenha) {
         this.bAlteraSenha = bAlteraSenha;
     }
-
+    
     public boolean isbExpiraSenha() {
         return bExpiraSenha;
     }
-
+    
     public void setbExpiraSenha(boolean bExpiraSenha) {
         this.bExpiraSenha = bExpiraSenha;
     }
-
+    
     public String getCpf() {
         return cpf;
     }
-
+    
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-
+    
+    public Integer getDependente() {
+        return dependente;
+    }
+    
+    public void setDependente(Integer dependente) {
+        this.dependente = dependente;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 83 * hash + Objects.hashCode(this.usuario);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -227,12 +236,12 @@ public class UsuarioView implements Serializable {
         final UsuarioView other = (UsuarioView) obj;
         return Objects.equals(this.usuario, other.usuario);
     }
-
+    
     @Override
     public String toString() {
         return "UsuarioView{" + "usuario=" + usuario + ", nome=" + nome + ", senha=" + senha + ", email=" + email + ", dia=" + dia + ", dtExpira=" + dtExpira + ", dtCadastro=" + dtCadastro + ", perfil=" + perfil + '}';
     }
-
+    
     public void btIncluir() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             listPerfil = PerfilDao.grabListPerfilAtivo('S');
@@ -248,7 +257,7 @@ public class UsuarioView implements Serializable {
                     bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
-
+    
     public void btAlterar() {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             if (lnUsuario != null && !lnUsuario.getUsuStCodigo().isEmpty()) {
@@ -267,7 +276,7 @@ public class UsuarioView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
-
+    
     public void btExcluir() {
         if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
             try {
@@ -286,7 +295,7 @@ public class UsuarioView implements Serializable {
                 }
             } catch (NullPointerException ex) {
                 mensagem = bundle.getString("ln.mb.frase.problema");
-                logger.error(mensagem + " : " + ex.getMessage() );
+                logger.error(mensagem + " : " + ex.getMessage());
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.texto.usuario"), mensagem));
             }
@@ -296,15 +305,15 @@ public class UsuarioView implements Serializable {
                     bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
-
+    
     public void btSalvar() {
         boolean bSalvo;
         dataLoadUsuario();
-
+        
         if (usuarioFuncoes.verificaDadosUsuario(lnUsuario)) {
             bSalvo = usuarioFuncoes.gravaUsuario(lnUsuario);
             mensagem = usuarioFuncoes.mensagem;
-
+            
             if (bSalvo) {
                 listUsuario = UsuarioDao.grabListObject(LnUsuario.class);
                 dataClean();
@@ -316,20 +325,20 @@ public class UsuarioView implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.texto.usuario"), mensagem));
             }
-
+            
         } else {
             mensagem = usuarioFuncoes.mensagem;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
-
+    
     public void btCancelar() {
         dataClean();
         beanVar.setApresenta(false);
         beanVar.setBloquear(true);
     }
-
+    
     public void btAlteraSenha() {
         if (VarComuns.lnUsusario.getUsuChAlterasenha().equals('S')) {
             try {
@@ -342,21 +351,20 @@ public class UsuarioView implements Serializable {
                 }
             } catch (NullPointerException ex) {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.texto.usuario"), mensagem));
                 logger.error("ln.mb.frase.selecionaregistro : " + ex.getMessage());
             }
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
-
-    public void btVoltar(){
+    
+    public void btVoltar() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
-    
     
     public void dataClean() {
         usuario = "";
@@ -368,8 +376,9 @@ public class UsuarioView implements Serializable {
         nome = "";
         dia = null;
         cpf = "";
+        dependente = 0;
     }
-
+    
     public void dataLoadUsuario() {
         lnUsuario.setPerInCodigo(perfil);
         lnUsuario.setUsuChAlterasenha(tratamentoEspecial.tratamentoTextoCharacter(bAlteraSenha));
@@ -382,8 +391,14 @@ public class UsuarioView implements Serializable {
         lnUsuario.setUsuInDia(dia);
         lnUsuario.setUsuStCpf(tratamentoEspecial.tratamentoCpf(cpf));
         lnUsuario.setCliInCodigo(VarComuns.lnCliente.getCliInCodigo());
+        
+        if (dependente != null) {
+            lnUsuario.setUsuInDependente(dependente);            
+        } else {
+            lnUsuario.setUsuInDependente(0);
+        }
     }
-
+    
     public void dataLoadVar() {
         usuario = lnUsuario.getUsuStCodigo();
         senha = lnUsuario.getUsuStSenha();
@@ -395,8 +410,9 @@ public class UsuarioView implements Serializable {
         perfil = lnUsuario.getPerInCodigo();
         dia = lnUsuario.getUsuInDia();
         cpf = lnUsuario.getUsuStCpf();
+        dependente = lnUsuario.getUsuInDependente();
     }
-
+    
     public void btConfirmaSenha(String tela) {
         if (!novaSenha.equals("")) {
             if (novaSenha.equals(confirmaSenha)) {
@@ -405,13 +421,13 @@ public class UsuarioView implements Serializable {
                 UsuarioFuncoes usuarioFuncao = new UsuarioFuncoes();
                 lnUsuario.setUsuDtExpiracao(usuarioFuncao.calculaDataExpiracao(lnUsuario));
                 UsuarioDao.saveOrUpdateObject(lnUsuario);
-
+                
                 if (tela.equals("Usuario")) {
                     if (VarComuns.lnUsusario.getUsuStCodigo().equals(lnUsuario.getUsuStCodigo())) {
                         VarComuns.lnUsusario = lnUsuario;
 //                        EjbMap.updateUsuario(lnUsuario);
-                        historico.gravaHistoricoModulo(bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + 
-                                lnUsuario.getUsuStNome() + " " + bundle.getString("ln.mb.frase.alterada"));
+                        historico.gravaHistoricoModulo(bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - "
+                                + lnUsuario.getUsuStNome() + " " + bundle.getString("ln.mb.frase.alterada"));
                         RequestContext.getCurrentInstance().execute("PF('novaSenha').hide()");
                     }
                 } else {
@@ -424,18 +440,18 @@ public class UsuarioView implements Serializable {
                     RequestContext.getCurrentInstance().execute("PF('senha').hide()");
                 }
                 mensagem = bundle.getString("ln.mb.frase.senhasucesso");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.texto.usuario"), mensagem));
             } else {
                 mensagem = bundle.getString("ln.mb.frase.senhanaoconfere");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.texto.usuario"), mensagem));
             }
         } else {
             mensagem = bundle.getString("ln.mb.frase.senhavazia");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, 
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("ln.texto.usuario"), mensagem));
         }
     }
-
+    
 }

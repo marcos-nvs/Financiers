@@ -24,7 +24,7 @@
         <p:outputLabel value="E-mail"/>
         <p:inputText id="idUsuStEmaiil" value="#{usuarioView.email}" maxlength="40" size="60" disabled="#{not beanVar.apresenta}"/>
     </h:panelGrid>
-    <h:panelGrid id="cadUsuarioDados3" columns="4" style="margin-left: 13px">
+    <h:panelGrid id="cadUsuarioDados3" columns="6" style="margin-left: 13px">
         <p:outputLabel value="#{msgs['ln.texto.perfil']}"/>
         <p:selectOneMenu id="idperfil" value="#{usuarioView.perfil}" disabled="#{not beanVar.apresenta}" style="width: 250px;" effect="fade">
             <f:selectItems var="itemPerfil" value="#{usuarioView.listPerfil}" itemLabel="#{itemPerfil.perStDescricao}"
@@ -32,6 +32,8 @@
         </p:selectOneMenu>
         <p:outputLabel value="#{msgs['ln.texto.documento']}" />
         <p:inputMask id="idUsuStCPF" mask="999.999.999-99" value="#{usuarioView.cpf}" maxlength="40" size="11" disabled="#{not beanVar.apresenta}"/>
+        <p:outputLabel value="#{msgs['ln.texto.dependente']}"/>
+        <p:inputText id="idUsuDependente" value="#{usuarioView.dependente}" maxlength="5" size="5" disabled="#{not beanVar.apresenta}"/>
     </h:panelGrid>
     <h:panelGrid id="cadUsuarioButton" columns="2">
         <p:commandButton id="btSalvar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk" 
