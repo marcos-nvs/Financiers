@@ -495,6 +495,23 @@ public class PlanoContaView implements Serializable{
     public void btVisualizarConta(){
     
     }
+    
+    public void btFecharConta(){
+        beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+    }
+    
+    public void btIncluirContaLista(){
+        
+    }
+    
+    public void btSalvarContaLista(){
+        
+    }
+    
+    public void btFecharContaLista(){
+        RequestContext.getCurrentInstance().execute("PF('dlgconta').hide()");
+    }
+    
 
     private void clearVarConta() {
         idConta = null;

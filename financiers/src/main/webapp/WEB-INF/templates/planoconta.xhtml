@@ -55,12 +55,12 @@
         </p:rowExpansion>
         <f:facet name="footer">
             <p:commandButton id="idbtIncluirConta" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document" 
-                             action="#{contaView.btIncluirConta()}" process="idbtIncluirConta" 
+                             action="#{contaView.btIncluirConta}" process="idbtIncluirConta" 
                              update=":idFormTop:growl, :idFormCenter:iddialogconta"/>
             <p:commandButton id="idbtAlterarConta" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"
-                             action="#{contaView.btAlterarConta()}"/>
+                             action="#{contaView.btAlterarConta}"/>
             <p:commandButton id="idbtExcluirConta" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
-                             action="#{contaView.btExcluirConta()}">
+                             action="#{contaView.btExcluirConta}">
                 <p:confirm header="#{msgs['ln.texto.confirmacao']}" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -71,7 +71,7 @@
             <p:commandButton id="idbtHistoricoConta" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
                              onclick="PF('historico').show()"/>
             <p:commandButton id="idplanocontaclose" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close" 
-                             action="#{planoContaView.btVoltar()}" process="idplanocontaclose" update="idplanocontaclose, :idFormCenter"/>
+                             action="#{contaView.btFecharConta}" process="idplanocontaclose" update="idplanocontaclose, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
     
@@ -79,7 +79,7 @@
               closable="false" style="background-color: activeborder" width="1000" dynamic="true">
         <h:panelGrid id="idpanelcontacategoria" columns="2">
             <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
-            <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" effect="fade" style="margin-left: 30px;">
+            <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" effect="fade" style="margin-left: 18px;">
                 <p:ajax listener="#{contaView.identificaTipoConta}" process="idcontacategoria" 
                         update="idgridtipoconta" />
                 <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
@@ -88,8 +88,8 @@
         </h:panelGrid>
         <h:panelGrid id="idpanelconta" columns="10">
             <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-            <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 25px;"/>
-            <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}" />
+            <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 13px;"/>
+            <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}"  />
             <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
             <p:selectBooleanCheckbox value="#{contaView.bImposto}" />
             <p:outputLabel value="#{msgs['ln.text.calulaimposto']}"/>
@@ -98,24 +98,22 @@
             <p:selectBooleanCheckbox value="#{contaView.bAgendar}" />
             <p:outputLabel value="#{msgs['ln.texto.contaagendada']}"/>
         </h:panelGrid>
-        <h:panelGrid id="idpanelcontacomplemento" columns="4" >
-            <p:outputLabel value="#{msgs['ln.texto.limiteconta']}"/>
-            <p:inputText id="idinputlimite" value="#{contaView.limite}" size="20" >
+        <h:panelGrid id="idpanelcontacomplemento" columns="2" >
+            <p:outputLabel value="#{msgs['ln.texto.saldoinicial']}"/>
+            <p:inputText id="idsaldoinicial" value="#{contaView.limite}" size="20" >
                 <f:convertNumber pattern="##0.00" type="percent"/>
-                <p:ajax update="idinputlimite" process="idinputlimite" event="change"/>
+                <p:ajax update="idsaldoinicial" process="idsaldoinicial" event="change"/>
             </p:inputText>
         </h:panelGrid>
         
         <h:panelGrid id="idgridtipoconta" columns="1">
-            <!--<ui:insert id="idInsertTipoConta">-->
             <ui:include src="#{beanVar.telaConta}"/>
-            <!--</ui:insert>-->
         </h:panelGrid>
 
         <f:facet name="footer">
             <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
             <p:commandButton id="idPlanoContaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
-                             action="PF('categoriaEdit').hide()"/>
+                             action="#{contaView.btFecharContaLista}"/>
         </f:facet>
     </p:dialog>
 </ui:composition>
