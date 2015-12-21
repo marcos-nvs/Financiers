@@ -24,6 +24,7 @@ public class BeanVar implements Serializable{
     private String novaTela;
     private String telaOrigem;
     private String nomeTela;
+    private String telaConta;
     private boolean apresenta;
     private boolean bloquear;
     
@@ -33,6 +34,7 @@ public class BeanVar implements Serializable{
         this.localizacao = VarComuns.local();
         this.novaTela = "WEB-INF/templates/login.xhtml";
         this.nomeTela = "ln.frase.sistemafinanceiro";
+        this.telaConta = "ativo.xhtml";
         this.apresenta = false;
         this.bloquear = true;
     }
@@ -83,6 +85,14 @@ public class BeanVar implements Serializable{
 
     public void setTelaOrigem(String telaOrigem) {
         this.telaOrigem = telaOrigem;
+    }
+
+    public String getTelaConta() {
+        return telaConta;
+    }
+
+    public void setTelaConta(String telaConta) {
+        this.telaConta = telaConta;
     }
     
  }

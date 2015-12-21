@@ -515,4 +515,53 @@ public class PlanoContaView implements Serializable{
     public void btVoltar(){
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
+    
+    public void identificaTipoConta(){
+        
+        getTipoContaPorCategoria(idCategoria);
+        
+        switch (idTipoConta) {
+            case 1:
+                beanVar.setTelaConta("ativo.xhtml");
+                break;
+            case 2:
+                beanVar.setTelaConta("passivo.xhtml");
+                break;
+            case 3:
+                beanVar.setTelaConta("banco.xhtml");
+                break;
+            case 4:
+                beanVar.setTelaConta("cartaocredito.xhtml");
+                break;
+            case 5:
+                beanVar.setTelaConta("dinheiro.xhtml");
+                break;
+            case 6:
+                beanVar.setTelaConta("emprestimo.xhtml");
+                break;
+            case 7:
+                beanVar.setTelaConta("financiamento.xhtml");
+                break;
+            case 8:
+                beanVar.setTelaConta("outrospassivos.xhtml");
+                break;
+            case 9:
+                beanVar.setTelaConta("receitas.xhtml");
+                break;
+            case 10:
+                beanVar.setTelaConta("despesas.xhtml");
+                break;
+            case 11:
+                beanVar.setTelaConta("contasreceber.xhtml");
+                break;
+            case 12:
+                beanVar.setTelaConta("contaspagar.xhtml");
+                break;
+        }
+               
+    }
+    
+    private void getTipoContaPorCategoria(Integer categoria){
+        idTipoConta = CategoriaDao.grabTipoContaPorCategoria(categoria);
+    }
 }

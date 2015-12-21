@@ -47,5 +47,29 @@ public class CategoriaDao extends GenericDao implements Serializable{
 //        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_categoria');"));
 //    }
     
-    
+
+    public static Integer grabTipoContaPorCategoria(Integer categoria){
+        
+        Session session = null;
+        Transaction tx;
+        List<LnCategoria> listaCategoria = null;
+        Integer tipInCodigo = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            Query query = session.getNamedQuery("LnCategoria.findByCatInCodigo");
+            query.setInteger("catInCodigo", categoria);
+            listaCategoria = query.list();
+            tx.commit();
+            tipInCodigo = listaCategoria.get(0).getTipInCodigo();
+            
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return tipInCodigo;
+    }
 }

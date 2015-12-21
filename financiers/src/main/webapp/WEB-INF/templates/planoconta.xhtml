@@ -80,11 +80,13 @@
         <h:panelGrid id="idpanelcontacategoria" columns="2">
             <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
             <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" effect="fade" style="margin-left: 30px;">
+                <p:ajax listener="#{contaView.identificaTipoConta}" process="idcontacategoria" 
+                        update="idgridtipoconta" />
                 <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
                                itemValue="#{itemCatConta.catInCodigo}"/>
             </p:selectOneMenu>
         </h:panelGrid>
-        <h:panelGrid id="idpanelconta" columns="10" >
+        <h:panelGrid id="idpanelconta" columns="10">
             <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
             <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 25px;"/>
             <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}" />
@@ -103,24 +105,13 @@
                 <p:ajax update="idinputlimite" process="idinputlimite" event="change"/>
             </p:inputText>
         </h:panelGrid>
-        <p:tabView>
-            <p:tab title="Imposto" >
-                <h:panelGrid id="idpanelimposto" columns="4">
-                    <p:outputLabel value="#{msgs['ln.texto.tabelacalculo']}" />
-                    <p:selectOneMenu id="idtabelaimposto" value="#{contaView.idTipoConta}" style="width: 300px" effect="fade">
-                        <f:selectItems var="itemimposto" value="#{contaView.listaTipoTabela}" itemLabel="#{itemimposto.ttbStDescricao}"
-                                       itemValue="#{itemimposto.ttbInCodigo}"/>
-                    </p:selectOneMenu>
-                    <p:outputLabel value="#{msgs['ln.texto.tabelacalculo']}" />
-                    <p:selectOneMenu id="idcontadependente" value="#{contaView.idContaDependente}" style="width: 300px" effect="fade">
-                        <f:selectItems var="itemconta" value="#{contaView.listaContaCalculada}" itemLabel="#{itemconta.ctaStDescricao}"
-                                       itemValue="#{itemconta.ctaInCodigo}"/>
-                    </p:selectOneMenu>
-                </h:panelGrid>
-            </p:tab>
-            <p:tab title="Agenda">
-            </p:tab>
-        </p:tabView>
+        
+        <h:panelGrid id="idgridtipoconta" columns="1">
+            <!--<ui:insert id="idInsertTipoConta">-->
+            <ui:include src="#{beanVar.telaConta}"/>
+            <!--</ui:insert>-->
+        </h:panelGrid>
+
         <f:facet name="footer">
             <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
             <p:commandButton id="idPlanoContaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
