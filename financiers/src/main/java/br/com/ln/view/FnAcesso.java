@@ -238,14 +238,14 @@ public class FnAcesso implements Serializable {
                                     GenericDao.saveObject(lnHistorico);
                                 } else {
                                     lnUsuario = null;
-                                    beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+                                    beanVar.setNovaTela("WEB-INF/templates/usuario/login.xhtml");
                                     mensagem = bundle.getString("ln.mb.frase.problemamenu");
                                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                                             bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                                 }
                             } else {
                                 lnUsuario = null;
-                                beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+                                beanVar.setNovaTela("WEB-INF/templates/usuario/login.xhtml");
                                 mensagem = bundle.getString("ln.mb.titulo.senhaexpira");
                                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                                         bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
@@ -288,18 +288,18 @@ public class FnAcesso implements Serializable {
     }
 
     public void recuperaAcesso() {
-        beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+        beanVar.setNovaTela("WEB-INF/templates/usuario/recuperaacesso.xhtml");
         beanVar.setNomeTela("ln.frase.recuperaaceso");
     }
 
     public void cadastroCliente() {
-        beanVar.setTelaOrigem("WEB-INF/templates/login.xhtml");
-        beanVar.setNovaTela("WEB-INF/templates/cliente.xhtml");
+        beanVar.setTelaOrigem("WEB-INF/templates/usuario/login.xhtml");
+        beanVar.setNovaTela("WEB-INF/templates/usuario/cliente.xhtml");
         beanVar.setNomeTela("ln.texto.cadastrocliente");
     }
 
     public void btVoltar() {
-        beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+        beanVar.setNovaTela("WEB-INF/templates/usuario/login.xhtml");
         beanVar.setNomeTela("ln.frase.sistemafinanceiro");
     }
 
@@ -324,12 +324,12 @@ public class FnAcesso implements Serializable {
                         mensagem = bundle.getString("ln.mb.texto.enviaemail");
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                                 bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
-                        beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+                        beanVar.setNovaTela("WEB-INF/templates/usuario/usuario/login.xhtml");
                         beanVar.setNomeTela("ln.frase.sistemafinanceiro");
 
                     } else {
                         lnUsuario = null;
-                        beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+                        beanVar.setNovaTela("WEB-INF/templates/usuario/recuperaacesso.xhtml");
                         beanVar.setNomeTela(bundle.getString("ln.frase.recuperaaceso"));
                         mensagem = bundle.getString("ln.mb.texto.usuarionaoencontradobase");
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -337,7 +337,7 @@ public class FnAcesso implements Serializable {
                     }
                 } else {
                     lnUsuario = null;
-                    beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+                    beanVar.setNovaTela("WEB-INF/templates/usuario/recuperaacesso.xhtml");
                     beanVar.setNomeTela(bundle.getString("ln.frase.recuperaaceso"));
                     mensagem = bundle.getString("ln.mb.frase.invalidocpf");
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -345,7 +345,7 @@ public class FnAcesso implements Serializable {
                 }
             } catch (EmailException ex) {
                 lnUsuario = null;
-                beanVar.setNovaTela("WEB-INF/templates/login.xhtml");
+                beanVar.setNovaTela("WEB-INF/templates/usuario/login.xhtml");
                 beanVar.setNomeTela("ln.frase.sistemafinanceiro");
                 mensagem = bundle.getString("ln.mb.frase.emailcomproblema") + " " + ex.getMessage();
                 logger.error(mensagem);
@@ -353,7 +353,7 @@ public class FnAcesso implements Serializable {
                         bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
             } catch (NumberFormatException ex) {
                 lnUsuario = null;
-                beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+                beanVar.setNovaTela("WEB-INF/templates/usuario/recuperaacesso.xhtml");
                 beanVar.setNomeTela(bundle.getString("ln.frase.recuperaaceso"));
                 mensagem = bundle.getString("ln.mb.frase.emailcomproblema");
                 logger.error(mensagem);
@@ -365,7 +365,7 @@ public class FnAcesso implements Serializable {
             mensagem = bundle.getString("ln.mb.texto.usuarionaoencontradobase");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
-            beanVar.setNovaTela("WEB-INF/templates/recuperaacesso.xhtml");
+            beanVar.setNovaTela("WEB-INF/templates/usuario/recuperaacesso.xhtml");
             beanVar.setNomeTela("ln.frase.recuperaaceso");
         }
     }
