@@ -40,8 +40,8 @@ public class LnMenuModel implements Serializable {
     private MenuModel model;
     private LnUsuario lnUsuario;
     private LnPerfil lnPerfil;
-    private String strDbName;
-    private Map<String, LnPerfilacesso> mapPerfilUsuario = new HashMap<String, LnPerfilacesso>();
+//    private String strDbName;
+    private final Map<String, LnPerfilacesso> mapPerfilUsuario = new HashMap<>();
     private BeanVar beanVar;
     Logger logger = Logger.getLogger(LnMenuModel.class);
 
@@ -51,7 +51,7 @@ public class LnMenuModel implements Serializable {
 
     public LnMenuModel(LnUsuario lnUsuario, String strDbName) {
         this.lnUsuario = lnUsuario;
-        this.strDbName = strDbName;
+//        this.strDbName = strDbName;
         montaMenu();
     }
 
@@ -184,7 +184,7 @@ public class LnMenuModel implements Serializable {
     
     public DefaultSubMenu clienteControl(){
         
-        DefaultSubMenu subMenu = new DefaultSubMenu("");
+        DefaultSubMenu subMenu;
         DefaultMenuItem item;
         
         subMenu = new DefaultSubMenu("Administração");
