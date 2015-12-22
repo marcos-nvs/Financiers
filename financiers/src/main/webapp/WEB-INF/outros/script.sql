@@ -933,32 +933,7 @@ CREATE SEQUENCE seq_agenda
 ALTER TABLE seq_agenda
   OWNER TO postgres;
 
-
--- Table: ln_tipoativo
-
--- DROP TABLE ln_tipoativo;
-
-CREATE TABLE ln_tipoativo
-(
-  tia_in_codigo integer NOT NULL,
-  tia_st_descricao character varying(50) NOT NULL,
-  tia_ch_ativo character(1) NOT NULL,
-  CONSTRAINT "pk_tiaStCodigo" PRIMARY KEY (tia_in_codigo)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE ln_tipoativo
-  OWNER TO postgres;
-
-insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (1,'Automóvel','S');
-insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (2,'Imóvel','S');
-insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (3,'Aplicações','S');
-insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (4,'Previdência','S');
-insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (5,'Móveis','S');
-insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (6,'Outros','S');
-
- -------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------
 
 -- insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
 -- values (nextval('acessocontrol.seq_cliente'),'12684146896','Marcos Naves','S','naves','m-nvs@uol.com.br');
