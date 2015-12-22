@@ -204,6 +204,7 @@ public class JurosView implements Serializable {
             clearVarTabelaItem();
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
+            beanVar.setTituloDialog("ln.frase.inclusaotabela");
             RequestContext.getCurrentInstance().execute("PF('JurosEdit').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
@@ -218,6 +219,7 @@ public class JurosView implements Serializable {
                 tabela.setTipoFuncao(TipoFuncao.Alterar);
                 listTabelaItem = tabela.getListTabelaItem();
                 loadTabelaVarDesc();
+                beanVar.setTituloDialog("ln.frase.inclusaotabela");
                 RequestContext.getCurrentInstance().execute("PF('JurosEdit').show()");
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");

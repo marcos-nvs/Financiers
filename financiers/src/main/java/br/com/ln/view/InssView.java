@@ -230,6 +230,7 @@ public class InssView implements Serializable {
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelainss.xhtml");
+            beanVar.setTituloDialog("ln.frase.inclusaotabela");
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
@@ -245,6 +246,7 @@ public class InssView implements Serializable {
                 listTabelaItem = tabela.getListTabelaItem();
                 loadTabelaVarDesc();
                 beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelainss.xhtml");
+                beanVar.setTituloDialog("ln.frase.inclusaotabela");
                 RequestContext.getCurrentInstance().execute("PF('dialog').show()");
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
