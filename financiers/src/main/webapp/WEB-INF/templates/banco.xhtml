@@ -5,6 +5,15 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <h:outputLabel value="Teste de Banco" />
+    <p:panel header="Informações de Banco">
+        <h:panelGrid id="iddetalhebanco" columns="6">
+            <p:outputLabel value="Agência"/>
+            <p:inputText/>
+            <p:outputLabel value="Conta Corrente"/>
+            <p:inputText/>
+            <p:outputLabel value="Limite"/>
+            <p:inputText/>
+        </h:panelGrid>
+    </p:panel>
 </ui:composition>
 

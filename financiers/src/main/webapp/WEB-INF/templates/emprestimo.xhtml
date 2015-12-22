@@ -5,5 +5,28 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <h:outputLabel value="Teste de Empréstimo" />
+    <p:panel header="Informações do Empréstimo">
+        <h:panelGrid id="iddetalheemprestimo" columns="6">
+            <p:outputLabel value="Pagar para"/>
+            <p:inputText/>
+            <p:outputLabel value="Valor Tomado"/>
+            <p:inputText/>
+            <p:outputLabel value="Prazo"/>
+            <p:inputText/>
+            <p:outputLabel value="Valor das Parcelas"/>
+            <p:inputText/>
+            <p:outputLabel value="Juros Mensais"/>
+            <p:inputText/>
+            <p:outputLabel value="Valor Final"/>
+            <p:inputText/>
+            <p:outputLabel value="Juros Anuais"/>
+            <p:inputText/>
+            <p:outputLabel value="Juros Efetivos"/>
+            <p:inputText/>
+            <p:outputLabel value="Data de Vencimento"/>
+            <p:inputText/>
+            <p:outputLabel value="Gera agendamento?"/>
+            <p:inputText/>
+        </h:panelGrid>
+    </p:panel>
 </ui:composition>
