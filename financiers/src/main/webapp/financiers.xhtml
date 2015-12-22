@@ -56,8 +56,8 @@
                 </p:layoutUnit>
             </p:layout> 
             <h:form id="idformdialog">
-                <p:dialog id="iddialog" header="#{msgs['ln.texto.cadastroconta']}" widgetVar="dialog" modal="true" showEffect="fade" hideEffect="fade"
-                          closable="false" style="background-color: activeborder;" width="850" dynamic="true">
+                <p:dialog id="iddialog" header="#{msgs['ln.texto.cadastroconta']}" widgetVar="dialog" modal="true" showEffect="blind" hideEffect="drop"
+                          closable="false" style="background-color: activeborder;" width="1000" dynamic="true" position="center">
                     <h:panelGrid id="idpanelgriddialog" columns="1">
                         <ui:insert id="idInsertDialog">
                             <ui:include src="#{beanVar.telaDialog}"/>

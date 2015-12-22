@@ -236,7 +236,8 @@ public class IrrfView implements Serializable {
             clearVarTabelaItem();
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
-            RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
+            beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelairrf.xhtml");
+            RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -250,7 +251,8 @@ public class IrrfView implements Serializable {
                 tabela.setTipoFuncao(TipoFuncao.Alterar);
                 listTabelaItem = tabela.getListTabelaItem();
                 loadTabelaVarDesc();
-                RequestContext.getCurrentInstance().execute("PF('IrrfEdit').show()");
+                beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelairrf.xhtml");
+                RequestContext.getCurrentInstance().execute("PF('dialog').show()");
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -335,7 +337,7 @@ public class IrrfView implements Serializable {
     public void btSalvar() {
         boolean bGravar;
 //        if (tabela != null && tabela.getTipoFuncao().equals(TipoFuncao.Alterar)) {
-            loadVarTabela();
+        loadVarTabela();
 //        }
         lnTabela = loadLnTabela();
         if (lnTabela != null) {
@@ -345,7 +347,7 @@ public class IrrfView implements Serializable {
                 clearVarTabela();
                 clearVarTabelaItem();
                 listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
-                RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
+                RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
                 mensagem = bundle.getString("ln.mb.texto.sucesso");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.tabela"), mensagem));
@@ -358,7 +360,7 @@ public class IrrfView implements Serializable {
     }
 
     public void btFechar() {
-        RequestContext.getCurrentInstance().execute("PF('IrrfEdit').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 
     private void loadVarTabela() {
@@ -419,7 +421,7 @@ public class IrrfView implements Serializable {
         return lnTabela;
     }
 
-    public void btVoltar(){
+    public void btVoltar() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
 }
