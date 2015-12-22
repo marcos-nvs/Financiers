@@ -165,6 +165,7 @@ public class FavorecidoView implements Serializable {
             lnFavorecido = new LnFavorecido();
             lnFavorecido.setTipoFuncao(TipoFuncao.Incluir);
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogfavorecido.xhtml");
+            beanVar.setTituloDialog("ln.mb.titulo.favorecido");
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
@@ -178,6 +179,7 @@ public class FavorecidoView implements Serializable {
             if (lnFavorecido != null) {
                 lnFavorecido.setTipoFuncao(TipoFuncao.Alterar);
                 beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogfavorecido.xhtml");
+                beanVar.setTituloDialog("ln.mb.titulo.favorecido");
                 RequestContext.getCurrentInstance().execute("PF('dialog').show()");
                 loadDataVar();
             } else {

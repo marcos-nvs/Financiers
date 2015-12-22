@@ -183,6 +183,7 @@ public class CategoriaView implements Serializable {
             lnCategoria.setTipoFuncao(TipoFuncao.Incluir);
             bTipoConta = false;
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogcategoria.xhtml");
+            beanVar.setTituloDialog("ln.texto.cadastrodecategoriascontas");
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
@@ -197,6 +198,7 @@ public class CategoriaView implements Serializable {
                 lnCategoria.setTipoFuncao(TipoFuncao.Alterar);
                 bTipoConta = true;
                 beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogcategoria.xhtml");
+                beanVar.setTituloDialog("ln.texto.cadastrodecategoriascontas");
                 RequestContext.getCurrentInstance().execute("PF('dialog').show()");
                 loadDataVar();
             } else {
