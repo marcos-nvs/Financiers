@@ -638,7 +638,6 @@ CREATE TABLE ln_tabelaitem
   tai_fl_percentual double precision,
   tai_fl_desconto double precision,
   tai_fl_dependente double precision,
-  tai_in_qtddependente integer,
   tai_st_origem character varying(50),
   tai_st_tipo character varying(50),
   CONSTRAINT ln_tabelaitem_pkey PRIMARY KEY (tai_in_codigo)
@@ -935,6 +934,29 @@ ALTER TABLE seq_agenda
   OWNER TO postgres;
 
 
+-- Table: ln_tipoativo
+
+-- DROP TABLE ln_tipoativo;
+
+CREATE TABLE ln_tipoativo
+(
+  tia_in_codigo integer NOT NULL,
+  tia_st_descricao character varying(50) NOT NULL,
+  tia_ch_ativo character(1) NOT NULL,
+  CONSTRAINT "pk_tiaStCodigo" PRIMARY KEY (tia_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_tipoativo
+  OWNER TO postgres;
+
+insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (1,'Automóvel','S');
+insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (2,'Imóvel','S');
+insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (3,'Aplicações','S');
+insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (4,'Previdência','S');
+insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (5,'Móveis','S');
+insert into ln_tipoativo ("tia_in_codigo","tia_st_descricao","tia_ch_ativo") values (6,'Outros','S');
 
  -------------------------------------------------------------------------------------------------------------------------
 
