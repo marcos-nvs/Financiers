@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:panelGrid id="idPerfilDialog" columns="6">
+        <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+        <p:inputText id="idPerfilDescricao" value="#{perfilView.perfilDescricao}" size="50"/>
+        <p:selectBooleanCheckbox id="idPerfilAtivo" value="#{perfilView.bAtivo}" />
+        <p:outputLabel  value="#{msgs['ln.texto.ativo']}"/>
+        <p:selectBooleanCheckbox id="idPerfilSenha" value="#{perfilView.bAlteraSenha}" style="margin-left: 5px"/>
+        <p:outputLabel  value="#{msgs['ln.texto.usuarioalterasenha']}"/>
+    </h:panelGrid>
+    <h:panelGrid id="idPerfilAcessoDialog" columns="10">
+        <p:outputLabel value="#{msgs['ln.texto.modulo']}"/>
+        <p:selectOneMenu id="idListModulo" value="#{perfilView.modInCodigo}" style="margin-left: 60px">
+            <f:selectItems value="#{perfilView.listModulo}" var="perfilAcesso" itemLabel="#{perfilAcesso.modStDescricao}"
+                           itemValue="#{perfilAcesso.modInCodigo}"/>
+        </p:selectOneMenu>
+        <p:selectBooleanCheckbox value="#{perfilView.bIncluirAcesso}" style="margin-left: 83px"/>
+        <p:outputLabel value="#{msgs['ln.texto.incluir']}"/>
+        <p:selectBooleanCheckbox value="#{perfilView.bAlterarAcesso}"/>
+        <p:outputLabel value="#{msgs['ln.texto.alterar']}"/>
+        <p:selectBooleanCheckbox value="#{perfilView.bExcluirAcesso}"/>
+        <p:outputLabel value="#{msgs['ln.texto.excluir']}"/>
+        <p:selectBooleanCheckbox value="#{perfilView.bPesquisarAcesso}"/>
+        <p:outputLabel value="#{msgs['ln.texto.pesquisar']}"/>
+    </h:panelGrid>
+    <p:dataTable id="idDtAcesso" var="incluiAcesso" value="#{perfilView.listPerfilacesso}" paginator="true" rows="10" paginatorPosition="bottom">
+        <f:facet name="header">
+            <p:outputLabel value="#{msgs['ln.texto.listaperfil']}"/>
+        </f:facet>
+        <p:column headerText="#{msgs['ln.texto.codigo']}" style="width: 40px">
+            <h:outputText value="#{incluiAcesso.lnPerfilacessoPK.modInCodigo}"/>
+        </p:column>
+        <p:column headerText="#{msgs['ln.texto.modulo']}" style="width: 40px">
+            <h:outputText value="#{perfilView.buscaDescModulo(incluiAcesso.lnPerfilacessoPK.modInCodigo)}"/>
+        </p:column>
+        <p:column headerText="#{msgs['ln.texto.incluir']}" style="width: 40px">
+            <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChIncluir)}"/>
+        </p:column>
+        <p:column headerText="#{msgs['ln.texto.alterar']}" style="width: 40px">
+            <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChAlterar)}"/>
+        </p:column>
+        <p:column headerText="#{msgs['ln.texto.excluir']}" style="width: 40px">
+            <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChExcluir)}"/>
+        </p:column>
+        <p:column headerText="#{msgs['ln.texto.pesquisar']}" style="width: 40px">
+            <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChPesquisar)}"/>
+        </p:column>
+        <p:column style="width: 20px; text-align: center">
+            <p:commandButton id='idBtEditaAcesso' icon="ui-icon-trash" action="#{perfilView.btEditaPerfilAcesso}" 
+                             process="idBtEditaAcesso, idDtAcesso" update=":idformdialog:idPerfilAcessoDialog, idDtAcesso">
+                <f:setPropertyActionListener value="#{incluiAcesso}" target="#{perfilView.lnPerfilacesso}"/>
+            </p:commandButton>
+        </p:column>
+    </p:dataTable>
+    <f:facet name="footer">
+        <p:commandButton id="idIncluirPerfilAcesso" value="#{msgs['ln.bt.incluir']}" action="#{perfilView.btIncluirPerfilAcesso()}"
+                         process="idIncluirPerfilAcesso, idPerfilDialog, idPerfilAcessoDialog, idDtAcesso,  :idformdialog:idPerfilDescricao, 
+                         :idformdialog:idPerfilAtivo, :idformdialog:idPerfilSenha" 
+                         update="idDtAcesso, :idFormTop:growl" icon="ui-icon-document"/>
+        <p:commandButton id="idGravarPerfilAcesso" value="#{msgs['ln.bt.salvar']}"
+                         action="#{perfilView.btGravarPerfilAcesso()}"  icon="ui-icon-disk"
+                         process="idGravarPerfilAcesso, :idformdialog:idPerfilDescricao,:idformdialog:idPerfilAtivo, 
+                         :idformdialog:idPerfilSenha, idPerfilAcessoDialog, :idformdialog:idPerfilSenha" 
+                         update="idDtAcesso, idPerfilAcessoDialog, idPerfilDialog, :idFormTop:growl, :idFormCenter:idTbPerfil "/><!--
+-->        <p:commandButton id="idFecharPerfilAcesso" value="#{msgs['ln.bt.fechar']}" action="#{perfilView.btFecharPerfilAcesso()}"
+                         process="idFecharPerfilAcesso" update=":idFormCenter:idTbPerfil" icon="ui-icon-circlesmall-close"/>
+    </f:facet>
+</ui:composition>

@@ -190,7 +190,8 @@ public class PerfilView implements Serializable {
             lnPerfilacesso.setTipoFuncao(TipoFuncao.Incluir);
             clearVar();
             listPerfilacesso.clear();
-            RequestContext.getCurrentInstance().execute("PF('PerfilEdit').show()");
+            beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogperfil.xhtml");
+            RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -203,7 +204,8 @@ public class PerfilView implements Serializable {
             if (lnPerfil != null) {
                 dataLoadPerfil();
                 lnPerfil.setTipoFuncao(TipoFuncao.Alterar);
-                RequestContext.getCurrentInstance().execute("PF('PerfilEdit').show()");
+                beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogperfil.xhtml");
+                RequestContext.getCurrentInstance().execute("PF('dialog').show()");
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -289,11 +291,11 @@ public class PerfilView implements Serializable {
         listPerfil = PerfilDao.grabListObject(LnPerfil.class);
         listaPerfilAcesso();
         lnPerfil = new LnPerfil();
-        RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 
     public void btFecharPerfilAcesso() {
-        RequestContext.getCurrentInstance().execute("PF('PerfilEdit').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
 
     }
 
