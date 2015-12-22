@@ -76,8 +76,8 @@
     </p:dataTable>
     
     <p:dialog id="iddialogconta" header="#{msgs['ln.texto.cadastroconta']}" widgetVar="dlgconta" modal="false" showEffect="fade" hideEffect="fade"
-              closable="false" style="background-color: activeborder" width="1000" dynamic="true">
-        <h:panelGrid id="idpanelcontacategoria" columns="2">
+              closable="false" style="background-color: activeborder;" width="850" dynamic="true"  >
+        <h:panelGrid id="idpanelcontacategoria" columns="10">
             <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
             <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" effect="fade" style="margin-left: 18px;">
                 <p:ajax listener="#{contaView.identificaTipoConta}" process="idcontacategoria" 
@@ -85,20 +85,21 @@
                 <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
                                itemValue="#{itemCatConta.catInCodigo}"/>
             </p:selectOneMenu>
-        </h:panelGrid>
-        <h:panelGrid id="idpanelconta" columns="10">
-            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-            <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 13px;"/>
             <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}"  />
             <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
             <p:selectBooleanCheckbox value="#{contaView.bImposto}" />
             <p:outputLabel value="#{msgs['ln.text.calulaimposto']}"/>
             <p:selectBooleanCheckbox value="#{contaView.bCalculada}" />
             <p:outputLabel value="#{msgs['ln.texto.contacalculada']}"/>
-            <p:selectBooleanCheckbox value="#{contaView.bAgendar}" />
+            <p:selectBooleanCheckbox id="idagendar" value="#{contaView.bAgendar}">
+                <p:ajax listener="#{contaView.mostrarAgendamento}" process="idagendar" 
+                        update="idagendamento" />
+            </p:selectBooleanCheckbox>
             <p:outputLabel value="#{msgs['ln.texto.contaagendada']}"/>
         </h:panelGrid>
-        <h:panelGrid id="idpanelcontacomplemento" columns="2" >
+        <h:panelGrid id="idpanelconta1" columns="4">
+            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+            <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 13px;"/>
             <p:outputLabel value="#{msgs['ln.texto.saldoinicial']}"/>
             <p:inputText id="idsaldoinicial" value="#{contaView.limite}" size="20" >
                 <f:convertNumber pattern="##0.00" type="percent"/>
@@ -110,8 +111,8 @@
             <ui:include src="#{beanVar.telaConta}"/>
         </h:panelGrid>
 
-        <h:panelGrid id="idgridtipoconta" columns="1" >
-            <ui:include src="agendamento.xhtml"/>
+        <h:panelGrid id="idagendamento" columns="1" >
+            <ui:include src="#{beanVar.telaAgenda}"/>
         </h:panelGrid>
 
         <f:facet name="footer">

@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <f:view contentType="text/html" locale="#{beanVar.localizacao}">
-     <!--<f:view contentType="text/html" locale="es">-->
+        <!--<f:view contentType="text/html" locale="es">-->
         <f:loadBundle var="msgs" basename="messages" id="idBundle"/>
 
         <h:head>
@@ -21,11 +21,11 @@
                     <ui:include src="WEB-INF/templates/historico.xhtml"/>
                 </ui:insert>
             </h:form>
-            <p:layout id="idLayoutPrincipal" fullPage="true"  >
+            <p:layout id="idLayoutPrincipal" fullPage="true" >
                 <p:layoutUnit id="idLayoutTop" size="105" position="north" resizable="true" closable="false" collapsible="true" 
                               style="border-color: transparent;">
                     <h:form id="idFormTop">
-<!--                        <p:graphicImage url="img/ln2.jpg"/> -->
+                        <!--                        <p:graphicImage url="img/ln2.jpg"/> -->
                         <p:growl id="growl" showDetail="true" life="6000" />
                     </h:form>
                 </p:layoutUnit>
@@ -54,7 +54,16 @@
                         </h:panelGrid>
                     </h:form>
                 </p:layoutUnit>
-            </p:layout>        
+            </p:layout> 
+            <h:form id="idformdialog">
+                <p:dialog id="iddialog" header="#{msgs['ln.texto.cadastroconta']}" widgetVar="dlgconta" modal="true" showEffect="fade" hideEffect="fade"
+                          closable="false" style="background-color: activeborder;" width="850" dynamic="true">
+                    <h:panelGrid id="idpanelgriddialog" columns="1">
+                    </h:panelGrid>
+                </p:dialog>
+
+            </h:form>
+
         </h:body>
     </f:view>
 </html>

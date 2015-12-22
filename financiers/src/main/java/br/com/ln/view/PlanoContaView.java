@@ -32,11 +32,10 @@ import org.primefaces.context.RequestContext;
  *
  * @author Marcos Naves
  */
-
 @SessionScoped
 @ManagedBean(name = "contaView")
-public class PlanoContaView implements Serializable{
-    
+public class PlanoContaView implements Serializable {
+
     private Integer idConta;
     private String nomeConta;
     private Integer idCategoria;
@@ -55,7 +54,7 @@ public class PlanoContaView implements Serializable{
     private Integer idContaDependente;
     private Integer idTabela;
     private Integer ordem;
-    
+
     private Integer idAgenda;
     private Integer idContaAgendada;
     private Date dtInicio;
@@ -73,7 +72,7 @@ public class PlanoContaView implements Serializable{
     private Character avisar;
     private Character porEmail;
     private Integer qtdeRepeticao;
-    
+
     private Conta conta;
     private ContaDependente contaDependente;
     private AgendaConta agendaConta;
@@ -81,7 +80,7 @@ public class PlanoContaView implements Serializable{
     private List<ContaDependente> listaContaDependente;
     private List<AgendaConta> listaAgendaConta;
     private List<LnPlanoconta> listaContaCalculada;
-    
+
     private LnPlanoconta planoConta;
     private List<LnPlanoconta> listaPlanoConta;
     private List<LnCategoria> listaCategoria;
@@ -173,7 +172,7 @@ public class PlanoContaView implements Serializable{
     public void setbAgendar(boolean bAgendar) {
         this.bAgendar = bAgendar;
     }
-    
+
     public Character getImposto() {
         return imposto;
     }
@@ -468,8 +467,8 @@ public class PlanoContaView implements Serializable{
         return true;
     }
 
-    public void btIncluirConta(){
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
+    public void btIncluirConta() {
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             clearVarConta();
             clearVarContaDepdente();
             clearVarAgendaConta();
@@ -483,35 +482,34 @@ public class PlanoContaView implements Serializable{
                     bundle.getString("ln.mb.titulo.tabela"), mensagem));
         }
     }
-    
-    public void btAlterarConta(){
-        
+
+    public void btAlterarConta() {
+
     }
-    
-    public void btExcluirConta(){
-        
+
+    public void btExcluirConta() {
+
     }
-    
-    public void btVisualizarConta(){
-    
+
+    public void btVisualizarConta() {
+
     }
-    
-    public void btFecharConta(){
+
+    public void btFecharConta() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
-    
-    public void btIncluirContaLista(){
-        
+
+    public void btIncluirContaLista() {
+
     }
-    
-    public void btSalvarContaLista(){
-        
+
+    public void btSalvarContaLista() {
+
     }
-    
-    public void btFecharContaLista(){
+
+    public void btFecharContaLista() {
         RequestContext.getCurrentInstance().execute("PF('dlgconta').hide()");
     }
-    
 
     private void clearVarConta() {
         idConta = null;
@@ -528,15 +526,15 @@ public class PlanoContaView implements Serializable{
     private void clearVarAgendaConta() {
 
     }
-    
-    public void btVoltar(){
+
+    public void btVoltar() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
-    
-    public void identificaTipoConta(){
-        
+
+    public void identificaTipoConta() {
+
         getTipoContaPorCategoria(idCategoria);
-        
+
         switch (idTipoConta) {
             case 1:
                 beanVar.setTelaConta("ativo.xhtml");
@@ -575,10 +573,18 @@ public class PlanoContaView implements Serializable{
                 beanVar.setTelaConta("contaspagar.xhtml");
                 break;
         }
-               
+
     }
-    
-    private void getTipoContaPorCategoria(Integer categoria){
+
+    private void getTipoContaPorCategoria(Integer categoria) {
         idTipoConta = CategoriaDao.grabTipoContaPorCategoria(categoria);
+    }
+
+    public void mostrarAgendamento() {
+        if (bAgendar) {
+            beanVar.setTelaAgenda("agendamento.xhtml");
+        } else {
+            beanVar.setTelaAgenda("ativo.xhtml");
+        }
     }
 }
