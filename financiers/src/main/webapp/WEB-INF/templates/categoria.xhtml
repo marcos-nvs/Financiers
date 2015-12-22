@@ -38,29 +38,4 @@
                              action="#{categoriaView.btVoltar()}" process="idcategoriaclose" update="idcategoriaclose, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
-
-    <p:dialog id="idCatDialog" header="#{msgs['ln.texto.cadastrodecategoriascontas']}" widgetVar="categoriaEdit" modal="false" showEffect="fade" hideEffect="fade" 
-              closable="false" style="background-color: activeborder" width="1000" dynamic="true">
-        <h:panelGrid id="idPanelCategoria" columns="6">
-            <p:outputLabel value="#{msgs['ln.texto.tipo']}"/>
-            <p:selectOneMenu id="idListTipoConta" value="#{categoriaView.tipo}" style="margin-left: 60px" disabled="#{categoriaView.bTipoConta}">
-                <f:selectItems value="#{categoriaView.listTipoconta}" var="categoriaTipo" itemLabel="#{categoriaTipo.tipStDescricao}"
-                               itemValue="#{categoriaTipo.tipInCodigo}"/>
-            </p:selectOneMenu>
-            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-            <p:inputText id="idCategoriaDescricao" value="#{categoriaView.descricao}" size="50"/>
-            <p:selectBooleanCheckbox id="idCategoriaAtivo" value="#{categoriaView.bAtivo}" />
-            <p:outputLabel  value="#{msgs['ln.texto.ativo']}"/>
-        </h:panelGrid>
-        <f:facet name="footer">
-            <p:commandButton id="idCategoriaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
-                             action="#{categoriaView.btSalvarCategoria()}" 
-                             process ="idCategoriaGravar, idPanelCategoria, idListTipoConta, idCategoriaDescricao, idCategoriaAtivo"
-                             update = ":idFormTop:growl,idTbCategoria "/>
-            <p:commandButton id="idCategoriaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
-                             action="#{categoriaView.btCancelarCategoria()}"
-                             process ="idCategoriaCancelar"
-                             update = "idTbCategoria, :idFormTop:growl"/>
-        </f:facet>
-    </p:dialog>    
 </ui:composition>

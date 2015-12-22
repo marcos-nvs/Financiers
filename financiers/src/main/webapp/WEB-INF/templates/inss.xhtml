@@ -56,7 +56,7 @@
                              action="#{inssView.btIncluir}" process="btIncluirInss" update="btIncluirInss"/>
             <p:commandButton id="btAlterarInss" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"
                              action="#{inssView.btAlterar()}" process="btAlterarInss,:idFormCenter:idtabelas:idTabelaInss"
-                             update=":idFormTop:growl, :idFormCenter:idtabelas:dlgInss"/>
+                             update=":idFormTop:growl, :idformdialog:iddialog"/>
             <p:commandButton id="btExcluirInss" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
                              action="#{inssView.btExcluir()}" process="btExcluirInss, ,:idFormCenter:idtabelas:idTabelaInss"
                              update=":idFormTop:growl,:idFormCenter:idtabelas:idTabelaInss">
@@ -73,84 +73,4 @@
         </f:facet>
     </p:dataTable>
 
-    <p:dialog id="dlgInss" header="#{msgs['ln.frase.inclusaotabela']}" widgetVar="InssEdit" modal="false" showEffect="fade" 
-              hideEffect="fade" closable="false" style="background-color: activeborder" width="1000" dynamic="true">
-
-        <h:panelGrid id="idgridDataInss" columns="6" >
-            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-            <p:inputText id="idinssDescricao" value="#{inssView.nomeTabela}" size="50"/>
-            <p:outputLabel for="dtinssInicio" value="#{msgs['ln.texto.datainicio']}"/>
-            <p:calendar id="dtinssInicio" value="#{inssView.dataInicial}" showOn="button"  pattern="dd/MM/yyyy"/>
-            <p:outputLabel for="dtinssFinal" value="#{msgs['ln.texto.datafinal']}"/>
-            <p:calendar id="dtinssFinal" value="#{inssView.dataFinal}" showOn="button" pattern="dd/MM/yyyy"/>
-        </h:panelGrid>
-        <h:panelGrid id="idgridValorInss" columns="8" style="margin-left: 20px;">
-            <p:outputLabel value="#{msgs['ln.texto.valorinicial']}"/>
-            <p:inputText id="idinssvlrinicial"  value="#{inssView.valorInicial}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
-                <p:ajax update="idinssvlrinicial" process="idinssvlrinicial" event="change"/>
-            </p:inputText>
-            <p:outputLabel value="#{msgs['ln.texto.valorfinal']}"/>
-            <p:inputText id="idinssvlrFinal" value="#{inssView.valorFinal}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
-                <p:ajax update="idinssvlrFinal" process="idinssvlrFinal" event="change"/>
-            </p:inputText>
-            <p:outputLabel value="#{msgs['ln.texto.percentualimposto']}"/>
-            <p:inputText id="idinsspercImposto" value="#{inssView.percentual}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="##0.00" type="percent"/>
-                <p:ajax update="idinsspercImposto" process="idinsspercImposto" event="change"/>
-            </p:inputText>
-            <p:outputLabel value="#{msgs['ln.texto.valorlimite']}"/>
-            <p:inputText id="idinssvlrLimite" value="#{inssView.valorDesconto}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
-                <p:ajax update="idinssvlrLimite" process="idinssvlrLimite" event="change"/>
-            </p:inputText>
-        </h:panelGrid>
-        <p:dataTable id="idDTinss" var="incluiTabelaInss" value="#{inssView.listTabelaItem}" paginator="true" rows="10" paginatorPosition="bottom">
-            <f:facet name="header">
-                <p:outputLabel value="INSS"/>
-            </f:facet>
-            <p:column headerText="#{msgs['ln.texto.valorinicial']}" style="width: 40px">
-                <h:outputText value="#{incluiTabelaInss.valorInicial}">
-                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="#{msgs['ln.texto.cifrao']}"/>
-                </h:outputText>
-            </p:column>
-            <p:column headerText="#{inssDetalhe.valorFinal}" style="width: 40px">
-                <h:outputText value="#{incluiTabelaInss.valorFinal}">
-                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="#{msgs['ln.texto.cifrao']}"/>
-                </h:outputText>
-            </p:column>
-            <p:column headerText="ln.texto.percentualimposto" style="width: 40px">
-                <h:outputText value="#{incluiTabelaInss.percentual}">
-                    <f:convertNumber pattern="##0.00" type="percent"/>
-                </h:outputText>
-            </p:column>
-            <p:column headerText="#{msgs['ln.texto.valorlimite']}" style="width: 40px">
-                <h:outputText value="#{incluiTabelaInss.valorDesconto}">
-                    <f:convertNumber pattern="R$ ###,##0.00" type="currency" currencySymbol="#{msgs['ln.texto.cifrao']}"/>
-                </h:outputText>
-            </p:column>
-            <p:column style="width: 20px; text-align: center">
-                <p:commandButton id='idBtEditaINSS' icon="ui-icon-trash"
-                                 action="#{inssView.btExcluirItem()}" process="idBtEditaINSS, idDTinss"
-                                 update="idDTinss, :idFormTop:growl">
-                    <f:setPropertyActionListener value="#{incluiTabelaInss}" target="#{inssView.tabelaItem}"/>
-                </p:commandButton>
-            </p:column>
-        </p:dataTable>
-        <f:facet name="footer">
-            <p:commandButton id="idbtincluirinss" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
-                             action="#{inssView.btIncluirItem}" 
-                             process="idbtincluirinss, idgridDataInss, idinssDescricao, dtinssInicio, dtinssFinal, idinssvlrinicial,
-                                      idinssvlrFinal, idinsspercImposto, idinssvlrLimite "
-                             update="idDTinss, :idFormTop:growl"/>
-            <p:commandButton id="idbtsalvarinss" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
-                             action="#{inssView.btSalvar()}" 
-                             process="idbtsalvarinss, idgridDataInss, idinssDescricao, dtinssInicio, dtinssFinal, idinssvlrinicial,
-                                      idinssvlrFinal, idinsspercImposto, idinssvlrLimite"
-                             update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaInss, idgridDataInss"/>
-            <p:commandButton id="idbtfecharinss" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
-                             action="#{inssView.btFechar}" process="idbtfecharinss" update="idbtfecharinss"/>
-        </f:facet>
-    </p:dialog>
 </ui:composition>

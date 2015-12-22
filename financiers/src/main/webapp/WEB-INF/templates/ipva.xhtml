@@ -45,10 +45,10 @@
         <f:facet name="footer">
             <p:commandButton id="btIncluirIpva" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
                              action="#{ipvaView.btIncluir()}" process="btIncluirIpva"
-                             update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl, :idFormCenter:idtabelas:dlgIpva"/>
+                             update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl, :idformdialog:iddialog"/>
             <p:commandButton id="btAlterarIpva" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil" 
                              action="#{ipvaView.btAlterar()}" process="btAlterarIpva, :idFormCenter:idtabelas:idTabelaIpva"
-                             update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl, :idFormCenter:idtabelas:dlgIpva"/>
+                             update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl, :idformdialog:iddialog"/>
             <p:commandButton id="btExcluirIpva" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
                              action="#{ipvaView.btExcluir()}" process="btExcluirIpva, :idFormCenter:idtabelas:idTabelaIpva"
                              update=":idFormCenter:idtabelas:idTabelaIpva, :idFormTop:growl">
@@ -64,72 +64,5 @@
                              action="#{ipvaView.btVoltar}" process="idipvaclose" update="idipvaclose, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
-
-    <p:dialog id="dlgIpva" header="#{msgs['ln.frase.inclusaotabela']}" widgetVar="ipvaEdit" modal="false" showEffect="fade" 
-              hideEffect="fade" closable="false" style="background-color: activeborder" width="1000" dynamic="true">
-
-        <h:panelGrid id="idgridDataIpva" columns="6" >
-            <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-            <p:inputText id="idipvaDescricao" value="#{ipvaView.nomeTabela}" size="50"/>
-            <p:outputLabel for="dtipvaInicio" value="#{msgs['ln.texto.datainicio']}"/>
-            <p:calendar id="dtipvaInicio" value="#{ipvaView.dataInicial}" showOn="button"  pattern="dd/MM/yyyy"/>
-            <p:outputLabel for="dtipvaFinal" value="#{msgs['ln.texto.datafinal']}"/>
-            <p:calendar id="dtipvaFinal" value="#{ipvaView.dataFinal}" showOn="button" pattern="dd/MM/yyyy"/>
-        </h:panelGrid>
-        <h:panelGrid id="idgridValorIpva" columns="8" style="margin-left: 25px;">
-            <p:outputLabel value="#{msgs['ln.texto.origemcarro']}"/>
-            <p:selectOneMenu id="idipvaordem" value="#{ipvaView.origemCarro}" style="width: 200px;" effect="fade">
-                <f:selectItem itemLabel="#{msgs['ln.texto.nacional']}" itemValue="Nacional"/>
-                <f:selectItem itemLabel="#{msgs['ln.texto.importado']}" itemValue="Importado"/>
-            </p:selectOneMenu>
-            <p:outputLabel value="#{msgs['ln.texto.tipocombustivel']}"/>
-            <p:selectOneMenu id="idipvatipo" value="#{ipvaView.tipoCombustivel}" style="width: 200px;" effect="fade">
-                <f:selectItem itemLabel="Flex" itemValue="Flex"/>
-                <f:selectItem itemLabel="#{msgs['ln.texto.etanol']}" itemValue="Alcool"/>
-                <f:selectItem itemLabel="#{msgs['ln.texto.gasolina']}" itemValue="Gasolina"/>
-            </p:selectOneMenu>
-            <p:outputLabel value="#{msgs['ln.texto.percentualimposto']}"/>
-            <p:inputText id="idipvapercImposto" value="#{ipvaView.percentual}" style="width: 80px;" size="20">
-                <f:convertNumber pattern="##0.00" type="percent"/>
-                <p:ajax update="idipvapercImposto" process="idipvapercImposto" event="change"/>
-            </p:inputText>
-        </h:panelGrid>
-        <p:dataTable id="idDTIpva" var="incluiTabelaIpva" value="#{ipvaView.listTabelaItem}"
-                     paginator="true" rows="10" paginatorPosition="bottom">
-            <f:facet name="header">
-                <p:outputLabel value="IPVA"/>
-            </f:facet>
-            <p:column headerText="#{msgs['ln.texto.origemcarro']}" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIpva.origem}"/>
-            </p:column>
-            <p:column headerText="#{msgs['ln.texto.tipocombustivel']}" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIpva.tipo}"/>
-            </p:column>
-            <p:column headerText="#{msgs['ln.texto.percentual']}" style="width: 40px">
-                <h:outputText value="#{incluiTabelaIpva.percentual}">
-                    <f:convertNumber pattern="##0.00" type="percent"/>
-                </h:outputText>
-            </p:column>
-            <p:column style="width: 20px; text-align: center">
-                <p:commandButton id='idBtEditaIPVA' icon="ui-icon-trash" action="#{ipvaView.btExcluiDetalhe()}"
-                                 process="idBtEditaIPVA, idDTIpva" update="idDTIpva, :idFormTop:growl">
-                    <f:setPropertyActionListener value="#{incluiTabelaIpva}" target="#{ipvaView.tabelaItem}"/>
-                </p:commandButton>
-            </p:column>
-        </p:dataTable>
-        <f:facet name="footer">
-            <p:commandButton id="idbtincluiripva" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
-                             action="#{ipvaView.btIncluiDetalhe}" 
-                             process="idbtincluiripva, idipvaDescricao, dtipvaInicio, dtipvaFinal, idipvaordem, idipvatipo, idipvapercImposto" 
-                             update="idDTIpva, :idFormTop:growl"/>
-            <p:commandButton id="idbtsalvaripva" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
-                             action="#{ipvaView.btSalvar}" 
-                             process="idbtsalvaripva, idipvaDescricao, dtipvaInicio, dtipvaFinal, idipvaordem, idipvatipo, idipvapercImposto,
-                                      idDTIpva" 
-                             update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaIpva, idTabelaIpva"/>
-            <p:commandButton id="idbtfecharipva" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
-                             action="#{ipvaView.btFechar()}" process="idbtfecharipva" update="idbtfecharipva"/>
-        </f:facet>
-    </p:dialog>
 
 </ui:composition>

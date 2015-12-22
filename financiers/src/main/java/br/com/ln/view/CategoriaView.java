@@ -182,7 +182,8 @@ public class CategoriaView implements Serializable {
             lnCategoria = new LnCategoria();
             lnCategoria.setTipoFuncao(TipoFuncao.Incluir);
             bTipoConta = false;
-            RequestContext.getCurrentInstance().execute("PF('categoriaEdit').show()");
+            beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogcategoria.xhtml");
+            RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -195,7 +196,8 @@ public class CategoriaView implements Serializable {
             if (lnCategoria != null) {
                 lnCategoria.setTipoFuncao(TipoFuncao.Alterar);
                 bTipoConta = true;
-                RequestContext.getCurrentInstance().execute("PF('categoriaEdit').show()");
+                beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogcategoria.xhtml");
+                RequestContext.getCurrentInstance().execute("PF('dialog').show()");
                 loadDataVar();
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
@@ -238,7 +240,7 @@ public class CategoriaView implements Serializable {
 
             if (categoriaFuncoes.categoria(lnCategoria)) {
                 listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
-                RequestContext.getCurrentInstance().execute("PF('categoriaEdit').hide()");
+                RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
                 listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
                 mensagem = categoriaFuncoes.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -256,7 +258,7 @@ public class CategoriaView implements Serializable {
     }
 
     public void btCancelarCategoria() {
-        RequestContext.getCurrentInstance().execute("PF('categoriaEdit').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 
     private void dataLoadVar() {
@@ -283,7 +285,7 @@ public class CategoriaView implements Serializable {
         bAtivo = false;
     }
 
-    public void btVoltar(){
+    public void btVoltar() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
 }

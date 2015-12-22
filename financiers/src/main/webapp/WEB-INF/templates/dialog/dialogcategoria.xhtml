@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:panelGrid id="idPanelCategoria" columns="6">
+        <p:outputLabel value="#{msgs['ln.texto.tipo']}"/>
+        <p:selectOneMenu id="idListTipoConta" value="#{categoriaView.tipo}" style="margin-left: 60px" disabled="#{categoriaView.bTipoConta}">
+            <f:selectItems value="#{categoriaView.listTipoconta}" var="categoriaTipo" itemLabel="#{categoriaTipo.tipStDescricao}"
+                           itemValue="#{categoriaTipo.tipInCodigo}"/>
+        </p:selectOneMenu>
+        <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+        <p:inputText id="idCategoriaDescricao" value="#{categoriaView.descricao}" size="50"/>
+        <p:selectBooleanCheckbox id="idCategoriaAtivo" value="#{categoriaView.bAtivo}" />
+        <p:outputLabel  value="#{msgs['ln.texto.ativo']}"/>
+    </h:panelGrid>
+    <f:facet name="footer">
+        <p:commandButton id="idCategoriaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
+                         action="#{categoriaView.btSalvarCategoria()}" 
+                         process ="idCategoriaGravar, idPanelCategoria, idListTipoConta, idCategoriaDescricao, idCategoriaAtivo"
+                         update = ":idFormTop:growl,idTbCategoria "/>
+        <p:commandButton id="idCategoriaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
+                         action="#{categoriaView.btCancelarCategoria()}"
+                         process ="idCategoriaCancelar"
+                         update = "idTbCategoria, :idFormTop:growl"/>
+    </f:facet>
+
+</ui:composition>

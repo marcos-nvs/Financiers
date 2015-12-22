@@ -229,7 +229,8 @@ public class InssView implements Serializable {
             clearVarTabelaItem();
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
-            RequestContext.getCurrentInstance().execute("PF('InssEdit').show()");
+            beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelainss.xhtml");
+            RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -243,7 +244,8 @@ public class InssView implements Serializable {
                 tabela.setTipoFuncao(TipoFuncao.Alterar);
                 listTabelaItem = tabela.getListTabelaItem();
                 loadTabelaVarDesc();
-                RequestContext.getCurrentInstance().execute("PF('InssEdit').show()");
+                beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelainss.xhtml");
+                RequestContext.getCurrentInstance().execute("PF('dialog').show()");
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -338,7 +340,7 @@ public class InssView implements Serializable {
                 clearVarTabela();
                 clearVarTabelaItem();
                 listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
-                RequestContext.getCurrentInstance().execute("PF('InssEdit').hide()");
+                RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
                 mensagem = bundle.getString("ln.mb.texto.sucesso");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.tabela"), mensagem));
@@ -351,7 +353,7 @@ public class InssView implements Serializable {
     }
 
     public void btFechar() {
-        RequestContext.getCurrentInstance().execute("PF('InssEdit').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 
     private void clearVarTabela() {
@@ -410,8 +412,8 @@ public class InssView implements Serializable {
         tabelaItem.setValorInicial(valorInicial);
     }
 
-    public void btVoltar(){
+    public void btVoltar() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
-    
+
 }
