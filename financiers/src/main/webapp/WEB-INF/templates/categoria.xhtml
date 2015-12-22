@@ -20,9 +20,9 @@
         </p:column>
         <f:facet name="footer">
             <p:commandButton id="idBtIncluirCat" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document" action="#{categoriaView.btIncluirCategoria}"
-                             process="idTbCategoria" update="idTbCategoria, :idFormCenter:idCatDialog"/>
+                             process="idTbCategoria" update="idTbCategoria, :idformdialog:iddialog"/>
             <p:commandButton id="idBtAlterarCat" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil" action="#{categoriaView.btAlterarCategoria}"
-                             process="idBtAlterarCat, idTbCategoria" update = "idTbCategoria, :idFormCenter:idCatDialog, :idFormTop:growl" />
+                             process="idBtAlterarCat, idTbCategoria" update = "idTbCategoria, :idformdialog:iddialog, :idFormTop:growl" />
             <p:commandButton id="idBtExcluirCat" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
                              action="#{categoriaView.btExcluirCategoria}" process="idBtExcluirCat, idTbCategoria"
                              update="idBtExcluirCat, :idFormTop:growl, idTbCategoria">
