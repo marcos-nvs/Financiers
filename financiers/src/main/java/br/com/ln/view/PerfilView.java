@@ -191,6 +191,7 @@ public class PerfilView implements Serializable {
             clearVar();
             listPerfilacesso.clear();
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogperfil.xhtml");
+            beanVar.setTituloDialog("ln.texto.cadastrodeperfil");
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
@@ -205,6 +206,7 @@ public class PerfilView implements Serializable {
                 dataLoadPerfil();
                 lnPerfil.setTipoFuncao(TipoFuncao.Alterar);
                 beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogperfil.xhtml");
+                beanVar.setTituloDialog("ln.texto.cadastrodeperfil");
                 RequestContext.getCurrentInstance().execute("PF('dialog').show()");
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
@@ -265,7 +267,7 @@ public class PerfilView implements Serializable {
             for (LnPerfilacesso lnPerfilacessog : listPerfilacesso) {
                 lnPerfil.getListPerfilAcesso().add(lnPerfilacessog);
             }
-            if (perfilFuncoes.perfil(lnPerfil)){
+            if (perfilFuncoes.perfil(lnPerfil)) {
                 mensagem = perfilFuncoes.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.perfil"), mensagem));
@@ -276,7 +278,7 @@ public class PerfilView implements Serializable {
             }
         } else if (lnPerfil.getTipoFuncao().equals(TipoFuncao.Alterar)) {
             dataLoadVarPerfil();
-            if (perfilFuncoes.perfil(lnPerfil)){
+            if (perfilFuncoes.perfil(lnPerfil)) {
                 mensagem = perfilFuncoes.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.perfil"), mensagem));
@@ -287,7 +289,6 @@ public class PerfilView implements Serializable {
             }
         }
 
-        
         listPerfil = PerfilDao.grabListObject(LnPerfil.class);
         listaPerfilAcesso();
         lnPerfil = new LnPerfil();
@@ -356,7 +357,7 @@ public class PerfilView implements Serializable {
         bPesquisarAcesso = false;
     }
 
-    public void btVoltar(){
+    public void btVoltar() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
 
