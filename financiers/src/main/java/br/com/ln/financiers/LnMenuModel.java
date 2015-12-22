@@ -155,22 +155,22 @@ public class LnMenuModel implements Serializable {
                     VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 3);
                     break;
                 case "Categoria":
-                    beanVar.setNovaTela("WEB-INF/templates/categoria.xhtml");
+                    beanVar.setNovaTela("WEB-INF/templates/cadastro/categoria.xhtml");
                     beanVar.setNomeTela("ln.texto.cadastrodecategoriascontas");
                     VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 4);
                     break;
                 case "Plano de Contas":
-                    beanVar.setNovaTela("WEB-INF/templates/planoconta.xhtml");
+                    beanVar.setNovaTela("WEB-INF/templates/cadastro/planoconta.xhtml");
                     beanVar.setNomeTela("ln.mb.titulo.planoconta");
                     VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 5);
                     break;
                 case "Favorecidos":
-                    beanVar.setNovaTela("WEB-INF/templates/favorecido.xhtml");
+                    beanVar.setNovaTela("WEB-INF/templates/cadastro/favorecido.xhtml");
                     beanVar.setNomeTela("ln.mb.titulo.favorecido");
                     VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 6);
                     break;
                 case "Orçamento":
-                    beanVar.setNovaTela("WEB-INF/templates/orcamento.xhtml");
+                    beanVar.setNovaTela("WEB-INF/templates/cadastro/orcamento.xhtml");
                     beanVar.setNomeTela("Orçamentos");
                     VarComuns.lnPerfilacesso = PerfilDao.grabPerfilAcesso(VarComuns.lnPerfil.getPerInCodigo(), 2);
                     break;

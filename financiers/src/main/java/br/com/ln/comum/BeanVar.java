@@ -38,7 +38,7 @@ public class BeanVar implements Serializable{
         this.novaTela = "WEB-INF/templates/usuario/login.xhtml";
         this.nomeTela = "ln.frase.sistemafinanceiro";
         this.tituloDialog = "";
-        this.telaConta = "ativo.xhtml";
+        this.telaConta = "../cadastro/planocontas/ativo.xhtml";
         this.apresenta = false;
         this.bloquear = true;
     }

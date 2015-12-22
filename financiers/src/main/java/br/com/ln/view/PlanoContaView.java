@@ -537,40 +537,40 @@ public class PlanoContaView implements Serializable {
 
         switch (idTipoConta) {
             case 1:
-                beanVar.setTelaConta("ativo.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/ativo.xhtml");
                 break;
             case 2:
-                beanVar.setTelaConta("passivo.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/passivo.xhtml");
                 break;
             case 3:
-                beanVar.setTelaConta("banco.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/banco.xhtml");
                 break;
             case 4:
-                beanVar.setTelaConta("cartaocredito.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/cartaocredito.xhtml");
                 break;
             case 5:
-                beanVar.setTelaConta("dinheiro.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/dinheiro.xhtml");
                 break;
             case 6:
-                beanVar.setTelaConta("emprestimo.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/emprestimo.xhtml");
                 break;
             case 7:
-                beanVar.setTelaConta("financiamento.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/financiamento.xhtml");
                 break;
             case 8:
-                beanVar.setTelaConta("outrospassivos.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/outrospassivos.xhtml");
                 break;
             case 9:
-                beanVar.setTelaConta("receitas.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/receitas.xhtml");
                 break;
             case 10:
-                beanVar.setTelaConta("despesas.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/despesas.xhtml");
                 break;
             case 11:
-                beanVar.setTelaConta("contasreceber.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/contasreceber.xhtml");
                 break;
             case 12:
-                beanVar.setTelaConta("contaspagar.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/contaspagar.xhtml");
                 break;
         }
 
@@ -582,9 +582,9 @@ public class PlanoContaView implements Serializable {
 
     public void mostrarAgendamento() {
         if (bAgendar) {
-            beanVar.setTelaAgenda("agendamento.xhtml");
+            beanVar.setTelaAgenda("../cadastro/planocontas/agendamento.xhtml");
         } else {
-            beanVar.setTelaAgenda("ativo.xhtml");
+            beanVar.setTelaAgenda("../cadastro/planocontas/ativo.xhtml");
         }
     }
 }
