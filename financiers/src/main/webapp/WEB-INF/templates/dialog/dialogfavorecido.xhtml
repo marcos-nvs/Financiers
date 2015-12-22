@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:panelGrid id="idpanelfavorecido" columns="6">
+        <p:outputLabel value="#{msgs['ln.texto.tipofavorecido']}"/>
+        <p:selectOneMenu id="idListTipoFavorecido" value="#{favorecidoView.tipoFavorecido}">
+            <f:selectItems value="#{favorecidoView.listaTipoFavorecido}" var="tipofavorecido" itemLabel="#{tipofavorecido.tfaStDescricao}"
+                           itemValue="#{tipofavorecido.tfaInCodigo}"/>
+        </p:selectOneMenu>
+        <p:outputLabel value="#{msgs['ln.texto.documento']}"/>
+        <p:inputText id="idinputdocumentofavorecido" value="#{favorecidoView.documento}" size="15"/>
+        <p:selectBooleanCheckbox id="idinputativofavorecido" value="#{favorecidoView.bAtivo}" />
+        <p:outputLabel  value="#{msgs['ln.texto.ativo']}"/>
+    </h:panelGrid>
+    <h:panelGrid id="idpanelfavorecidonome" columns="2" >
+        <p:outputLabel value="#{msgs['ln.texto.nome']}"/>
+        <p:inputText id="idinputnomefavorecido" value="#{favorecidoView.nomeFavorecido}" size="50" style="margin-left: 65px;"/>
+    </h:panelGrid>
+    <f:facet name="footer">
+
+        <p:commandButton id="idbtsalvarfavorecido" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
+                         action="#{favorecidoView.btSalvarFavorecido()}" process="idbtsalvarfavorecido, idListTipoFavorecido, idinputdocumentofavorecido,
+                         idinputativofavorecido, idinputnomefavorecido" update=":idFormCenter:iddtfavorecido, :idFormTop:growl"/>
+        <p:commandButton id="idbtfecharfavorecido" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
+                         action="#{favorecidoView.btFecharFavorecido()}" process="idbtfecharfavorecido" update="idbtfecharfavorecido"/>
+    </f:facet>
+
+</ui:composition>

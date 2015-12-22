@@ -164,7 +164,8 @@ public class FavorecidoView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             lnFavorecido = new LnFavorecido();
             lnFavorecido.setTipoFuncao(TipoFuncao.Incluir);
-            RequestContext.getCurrentInstance().execute("PF('favorecido').show()");
+            beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogfavorecido.xhtml");
+            RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -176,7 +177,8 @@ public class FavorecidoView implements Serializable {
         if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
             if (lnFavorecido != null) {
                 lnFavorecido.setTipoFuncao(TipoFuncao.Alterar);
-                RequestContext.getCurrentInstance().execute("PF('favorecido').show()");
+                beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogfavorecido.xhtml");
+                RequestContext.getCurrentInstance().execute("PF('dialog').show()");
                 loadDataVar();
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
@@ -233,7 +235,7 @@ public class FavorecidoView implements Serializable {
         if (favorecidoFuncoes.verificaInformacoes(lnFavorecido)) {
             if (favorecidoFuncoes.favorecido(lnFavorecido)) {
                 listaFavorecido = favorecidoFuncoes.grabListaFavorecido();
-                RequestContext.getCurrentInstance().execute("PF('favorecido').hide()");
+                RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
                 mensagem = favorecidoFuncoes.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.favorecido"), mensagem));
@@ -250,7 +252,7 @@ public class FavorecidoView implements Serializable {
     }
     
     public void btFecharFavorecido() {
-        RequestContext.getCurrentInstance().execute("PF('favorecido').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 
     private void dataLoadVar() {

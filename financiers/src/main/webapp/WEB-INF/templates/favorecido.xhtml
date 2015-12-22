@@ -24,10 +24,10 @@
         <f:facet name="footer">
             <p:commandButton id="idincluirfavorecido" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
                              action="#{favorecidoView.btIncluirFavorecido()}" process="idincluirfavorecido"
-                             update=":idFormCenter:iddialogfavorecido, :idFormTop:growl"/>
+                             update=":idformdialog:iddialog, :idFormTop:growl"/>
             <p:commandButton id="idalterarfavorecido" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"
                              action="#{favorecidoView.btAlterarFavorecido()}" process="idalterarfavorecido,iddtfavorecido "
-                             update="iddtfavorecido, :idFormCenter:iddialogfavorecido, :idFormTop:growl"/>
+                             update="iddtfavorecido, :idformdialog:iddialog, :idFormTop:growl"/>
             <p:commandButton id="idexcluirfavorecido" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
                              action="#{favorecidoView.btExcluirFavorecido()}" process="idexcluirfavorecido, iddtfavorecido"
                              update="idexcluirfavorecido, iddtfavorecido, :idFormTop:growl">
@@ -43,29 +43,4 @@
                              action="#{favorecidoView.btVoltar()}" process="idfavorecidoclose" update="idfavorecidoclose, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
-
-    <p:dialog id="iddialogfavorecido" header="#{msgs['ln.mb.titulo.favorecido']}" widgetVar="favorecido" modal="false" showEffect="fade"
-              hideEffect="fade" closable="false" style="background-color: activeborder" width="600" dynamic="true">
-        <h:panelGrid id="idpanelfavorecido" columns="6">
-            <p:outputLabel value="#{msgs['ln.texto.tipofavorecido']}"/>
-            <p:selectOneMenu id="idListTipoFavorecido" value="#{favorecidoView.tipoFavorecido}">
-                <f:selectItems value="#{favorecidoView.listaTipoFavorecido}" var="tipofavorecido" itemLabel="#{tipofavorecido.tfaStDescricao}"
-                               itemValue="#{tipofavorecido.tfaInCodigo}"/>
-            </p:selectOneMenu>
-            <p:outputLabel value="#{msgs['ln.texto.documento']}"/>
-            <p:inputText id="idinputdocumentofavorecido" value="#{favorecidoView.documento}" size="15"/>
-            <p:selectBooleanCheckbox id="idinputativofavorecido" value="#{favorecidoView.bAtivo}" />
-            <p:outputLabel  value="#{msgs['ln.texto.ativo']}"/>
-        </h:panelGrid>
-        <h:panelGrid id="idpanelfavorecidonome" columns="2" >
-            <p:outputLabel value="#{msgs['ln.texto.nome']}"/>
-            <p:inputText id="idinputnomefavorecido" value="#{favorecidoView.nomeFavorecido}" size="50" style="margin-left: 65px;"/>
-        </h:panelGrid>
-        <p:commandButton id="idbtsalvarfavorecido" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
-                         action="#{favorecidoView.btSalvarFavorecido()}" process="idbtsalvarfavorecido, idListTipoFavorecido, idinputdocumentofavorecido,
-                         idinputativofavorecido, idinputnomefavorecido" update="iddtfavorecido, :idFormTop:growl"/>
-        <p:commandButton id="idbtfecharfavorecido" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
-                         action="#{favorecidoView.btFecharFavorecido()}" process="idbtfecharfavorecido" update="idbtfecharfavorecido"/>
-    </p:dialog>
-  
 </ui:composition>
