@@ -475,7 +475,9 @@ public class PlanoContaView implements Serializable {
             conta = new Conta();
             contaDependente = new ContaDependente();
             agendaConta = new AgendaConta();
-            RequestContext.getCurrentInstance().execute("PF('dlgconta').show()");
+            beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogplanoconta.xhtml");
+            beanVar.setTituloDialog("ln.texto.cadastroconta");
+            RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -508,7 +510,7 @@ public class PlanoContaView implements Serializable {
     }
 
     public void btFecharContaLista() {
-        RequestContext.getCurrentInstance().execute("PF('dlgconta').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 
     private void clearVarConta() {

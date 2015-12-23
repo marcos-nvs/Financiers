@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:panelGrid id="idpanelcontacategoria" columns="10">
+        <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
+        <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" effect="fade" style="margin-left: 18px;">
+            <p:ajax listener="#{contaView.identificaTipoConta}" process="idcontacategoria" 
+                    update="idgridtipoconta" />
+            <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
+                           itemValue="#{itemCatConta.catInCodigo}"/>
+        </p:selectOneMenu>
+        <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}"  />
+        <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.bImposto}" />
+        <p:outputLabel value="#{msgs['ln.text.calulaimposto']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.bCalculada}" />
+        <p:outputLabel value="#{msgs['ln.texto.contacalculada']}"/>
+        <p:selectBooleanCheckbox id="idagendar" value="#{contaView.bAgendar}">
+            <p:ajax listener="#{contaView.mostrarAgendamento}" process="idagendar" 
+                    update="idagendamento" />
+        </p:selectBooleanCheckbox>
+        <p:outputLabel value="#{msgs['ln.texto.contaagendada']}"/>
+    </h:panelGrid>
+    <h:panelGrid id="idpanelconta1" columns="4">
+        <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+        <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 13px;"/>
+        <p:outputLabel value="#{msgs['ln.texto.saldoinicial']}"/>
+        <p:inputText id="idsaldoinicial" value="#{contaView.limite}" size="20" >
+            <f:convertNumber pattern="##0.00" type="percent"/>
+            <p:ajax update="idsaldoinicial" process="idsaldoinicial" event="change"/>
+        </p:inputText>
+    </h:panelGrid>
+
+    <h:panelGrid id="idgridtipoconta" columns="1">
+        <ui:include src="#{beanVar.telaConta}"/>
+    </h:panelGrid>
+
+    <h:panelGrid id="idagendamento" columns="1" >
+        <ui:include src="#{beanVar.telaAgenda}"/>
+    </h:panelGrid>
+
+    <f:facet name="footer">
+        <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
+        <p:commandButton id="idPlanoContaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
+                         action="#{contaView.btFecharContaLista}"/>
+    </f:facet>
+
+
+</ui:composition>
