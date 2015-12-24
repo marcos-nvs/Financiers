@@ -9,6 +9,7 @@ import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnAgendaconta;
 import br.com.ln.entity.LnContadependente;
 import br.com.ln.entity.LnPlanoconta;
+import br.com.ln.entity.LnTipoagenda;
 import br.com.ln.hibernate.SessionFactoryDbName;
 import br.com.ln.objeto.Conta;
 import java.util.List;
@@ -44,10 +45,6 @@ public class PlanoContaDao extends GenericDao{
         return listaContaDep;
     }
 
-    public static List<LnAgendaconta> buscaListaAgendaConta(Conta conta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
     public static List<LnPlanoconta> buscaListaContaDependente(Character ativo){
         
         List<LnPlanoconta> listaPlanoConta= null;
@@ -69,6 +66,32 @@ public class PlanoContaDao extends GenericDao{
         }
         
         return listaPlanoConta;
+    }
+    
+    public static List<LnTipoagenda> grabListAgenda(){
+        
+        Session session = null;
+        Transaction tx;
+        List<LnTipoagenda> listaTipoAgenda = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            Query query = session.getNamedQuery("LnTipoagenda.findAll");
+            listaTipoAgenda = query.list();
+            tx.commit();
+            
+        } finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listaTipoAgenda;
+    }
+
+    public static List<LnAgendaconta> buscaListaAgendaConta(Conta conta) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

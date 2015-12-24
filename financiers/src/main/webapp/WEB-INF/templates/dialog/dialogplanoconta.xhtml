@@ -46,7 +46,7 @@
     <f:facet name="footer">
         <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
         <p:commandButton id="idPlanoContaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
-                         action="#{contaView.btFecharContaLista}"/>
+                         action="#{contaView.btFecharContaLista}" process="idPlanoContaCancelar" update="idPlanoContaCancelar"/>
     </f:facet>
 
 

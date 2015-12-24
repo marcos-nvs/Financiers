@@ -780,6 +780,57 @@ insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) valu
 insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (8,'Semanal',7);
 insert into ln_tipoagenda(tpa_in_codigo, tpa_st_descricao, tpa_in_qtdedias) values (9,'Diário',1);
 
+-- Table: ln_agenda
+
+-- DROP TABLE ln_agenda;
+
+CREATE TABLE ln_agenda
+(
+  age_in_codigo integer NOT NULL,
+  act_in_codigo integer NOT NULL,
+  age_dt_data date NOT NULL,
+  age_fl_valor double precision NOT NULL,
+  age_ch_encerrado character(1) NOT NULL,
+  CONSTRAINT pk_agenda PRIMARY KEY (age_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_agenda
+  OWNER TO postgres;
+
+-- Table: ln_agendaconta
+
+-- DROP TABLE ln_agendaconta;
+
+CREATE TABLE ln_agendaconta
+(
+  act_in_codigo integer NOT NULL,
+  cta_in_codigo integer NOT NULL,
+  act_dt_inicio date NOT NULL,
+  act_dt_final date,
+  tpa_in_codigo integer NOT NULL,
+  act_ch_ativo character(1) NOT NULL,
+  act_in_dia integer,
+  act_ch_domingo character(1),
+  act_ch_segunda character(1),
+  act_ch_terca character(1),
+  act_ch_quarta character(1),
+  act_ch_quinta character(1),
+  act_ch_sexta character(1),
+  act_ch_sabado character(1),
+  act_ch_aviso character(1) NOT NULL,
+  act_ch_email character(1),
+  act_in_qtde integer,
+  act_st_email character varying(50),
+  CONSTRAINT pc_agendaconta PRIMARY KEY (act_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_agendaconta
+  OWNER TO postgres;
+
 -- Table: ln_planoconta
 
 -- DROP TABLE ln_planoconta;
