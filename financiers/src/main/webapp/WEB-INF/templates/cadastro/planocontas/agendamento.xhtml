@@ -8,11 +8,11 @@
     <p:panel header="#{msgs['ln.texto.agendamento']}">
         <h:panelGrid id="iddetalheagendamento" columns="4">
             <p:outputLabel value="#{msgs['ln.texto.tipoagenda']}"/>
-            <p:selectOneMenu id="idtipocontaagenda" value="#{agendaView.iTipoCodigo}" effect="fade" style="margin-left: 18px">
+            <p:selectOneMenu id="idtipocontaagenda" value="#{agendaView.iTipoCodigo}" effect="fade" style="margin-left: 30px">
                 <f:selectItems var="itemAgenda" value="#{agendaView.listaTipoAgenda}" itemLabel="#{itemAgenda.tpaStDescricao}"
                                itemValue="#{itemAgenda.tpaInCodigo}"/>
             </p:selectOneMenu>
-            <p:selectBooleanCheckbox value="#{agendaView.bAtivo}" />
+            <p:selectBooleanCheckbox value="#{agendaView.bAtivo}" style="margin-left: 30px" />
             <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
         </h:panelGrid>
         <h:panelGrid id="iddetalheagendamento4" columns="4">

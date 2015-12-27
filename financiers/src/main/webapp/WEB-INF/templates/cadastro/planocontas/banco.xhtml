@@ -12,7 +12,10 @@
             <p:outputLabel value="#{msgs['ln.texto.contacorrente']}"/>
             <p:inputText size="8"/>
             <p:outputLabel value="#{msgs['ln.texto.limite']}"/>
-            <p:inputText size="10"/>
+            <p:inputText id="idlimite" size="10">
+                <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
+                <p:ajax update="idlimite" process="idlimite" event="change"/>
+            </p:inputText>
             <p:outputLabel value="#{msgs['ln.texto.datavencimento']}"/>
             <p:inputText size="4"/>
         </h:panelGrid>
