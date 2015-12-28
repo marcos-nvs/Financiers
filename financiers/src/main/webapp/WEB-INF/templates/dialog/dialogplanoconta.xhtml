@@ -29,7 +29,7 @@
         <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
         <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 13px;"/>
         <p:outputLabel value="#{msgs['ln.texto.saldoinicial']}"/>
-        <p:inputText id="idsaldoinicial" value="#{contaView.limite}" size="20" >
+        <p:inputText id="idsaldoinicial" value="#{contaView.limite}" size="10" >
             <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
             <p:ajax update="idsaldoinicial" process="idsaldoinicial" event="change"/>
         </p:inputText>

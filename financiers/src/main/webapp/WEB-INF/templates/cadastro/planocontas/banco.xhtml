@@ -8,16 +8,16 @@
     <p:panel header="#{msgs['ln.texto.informacaobanco']}">
         <h:panelGrid id="iddetalhebanco" columns="10">
             <p:outputLabel value="#{msgs['ln.texto.agencia']}"/>
-            <p:inputText size="5"/>
+            <p:inputText value="#{tipoConta.agencia}" size="5"/>
             <p:outputLabel value="#{msgs['ln.texto.contacorrente']}"/>
-            <p:inputText size="8"/>
+            <p:inputText value="#{tipoConta.conta}" size="8"/>
             <p:outputLabel value="#{msgs['ln.texto.limite']}"/>
-            <p:inputText id="idlimite" size="10">
+            <p:inputText value="#{tipoConta.limite}" id="idlimite" size="10">
                 <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
                 <p:ajax update="idlimite" process="idlimite" event="change"/>
             </p:inputText>
             <p:outputLabel value="#{msgs['ln.texto.datavencimento']}"/>
-            <p:inputText size="4"/>
+            <p:inputText value="#{tipoConta.diaVencimento}" size="4"/>
         </h:panelGrid>
     </p:panel>
     

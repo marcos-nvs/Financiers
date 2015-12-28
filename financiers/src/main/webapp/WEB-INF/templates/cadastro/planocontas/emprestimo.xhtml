@@ -6,7 +6,14 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <p:panel header="Informações do Empréstimo">
-        <h:panelGrid id="iddetalheemprestimo" columns="6">
+        <h:panelGrid id="ididentificaemprestimo" columns="4">
+            <h3>#{msgs['Tipo Empréstimo']}</h3>
+            <p:selectOneRadio >
+                <f:selectItem itemLabel="#{msgs['Tomando Emprestado']}"/>
+                <f:selectItem itemLabel="#{msgs['Emprestando']}"/>
+            </p:selectOneRadio>
+        </h:panelGrid>    
+        <h:panelGrid id="iddetalheemprestado" columns="6">
             <p:outputLabel value="Pagar para"/>
             <p:inputText/>
             <p:outputLabel value="Valor Tomado"/>
@@ -25,8 +32,6 @@
             <p:inputText/>
             <p:outputLabel value="Data de Vencimento"/>
             <p:inputText/>
-            <p:outputLabel value="Gera agendamento?"/>
-            <p:inputText/>
-        </h:panelGrid>
+        </h:panelGrid>      
     </p:panel>
 </ui:composition>

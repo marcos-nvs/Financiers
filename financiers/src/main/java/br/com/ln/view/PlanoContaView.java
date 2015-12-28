@@ -551,7 +551,7 @@ public class PlanoContaView implements Serializable {
                 beanVar.setTelaConta("../cadastro/planocontas/cartaocredito.xhtml");
                 break;
             case 5:
-                beanVar.setTelaConta("../cadastro/planocontas/dinheiro.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/ativo.xhtml");
                 break;
             case 6:
                 beanVar.setTelaConta("../cadastro/planocontas/emprestimo.xhtml");
