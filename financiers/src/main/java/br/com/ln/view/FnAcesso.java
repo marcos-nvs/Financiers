@@ -6,7 +6,6 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.BeanVar;
-import br.com.ln.comum.EjbMap;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.Utilitarios;
