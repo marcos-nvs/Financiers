@@ -51,7 +51,7 @@ public class SessionFactoryDbName implements Serializable{
             cfg.configure("hibernate.cfg.xml");
 //            cfg.setProperty("hibernate.connection.datasource", "jdbc/Financiers");
             cfg.setProperty("hibernate.connection.datasource", "java:/jdbc/financiers");
-//            cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+            cfg.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
             cfg.setProperty("hibernate.default_schema", strDbName);
             
 //            SchemaExport export = new SchemaExport(cfg);
