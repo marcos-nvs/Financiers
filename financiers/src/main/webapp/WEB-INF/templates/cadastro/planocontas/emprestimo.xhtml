@@ -13,21 +13,27 @@
                 <f:selectItem itemLabel="#{msgs['Emprestando']}"/>
             </p:selectOneRadio>
         </h:panelGrid>    
-        <h:panelGrid id="iddetalheemprestado" columns="8">
+        <h:panelGrid id="iddetalheemprestado2" columns="4">
             <p:outputLabel value="Pagar para"/>
-            <p:inputText/>
+            <p:selectOneMenu id="idfavorecidoemprestimo">
+                <f:selectItem/>
+            </p:selectOneMenu>
             <p:outputLabel value="Pagar com a conta"/>
-            <p:inputText/>
-            <p:outputLabel value="Valor Tomado"/>
-            <p:inputText/>
+            <p:selectOneMenu id="idcontaemprestimopagar">
+                <f:selectItems/>
+            </p:selectOneMenu>
+        </h:panelGrid>      
+        <h:panelGrid id="iddetalheemprestado3" columns="10">
+            <p:outputLabel value="Valor"/>
+            <p:inputText size="15"/>
             <p:outputLabel value="Prazo"/>
-            <p:inputText/>
+            <p:inputText size="5"/>
             <p:outputLabel value="Valor das Parcelas"/>
-            <p:inputText/>
+            <p:inputText size="10"/>
             <p:outputLabel value="Juros Mensais"/>
-            <p:inputText/>
+            <p:inputText size="10"/>
             <p:outputLabel value="Valor Final"/>
-            <p:inputText/>
+            <p:inputText size="15"/>
             <p:outputLabel value="Juros Anuais"/>
             <p:inputText/>
             <p:outputLabel value="Juros Efetivos"/>
