@@ -18,7 +18,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 /**
- * Fabrica de conexÃ£o
+ * Fabrica de conexao
  * @author Marcos Naves
  */
 public class SessionFactoryDbName implements Serializable{
