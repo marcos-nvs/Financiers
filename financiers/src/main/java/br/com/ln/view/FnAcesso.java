@@ -36,7 +36,6 @@ import org.primefaces.model.menu.MenuModel;
  *
  * @author Marcos Naves
  */
-
 @SessionScoped
 @ManagedBean(name = "financiersView")
 public class FnAcesso implements Serializable {
@@ -56,11 +55,11 @@ public class FnAcesso implements Serializable {
     private MenuModel model;
     private String cpf;
     private final TratamentoEspecial tratamentoEspecial;
-    
+
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
     Logger logger = Logger.getLogger(FnAcesso.class);
-            
+
     public FnAcesso() {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tratamentoEspecial = new TratamentoEspecial();
@@ -211,6 +210,7 @@ public class FnAcesso implements Serializable {
     }
 
     public void sistemaLogin() {
+        RequestContext.getCurrentInstance().execute("PF('statusDialog').show()");
         if (VarComuns.strDbName != null) {
             if (usuario != null && senha != null) {
                 lnUsuario = UsuarioDao.grabUsuario(usuario, 'S');
@@ -221,6 +221,7 @@ public class FnAcesso implements Serializable {
                         if (!lnUsuario.getUsuStSenha().equals(senha)) {
                             lnUsuario = null;
                             mensagem = bundle.getString("ln.mb.frase.usuarioinvalido");
+                            RequestContext.getCurrentInstance().execute("PF('statusDialog').hide()");
                             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                                     bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
                         } else {
@@ -266,7 +267,8 @@ public class FnAcesso implements Serializable {
                         bundle.getString("ln.mb.titulo.usuariosenha"), mensagem));
             }
         }
-    }
+        RequestContext.getCurrentInstance().execute("PF('statusDialog').hide()");
+        }
 
     public void logout() {
 
@@ -382,8 +384,8 @@ public class FnAcesso implements Serializable {
                             lnUsuario.setUsuDtExpiracao(usuarioFuncao.calculaDataExpiracao(lnUsuario));
                             UsuarioDao.saveOrUpdateObject(lnUsuario);
                             VarComuns.lnUsusario = lnUsuario;
-                            historico.gravaHistorico(lnUsuario, bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " " + 
-                                   bundle.getString("ln.mb.frase.alterada"));
+                            historico.gravaHistorico(lnUsuario, bundle.getString("ln.mb.frase.senhausuario") + " " + lnUsuario.getUsuStCodigo() + " - " + lnUsuario.getUsuStNome() + " "
+                                    + bundle.getString("ln.mb.frase.alterada"));
                             RequestContext.getCurrentInstance().execute("PF('senha').hide()");
                             mensagem = bundle.getString("ln.mb.frase.senhasucesso");
                             rusuario = null;
