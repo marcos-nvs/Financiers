@@ -25,6 +25,7 @@ public class BeanVar implements Serializable{
     private String telaOrigem;
     private String nomeTela;
     private String telaConta;
+    private String telaCalculada;
     private String telaAgenda;
     private String telaDialog;
     private String tituloDialog;
@@ -121,6 +122,14 @@ public class BeanVar implements Serializable{
 
     public void setTituloDialog(String tituloDialog) {
         this.tituloDialog = tituloDialog;
+    }
+
+    public String getTelaCalculada() {
+        return telaCalculada;
+    }
+
+    public void setTelaCalculada(String telaCalculada) {
+        this.telaCalculada = telaCalculada;
     }
     
  }

@@ -589,4 +589,12 @@ public class PlanoContaView implements Serializable {
             beanVar.setTelaAgenda("../cadastro/planocontas/ativo.xhtml");
         }
     }
+    
+    public void mostraCalculoConta(){
+        if (bCalculada){
+            beanVar.setTelaCalculada("../cadastro/planocontas/contacalculada.xhtml");
+        } else {
+            beanVar.setTelaCalculada("../cadastro/planocontas/ativo.xhtml");
+        }
+    }
 }

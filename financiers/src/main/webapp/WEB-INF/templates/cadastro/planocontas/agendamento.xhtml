@@ -15,7 +15,7 @@
             <p:selectBooleanCheckbox value="#{agendaView.bAtivo}" style="margin-left: 30px" />
             <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
         </h:panelGrid>
-        <h:panelGrid id="idinformacaotempo" columns="4">
+        <h:panelGrid id="idinformacaotempo" columns="8">
             <p:outputLabel for="dtinicioagenda" value="#{msgs['ln.texto.datainicio']}"/>
             <p:calendar id="dtinicioagenda" value="#{agendaView.dtInicio}" showOn="button" pattern="dd/MM/yyyy" size="10"/>
             <p:outputLabel for="dtfinalagenda" value="#{msgs['ln.texto.datafinal']}"/>
@@ -25,8 +25,9 @@
             <p:outputLabel value="#{msgs['ln.texto.qtdexecucao']}" />
             <p:inputText value="#{agendaView.iQtdeExecucao}" size="5"/>
         </h:panelGrid>
-        <h3>#{msgs['ln.texto.diasemana']}</h3>
+        
         <h:panelGrid id="iddiasemana" columns="16">
+            <h3>#{msgs['ln.texto.diasemana']}</h3>
             <p:selectBooleanCheckbox value="#{agendaView.btDomingo}" />
             <p:outputLabel value="#{msgs['ln.texto.domingo']}"/>
             <p:selectBooleanCheckbox value="#{agendaView.btSegunda}" />
@@ -42,8 +43,8 @@
             <p:selectBooleanCheckbox value="#{agendaView.btSabado}" />
             <p:outputLabel value="#{msgs['ln.texto.sabado']}"/>
         </h:panelGrid>
-        <h3>#{msgs['ln.texto.avisos']}</h3>
-        <h:panelGrid id="idenviaemailagenda" columns="6">
+        <h:panelGrid id="idenviaemailagenda" columns="7">
+            <h3>#{msgs['ln.texto.avisos']}</h3>
             <p:selectBooleanCheckbox value="#{agendaView.btAvisar}" />
             <p:outputLabel value="#{msgs['ln.texto.avisar']}"/>
             <p:selectBooleanCheckbox value="#{agendaView.btAvisarEmail}" />
