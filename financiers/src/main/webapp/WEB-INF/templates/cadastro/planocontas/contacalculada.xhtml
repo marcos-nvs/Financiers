@@ -5,13 +5,19 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <p:panel header="#{msgs['Informações para calculo da conta']}">
-        <h:panelGrid id="idcontacalculada" columns="10">
-            <p:outputLabel value="Conta"/>
-            <p:selectOneMenu id="idtipocontacalculada" effect="fade" style="margin-left: 30px">
-                <f:selectItems var="itemAgenda" />
+    <p:panel header="Informações para cálculo da conta">
+        <h:panelGrid id="idcontacalculada" columns="6">
+            <p:outputLabel value="Conta Dependente"/>
+            <p:selectOneMenu id="idtipocontacalculada" effect="fade" style="margin-left: 30px;width: 250px;">
+                <f:selectItems var="itemCalculada" />
             </p:selectOneMenu>
-
+            <p:selectBooleanCheckbox/>
+            <p:outputLabel value="Calcula imposto"/>
+            <p:outputLabel value="Tabela de calculo" style="margin-left: 50px;"/>
+            <p:selectOneMenu id="idtipoimpostoconta" effect="fade" style="margin-left: 30px;width: 250px;">
+                <f:selectItems var="itemCalculada" />
+            </p:selectOneMenu>
+            
         </h:panelGrid>
     </p:panel>
 

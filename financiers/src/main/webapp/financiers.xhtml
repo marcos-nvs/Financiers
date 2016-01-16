@@ -57,14 +57,15 @@
             </p:layout>
             
             <h:form id="idformdialog">
-                <p:dialog id="iddialog" header="#{msgs[beanVar.tituloDialog]}" widgetVar="dialog" modal="true" showEffect="blind" hideEffect="drop"
-                          closable="false" style="background-color: activeborder;" dynamic="true" position="center">
+                <p:dialog id="iddialog" header="#{msgs[beanVar.tituloDialog]}" widgetVar="dialog" modal="true" showEffect="clip" hideEffect="drop"
+                          closable="false" style="background-color: activeborder;" dynamic="true" position="top">
                     <h:panelGrid id="idpanelgriddialog" columns="1">
                         <ui:insert id="idInsertDialog">
                             <ui:include src="#{beanVar.telaDialog}"/>
                         </ui:insert>
                     </h:panelGrid>
                 </p:dialog>
+                <p:progressBar />
             </h:form>
             
         </h:body>
