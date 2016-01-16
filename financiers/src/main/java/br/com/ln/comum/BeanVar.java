@@ -28,6 +28,7 @@ public class BeanVar implements Serializable{
     private String telaCalculada;
     private String telaAgenda;
     private String telaDialog;
+    private String telaAtivo;
     private String tituloDialog;
     private boolean apresenta;
     private boolean bloquear;
@@ -40,6 +41,7 @@ public class BeanVar implements Serializable{
         this.nomeTela = "ln.frase.sistemafinanceiro";
         this.tituloDialog = "";
         this.telaConta = "../cadastro/planocontas/ativo.xhtml";
+        this.telaAtivo = "imovel.xhtml";
         this.apresenta = false;
         this.bloquear = true;
     }
@@ -131,6 +133,14 @@ public class BeanVar implements Serializable{
     public void setTelaCalculada(String telaCalculada) {
         this.telaCalculada = telaCalculada;
     }
-    
+
+    public String getTelaAtivo() {
+        return telaAtivo;
+    }
+
+    public void setTelaAtivo(String telaAtivo) {
+        this.telaAtivo = telaAtivo;
+    }
+
  }
     

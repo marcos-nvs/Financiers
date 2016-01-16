@@ -551,7 +551,7 @@ public class PlanoContaView implements Serializable {
                 beanVar.setTelaConta("../cadastro/planocontas/cartaocredito.xhtml");
                 break;
             case 5:
-                beanVar.setTelaConta("../cadastro/planocontas/ativo.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/vazia.xhtml");
                 break;
             case 6:
                 beanVar.setTelaConta("../cadastro/planocontas/emprestimo.xhtml");
@@ -586,7 +586,7 @@ public class PlanoContaView implements Serializable {
         if (bAgendar) {
             beanVar.setTelaAgenda("../cadastro/planocontas/agendamento.xhtml");
         } else {
-            beanVar.setTelaAgenda("../cadastro/planocontas/ativo.xhtml");
+            beanVar.setTelaAgenda("../cadastro/planocontas/vazia.xhtml");
         }
     }
     
@@ -594,7 +594,7 @@ public class PlanoContaView implements Serializable {
         if (bCalculada){
             beanVar.setTelaCalculada("../cadastro/planocontas/contacalculada.xhtml");
         } else {
-            beanVar.setTelaCalculada("../cadastro/planocontas/ativo.xhtml");
+            beanVar.setTelaCalculada("../cadastro/planocontas/vazia.xhtml");
         }
     }
 }

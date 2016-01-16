@@ -6,13 +6,7 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <h:panelGrid id="idpanelcontacategoria" columns="10">
-
-
-
-
-
-
-<!--        <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
+        <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
         <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" effect="fade" style="margin-left: 18px; width: 250px;">
             <p:ajax listener="#{contaView.identificaTipoConta}" process="idcontacategoria" 
                     update="idgridtipoconta"/>
@@ -21,6 +15,11 @@
         </p:selectOneMenu>
         <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}"  />
         <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
+
+
+
+
+<!--        
         <p:selectBooleanCheckbox value="#{contaView.bImposto}" />
         <p:outputLabel value="#{msgs['ln.text.calulaimposto']}"/>
         <p:selectBooleanCheckbox id="idcalculaconta" value="#{contaView.bCalculada}" >
@@ -35,21 +34,21 @@
         <p:outputLabel value="#{msgs['ln.texto.contaagendada']}"/>-->
     </h:panelGrid>
     <h:panelGrid id="idpanelconta1" columns="4">
-<!--        <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+        <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
         <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 13px;"/>
-        <p:outputLabel value="#{msgs['ln.texto.saldoinicial']}"/>
+<!--        <p:outputLabel value="#{msgs['ln.texto.saldoinicial']}"/>
         <p:inputText id="idsaldoinicial" value="#{contaView.limite}" size="10" >
             <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
             <p:ajax update="idsaldoinicial" process="idsaldoinicial" event="change"/>
         </p:inputText>-->
     </h:panelGrid>
 
+    <h:panelGrid id="idgridtipoconta" columns="1">
+        <ui:include src="#{beanVar.telaConta}"/>
+    </h:panelGrid>
+
 <!--    <h:panelGrid id="idgridcalculada" columns="1">
         <ui:include src="#{beanVar.telaCalculada}"/>
-    </h:panelGrid>-->
-
-<!--    <h:panelGrid id="idgridtipoconta" columns="1">
-        <ui:include src="#{beanVar.telaConta}"/>
     </h:panelGrid>-->
 
 <!--    <h:panelGrid id="idagendamento" columns="1" >
