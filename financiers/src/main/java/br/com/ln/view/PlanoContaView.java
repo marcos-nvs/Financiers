@@ -50,6 +50,7 @@ public class PlanoContaView implements Serializable {
     private Double limite;
     private Character agendar;
     private boolean bAgendar;
+    private String tipoAtivo;
 
     private Integer idContaDependente;
     private Integer idTabela;
@@ -445,6 +446,15 @@ public class PlanoContaView implements Serializable {
         this.listaContaCalculada = listaContaCalculada;
     }
 
+    public String getTipoAtivo() {
+        return tipoAtivo;
+    }
+
+    public void setTipoAtivo(String tipoAtivo) {
+        this.tipoAtivo = tipoAtivo;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -596,5 +606,25 @@ public class PlanoContaView implements Serializable {
         } else {
             beanVar.setTelaCalculada("../cadastro/planocontas/vazia.xhtml");
         }
+    }
+    
+    public void mostraAtivo(){
+        
+       switch (tipoAtivo){
+           case "Imóvel":
+               beanVar.setTelaAtivo("imovel.xhtml");
+               break;
+           case "Automóvel":
+               beanVar.setTelaAtivo("automovel.xhtml");
+               break;
+           case "Móvel":
+               beanVar.setTelaAtivo("vazia.xhtml");
+               break;
+           case "Aplicação":
+               beanVar.setTelaAtivo("vazia.xhtml");
+               break;
+               
+       }
+               
     }
 }
