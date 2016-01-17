@@ -239,6 +239,10 @@ public class CategoriaView implements Serializable {
     public void btSalvarCategoria() {
         if (descricao != null && !descricao.equals("")) {
             dataLoadVar();
+            
+            if (lnCategoria.getTipoFuncao().equals(TipoFuncao.Alterar)){
+                lnCategoria.setCatInCodigo(codigo);
+            }
 
             if (categoriaFuncoes.categoria(lnCategoria)) {
                 listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
