@@ -7,6 +7,8 @@
 
     <p:panel header="#{msgs['ln.texto.infocartaocredito']}">
         <h:panelGrid id="iddetalhecartaocredito" columns="6">
+            <p:outputLabel value="#{msgs['ln.texto.numerocartao']}"/>
+            <p:inputText  size="30"/>
             <p:outputLabel value="#{msgs['ln.texto.limitecredito']}"/>
             <p:inputText value="#{tipoConta.limite}" size="10"/>
             <p:outputLabel value="#{msgs['ln.texto.diavencimento']}"/>
