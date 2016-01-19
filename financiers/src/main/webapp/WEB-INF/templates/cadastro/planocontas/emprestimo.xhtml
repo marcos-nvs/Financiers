@@ -6,42 +6,40 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <p:panel header="#{msgs['ln.texto.informacaoemprestimo']}">
+        <h3>#{msgs['ln.texto.tipoemprestimo']}</h3>
         <h:panelGrid id="ididentificatipoemprestimo" columns="4">
-            <h3>#{msgs['ln.texto.tipoemprestimo']}</h3>
-            <p:selectOneRadio >
-                <f:selectItem itemLabel="#{msgs['ln.texto.tomandoemprestado']}"/>
-                <f:selectItem itemLabel="#{msgs['ln.texto.emprestando']}"/>
+            <p:selectOneRadio widgetVar="teste" value="#{contaView.tipoEmprestimo}" >
+                <f:selectItem itemLabel="#{msgs['ln.texto.tomandoemprestado']}" itemValue="1"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.emprestando']}" itemValue="2"/>
+                <p:ajax listener="#{contaView.mostraTipoEmpretimo()}" process="ididentificatipoemprestimo" update="idtipoemprestimo"/>
             </p:selectOneRadio>
-        </h:panelGrid>    
-        <h:panelGrid id="ididentificafavorecido" columns="4">
-            <p:outputLabel value="#{msgs['Pagar para']}"/>
-            <p:selectOneMenu id="idfavorecidoemprestimo">
-                <f:selectItem/>
-            </p:selectOneMenu>
-            <p:outputLabel value="#{msgs['Pagar com a conta']}"/>
-            <p:selectOneMenu id="idcontaemprestimopagar">
-                <f:selectItems/>
-            </p:selectOneMenu>
-        </h:panelGrid>      
-        <h:panelGrid id="iddetalheemprestado3" columns="10">
-            <p:outputLabel value="#{msgs['Valor']}"/>
-            <p:inputText size="6"/>
-            <p:outputLabel value="#{msgs['Prazo']}"/>
-            <p:inputText size="1"/>
-            <p:outputLabel value="#{msgs['Valor das Parcelas']}"/>
-            <p:inputText size="6"/>
-            <p:outputLabel value="#{msgs['Juros Mensais']}"/>
-            <p:inputText size="6"/>
-            <p:outputLabel value="#{msgs['Valor Final']}"/>
-            <p:inputText size="6"/>
-        </h:panelGrid>      
-        <h:panelGrid id="iddetalheemprestado4" columns="6">
-            <p:outputLabel value="#{msgs['Juros Anuais']}"/>
-            <p:inputText size="6"/>
-            <p:outputLabel value="#{msgs['Juros Efetivos']}"/>
-            <p:inputText size="6"/>
-            <p:outputLabel value="#{msgs['Data de Vencimento']}"/>
-            <p:inputText size="6"/>
-        </h:panelGrid>      
+        </h:panelGrid> 
+
+        <p:panel>
+            <h:panelGrid id="idtipoemprestimo" columns="1">
+                <ui:include src="#{beanVar.telaEmprestimo}"/>
+            </h:panelGrid>
+            <h:panelGrid id="iddetalhevalores" columns="10">
+                <p:outputLabel value="#{msgs['ln.texto.valor']}"/>
+                <p:inputText size="6"/>
+                <p:outputLabel value="#{msgs['ln.texto.prazo']}"/>
+                <p:inputText size="1"/>
+                <p:outputLabel value="#{msgs['ln.texto.valorparcelas']}"/>
+                <p:inputText size="6"/>
+                <p:outputLabel value="#{msgs['ln.texto.jurosmensais']}"/>
+                <p:inputText size="6"/>
+                <p:outputLabel value="#{msgs['ln.texto.valortotal']}"/>
+                <p:inputText size="6"/>
+            </h:panelGrid>      
+            <h:panelGrid id="iddetalhejuros" columns="6">
+                <p:outputLabel value="#{msgs['ln.texto.jurosanuais']}"/>
+                <p:inputText size="6"/>
+                <p:outputLabel value="#{msgs['ln.texto.jurosefetivo']}"/>
+                <p:inputText size="6"/>
+                <p:outputLabel value="#{msgs['ln.texto.datavencimento']}"/>
+                <p:inputText size="6"/>
+            </h:panelGrid>      
+
+        </p:panel>
     </p:panel>
 </ui:composition>

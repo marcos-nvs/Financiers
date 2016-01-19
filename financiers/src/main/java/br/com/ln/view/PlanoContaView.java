@@ -51,6 +51,7 @@ public class PlanoContaView implements Serializable {
     private Character agendar;
     private boolean bAgendar;
     private String tipoAtivo;
+    private String tipoEmprestimo;
 
     private Integer idContaDependente;
     private Integer idTabela;
@@ -100,6 +101,8 @@ public class PlanoContaView implements Serializable {
         listaTipoTabela = PlanoContaDao.grabListObject(LnTipotabela.class);
         listaContaCalculada = PlanoContaDao.buscaListaContaDependente('S');
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        tipoEmprestimo = "1";
+        mostraTipoEmpretimo();
     }
 
     public Integer getIdConta() {
@@ -453,8 +456,15 @@ public class PlanoContaView implements Serializable {
     public void setTipoAtivo(String tipoAtivo) {
         this.tipoAtivo = tipoAtivo;
     }
-    
-    
+
+    public String getTipoEmprestimo() {
+        return tipoEmprestimo;
+    }
+
+    public void setTipoEmprestimo(String tipoEmprestimo) {
+        this.tipoEmprestimo = tipoEmprestimo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -626,5 +636,13 @@ public class PlanoContaView implements Serializable {
                
        }
                
+    }
+    
+    public void mostraTipoEmpretimo(){
+        if (tipoEmprestimo.equals("1")){
+            beanVar.setTelaEmprestimo("infotomando.xhtml");
+        } else {
+            beanVar.setTelaEmprestimo("emprestando.xhtml");
+        }
     }
 }

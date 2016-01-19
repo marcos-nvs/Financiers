@@ -15,9 +15,21 @@
         </p:selectOneMenu>
         <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}"  />
         <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
+    </h:panelGrid>
+    <h:panelGrid id="idpanelconta1" columns="4">
+        <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+        <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 13px;"/>
+    </h:panelGrid>
 
-
-
+    <h:panelGrid id="idgridtipoconta" columns="1">
+        <ui:include src="#{beanVar.telaConta}"/>
+    </h:panelGrid>
+    <f:facet name="footer">
+        <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
+        <p:commandButton id="idPlanoContaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
+                         action="#{contaView.btFecharContaLista}" process="idPlanoContaCancelar" update="idPlanoContaCancelar"/>
+    </f:facet>
+</ui:composition>
 
 <!--        
         <p:selectBooleanCheckbox value="#{contaView.bImposto}" />
@@ -32,20 +44,13 @@
                     update="idagendamento" />
         </p:selectBooleanCheckbox>
         <p:outputLabel value="#{msgs['ln.texto.contaagendada']}"/>-->
-    </h:panelGrid>
-    <h:panelGrid id="idpanelconta1" columns="4">
-        <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-        <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 13px;"/>
+
+
 <!--        <p:outputLabel value="#{msgs['ln.texto.saldoinicial']}"/>
         <p:inputText id="idsaldoinicial" value="#{contaView.limite}" size="10" >
             <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
             <p:ajax update="idsaldoinicial" process="idsaldoinicial" event="change"/>
         </p:inputText>-->
-    </h:panelGrid>
-
-    <h:panelGrid id="idgridtipoconta" columns="1">
-        <ui:include src="#{beanVar.telaConta}"/>
-    </h:panelGrid>
 
 <!--    <h:panelGrid id="idgridcalculada" columns="1">
         <ui:include src="#{beanVar.telaCalculada}"/>
@@ -54,12 +59,3 @@
 <!--    <h:panelGrid id="idagendamento" columns="1" >
         <ui:include src="#{beanVar.telaAgenda}"/>
     </h:panelGrid>-->
-
-    <f:facet name="footer">
-        <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
-        <p:commandButton id="idPlanoContaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
-                         action="#{contaView.btFecharContaLista}" process="idPlanoContaCancelar" update="idPlanoContaCancelar"/>
-    </f:facet>
-
-
-</ui:composition>
