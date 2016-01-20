@@ -36,6 +36,14 @@ import org.primefaces.context.RequestContext;
 @ManagedBean(name = "contaView")
 public class PlanoContaView implements Serializable {
 
+    //Variavéis de Tela
+    private String tipoAtivo;
+    private String tipoEmprestimo;
+    private String tipoFinanciamento;
+    private boolean bItemAtivoAplicacao;
+    private boolean bItemAtivoMovel;
+    
+    
     private Integer idConta;
     private String nomeConta;
     private Integer idCategoria;
@@ -50,8 +58,6 @@ public class PlanoContaView implements Serializable {
     private Double limite;
     private Character agendar;
     private boolean bAgendar;
-    private String tipoAtivo;
-    private String tipoEmprestimo;
 
     private Integer idContaDependente;
     private Integer idTabela;
@@ -102,7 +108,9 @@ public class PlanoContaView implements Serializable {
         listaContaCalculada = PlanoContaDao.buscaListaContaDependente('S');
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tipoEmprestimo = "1";
+        tipoFinanciamento = "1";
         mostraTipoEmpretimo();
+        mostraTipoFinanciamento();
     }
 
     public Integer getIdConta() {
@@ -465,6 +473,31 @@ public class PlanoContaView implements Serializable {
         this.tipoEmprestimo = tipoEmprestimo;
     }
 
+    public String getTipoFinanciamento() {
+        return tipoFinanciamento;
+    }
+
+    public void setTipoFinanciamento(String tipoFinanciamento) {
+        this.tipoFinanciamento = tipoFinanciamento;
+    }
+
+    public boolean isbItemAtivoAplicacao() {
+        return bItemAtivoAplicacao;
+    }
+
+    public void setbItemAtivoAplicacao(boolean bItemAtivoAplicacao) {
+        this.bItemAtivoAplicacao = bItemAtivoAplicacao;
+    }
+
+    public boolean isbItemAtivoMovel() {
+        return bItemAtivoMovel;
+    }
+
+    public void setbItemAtivoMovel(boolean bItemAtivoMovel) {
+        this.bItemAtivoMovel = bItemAtivoMovel;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -560,6 +593,8 @@ public class PlanoContaView implements Serializable {
         switch (idTipoConta) {
             case 1:
                 beanVar.setTelaConta("../cadastro/planocontas/ativo.xhtml");
+                bItemAtivoAplicacao = true;
+                bItemAtivoMovel = true;
                 break;
             case 2:
                 beanVar.setTelaConta("../cadastro/planocontas/passivo.xhtml");
@@ -578,6 +613,8 @@ public class PlanoContaView implements Serializable {
                 break;
             case 7:
                 beanVar.setTelaConta("../cadastro/planocontas/financiamento.xhtml");
+                bItemAtivoAplicacao = true;
+                bItemAtivoMovel = true;
                 break;
             case 8:
                 beanVar.setTelaConta("../cadastro/planocontas/outrospassivos.xhtml");
@@ -643,6 +680,14 @@ public class PlanoContaView implements Serializable {
             beanVar.setTelaEmprestimo("infotomando.xhtml");
         } else {
             beanVar.setTelaEmprestimo("emprestando.xhtml");
+        }
+    }
+
+    public void mostraTipoFinanciamento(){
+        if (tipoFinanciamento.equals("1")){
+            beanVar.setTelaFinanciamento("ativo.xhtml");
+        } else {
+            beanVar.setTelaFinanciamento("vazia.xhtml");
         }
     }
 }

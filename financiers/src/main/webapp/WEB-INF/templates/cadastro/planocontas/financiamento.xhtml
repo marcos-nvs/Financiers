@@ -5,7 +5,20 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <p:panel header="Informações do Financiamento">
+    <p:panel header="#{msgs['ln.texto.informacoesfinanciamento']}">
+        <h:panelGrid id="idtipofinanciamento" columns="4">
+            <p:selectOneRadio id="idescolhatipofinanciamento" value="#{contaView.tipoFinanciamento}" >
+                <f:selectItem itemLabel="#{msgs['ln.texto.adquirindonovo']}" itemValue="1"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.financiandoexistente']}" itemValue="2"/>
+                <p:ajax listener="#{contaView.mostraTipoFinanciamento()}" process="idescolhatipofinanciamento" update="idtipofinanciamentoescolhido"/>
+            </p:selectOneRadio>
+        </h:panelGrid>
+        
+        <h:panelGrid id="idtipofinanciamentoescolhido" columns="1">
+            <ui:include src="#{beanVar.telaFinanciamento}"/>
+        </h:panelGrid>
+        
+        
         <h:panelGrid id="idfinanciamentobem" columns="4">
             <p:outputLabel value="Bem Financiado"/>
             <p:selectOneMenu id="idcontafinanciada" style="margin-left: 5px;width: 250px;">
@@ -19,6 +32,8 @@
             <p:selectOneMenu id="idcontautilizadafinanciada" style="margin-left: 5px;width: 250px;">
                 <f:selectItems/>
             </p:selectOneMenu>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="#{msgs['ln.texto.simulado']}"/>
         </h:panelGrid>
         <h:panelGrid id="iddetalhefinaciamento" columns="6">
             <p:outputLabel value="#{msgs['Valor do Bem']}"/>
