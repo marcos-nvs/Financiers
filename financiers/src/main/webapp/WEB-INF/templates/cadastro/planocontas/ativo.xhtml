@@ -13,7 +13,7 @@
                 <f:selectItem itemLabel="Automóvel" itemValue="Automóvel"/>
                 <f:selectItem itemLabel="Móvel" itemValue="Móvel" itemDisabled="#{contaView.bItemAtivoMovel}"/>
                 <f:selectItem itemLabel="Aplicação" itemValue="Aplicação" itemDisabled="#{contaView.bItemAtivoAplicacao}"/>
-                <p:ajax listener="#{contaView.mostraAtivo}" process="idtipoativoseleciona" update="idtipoativoselecionado"/>
+                <p:ajax listener="#{contaView.mostraAtivo}" process="idtipoativoseleciona" update="idtipoativoselecionado, idtipoativoseleciona"/>
             </p:selectOneMenu>
             <p:outputLabel value="Valor do Ativo"/>
             <p:inputText id="idvalorativo" size="10" >

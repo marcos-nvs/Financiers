@@ -593,8 +593,8 @@ public class PlanoContaView implements Serializable {
         switch (idTipoConta) {
             case 1:
                 beanVar.setTelaConta("../cadastro/planocontas/ativo.xhtml");
-                bItemAtivoAplicacao = true;
-                bItemAtivoMovel = true;
+                bItemAtivoAplicacao = false;
+                bItemAtivoMovel = false;
                 break;
             case 2:
                 beanVar.setTelaConta("../cadastro/planocontas/passivo.xhtml");
