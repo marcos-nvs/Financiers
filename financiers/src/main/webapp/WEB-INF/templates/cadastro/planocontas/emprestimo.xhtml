@@ -7,12 +7,14 @@
 
     <p:panel header="#{msgs['ln.texto.informacaoemprestimo']}">
         <h3>#{msgs['ln.texto.tipoemprestimo']}</h3>
-        <h:panelGrid id="ididentificatipoemprestimo" columns="4">
+        <h:panelGrid id="ididentificatipoemprestimo" columns="6">
             <p:selectOneRadio widgetVar="teste" value="#{contaView.tipoEmprestimo}" >
                 <f:selectItem itemLabel="#{msgs['ln.texto.tomandoemprestado']}" itemValue="1"/>
                 <f:selectItem itemLabel="#{msgs['ln.texto.emprestando']}" itemValue="2"/>
                 <p:ajax listener="#{contaView.mostraTipoEmpretimo()}" process="ididentificatipoemprestimo" update="idtipoemprestimo"/>
             </p:selectOneRadio>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="#{msgs['ln.texto.simulado']}"/>
         </h:panelGrid> 
 
         <p:panel>

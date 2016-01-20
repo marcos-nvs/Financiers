@@ -6,26 +6,34 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <p:panel header="Informações do Financiamento">
-        <h:panelGrid id="idfinanciamentobem" columns="2">
+        <h:panelGrid id="idfinanciamentobem" columns="4">
             <p:outputLabel value="Bem Financiado"/>
-            <p:selectOneMenu id="idcontafinanciada" style="width: 250px;">
+            <p:selectOneMenu id="idcontafinanciada" style="margin-left: 5px;width: 250px;">
+                <f:selectItems/>
+            </p:selectOneMenu>
+            <p:outputLabel value="#{msgs['ln.texto.pagarpara']}"/>
+            <p:selectOneMenu id="idcontapagarparafinanciada" style="width: 250px;">
+                <f:selectItems/>
+            </p:selectOneMenu>
+            <p:outputLabel value="#{msgs['ln.texto.pagarcomconta']}"/>
+            <p:selectOneMenu id="idcontautilizadafinanciada" style="margin-left: 5px;width: 250px;">
                 <f:selectItems/>
             </p:selectOneMenu>
         </h:panelGrid>
         <h:panelGrid id="iddetalhefinaciamento" columns="6">
-            <p:outputLabel value="Valor do Bem"/>
+            <p:outputLabel value="#{msgs['Valor do Bem']}"/>
             <p:inputText/>
-            <p:outputLabel value="Valor da Entrada"/>
+            <p:outputLabel value="#{msgs['Valor da Entrada']}"/>
             <p:inputText/>
-            <p:outputLabel value="Valor do Financiado"/>
+            <p:outputLabel value="#{msgs['Valor do Financiado']}"/>
             <p:inputText/>
-            <p:outputLabel value="Prazo"/>
+            <p:outputLabel value="#{msgs['Valor das Parcelas']}"/>
             <p:inputText/>
-            <p:outputLabel value="Juros"/>
+            <p:outputLabel value="#{msgs['Prazo']}"/>
             <p:inputText/>
-            <p:outputLabel value="Valor das Parcelas"/>
+            <p:outputLabel value="#{msgs['Juros']}"/>
             <p:inputText/>
-            <p:outputLabel value="Data de Vencimento"/>
+            <p:outputLabel value="#{msgs['Data de Vencimento']}"/>
             <p:inputText/>
         </h:panelGrid>
     </p:panel>
