@@ -12,43 +12,38 @@
                 <f:selectItem itemLabel="#{msgs['ln.texto.financiandoexistente']}" itemValue="2"/>
                 <p:ajax listener="#{contaView.mostraTipoFinanciamento()}" process="idescolhatipofinanciamento" update="idtipofinanciamentoescolhido"/>
             </p:selectOneRadio>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="#{msgs['ln.texto.simulado']}"/>
         </h:panelGrid>
         
         <h:panelGrid id="idtipofinanciamentoescolhido" columns="1">
             <ui:include src="#{beanVar.telaFinanciamento}"/>
         </h:panelGrid>
-        
-        
-        <h:panelGrid id="idfinanciamentobem" columns="4">
-            <p:outputLabel value="Bem Financiado"/>
-            <p:selectOneMenu id="idcontafinanciada" style="margin-left: 5px;width: 250px;">
-                <f:selectItems/>
-            </p:selectOneMenu>
+
+        <h:panelGrid id="idfinanciamentoconta" columns="4">
             <p:outputLabel value="#{msgs['ln.texto.pagarpara']}"/>
-            <p:selectOneMenu id="idcontapagarparafinanciada" style="width: 250px;">
+            <p:selectOneMenu id="idcontapagarparafinanciada" style="margin-left: 40px; width: 250px;">
                 <f:selectItems/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.pagarcomconta']}"/>
             <p:selectOneMenu id="idcontautilizadafinanciada" style="margin-left: 5px;width: 250px;">
                 <f:selectItems/>
             </p:selectOneMenu>
-            <p:selectBooleanCheckbox />
-            <p:outputLabel value="#{msgs['ln.texto.simulado']}"/>
         </h:panelGrid>
         <h:panelGrid id="iddetalhefinaciamento" columns="6">
-            <p:outputLabel value="#{msgs['Valor do Bem']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.valor']}"/>
             <p:inputText/>
             <p:outputLabel value="#{msgs['Valor da Entrada']}"/>
             <p:inputText/>
             <p:outputLabel value="#{msgs['Valor do Financiado']}"/>
             <p:inputText/>
-            <p:outputLabel value="#{msgs['Valor das Parcelas']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.valorparcelas']}"/>
             <p:inputText/>
-            <p:outputLabel value="#{msgs['Prazo']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.prazo']}"/>
             <p:inputText/>
-            <p:outputLabel value="#{msgs['Juros']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.jurosmensais']}"/>
             <p:inputText/>
-            <p:outputLabel value="#{msgs['Data de Vencimento']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.datavencimento']}"/>
             <p:inputText/>
         </h:panelGrid>
     </p:panel>

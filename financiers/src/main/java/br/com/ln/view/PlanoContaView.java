@@ -687,7 +687,7 @@ public class PlanoContaView implements Serializable {
         if (tipoFinanciamento.equals("1")){
             beanVar.setTelaFinanciamento("ativo.xhtml");
         } else {
-            beanVar.setTelaFinanciamento("vazia.xhtml");
+            beanVar.setTelaFinanciamento("escolhebem.xhtml");
         }
     }
 }
