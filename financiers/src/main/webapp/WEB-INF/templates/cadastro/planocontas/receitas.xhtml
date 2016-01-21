@@ -6,19 +6,8 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <p:panel header="Informações da Receita">
-        <h:panelGrid id="iddetalhereceita" columns="6">
-            <p:outputLabel value=""/>
-            <p:inputText/>
-            <p:outputLabel value=""/>
-            <p:inputText/>
-            <p:outputLabel value=""/>
-            <p:inputText/>
-            <p:outputLabel value=""/>
-            <p:inputText/>
-            <p:outputLabel value=""/>
-            <p:inputText/>
-            <p:outputLabel value=""/>
-            <p:inputText/>
+        <h:panelGrid id="iddetalhereceita" columns="1">
+            <ui:include src="receitadespesa.xhtml"/>
         </h:panelGrid>
     </p:panel>
 </ui:composition>
