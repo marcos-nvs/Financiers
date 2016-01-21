@@ -35,7 +35,8 @@
             <p:ajax update="idinssvlrLimite" process="idinssvlrLimite" event="change"/>
         </p:inputText>
     </h:panelGrid>
-    <p:dataTable id="idDTinss" var="incluiTabelaInss" value="#{inssView.listTabelaItem}" paginator="true" rows="10" paginatorPosition="bottom">
+    <p:dataTable id="idDTinss" var="incluiTabelaInss" value="#{inssView.listTabelaItem}" paginator="true" rows="10" paginatorPosition="bottom"
+                 style="width: 1000px;">
         <f:facet name="header">
             <p:outputLabel value="INSS"/>
         </f:facet>

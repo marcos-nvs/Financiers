@@ -204,8 +204,9 @@ public class JurosView implements Serializable {
             clearVarTabelaItem();
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
+                beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelajuros.xhtml");
             beanVar.setTituloDialog("ln.frase.inclusaotabela");
-            RequestContext.getCurrentInstance().execute("PF('JurosEdit').show()");
+            RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -219,8 +220,9 @@ public class JurosView implements Serializable {
                 tabela.setTipoFuncao(TipoFuncao.Alterar);
                 listTabelaItem = tabela.getListTabelaItem();
                 loadTabelaVarDesc();
+                beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelajuros.xhtml");
                 beanVar.setTituloDialog("ln.frase.inclusaotabela");
-                RequestContext.getCurrentInstance().execute("PF('JurosEdit').show()");
+                RequestContext.getCurrentInstance().execute("PF('dialog').show()");
             } else {
                 mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -315,7 +317,7 @@ public class JurosView implements Serializable {
                 clearVarTabela();
                 clearVarTabelaItem();
                 listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
-                RequestContext.getCurrentInstance().execute("PF('JurosEdit').hide()");
+                RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
                 mensagem = bundle.getString("ln.mb.texto.sucesso");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.tabela"), mensagem));
@@ -328,7 +330,7 @@ public class JurosView implements Serializable {
     }
 
     public void btFechar() {
-        RequestContext.getCurrentInstance().execute("PF('JurosEdit').hide()");
+        RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 
     private void loadVarTabela() {

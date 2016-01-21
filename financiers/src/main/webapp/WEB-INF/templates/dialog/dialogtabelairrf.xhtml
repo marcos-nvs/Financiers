@@ -41,7 +41,8 @@
             <p:ajax update="idvlrDependente" process="idvlrDependente" event="change"/>
         </p:inputText>
     </h:panelGrid>
-    <p:dataTable id="idDTIRRF" var="incluiTabelaIR" value="#{irrfView.listTabelaItem}" paginator="true" rows="10" paginatorPosition="bottom">
+    <p:dataTable id="idDTIRRF" var="incluiTabelaIR" value="#{irrfView.listTabelaItem}" paginator="true" rows="10" paginatorPosition="bottom"
+                 style="width: 1000px;">
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.frase.irrf']}"/>
         </f:facet>
