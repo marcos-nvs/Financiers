@@ -83,7 +83,7 @@ public class FavorecidoFuncoes implements Serializable {
     }
 
     public List<LnFavorecido> grabListaFavorecido() {
-        return FavorecidoDao.grabListObject(LnFavorecido.class);
+        return FavorecidoDao.grabListaFavorecido();
     }
 
     public boolean verificaInformacoes(LnFavorecido lnFavorecido) {

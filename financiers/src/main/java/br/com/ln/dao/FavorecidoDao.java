@@ -18,24 +18,24 @@ import org.hibernate.Transaction;
  *
  * @author Marcos Naves
  */
-public class FavorecidoDao extends GenericDao implements Serializable{
-    
-    public static List<LnFavorecido> grabBancos(){
+public class FavorecidoDao extends GenericDao implements Serializable {
+
+    public static List<LnFavorecido> grabBancos() {
         Session session = null;
         Transaction tx;
         List<LnFavorecido> listaFavorecido = null;
-        
-        try{
+
+        try {
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
-            
+
             Query query = session.getNamedQuery("LnFavorecido.findByTfaInCodigo");
             query.setInteger("tfaInCodigo", 2);
             listaFavorecido = query.list();
             tx.commit();
-            
-        }finally{
-            if (session != null && session.isOpen()){
+
+        } finally {
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -43,30 +43,51 @@ public class FavorecidoDao extends GenericDao implements Serializable{
     }
 
     public static LnFavorecido grabFavorecidoBanco(Integer favInCodigo) {
-        
+
         Session session = null;
         Transaction tx;
         LnFavorecido lnFavorecido = null;
-        
-        try{
+
+        try {
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
-            
+
             Query query = session.getNamedQuery("LnFavorecido.findByFavInCodigo");
             query.setInteger("favInCodigo", favInCodigo);
             List l = query.list();
             tx.commit();
-            
-            if (l != null && l.size() > 0){
+
+            if (l != null && l.size() > 0) {
                 lnFavorecido = (LnFavorecido) l.get(0);
             }
-            
+
         } finally {
-            if (session != null && session.isOpen()){
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
         return lnFavorecido;
     }
-    
+
+    public static List<LnFavorecido> grabListaFavorecido() {
+
+        Session session = null;
+        Transaction tx;
+        List<LnFavorecido> listaFavorecido = null;
+
+        try {
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+
+            Query query = session.getNamedQuery("LnFavorecido.findAll");
+            listaFavorecido = query.list();
+            tx.commit();
+
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return listaFavorecido;
+    }
 }
