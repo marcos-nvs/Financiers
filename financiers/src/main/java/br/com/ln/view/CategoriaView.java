@@ -51,7 +51,7 @@ public class CategoriaView implements Serializable {
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public CategoriaView() {
-        listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
+        listCategoria = CategoriaDao.grabListaCategoria();
         listTipoconta = CategoriaDao.grabListObject(LnTipoconta.class);
         tratativa = new TratamentoEspecial();
         categoriaFuncoes = new CategoriaFuncoes();
@@ -241,7 +241,7 @@ public class CategoriaView implements Serializable {
             dataLoadVar();
             
             if (lnCategoria.getTipoFuncao().equals(TipoFuncao.Alterar)){
-                lnCategoria.setCatInCodigo(codigo);
+                lnCategoria.setCatInCodigo(lnCategoria.getCatInCodigo());
             }
 
             if (categoriaFuncoes.categoria(lnCategoria)) {

@@ -72,4 +72,25 @@ public class CategoriaDao extends GenericDao implements Serializable{
         
         return tipInCodigo;
     }
+    
+    public static List<LnCategoria> grabListaCategoria(){
+        Session session = null;
+        Transaction tx;
+        List<LnCategoria> listaCategoria = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            Query query = session.getNamedQuery("LnCategoria.findAll");
+            listaCategoria = query.list();
+            tx.commit();
+        }finally{
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listaCategoria;
+        
+    }
 }
