@@ -4,15 +4,51 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
-    
-    <h:panelGrid id="idcontacalculada" columns="10">
-        
+
+    <h:panelGrid id="idcontacalculada" columns="3">
+        <p:selectBooleanCheckbox />
+        <p:outputLabel value="Conta calculada"/>
+        <p:selectOneMenu style="width: 250px;" disabled="true" />
+        <p:selectBooleanCheckbox />
+        <p:outputLabel value="Imposto"/>
+        <p:selectOneMenu style="width: 150px;" disabled="true"/>
     </h:panelGrid>
-    
-    <h:panelGrid id="idcontafrequencia" columns="10">
-        
+
+    <h:panelGrid id="idcontacalculadadia" columns="2">
+        <p:outputLabel value="Dia"/>
+        <p:inputText size="2"/>
     </h:panelGrid>
-    
+
+    <p:panel>
+        <h:panelGrid id="idcontafrequencia" columns="12">
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Janeiro"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Fevereiro"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Março"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Abril"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Maio"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Junho"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Julho"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Agosto"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Setembro"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Outubro"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Novembro"/>
+            <p:selectBooleanCheckbox />
+            <p:outputLabel value="Dezembro"/>
+        </h:panelGrid>
+
+    </p:panel>
+
 
 </ui:composition>
 

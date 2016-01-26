@@ -6,11 +6,9 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <p:panel header="#{msgs['ln.texto.informacoesfinanciamento']}">
-        <h:panelGrid id="iddatafinanciamento" columns="2">
+        <h:panelGrid id="iddatafinanciamento" columns="5">
             <p:outputLabel for="dtdatafinanciamento" value="#{msgs['ln.texto.data']}"/>
             <p:calendar id="dtdatafinanciamento" showOn="button" pattern="dd/MM/yyyy"/>
-        </h:panelGrid>
-        <h:panelGrid id="idtipofinanciamento" columns="4">
             <p:selectOneRadio id="idescolhatipofinanciamento" value="#{contaView.tipoFinanciamento}" >
                 <f:selectItem itemLabel="#{msgs['ln.texto.adquirindonovo']}" itemValue="1"/>
                 <f:selectItem itemLabel="#{msgs['ln.texto.financiandoexistente']}" itemValue="2"/>
@@ -19,13 +17,15 @@
             <p:selectBooleanCheckbox />
             <p:outputLabel value="#{msgs['ln.texto.simulado']}"/>
         </h:panelGrid>
+        <h:panelGrid id="idtipofinanciamento" columns="4">
+        </h:panelGrid>
 
         <h:panelGrid id="idtipofinanciamentoescolhido" columns="1">
             <ui:include src="#{beanVar.telaFinanciamento}"/>
         </h:panelGrid>
 
         <p:panel>
-            <h:panelGrid id="idfinanciamentoconta" columns="4">
+            <h:panelGrid id="idfinanciamentoconta" columns="6">
                 <p:outputLabel value="#{msgs['ln.texto.pagarpara']}"/>
                 <p:selectOneMenu id="idcontapagarparafinanciada" style="margin-left: 40px; width: 250px;">
                     <f:selectItems/>
@@ -34,24 +34,27 @@
                 <p:selectOneMenu id="idcontautilizadafinanciada" style="margin-left: 5px;width: 250px;">
                     <f:selectItems/>
                 </p:selectOneMenu>
-            </h:panelGrid>
-            <h:panelGrid id="iddetalhefinaciamento" columns="6">
-                <p:outputLabel value="#{msgs['ln.texto.valor']}"/>
-                <p:inputText/>
-                <p:outputLabel value="#{msgs['ln.texto.valorentrada']}"/>
-                <p:inputText/>
-                <p:outputLabel value="#{msgs['ln.texto.valorfinanciado']}"/>
-                <p:inputText/>
-                <p:outputLabel value="#{msgs['ln.texto.valorparcelas']}"/>
-                <p:inputText/>
-                <p:outputLabel value="#{msgs['ln.texto.prazo']}"/>
-                <p:inputText/>
-                <p:outputLabel value="#{msgs['ln.texto.jurosmensais']}"/>
-                <p:inputText/>
                 <p:outputLabel value="#{msgs['ln.texto.datavencimento']}"/>
-                <p:inputText/>
+                <p:inputText size="10"/>
+            </h:panelGrid>
+            <h:panelGrid id="iddetalhefinaciamento" columns="8">
+                <p:outputLabel value="#{msgs['ln.texto.valor']}"/>
+                <p:inputText size="10"/>
+                <p:outputLabel value="#{msgs['ln.texto.valorentrada']}"/>
+                <p:inputText size="10"/>
+                <p:outputLabel value="#{msgs['ln.texto.valorfinanciado']}"/>
+                <p:inputText size="10"/>
+                <p:outputLabel value="#{msgs['ln.texto.valorparcelas']}"/>
+                <p:inputText size="10"/>
+                <p:outputLabel value="#{msgs['ln.texto.prazo']}"/>
+                <p:inputText size="5"/>
+                <p:outputLabel value="#{msgs['ln.texto.jurosmensais']}"/>
+                <p:inputText size="10"/>
             </h:panelGrid>
         </p:panel>
+        <h:panelGrid id="idmensagemavisoreceita" columns="1">
+            <ui:include src="configuraaviso.xhtml"/>
+        </h:panelGrid>
 
     </p:panel>
 </ui:composition>
