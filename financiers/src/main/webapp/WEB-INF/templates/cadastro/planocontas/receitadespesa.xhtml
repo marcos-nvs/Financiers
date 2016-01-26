@@ -14,37 +14,39 @@
         <p:selectOneMenu style="width: 150px;" disabled="true"/>
     </h:panelGrid>
 
-    <h:panelGrid id="idcontacalculadadia" columns="2">
-        <p:outputLabel value="Dia"/>
+    <h:panelGrid id="idcontacalculadadia" columns="4">
+        <p:outputLabel value="Quantas vezes por semana"/>
+        <p:inputText size="2"/>
+        <p:outputLabel value="Qual dia expecifico"/>
         <p:inputText size="2"/>
     </h:panelGrid>
 
     <p:panel>
         <h:panelGrid id="idcontafrequencia" columns="12">
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Janeiro"/>
+            <p:outputLabel value="#{msgs['ln.texto.janeiro']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Fevereiro"/>
+            <p:outputLabel value="#{msgs['ln.texto.fevereiro']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Março"/>
+            <p:outputLabel value="#{msgs['ln.texto.marco']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Abril"/>
+            <p:outputLabel value="#{msgs['ln.texto.abril']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Maio"/>
+            <p:outputLabel value="#{msgs['ln.texto.maio']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Junho"/>
+            <p:outputLabel value="#{msgs['ln.texto.junho']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Julho"/>
+            <p:outputLabel value="#{msgs['ln.texto.julho']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Agosto"/>
+            <p:outputLabel value="#{msgs['ln.texto.agosto']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Setembro"/>
+            <p:outputLabel value="#{msgs['ln.texto.setembro']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Outubro"/>
+            <p:outputLabel value="#{msgs['ln.texto.outubro']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Novembro"/>
+            <p:outputLabel value="#{msgs['ln.texto.novembro']}"/>
             <p:selectBooleanCheckbox />
-            <p:outputLabel value="Dezembro"/>
+            <p:outputLabel value="#{msgs['ln.texto.dezembro']}"/>
         </h:panelGrid>
 
     </p:panel>

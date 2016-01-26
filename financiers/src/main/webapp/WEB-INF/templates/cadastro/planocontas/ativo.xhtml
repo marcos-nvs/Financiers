@@ -7,15 +7,15 @@
 
     <p:panel header="#{msgs['ln.texto.tipoativo']}">
         <h:panelGrid id="idtipoativo" columns="10">
-            <p:outputLabel value="Escolha o tipo de Ativo"/>
+            <p:outputLabel value="#{msgs['ln.texto.escolheativo']}"/>
             <p:selectOneMenu id="idtipoativoseleciona" value="#{contaView.tipoAtivo}" style="width: 70px;">
-                <f:selectItem itemLabel="Imóvel" itemValue="Imóvel"/>
-                <f:selectItem itemLabel="Automóvel" itemValue="Automóvel"/>
-                <f:selectItem itemLabel="Móvel" itemValue="Móvel" itemDisabled="#{contaView.bItemAtivoMovel}"/>
-                <f:selectItem itemLabel="Aplicação" itemValue="Aplicação" itemDisabled="#{contaView.bItemAtivoAplicacao}"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.imovel']}" itemValue="Imóvel"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.automovel']}" itemValue="Automóvel"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.movel']}" itemValue="Móvel" itemDisabled="#{contaView.bItemAtivoMovel}"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.aplicacao']}" itemValue="Aplicação" itemDisabled="#{contaView.bItemAtivoAplicacao}"/>
                 <p:ajax listener="#{contaView.mostraAtivo}" process="idtipoativoseleciona" update="idtipoativoselecionado, idtipoativoseleciona"/>
             </p:selectOneMenu>
-            <p:outputLabel value="Valor do Ativo"/>
+            <p:outputLabel value="#{msgs['ln.texto.valorativo']}"/>
             <p:inputText id="idvalorativo" size="10" >
                 <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
                 <p:ajax update="idvalorativo" process="idvalorativo" event="change"/>
