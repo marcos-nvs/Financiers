@@ -597,7 +597,7 @@ public class PlanoContaView implements Serializable {
                 bItemAtivoMovel = false;
                 break;
             case 2:
-                beanVar.setTelaConta("../cadastro/planocontas/passivo.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/vazia.xhtml");
                 break;
             case 3:
                 beanVar.setTelaConta("../cadastro/planocontas/banco.xhtml");
@@ -617,7 +617,7 @@ public class PlanoContaView implements Serializable {
                 bItemAtivoMovel = true;
                 break;
             case 8:
-                beanVar.setTelaConta("../cadastro/planocontas/outrospassivos.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/vazia.xhtml");
                 break;
             case 9:
                 beanVar.setTelaConta("../cadastro/planocontas/receitas.xhtml");
@@ -626,10 +626,10 @@ public class PlanoContaView implements Serializable {
                 beanVar.setTelaConta("../cadastro/planocontas/despesas.xhtml");
                 break;
             case 11:
-                beanVar.setTelaConta("../cadastro/planocontas/contasreceber.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/vazia.xhtml");
                 break;
             case 12:
-                beanVar.setTelaConta("../cadastro/planocontas/contaspagar.xhtml");
+                beanVar.setTelaConta("../cadastro/planocontas/vazia.xhtml");
                 break;
         }
 

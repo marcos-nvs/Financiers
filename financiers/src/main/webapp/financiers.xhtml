@@ -5,8 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <!--<f:view contentType="text/html" locale="#{beanVar.localizacao}">-->
-        <f:view contentType="text/html" locale="en">
+    <f:view contentType="text/html" locale="#{beanVar.localizacao}">
+        <!--<f:view contentType="text/html" locale="en">-->
         <f:loadBundle var="msgs" basename="messages" id="idBundle"/>
 
         <h:head>
@@ -25,7 +25,7 @@
                 <p:layoutUnit id="idLayoutTop" size="105" position="north" resizable="true" closable="false" collapsible="true" 
                               style="border-color: transparent;">
                     <h:form id="idFormTop">
-                        <!--<p:graphicImage url="img/ln2.jpg"/>--> 
+                        <p:graphicImage url="img/ln2.jpg"/> 
                         <p:growl id="growl" showDetail="true" life="6000" sticky="true"/>
                     </h:form>
                 </p:layoutUnit>
