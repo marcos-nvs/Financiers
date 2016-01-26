@@ -7,17 +7,17 @@
 
     <h:panelGrid id="idcontacalculada" columns="3">
         <p:selectBooleanCheckbox />
-        <p:outputLabel value="Conta calculada"/>
+        <p:outputLabel value="#{msgs['ln.texto.contacalculada']}"/>
         <p:selectOneMenu style="width: 250px;" disabled="true" />
         <p:selectBooleanCheckbox />
-        <p:outputLabel value="Imposto"/>
+        <p:outputLabel value="ln.text.calulaimposto"/>
         <p:selectOneMenu style="width: 150px;" disabled="true"/>
     </h:panelGrid>
 
     <h:panelGrid id="idcontacalculadadia" columns="4">
-        <p:outputLabel value="Quantas vezes por semana"/>
+        <p:outputLabel value="#{msgs['ln.texto.qtdeporsemana']}"/>
         <p:inputText size="2"/>
-        <p:outputLabel value="Qual dia expecifico"/>
+        <p:outputLabel value="#{msgs['ln.texto.diaocorrencia']}"/>
         <p:inputText size="2"/>
     </h:panelGrid>
 
