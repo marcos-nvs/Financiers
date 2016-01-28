@@ -5,8 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <p:dataTable id="iddtcontas" var="conta" value="#{contaView.listaContas}" selection="#{contaView.conta}" selectionMode="single"
-                 rowKey="#{conta.idConta}" paginator="true" paginatorPosition="bottom" rows="20" >
+    <p:dataTable id="iddtcontas" var="conta" paginator="true" paginatorPosition="bottom" rows="20" >
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.mb.titulo.planoconta']}"/>
         </f:facet>
@@ -14,13 +13,13 @@
             <p:rowToggler />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.codigo']}" style="width: 100px;">
-            <p:outputLabel value="#{conta.idConta}" />
+            <p:outputLabel />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.descricao']}" style="width: 900px;">
-            <p:outputLabel value="#{conta.nomeConta}"/>
+            <p:outputLabel />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.ativo']}">
-            <p:outputLabel value="#{conta.ativo}"/>
+            <p:outputLabel />
         </p:column>
 <!--        <p:rowExpansion>
             <p:dataTable id="iddtcontasdetalhe" var="contaDetalhe" value="#{conta.listaContaDependente}"

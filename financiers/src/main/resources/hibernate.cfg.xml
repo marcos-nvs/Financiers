@@ -6,8 +6,6 @@
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.default_schema">public</property>
 
-
-
     <!--    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
     <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/financiers</property>
@@ -15,12 +13,9 @@
     <property name="hibernate.connection.password">Kareta44!@#$</property>
     <property name="hibernate.default_schema">public</property>-->
 
-
     <!--    <property name="hibernate.show_sql">true</property>
     <property name="hibernate.format_sql">true</property>
     <property name="use_sql_comments">true</property>-->
-
-
 
     <mapping class="br.com.ln.entity.LnHistorico"/>
     <mapping class="br.com.ln.entity.LnMenu"/>
@@ -37,11 +32,6 @@
     <mapping class="br.com.ln.entity.LnTabelaItem"/>
     <mapping class="br.com.ln.entity.LnEndereco"/>
     <mapping class="br.com.ln.entity.LnTelefone"/>
-    <mapping class="br.com.ln.entity.LnAgenda"/>
-    <mapping class="br.com.ln.entity.LnAgendaconta"/>
-    <mapping class="br.com.ln.entity.LnContadependente"/>
-    <mapping class="br.com.ln.entity.LnPlanoconta"/>
-    <mapping class="br.com.ln.entity.LnTipoagenda"/>
     <mapping class="br.com.ln.entity.LnUsuario"/>
     <mapping class="br.com.ln.entity.LnCliente"/>
   </session-factory>

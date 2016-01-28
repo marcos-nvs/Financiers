@@ -11,7 +11,6 @@ import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.funcao.PlanoContaFuncoes;
-import br.com.ln.objeto.Conta;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -35,9 +34,6 @@ public class PlanoContaView implements Serializable {
     private boolean bContaAtiva;
     private Double saldoInicial;
 
-    private Conta conta;
-
-    private List<Conta> listaContas;
     private List<LnCategoria> listaCategoria;
 
     private String mensagem;
@@ -87,22 +83,6 @@ public class PlanoContaView implements Serializable {
 
     public void setNomeConta(String nomeConta) {
         this.nomeConta = nomeConta;
-    }
-
-    public Conta getConta() {
-        return conta;
-    }
-
-    public void setConta(Conta conta) {
-        this.conta = conta;
-    }
-
-    public List<Conta> getListaContas() {
-        return listaContas;
-    }
-
-    public void setListaContas(List<Conta> listaContas) {
-        this.listaContas = listaContas;
     }
 
     public List<LnCategoria> getListaCategoria() {
@@ -245,7 +225,6 @@ public class PlanoContaView implements Serializable {
             clearVarConta();
             clearVarContaDepdente();
             clearVarAgendaConta();
-            conta = new Conta();
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogplanoconta.xhtml");
             beanVar.setTituloDialog("ln.texto.cadastroconta");
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
