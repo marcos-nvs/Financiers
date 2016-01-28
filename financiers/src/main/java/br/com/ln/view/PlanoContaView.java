@@ -32,6 +32,8 @@ public class PlanoContaView implements Serializable {
     //Variavéis Plano Conta
     private Integer idConta;
     private String nomeConta;
+    private boolean bContaAtiva;
+    private Double saldoInicial;
 
     private Conta conta;
 
@@ -68,8 +70,8 @@ public class PlanoContaView implements Serializable {
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tipoEmprestimo = "1";
         tipoFinanciamento = "1";
-        mostraTipoEmpretimo();
-        mostraTipoFinanciamento();
+        telaEmprestimo = "infotomando.xhtml";
+        telaFinanciamento = "ativo.xhtml";
     }
 
     public Integer getIdConta() {
@@ -111,6 +113,24 @@ public class PlanoContaView implements Serializable {
     public void setListaCategoria(List<LnCategoria> listaCategoria) {
         this.listaCategoria = listaCategoria;
     }
+
+    public boolean isbContaAtiva() {
+        return bContaAtiva;
+    }
+
+    public void setbContaAtiva(boolean bContaAtiva) {
+        this.bContaAtiva = bContaAtiva;
+    }
+
+    public Double getSaldoInicial() {
+        return saldoInicial;
+    }
+
+    public void setSaldoInicial(Double saldoInicial) {
+        this.saldoInicial = saldoInicial;
+    }
+    
+    //Tela
 
     public Integer getIdCategoria() {
         return idCategoria;

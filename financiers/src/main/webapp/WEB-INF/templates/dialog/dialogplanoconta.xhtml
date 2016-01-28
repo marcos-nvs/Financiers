@@ -19,6 +19,11 @@
     <h:panelGrid id="idpanelconta1" columns="4">
         <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
         <p:inputText id="idinputConta" value="#{contaView.nomeConta}" size="50" style="margin-left: 13px;"/>
+        <p:outputLabel value="#{msgs['ln.texto.saldoinicial']}"/>
+        <p:inputText id="idinputContaSaldo" value="#{contaView.saldoInicial}" size="10">
+            <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
+            <p:ajax update="idinputContaSaldo" process="idinputContaSaldo" event="change"/>
+        </p:inputText>
     </h:panelGrid>
 
     <h:panelGrid id="idgridtipoconta" columns="1">
@@ -30,32 +35,3 @@
                          action="#{contaView.btFecharContaLista}" process="idPlanoContaCancelar" update="idPlanoContaCancelar"/>
     </f:facet>
 </ui:composition>
-
-<!--        
-        <p:selectBooleanCheckbox value="#{contaView.bImposto}" />
-        <p:outputLabel value="#{msgs['ln.text.calulaimposto']}"/>
-        <p:selectBooleanCheckbox id="idcalculaconta" value="#{contaView.bCalculada}" >
-            <p:ajax listener="#{contaView.mostraCalculoConta()}" process="idcalculaconta" 
-                    update="idgridcalculada" />
-        </p:selectBooleanCheckbox>
-        <p:outputLabel value="#{msgs['ln.texto.contacalculada']}"/>
-        <p:selectBooleanCheckbox id="idagendar" value="#{contaView.bAgendar}">
-            <p:ajax listener="#{contaView.mostrarAgendamento}" process="idagendar" 
-                    update="idagendamento" />
-        </p:selectBooleanCheckbox>
-        <p:outputLabel value="#{msgs['ln.texto.contaagendada']}"/>-->
-
-
-<!--        <p:outputLabel value="#{msgs['ln.texto.saldoinicial']}"/>
-        <p:inputText id="idsaldoinicial" value="#{contaView.limite}" size="10" >
-            <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
-            <p:ajax update="idsaldoinicial" process="idsaldoinicial" event="change"/>
-        </p:inputText>-->
-
-<!--    <h:panelGrid id="idgridcalculada" columns="1">
-        <ui:include src="#{beanVar.telaCalculada}"/>
-    </h:panelGrid>-->
-
-<!--    <h:panelGrid id="idagendamento" columns="1" >
-        <ui:include src="#{beanVar.telaAgenda}"/>
-    </h:panelGrid>-->
