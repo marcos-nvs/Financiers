@@ -24,11 +24,7 @@ public class BeanVar implements Serializable{
     private String novaTela;
     private String telaOrigem;
     private String nomeTela;
-//    private String telaCalculada;
-//    private String telaAgenda;
     private String telaDialog;
-//    private String telaEmprestimo;
-//    private String telaFinanciamento;
     private String tituloDialog;
     private boolean apresenta;
     private boolean bloquear;
@@ -92,22 +88,6 @@ public class BeanVar implements Serializable{
         this.telaOrigem = telaOrigem;
     }
 
-//    public String getTelaConta() {
-//        return telaConta;
-//    }
-//
-//    public void setTelaConta(String telaConta) {
-//        this.telaConta = telaConta;
-//    }
-
-//    public String getTelaAgenda() {
-//        return telaAgenda;
-//    }
-//
-//    public void setTelaAgenda(String telaAgenda) {
-//        this.telaAgenda = telaAgenda;
-//    }
-
     public String getTelaDialog() {
         return telaDialog;
     }
@@ -123,38 +103,5 @@ public class BeanVar implements Serializable{
     public void setTituloDialog(String tituloDialog) {
         this.tituloDialog = tituloDialog;
     }
-
-//    public String getTelaCalculada() {
-//        return telaCalculada;
-//    }
-//
-//    public void setTelaCalculada(String telaCalculada) {
-//        this.telaCalculada = telaCalculada;
-//    }
-//
-//    public String getTelaAtivo() {
-//        return telaAtivo;
-//    }
-//
-//    public void setTelaAtivo(String telaAtivo) {
-//        this.telaAtivo = telaAtivo;
-//    }
-
-//    public String getTelaEmprestimo() {
-//        return telaEmprestimo;
-//    }
-//
-//    public void setTelaEmprestimo(String telaEmprestimo) {
-//        this.telaEmprestimo = telaEmprestimo;
-//    }
-//
-//    public String getTelaFinanciamento() {
-//        return telaFinanciamento;
-//    }
-//
-//    public void setTelaFinanciamento(String telaFinanciamento) {
-//        this.telaFinanciamento = telaFinanciamento;
-//    }
-    
  }
     

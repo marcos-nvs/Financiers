@@ -9,18 +9,11 @@ import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
-//import br.com.ln.dao.PlanoContaDao;
 import br.com.ln.entity.LnCategoria;
-//import br.com.ln.entity.LnPlanoconta;
-//import br.com.ln.entity.LnTipotabela;
 import br.com.ln.funcao.PlanoContaFuncoes;
-//import br.com.ln.objeto.AgendaConta;
 import br.com.ln.objeto.Conta;
-//import br.com.ln.objeto.ContaDependente;
 import java.io.Serializable;
-//import java.util.Date;
 import java.util.List;
-//import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -67,50 +60,11 @@ public class PlanoContaView implements Serializable {
     private String telaEmprestimo;
     private String telaFinanciamento;
         
-//    private List<ContaDependente> listaContaDependente;
-//    private Character ativoConta;
-//    private Character imposto;
-//    private boolean bImposto;
-//    private Character calculada;
-//    private Double percentual;
-//    private Double limite;
-//    private Character agendar;
-//    private boolean bAgendar;
-//    private Integer idContaDependente;
-//    private Integer idTabela;
-//    private Integer ordem;
-//    private Integer idAgenda;
-//    private Integer idContaAgendada;
-//    private Date dtInicio;
-//    private Date DtFinal;
-//    private Integer idTipoAgenda;
-//    private Character ativoDependente;
-//    private Integer diaVencimento;
-//    private Character domingo;
-//    private Character segunda;
-//    private Character terca;
-//    private Character quarta;
-//    private Character quinta;
-//    private Character sexta;
-//    private Character sabado;
-//    private Character avisar;
-//    private Character porEmail;
-//    private Integer qtdeRepeticao;
-//    private ContaDependente contaDependente;
-//    private AgendaConta agendaConta;
-//    private List<AgendaConta> listaAgendaConta;
-//    private List<LnPlanoconta> listaContaCalculada;
-//    private LnPlanoconta planoConta;
-//    private List<LnPlanoconta> listaPlanoConta;
-//    private List<LnTipotabela> listaTipoTabela;
-
 
     public PlanoContaView() {
         planoContaFuncoes = new PlanoContaFuncoes();
         listaContas = planoContaFuncoes.buscaListaContas();
         listaCategoria = CategoriaDao.grabCategoria('S');
-//        listaTipoTabela = PlanoContaDao.grabListObject(LnTipotabela.class);
-//        listaContaCalculada = PlanoContaDao.buscaListaContaDependente('S');
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tipoEmprestimo = "1";
         tipoFinanciamento = "1";
@@ -267,316 +221,12 @@ public class PlanoContaView implements Serializable {
     }
     
 
-//    public List<ContaDependente> getListaContaDependente() {
-//        return listaContaDependente;
-//    }
-//
-//    public void setListaContaDependente(List<ContaDependente> listaContaDependente) {
-//        this.listaContaDependente = listaContaDependente;
-//    }
-//
-//
-//    public Character getAtivoConta() {
-//        return ativoConta;
-//    }
-//
-//    public void setAtivoConta(Character ativoConta) {
-//        this.ativoConta = ativoConta;
-//    }
-//
-//
-//    public boolean isbImposto() {
-//        return bImposto;
-//    }
-//
-//    public void setbImposto(boolean bImposto) {
-//        this.bImposto = bImposto;
-//    }
-//
-//    public boolean isbAgendar() {
-//        return bAgendar;
-//    }
-//
-//    public void setbAgendar(boolean bAgendar) {
-//        this.bAgendar = bAgendar;
-//    }
-//
-//    public Character getImposto() {
-//        return imposto;
-//    }
-//
-//    public void setImposto(Character imposto) {
-//        this.imposto = imposto;
-//    }
-//
-//    public Character getCalculada() {
-//        return calculada;
-//    }
-//
-//    public void setCalculada(Character calculada) {
-//        this.calculada = calculada;
-//    }
-//
-//    public Double getPercentual() {
-//        return percentual;
-//    }
-//
-//    public void setPercentual(Double percentual) {
-//        this.percentual = percentual;
-//    }
-//
-//    public Double getLimite() {
-//        return limite;
-//    }
-//
-//    public void setLimite(Double limite) {
-//        this.limite = limite;
-//    }
-//
-//    public Character getAgendar() {
-//        return agendar;
-//    }
-//
-//    public void setAgendar(Character agendar) {
-//        this.agendar = agendar;
-//    }
-//
-//    public Integer getIdContaDependente() {
-//        return idContaDependente;
-//    }
-//
-//    public void setIdContaDependente(Integer idContaDependente) {
-//        this.idContaDependente = idContaDependente;
-//    }
-//
-//    public Integer getIdTabela() {
-//        return idTabela;
-//    }
-//
-//    public void setIdTabela(Integer idTabela) {
-//        this.idTabela = idTabela;
-//    }
-//
-//    public Integer getOrdem() {
-//        return ordem;
-//    }
-//
-//    public void setOrdem(Integer ordem) {
-//        this.ordem = ordem;
-//    }
-//
-//    public Integer getIdAgenda() {
-//        return idAgenda;
-//    }
-//
-//    public void setIdAgenda(Integer idAgenda) {
-//        this.idAgenda = idAgenda;
-//    }
-//
-//    public Integer getIdContaAgendada() {
-//        return idContaAgendada;
-//    }
-//
-//    public void setIdContaAgendada(Integer idContaAgendada) {
-//        this.idContaAgendada = idContaAgendada;
-//    }
-//
-//    public Date getDtInicio() {
-//        return dtInicio;
-//    }
-//
-//    public void setDtInicio(Date dtInicio) {
-//        this.dtInicio = dtInicio;
-//    }
-//
-//    public Date getDtFinal() {
-//        return DtFinal;
-//    }
-//
-//    public void setDtFinal(Date DtFinal) {
-//        this.DtFinal = DtFinal;
-//    }
-//
-//    public Integer getIdTipoAgenda() {
-//        return idTipoAgenda;
-//    }
-//
-//    public void setIdTipoAgenda(Integer idTipoAgenda) {
-//        this.idTipoAgenda = idTipoAgenda;
-//    }
-//
-//    public Character getAtivoDependente() {
-//        return ativoDependente;
-//    }
-//
-//    public void setAtivoDependente(Character ativoDependente) {
-//        this.ativoDependente = ativoDependente;
-//    }
-//
-//    public Integer getDiaVencimento() {
-//        return diaVencimento;
-//    }
-//
-//    public void setDiaVencimento(Integer diaVencimento) {
-//        this.diaVencimento = diaVencimento;
-//    }
-//
-//    public Character getDomingo() {
-//        return domingo;
-//    }
-//
-//    public void setDomingo(Character domingo) {
-//        this.domingo = domingo;
-//    }
-//
-//    public Character getSegunda() {
-//        return segunda;
-//    }
-//
-//    public void setSegunda(Character segunda) {
-//        this.segunda = segunda;
-//    }
-//
-//    public Character getTerca() {
-//        return terca;
-//    }
-//
-//    public void setTerca(Character terca) {
-//        this.terca = terca;
-//    }
-//
-//    public Character getQuarta() {
-//        return quarta;
-//    }
-//
-//    public void setQuarta(Character quarta) {
-//        this.quarta = quarta;
-//    }
-//
-//    public Character getQuinta() {
-//        return quinta;
-//    }
-//
-//    public void setQuinta(Character quinta) {
-//        this.quinta = quinta;
-//    }
-//
-//    public Character getSexta() {
-//        return sexta;
-//    }
-//
-//    public void setSexta(Character sexta) {
-//        this.sexta = sexta;
-//    }
-//
-//    public Character getSabado() {
-//        return sabado;
-//    }
-//
-//    public void setSabado(Character sabado) {
-//        this.sabado = sabado;
-//    }
-//
-//    public Character getAvisar() {
-//        return avisar;
-//    }
-//
-//    public void setAvisar(Character avisar) {
-//        this.avisar = avisar;
-//    }
-//
-//    public Character getPorEmail() {
-//        return porEmail;
-//    }
-//
-//    public void setPorEmail(Character porEmail) {
-//        this.porEmail = porEmail;
-//    }
-//
-//    public Integer getQtdeRepeticao() {
-//        return qtdeRepeticao;
-//    }
-//
-//    public void setQtdeRepeticao(Integer qtdeRepeticao) {
-//        this.qtdeRepeticao = qtdeRepeticao;
-//    }
-//
-//    public ContaDependente getContaDependente() {
-//        return contaDependente;
-//    }
-//
-//    public void setContaDependente(ContaDependente contaDependente) {
-//        this.contaDependente = contaDependente;
-//    }
-//
-//    public AgendaConta getAgendaConta() {
-//        return agendaConta;
-//    }
-//
-//    public void setAgendaConta(AgendaConta agendaConta) {
-//        this.agendaConta = agendaConta;
-//    }
-//
-//    public List<AgendaConta> getListaAgendaConta() {
-//        return listaAgendaConta;
-//    }
-//
-//    public void setListaAgendaConta(List<AgendaConta> listaAgendaConta) {
-//        this.listaAgendaConta = listaAgendaConta;
-//    }
-//
-//
-//    public List<LnTipotabela> getListaTipoTabela() {
-//        return listaTipoTabela;
-//    }
-//
-//    public void setListaTipoTabela(List<LnTipotabela> listaTipoTabela) {
-//        this.listaTipoTabela = listaTipoTabela;
-//    }
-//
-//    public List<LnPlanoconta> getListaContaCalculada() {
-//        return listaContaCalculada;
-//    }
-//
-//    public void setListaContaCalculada(List<LnPlanoconta> listaContaCalculada) {
-//        this.listaContaCalculada = listaContaCalculada;
-//    }
-//
-//
-//
-//
-//    public void setbItemAtivoMovel(boolean bItemAtivoMovel) {
-//        this.bItemAtivoMovel = bItemAtivoMovel;
-//    }
-//    
-//    @Override
-//    public int hashCode() {
-//        int hash = 5;
-//        hash = 97 * hash + Objects.hashCode(this.idConta);
-//        return hash;
-//    }
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (obj == null) {
-//            return false;
-//        }
-//        if (getClass() != obj.getClass()) {
-//            return false;
-//        }
-//        final PlanoContaView other = (PlanoContaView) obj;
-//        if (!Objects.equals(this.idConta, other.idConta)) {
-//            return false;
-//        }
-//        return true;
-//    }
     public void btIncluirConta() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             clearVarConta();
             clearVarContaDepdente();
             clearVarAgendaConta();
             conta = new Conta();
-//            contaDependente = new ContaDependente();
-//            agendaConta = new AgendaConta();
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogplanoconta.xhtml");
             beanVar.setTituloDialog("ln.texto.cadastroconta");
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
@@ -616,12 +266,6 @@ public class PlanoContaView implements Serializable {
     }
 
     private void clearVarConta() {
-//        idConta = null;
-//        nomeConta = null;
-//        ativoConta = null;
-//        imposto = null;
-//        calculada = null;
-//        agendaConta = null;
     }
 
     private void clearVarContaDepdente() {
@@ -688,14 +332,6 @@ public class PlanoContaView implements Serializable {
         idTipoConta = CategoriaDao.grabTipoContaPorCategoria(categoria);
     }
 
-//    public void mostrarAgendamento() {
-//        if (bAgendar) {
-//            beanVar.setTelaAgenda("../cadastro/planocontas/agendamento.xhtml");
-//        } else {
-//            beanVar.setTelaAgenda("../cadastro/planocontas/vazia.xhtml");
-//        }
-//    }
-
     public void mostraCalculoConta(){
         if (bCalculada){
             telaCalculada = "../cadastro/planocontas/contacalculada.xhtml";
@@ -720,7 +356,6 @@ public class PlanoContaView implements Serializable {
                 telaAtivo = "vazia.xhtml";
                 break;
         }
-
     }
 
     public void mostraTipoEmpretimo(){
