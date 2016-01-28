@@ -23,7 +23,7 @@
 
         <p:panel>
             <h:panelGrid id="idtipoemprestimo" columns="1">
-                <ui:include src="#{beanVar.telaEmprestimo}"/>
+                <ui:include src="#{contaView.telaEmprestimo}"/>
             </h:panelGrid>
             <h:panelGrid id="iddetalhevalores" columns="10">
                 <p:outputLabel value="#{msgs['ln.texto.valor']}"/>
@@ -47,5 +47,8 @@
             </h:panelGrid>      
 
         </p:panel>
+        <h:panelGrid id="idmensagemavisoemprestimo" columns="1">
+            <ui:include src="configuraaviso.xhtml"/>
+        </h:panelGrid>
     </p:panel>
 </ui:composition>

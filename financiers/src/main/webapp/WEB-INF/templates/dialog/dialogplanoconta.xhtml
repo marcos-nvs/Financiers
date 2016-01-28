@@ -22,7 +22,7 @@
     </h:panelGrid>
 
     <h:panelGrid id="idgridtipoconta" columns="1">
-        <ui:include src="#{beanVar.telaConta}"/>
+        <ui:include src="#{contaView.telaConta}"/>
     </h:panelGrid>
     <f:facet name="footer">
         <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>

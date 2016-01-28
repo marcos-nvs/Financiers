@@ -8,7 +8,7 @@
     <p:panel header="#{msgs['ln.texto.tipoativo']}">
         <h:panelGrid id="idtipoativo" columns="10">
             <p:outputLabel value="#{msgs['ln.texto.escolheativo']}"/>
-            <p:selectOneMenu id="idtipoativoseleciona" value="#{contaView.tipoAtivo}" style="width: 70px;">
+            <p:selectOneMenu id="idtipoativoseleciona" value="#{contaView.tipoAtivo}" style="width: 150px;">
                 <f:selectItem itemLabel="#{msgs['ln.texto.imovel']}" itemValue="Imóvel"/>
                 <f:selectItem itemLabel="#{msgs['ln.texto.automovel']}" itemValue="Automóvel"/>
                 <f:selectItem itemLabel="#{msgs['ln.texto.movel']}" itemValue="Móvel" itemDisabled="#{contaView.bItemAtivoMovel}"/>
@@ -22,7 +22,7 @@
             </p:inputText>
         </h:panelGrid>
         <h:panelGrid id="idtipoativoselecionado" columns="1" >
-            <ui:include src="#{beanVar.telaAtivo}"/>
+            <ui:include src="#{contaView.telaAtivo}"/>
         </h:panelGrid>
     </p:panel>
 </ui:composition>

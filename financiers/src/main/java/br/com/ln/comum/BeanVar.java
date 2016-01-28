@@ -24,13 +24,11 @@ public class BeanVar implements Serializable{
     private String novaTela;
     private String telaOrigem;
     private String nomeTela;
-    private String telaConta;
-    private String telaCalculada;
-    private String telaAgenda;
+//    private String telaCalculada;
+//    private String telaAgenda;
     private String telaDialog;
-    private String telaAtivo;
-    private String telaEmprestimo;
-    private String telaFinanciamento;
+//    private String telaEmprestimo;
+//    private String telaFinanciamento;
     private String tituloDialog;
     private boolean apresenta;
     private boolean bloquear;
@@ -42,8 +40,6 @@ public class BeanVar implements Serializable{
         this.novaTela = "WEB-INF/templates/usuario/login.xhtml";
         this.nomeTela = "ln.frase.sistemafinanceiro";
         this.tituloDialog = "";
-        this.telaConta = "../cadastro/planocontas/ativo.xhtml";
-        this.telaAtivo = "imovel.xhtml";
         this.apresenta = false;
         this.bloquear = true;
     }
@@ -96,21 +92,21 @@ public class BeanVar implements Serializable{
         this.telaOrigem = telaOrigem;
     }
 
-    public String getTelaConta() {
-        return telaConta;
-    }
+//    public String getTelaConta() {
+//        return telaConta;
+//    }
+//
+//    public void setTelaConta(String telaConta) {
+//        this.telaConta = telaConta;
+//    }
 
-    public void setTelaConta(String telaConta) {
-        this.telaConta = telaConta;
-    }
-
-    public String getTelaAgenda() {
-        return telaAgenda;
-    }
-
-    public void setTelaAgenda(String telaAgenda) {
-        this.telaAgenda = telaAgenda;
-    }
+//    public String getTelaAgenda() {
+//        return telaAgenda;
+//    }
+//
+//    public void setTelaAgenda(String telaAgenda) {
+//        this.telaAgenda = telaAgenda;
+//    }
 
     public String getTelaDialog() {
         return telaDialog;
@@ -128,37 +124,37 @@ public class BeanVar implements Serializable{
         this.tituloDialog = tituloDialog;
     }
 
-    public String getTelaCalculada() {
-        return telaCalculada;
-    }
+//    public String getTelaCalculada() {
+//        return telaCalculada;
+//    }
+//
+//    public void setTelaCalculada(String telaCalculada) {
+//        this.telaCalculada = telaCalculada;
+//    }
+//
+//    public String getTelaAtivo() {
+//        return telaAtivo;
+//    }
+//
+//    public void setTelaAtivo(String telaAtivo) {
+//        this.telaAtivo = telaAtivo;
+//    }
 
-    public void setTelaCalculada(String telaCalculada) {
-        this.telaCalculada = telaCalculada;
-    }
-
-    public String getTelaAtivo() {
-        return telaAtivo;
-    }
-
-    public void setTelaAtivo(String telaAtivo) {
-        this.telaAtivo = telaAtivo;
-    }
-
-    public String getTelaEmprestimo() {
-        return telaEmprestimo;
-    }
-
-    public void setTelaEmprestimo(String telaEmprestimo) {
-        this.telaEmprestimo = telaEmprestimo;
-    }
-
-    public String getTelaFinanciamento() {
-        return telaFinanciamento;
-    }
-
-    public void setTelaFinanciamento(String telaFinanciamento) {
-        this.telaFinanciamento = telaFinanciamento;
-    }
+//    public String getTelaEmprestimo() {
+//        return telaEmprestimo;
+//    }
+//
+//    public void setTelaEmprestimo(String telaEmprestimo) {
+//        this.telaEmprestimo = telaEmprestimo;
+//    }
+//
+//    public String getTelaFinanciamento() {
+//        return telaFinanciamento;
+//    }
+//
+//    public void setTelaFinanciamento(String telaFinanciamento) {
+//        this.telaFinanciamento = telaFinanciamento;
+//    }
     
  }
     
