@@ -5,15 +5,7 @@
  */
 package br.com.ln.funcao;
 
-import br.com.ln.dao.PlanoContaDao;
-import br.com.ln.entity.LnAgendaconta;
-import br.com.ln.entity.LnContadependente;
-import br.com.ln.entity.LnPlanoconta;
-import br.com.ln.objeto.Conta;
-import br.com.ln.objeto.ContaDependente;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
