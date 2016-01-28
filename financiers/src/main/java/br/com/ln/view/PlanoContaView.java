@@ -351,6 +351,7 @@ public class PlanoContaView implements Serializable {
                 break;
             case "Móvel":
                 telaAtivo = "vazia.xhtml";
+                
                 break;
             case "Aplicação":
                 telaAtivo = "vazia.xhtml";
