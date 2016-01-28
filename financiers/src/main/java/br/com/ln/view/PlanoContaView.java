@@ -65,7 +65,6 @@ public class PlanoContaView implements Serializable {
 
     public PlanoContaView() {
         planoContaFuncoes = new PlanoContaFuncoes();
-        listaContas = planoContaFuncoes.buscaListaContas();
         listaCategoria = CategoriaDao.grabCategoria('S');
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tipoEmprestimo = "1";

@@ -27,7 +27,6 @@ public class Conta implements Serializable{
     private Character agendar;
         
     private List<ContaDependente> listaContaDependente;
-    private List<AgendaConta> listaAgendamento;
 
     public Conta() {
     }
@@ -120,14 +119,6 @@ public class Conta implements Serializable{
         this.listaContaDependente = listaContaDependente;
     }
 
-    public List<AgendaConta> getListaAgendamento() {
-        return listaAgendamento;
-    }
-
-    public void setListaAgendamento(List<AgendaConta> listaAgendamento) {
-        this.listaAgendamento = listaAgendamento;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -152,7 +143,7 @@ public class Conta implements Serializable{
 
     @Override
     public String toString() {
-        return "Conta{" + "idConta=" + idConta + ", nomeConta=" + nomeConta + ", idCategoria=" + idCategoria + ", idTipoConta=" + idTipoConta + ", ativo=" + ativo + ", imposto=" + imposto + ", calculada=" + calculada + ", percentual=" + percentual + ", limite=" + limite + ", agendar=" + agendar + ", listaContaDependente=" + listaContaDependente + ", listaAgendamento=" + listaAgendamento + '}';
+        return "Conta{" + "idConta=" + idConta + ", nomeConta=" + nomeConta + ", idCategoria=" + idCategoria + ", idTipoConta=" + idTipoConta + ", ativo=" + ativo + ", imposto=" + imposto + ", calculada=" + calculada + ", percentual=" + percentual + ", limite=" + limite + ", agendar=" + agendar + ", listaContaDependente=" + listaContaDependente + '}';
     }
     
 }
