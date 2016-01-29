@@ -13,7 +13,7 @@
             <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
                            itemValue="#{itemCatConta.catInCodigo}"/>
         </p:selectOneMenu>
-        <p:selectBooleanCheckbox id="idcontaativa" value="#{contaView.bAtivoConta}"/>
+        <p:selectBooleanCheckbox id="idcontaativa" value="#{contaView.bContaAtiva}"/>
         <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
     </h:panelGrid>
     <h:panelGrid id="idpanelconta1" columns="4">

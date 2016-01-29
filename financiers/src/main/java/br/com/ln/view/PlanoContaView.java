@@ -35,6 +35,7 @@ public class PlanoContaView implements Serializable {
     private boolean bContaAtiva;
     private Double saldoInicial;
     private Conta conta;
+    private LnCategoria categoria;
 
     private List<LnCategoria> listaCategoria;
 
@@ -263,26 +264,50 @@ public class PlanoContaView implements Serializable {
     }
 
     public void btSalvarContaLista() {
-        AtivoView ativoView = (AtivoView) JsfHelper.getSessionAttribute("ativoInfo");
         conta = new Conta();
-        conta.setAtivo(ativoView.grabAtivo());
-        conta.getAtivo().setTipoAtivo(tipoAtivo);
+        defineConfiguracaoConta(conta);
+        
+        System.out.println("Conta : " + conta.toString());
+    }
 
-        switch (tipoAtivo) {
-            case "Imóvel":
-                conta.getAtivo().setAnoModelo(null);
-                conta.getAtivo().setAnoFabricacao(null);
-                conta.getAtivo().setPlaca(null);
+    private Conta defineConfiguracaoConta(Conta conta) {
+
+        switch (idCategoria) {
+            case 1:
+                AtivoView ativoView = (AtivoView) JsfHelper.getSessionAttribute("ativoInfo");
+                conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
+                conta.getAtivo().setTipoAtivo(tipoAtivo);
                 break;
-            case "Automóvel":
-                conta.getAtivo().setEndereco(null);
+            case 2:
                 break;
-            default:
-                conta.getAtivo().setAnoModelo(null);
-                conta.getAtivo().setAnoFabricacao(null);
-                conta.getAtivo().setEndereco(null);
-                conta.getAtivo().setPlaca(null);
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+            case 11:
+                break;
+            case 12:
+                break;
         }
+
+        conta.setbContaAtiva(bContaAtiva);
+        conta.setCodigoCategoria(idCategoria);
+        conta.setDescricaoConta(nomeConta);
+        conta.setSaldoConta(saldoInicial);
+
+        return conta;
     }
 
     public void btFecharContaLista() {

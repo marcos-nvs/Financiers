@@ -108,20 +108,33 @@ public class AtivoView implements Serializable {
         return "AtivoView{" + "valorInicial=" + valorInicial + ", placaVeiculo=" + placaVeiculo + ", anoFabricacao=" + anoFabricacao + ", anoModelo=" + anoModelo + '}';
     }
 
-    public Ativo grabAtivo() {
-        ativo.setAnoFabricacao(anoFabricacao);
-        ativo.setAnoModelo(anoModelo);
-        endereco = new Endereco();
+    public Ativo grabAtivo(String tipoAtivo) {
 
-        enderecoView = (EnderecoView) JsfHelper.getSessionAttribute("enderecoView");
-        if (enderecoView != null) {
-            endereco = enderecoView.grabEnderecoObj();
-            ativo.setEndereco(endereco);
+        switch (tipoAtivo) {
+            case "Imóvel":
+                endereco = new Endereco();
+
+                enderecoView = (EnderecoView) JsfHelper.getSessionAttribute("enderecoView");
+                if (enderecoView != null) {
+                    endereco = enderecoView.grabEnderecoObj();
+                    ativo.setEndereco(endereco);
+                }
+                ativo.setEndereco(endereco);
+                break;
+            case "Automóvel":
+                ativo.setAnoFabricacao(anoFabricacao);
+                ativo.setAnoModelo(anoModelo);
+                ativo.setPlaca(placaVeiculo);
+                ativo.setEndereco(null);
+                break;
+            default:
+                ativo.setAnoModelo(null);
+                ativo.setAnoFabricacao(null);
+                ativo.setEndereco(null);
+                ativo.setPlaca(null);
+                
         }
-        
-        ativo.setPlaca(placaVeiculo);
         ativo.setValorAtivo(valorInicial);
-        ativo.setEndereco(endereco);
 
         return ativo;
     }

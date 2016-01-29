@@ -33,7 +33,7 @@ public class EnderecoView implements Serializable {
 
     private String cep;
     private String endereco;
-    private String tipoEndereco;
+    private TipoEndereco tipoEndereco;
     private String complemento;
     private String bairro;
     private String cidade;
@@ -62,11 +62,11 @@ public class EnderecoView implements Serializable {
         this.endereco = endereco;
     }
 
-    public String getTipoEndereco() {
+    public TipoEndereco getTipoEndereco() {
         return tipoEndereco;
     }
 
-    public void setTipoEndereco(String tipoEndereco) {
+    public void setTipoEndereco(TipoEndereco tipoEndereco) {
         this.tipoEndereco = tipoEndereco;
     }
 
@@ -174,7 +174,7 @@ public class EnderecoView implements Serializable {
         enderecoObj.setComplemento(complemento);
         enderecoObj.setEndereco(endereco);
         enderecoObj.setEstado(estado);
-        enderecoObj.setTipoEndereco(TipoEndereco.Comercial);
+        enderecoObj.setTipoEndereco(tipoEndereco);
         
         return enderecoObj;
     }
