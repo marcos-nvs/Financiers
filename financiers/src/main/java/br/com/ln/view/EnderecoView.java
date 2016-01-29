@@ -44,7 +44,6 @@ public class EnderecoView implements Serializable {
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public EnderecoView() {
-        System.out.println("EnderecoView Criado");
     }
 
     public String getCep() {

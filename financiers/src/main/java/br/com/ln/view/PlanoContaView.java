@@ -268,8 +268,6 @@ public class PlanoContaView implements Serializable {
         conta.setAtivo(ativoView.grabAtivo());
         conta.getAtivo().setTipoAtivo(tipoAtivo);
 
-        System.out.println("Tipo Ativo " + tipoAtivo);
-
         switch (tipoAtivo) {
             case "Imóvel":
                 conta.getAtivo().setAnoModelo(null);
@@ -285,8 +283,6 @@ public class PlanoContaView implements Serializable {
                 conta.getAtivo().setEndereco(null);
                 conta.getAtivo().setPlaca(null);
         }
-
-        System.out.println("conta : " + conta.toString());
     }
 
     public void btFecharContaLista() {
