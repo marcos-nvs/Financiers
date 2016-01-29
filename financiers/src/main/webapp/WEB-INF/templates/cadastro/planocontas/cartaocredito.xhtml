@@ -8,11 +8,11 @@
     <p:panel header="#{msgs['ln.texto.infocartaocredito']}">
         <h:panelGrid id="iddetalhecartaocredito" columns="6">
             <p:outputLabel value="#{msgs['ln.texto.numerocartao']}"/>
-            <p:inputText  size="30"/>
+            <p:inputText  size="30" value="#{ccView.numCartao}"/>
             <p:outputLabel value="#{msgs['ln.texto.limitecredito']}"/>
-            <p:inputText value="#{tipoConta.limite}" size="10"/>
+            <p:inputText value="#{ccView.limiteCartao}" size="10"/>
             <p:outputLabel value="#{msgs['ln.texto.diavencimento']}"/>
-            <p:inputText value="#{tipoConta.diaVencimento}" size="4"/>
+            <p:inputText value="#{ccView.diaVencimento}" size="4"/>
         </h:panelGrid>
     </p:panel>
     

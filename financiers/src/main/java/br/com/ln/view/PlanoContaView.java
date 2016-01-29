@@ -271,34 +271,40 @@ public class PlanoContaView implements Serializable {
     }
 
     private Conta defineConfiguracaoConta(Conta conta) {
-
-        switch (idCategoria) {
-            case 1:
+        
+        Integer idTipoCategoria = planoContaFuncoes.tipoConta(idCategoria);
+        
+        switch (idTipoCategoria) {
+            case 1: //Ativo
                 AtivoView ativoView = (AtivoView) JsfHelper.getSessionAttribute("ativoInfo");
                 conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
                 conta.getAtivo().setTipoAtivo(tipoAtivo);
                 break;
-            case 2:
+//            case 2: //Passivo.
+//                break;
+            case 3: //banco
+                BancoView bancoView = (BancoView) JsfHelper.getSessionAttribute("bancoInfo");
+                conta.setBanco(bancoView.grabBanco());
                 break;
-            case 3:
+            case 4: //Cartão de Crédito
+                CartaoCreditoView ccView = (CartaoCreditoView) JsfHelper.getSessionAttribute("ccView");
+                conta.setCartaoCredito(ccView.grabCartaoCredito());
                 break;
-            case 4:
+//            case 5: //Dinheiro
+//                break;
+            case 6: //Empréstimo
                 break;
-            case 5:
+            case 7: //Financiamento
                 break;
-            case 6:
+            case 8: //Outros Passivos
                 break;
-            case 7:
+            case 9: //Receitas
                 break;
-            case 8:
+            case 10: //Despesas
                 break;
-            case 9:
+            case 11: //Contas à Receber
                 break;
-            case 10:
-                break;
-            case 11:
-                break;
-            case 12:
+            case 12: //Contas à Pagar
                 break;
         }
 

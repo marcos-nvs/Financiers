@@ -5,6 +5,7 @@
  */
 package br.com.ln.funcao;
 
+import br.com.ln.dao.CategoriaDao;
 import java.io.Serializable;
 
 /**
@@ -13,4 +14,7 @@ import java.io.Serializable;
  */
 public class PlanoContaFuncoes implements Serializable {
 
+    public Integer tipoConta(Integer categoria){
+        return CategoriaDao.grabTipoContaPorCategoria(categoria);
+    }
 }
