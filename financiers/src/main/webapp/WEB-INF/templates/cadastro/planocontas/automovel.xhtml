@@ -8,11 +8,11 @@
     <p:panel>
         <h:panelGrid id="idgridtipoautomovel" columns="10">
             <p:outputLabel value="#{msgs['ln.texto.placa']}"/>
-            <p:inputText size="6" />
+            <p:inputText size="6" value="#{ativoInfo.placaVeiculo}"/>
             <p:outputLabel value="#{msgs['ln.texto.anofabricacao']}"/>
-            <p:inputText size="2" />
+            <p:inputText size="2" value="#{ativoInfo.anoFabricacao}" />
             <p:outputLabel value="#{msgs['ln.texto.anomodelo']}"/>
-            <p:inputText size="2" />
+            <p:inputText size="2" value="#{ativoInfo.anoModelo}" />
         </h:panelGrid>
     </p:panel>
 </ui:composition>

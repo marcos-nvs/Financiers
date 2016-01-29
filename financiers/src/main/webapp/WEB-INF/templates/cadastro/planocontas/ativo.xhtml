@@ -16,7 +16,7 @@
                 <p:ajax listener="#{contaView.mostraAtivo}" process="idtipoativoseleciona" update="idtipoativoselecionado, idtipoativoseleciona"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.valorativo']}"/>
-            <p:inputText id="idvalorativo" size="10" >
+            <p:inputText id="idvalorativo" size="10" value="#{ativoInfo.valorInicial}" >
                 <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
                 <p:ajax update="idvalorativo" process="idvalorativo" event="change"/>
             </p:inputText>

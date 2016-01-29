@@ -13,7 +13,7 @@
             <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
                            itemValue="#{itemCatConta.catInCodigo}"/>
         </p:selectOneMenu>
-        <p:selectBooleanCheckbox value="#{contaView.bAtivoConta}"/>
+        <p:selectBooleanCheckbox id="idcontaativa" value="#{contaView.bAtivoConta}"/>
         <p:outputLabel value="#{msgs['ln.texto.ativo']}"/>
     </h:panelGrid>
     <h:panelGrid id="idpanelconta1" columns="4">
@@ -27,10 +27,13 @@
     </h:panelGrid>
 
     <h:panelGrid id="idgridtipoconta" columns="1">
-        <ui:include src="#{contaView.telaConta}"/>
+        <ui:include id="idativo" src="#{contaView.telaConta}"/>
     </h:panelGrid>
     <f:facet name="footer">
-        <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
+        <p:commandButton id="idPlanoContaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
+                         action="#{contaView.btSalvarContaLista()}" process="idPlanoContaGravar, idpanelcontacategoria, idcontacategoria, idcontaativa,
+                                idinputConta, idinputContaSaldo, idgridtipoconta, idtipoativoseleciona, idvalorativo" 
+                                update="idPlanoContaGravar"/>
         <p:commandButton id="idPlanoContaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
                          action="#{contaView.btFecharContaLista}" process="idPlanoContaCancelar" update="idPlanoContaCancelar"/>
     </f:facet>

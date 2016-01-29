@@ -9,6 +9,7 @@ import br.com.ln.comum.ApprovalConnection;
 import br.com.ln.comum.Correios;
 import br.com.ln.comum.EnderecoCep;
 import br.com.ln.objeto.Endereco;
+import br.com.ln.tipos.TipoEndereco;
 import java.io.Serializable;
 import java.net.ConnectException;
 import java.util.Objects;
@@ -28,28 +29,84 @@ import org.apache.log4j.Logger;
 public class EnderecoView implements Serializable {
 
     Logger logger = Logger.getLogger(ClienteView.class);
-    private Endereco endereco;
+    private Endereco enderecoObj;
 
+    private String cep;
+    private String endereco;
+    private String tipoEndereco;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String estado;
+    
     private String mensagem;
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public EnderecoView() {
-        endereco = new Endereco();
+        System.out.println("EnderecoView Criado");
     }
 
-    public Endereco getEndereco() {
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public String getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
+    public String getTipoEndereco() {
+        return tipoEndereco;
+    }
+
+    public void setTipoEndereco(String tipoEndereco) {
+        this.tipoEndereco = tipoEndereco;
+    }
+
+    public String getComplemento() {
+        return complemento;
+    }
+
+    public void setComplemento(String complemento) {
+        this.complemento = complemento;
+    }
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.endereco);
+        hash = 97 * hash + Objects.hashCode(this.enderecoObj);
         return hash;
     }
 
@@ -65,7 +122,7 @@ public class EnderecoView implements Serializable {
             return false;
         }
         final EnderecoView other = (EnderecoView) obj;
-        if (!Objects.equals(this.endereco, other.endereco)) {
+        if (!Objects.equals(this.enderecoObj, other.enderecoObj)) {
             return false;
         }
         return true;
@@ -74,16 +131,16 @@ public class EnderecoView implements Serializable {
     public void btPesquisaCEP() {
         try {
             if (ApprovalConnection.getConnectionApproval("http://correiosapi.apphb.com")) {
-                if (endereco.getCep() != null) {
+                if (cep != null) {
                     EnderecoCep enderecoCep;
                     Correios correio = new Correios();
-                    enderecoCep = correio.entregaEndereco(endereco.getCep().replaceAll("-", ""));
+                    enderecoCep = correio.entregaEndereco(cep.replaceAll("-", ""));
                     correio.close();
                     if (enderecoCep != null) {
-                        endereco.setEndereco(enderecoCep.getTipoDeLogradouro() + " " + enderecoCep.getLogradouro());
-                        endereco.setBairro(enderecoCep.getBairro());
-                        endereco.setCidade(enderecoCep.getCidade());
-                        endereco.setEstado(enderecoCep.getEstado());
+                        endereco = enderecoCep.getTipoDeLogradouro() + " " + enderecoCep.getLogradouro();
+                        bairro = enderecoCep.getBairro();
+                        cidade = enderecoCep.getCidade();
+                        estado = enderecoCep.getEstado();
                     } else {
                         mensagem = "Cep não localizado!!!";
                         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -107,5 +164,19 @@ public class EnderecoView implements Serializable {
                     bundle.getString("ln.mb.titulo.cliente"), mensagem));
         }
 
+    }
+    
+    public Endereco grabEnderecoObj(){
+
+        enderecoObj = new Endereco();
+        enderecoObj.setBairro(bairro);
+        enderecoObj.setCep(cep);
+        enderecoObj.setCidade(cidade);
+        enderecoObj.setComplemento(complemento);
+        enderecoObj.setEndereco(endereco);
+        enderecoObj.setEstado(estado);
+        enderecoObj.setTipoEndereco(TipoEndereco.Comercial);
+        
+        return enderecoObj;
     }
 }

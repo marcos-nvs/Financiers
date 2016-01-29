@@ -11,6 +11,7 @@ import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.funcao.PlanoContaFuncoes;
+import br.com.ln.objeto.Conta;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -33,6 +34,7 @@ public class PlanoContaView implements Serializable {
     private String nomeConta;
     private boolean bContaAtiva;
     private Double saldoInicial;
+    private Conta conta;
 
     private List<LnCategoria> listaCategoria;
 
@@ -57,7 +59,6 @@ public class PlanoContaView implements Serializable {
     private String tipoFinanciamento;
     private String telaEmprestimo;
     private String telaFinanciamento;
-        
 
     public PlanoContaView() {
         planoContaFuncoes = new PlanoContaFuncoes();
@@ -108,9 +109,16 @@ public class PlanoContaView implements Serializable {
     public void setSaldoInicial(Double saldoInicial) {
         this.saldoInicial = saldoInicial;
     }
-    
-    //Tela
 
+    public Conta getConta() {
+        return conta;
+    }
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
+    }
+
+    //Tela
     public Integer getIdCategoria() {
         return idCategoria;
     }
@@ -186,7 +194,7 @@ public class PlanoContaView implements Serializable {
     public void setbCalculada(boolean bCalculada) {
         this.bCalculada = bCalculada;
     }
-    
+
     public String getTipoEmprestimo() {
         return tipoEmprestimo;
     }
@@ -218,7 +226,6 @@ public class PlanoContaView implements Serializable {
     public void setTelaFinanciamento(String telaFinanciamento) {
         this.telaFinanciamento = telaFinanciamento;
     }
-    
 
     public void btIncluirConta() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
@@ -256,7 +263,30 @@ public class PlanoContaView implements Serializable {
     }
 
     public void btSalvarContaLista() {
+        AtivoView ativoView = (AtivoView) JsfHelper.getSessionAttribute("ativoInfo");
+        conta = new Conta();
+        conta.setAtivo(ativoView.grabAtivo());
+        conta.getAtivo().setTipoAtivo(tipoAtivo);
 
+        System.out.println("Tipo Ativo " + tipoAtivo);
+
+        switch (tipoAtivo) {
+            case "Imóvel":
+                conta.getAtivo().setAnoModelo(null);
+                conta.getAtivo().setAnoFabricacao(null);
+                conta.getAtivo().setPlaca(null);
+                break;
+            case "Automóvel":
+                conta.getAtivo().setEndereco(null);
+                break;
+            default:
+                conta.getAtivo().setAnoModelo(null);
+                conta.getAtivo().setAnoFabricacao(null);
+                conta.getAtivo().setEndereco(null);
+                conta.getAtivo().setPlaca(null);
+        }
+
+        System.out.println("conta : " + conta.toString());
     }
 
     public void btFecharContaLista() {
@@ -330,8 +360,8 @@ public class PlanoContaView implements Serializable {
         idTipoConta = CategoriaDao.grabTipoContaPorCategoria(categoria);
     }
 
-    public void mostraCalculoConta(){
-        if (bCalculada){
+    public void mostraCalculoConta() {
+        if (bCalculada) {
             telaCalculada = "../cadastro/planocontas/contacalculada.xhtml";
         } else {
             telaCalculada = "../cadastro/planocontas/vazia.xhtml";
@@ -356,15 +386,16 @@ public class PlanoContaView implements Serializable {
         }
     }
 
-    public void mostraTipoEmpretimo(){
-        if (tipoEmprestimo.equals("1")){
+    public void mostraTipoEmpretimo() {
+        if (tipoEmprestimo.equals("1")) {
             telaEmprestimo = "infotomando.xhtml";
         } else {
             telaEmprestimo = "emprestando.xhtml";
         }
     }
-    public void mostraTipoFinanciamento(){
-        if (tipoFinanciamento.equals("1")){
+
+    public void mostraTipoFinanciamento() {
+        if (tipoFinanciamento.equals("1")) {
             telaFinanciamento = "ativo.xhtml";
         } else {
             telaFinanciamento = "escolhebem.xhtml";

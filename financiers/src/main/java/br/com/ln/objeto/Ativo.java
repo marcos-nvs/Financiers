@@ -18,8 +18,8 @@ public class Ativo implements Serializable{
     private Double valorAtivo;
     private Endereco endereco;
     private String placa;
-    private Double anoFabricacao;
-    private Double anoModelo;
+    private Integer anoFabricacao;
+    private Integer anoModelo;
 
     public Ativo() {
     }
@@ -56,26 +56,31 @@ public class Ativo implements Serializable{
         this.placa = placa;
     }
 
-    public Double getAnoFabricacao() {
+    public Integer getAnoFabricacao() {
         return anoFabricacao;
     }
 
-    public void setAnoFabricacao(Double anoFabricacao) {
+    public void setAnoFabricacao(Integer anoFabricacao) {
         this.anoFabricacao = anoFabricacao;
     }
 
-    public Double getAnoModelo() {
+    public Integer getAnoModelo() {
         return anoModelo;
     }
 
-    public void setAnoModelo(Double anoModelo) {
+    public void setAnoModelo(Integer anoModelo) {
         this.anoModelo = anoModelo;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.tipoAtivo);
+        hash = 23 * hash + Objects.hashCode(this.tipoAtivo);
+        hash = 23 * hash + Objects.hashCode(this.valorAtivo);
+        hash = 23 * hash + Objects.hashCode(this.endereco);
+        hash = 23 * hash + Objects.hashCode(this.placa);
+        hash = 23 * hash + Objects.hashCode(this.anoFabricacao);
+        hash = 23 * hash + Objects.hashCode(this.anoModelo);
         return hash;
     }
 
@@ -94,6 +99,21 @@ public class Ativo implements Serializable{
         if (!Objects.equals(this.tipoAtivo, other.tipoAtivo)) {
             return false;
         }
+        if (!Objects.equals(this.placa, other.placa)) {
+            return false;
+        }
+        if (!Objects.equals(this.valorAtivo, other.valorAtivo)) {
+            return false;
+        }
+        if (!Objects.equals(this.endereco, other.endereco)) {
+            return false;
+        }
+        if (!Objects.equals(this.anoFabricacao, other.anoFabricacao)) {
+            return false;
+        }
+        if (!Objects.equals(this.anoModelo, other.anoModelo)) {
+            return false;
+        }
         return true;
     }
 
@@ -101,5 +121,5 @@ public class Ativo implements Serializable{
     public String toString() {
         return "Ativo{" + "tipoAtivo=" + tipoAtivo + ", valorAtivo=" + valorAtivo + ", endereco=" + endereco + ", placa=" + placa + ", anoFabricacao=" + anoFabricacao + ", anoModelo=" + anoModelo + '}';
     }
-    
+
 }
