@@ -752,6 +752,40 @@ CREATE SEQUENCE seq_favorecido
 ALTER TABLE seq_favorecido
   OWNER TO postgres;
 
+-- Table: ln_planoconta
+
+-- DROP TABLE ln_planoconta;
+
+CREATE TABLE ln_planoconta
+(
+  cta_in_codigo integer NOT NULL,
+  cat_in_codigo integer NOT NULL,
+  cta_st_descricao character varying(50) NOT NULL,
+  cta_ch_ativo character(1) NOT NULL,
+  cta_fl_saldoinicial double precision NOT NULL,
+  cta_st_configuracao character varying(1000),
+  cta_st_alerta character varying(1000),
+  CONSTRAINT pk_conta PRIMARY KEY (cta_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_planoconta
+  OWNER TO postgres;
+
+-- Sequence: seq_planoconta
+
+-- DROP SEQUENCE seq_planoconta;
+
+CREATE SEQUENCE seq_planoconta
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_planoconta
+  OWNER TO postgres;
+
 -------------------------------------------------------------------------------------------------------------------------
 
 -- insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")
