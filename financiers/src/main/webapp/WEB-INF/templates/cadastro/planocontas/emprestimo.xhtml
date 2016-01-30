@@ -6,10 +6,6 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <p:panel header="#{msgs['ln.texto.informacaoemprestimo']}">
-        <h:panelGrid id="iddataemprestimo" columns="2">
-            <p:outputLabel for="dtdataemprestimo" value="#{msgs['ln.texto.data']}"/>
-            <p:calendar id="dtdataemprestimo" showOn="button" pattern="dd/MM/yyyy"/>
-        </h:panelGrid>
         <h3>#{msgs['ln.texto.tipoemprestimo']}</h3>
         <h:panelGrid id="ididentificatipoemprestimo" columns="6">
             <p:selectOneRadio widgetVar="teste" value="#{contaView.tipoEmprestimo}" >
@@ -17,9 +13,14 @@
                 <f:selectItem itemLabel="#{msgs['ln.texto.emprestando']}" itemValue="2"/>
                 <p:ajax listener="#{contaView.mostraTipoEmpretimo()}" process="ididentificatipoemprestimo" update="idtipoemprestimo"/>
             </p:selectOneRadio>
-            <p:selectBooleanCheckbox />
+            <p:selectBooleanCheckbox value="#{emprestimoView.simulado}" />
             <p:outputLabel value="#{msgs['ln.texto.simulado']}"/>
         </h:panelGrid> 
+
+        <h:panelGrid id="iddataemprestimo" columns="2">
+            <p:outputLabel for="dtdataemprestimo" value="#{msgs['ln.texto.data']}"/>
+            <p:calendar id="dtdataemprestimo" showOn="button" pattern="dd/MM/yyyy" value="#{emprestimoView.dataEmprestimo}"/>
+        </h:panelGrid>
 
         <p:panel>
             <h:panelGrid id="idtipoemprestimo" columns="1">
@@ -27,23 +28,23 @@
             </h:panelGrid>
             <h:panelGrid id="iddetalhevalores" columns="10">
                 <p:outputLabel value="#{msgs['ln.texto.valor']}"/>
-                <p:inputText size="6" style="margin-left: 40px;"/>
+                <p:inputText size="6" style="margin-left: 40px;" value="#{emprestimoView.valorEmprestimo}"/>
                 <p:outputLabel value="#{msgs['ln.texto.prazo']}"/>
-                <p:inputText size="1" style="margin-left: 35px;"/>
+                <p:inputText size="1" style="margin-left: 35px;" value="#{emprestimoView.valorParcelas}"/>
                 <p:outputLabel value="#{msgs['ln.texto.valorparcelas']}" style="margin-left: 30px;"/>
-                <p:inputText size="6" />
+                <p:inputText size="6" value="#{emprestimoView.valorParcelas}"/>
                 <p:outputLabel value="#{msgs['ln.texto.jurosmensais']}"/>
-                <p:inputText size="6" />
+                <p:inputText size="6" value="#{emprestimoView.jurosMensais}" />
                 <p:outputLabel value="#{msgs['ln.texto.valortotal']}"/>
-                <p:inputText size="6"/>
+                <p:inputText size="6" value="#{emprestimoView.valorTotal}"/>
             </h:panelGrid>      
             <h:panelGrid id="iddetalhejuros" columns="6">
-                <p:outputLabel value="#{msgs['ln.texto.jurosanuais']}"/>
-                <p:inputText size="6"/>
+                <p:outputLabel value="#{msgs['ln.texto.jurosanuais']}" />
+                <p:inputText size="6" value="#{emprestimoView.jurosAnuais}"/>
                 <p:outputLabel value="#{msgs['ln.texto.jurosefetivo']}"/>
-                <p:inputText size="6"/>
+                <p:inputText size="6" value="#{emprestimoView.jurosEfetivos}"/>
                 <p:outputLabel value="#{msgs['ln.texto.datavencimento']}"/>
-                <p:inputText size="6" style="margin-left: 10px;"/>
+                <p:inputText size="6" style="margin-left: 10px;" value="#{emprestimoView.diaVencimento}"/>
             </h:panelGrid>      
 
         </p:panel>
