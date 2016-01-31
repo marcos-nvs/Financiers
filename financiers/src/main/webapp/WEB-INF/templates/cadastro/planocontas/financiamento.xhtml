@@ -27,27 +27,27 @@
         <p:panel>
             <h:panelGrid id="idfinanciamentoconta" columns="6">
                 <p:outputLabel value="#{msgs['ln.texto.pagarpara']}"/>
-                <p:selectOneMenu id="idcontapagarparafinanciada" style="margin-left: 40px; width: 250px;">
+                <p:selectOneMenu id="idcontapagarparafinanciada" style="width: 250px;">
                     <f:selectItems/>
                 </p:selectOneMenu>
                 <p:outputLabel value="#{msgs['ln.texto.pagarcomconta']}"/>
                 <p:selectOneMenu id="idcontautilizadafinanciada" style="margin-left: 5px;width: 250px;">
                     <f:selectItems/>
                 </p:selectOneMenu>
-                <p:outputLabel value="#{msgs['ln.texto.datavencimento']}"/>
-                <p:inputText size="10"/>
+                <p:outputLabel value="#{msgs['ln.texto.diavencimento']}"/>
+                <p:inputText size="3"/>
             </h:panelGrid>
             <h:panelGrid id="iddetalhefinaciamento" columns="8">
                 <p:outputLabel value="#{msgs['ln.texto.valor']}"/>
-                <p:inputText size="10"/>
+                <p:inputText size="10" style="margin-left: 25px;"/>
                 <p:outputLabel value="#{msgs['ln.texto.valorentrada']}"/>
                 <p:inputText size="10"/>
                 <p:outputLabel value="#{msgs['ln.texto.valorfinanciado']}"/>
-                <p:inputText size="10"/>
+                <p:inputText size="10" style="margin-left: 20px;"/>
                 <p:outputLabel value="#{msgs['ln.texto.valorparcelas']}"/>
                 <p:inputText size="10"/>
                 <p:outputLabel value="#{msgs['ln.texto.prazo']}"/>
-                <p:inputText size="5"/>
+                <p:inputText size="5" style="margin-left: 25px;"/>
                 <p:outputLabel value="#{msgs['ln.texto.jurosmensais']}"/>
                 <p:inputText size="10"/>
             </h:panelGrid>
