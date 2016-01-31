@@ -28,7 +28,7 @@ public class Emprestimo implements Serializable{
     private Double valorTotal;
     private Double jurosAnuais;
     private Double jurosEfetivos;
-    private Integer diaVencimento;
+    private Date dataVencimento;
     private boolean simulado;
     
     public Emprestimo() {
@@ -130,13 +130,14 @@ public class Emprestimo implements Serializable{
         this.jurosEfetivos = jurosEfetivos;
     }
 
-    public Integer getDiaVencimento() {
-        return diaVencimento;
+    public Date getDataVencimento() {
+        return dataVencimento;
     }
 
-    public void setDiaVencimento(Integer diaVencimento) {
-        this.diaVencimento = diaVencimento;
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
+
 
     public boolean isSimulado() {
         return simulado;
@@ -173,8 +174,7 @@ public class Emprestimo implements Serializable{
 
     @Override
     public String toString() {
-        return "Emprestimo{" + "tipoEmprestimo=" + tipoEmprestimo + ", dataEmprestimo=" + dataEmprestimo + ", favorecido=" + favorecido + ", contaPagamento=" + contaPagamento + ", contaDestino=" + contaDestino + ", valorEmprestimo=" + valorEmprestimo + ", prazoEmprestimo=" + prazoEmprestimo + ", valorParcelas=" + valorParcelas + ", jurosMensais=" + jurosMensais + ", valorTotal=" + valorTotal + ", jurosAnuais=" + jurosAnuais + ", jurosEfetivos=" + jurosEfetivos + ", diaVencimento=" + diaVencimento + ", simulado=" + simulado + '}';
+        return "Emprestimo{" + "tipoEmprestimo=" + tipoEmprestimo + ", dataEmprestimo=" + dataEmprestimo + ", favorecido=" + favorecido + ", contaPagamento=" + contaPagamento + ", contaDestino=" + contaDestino + ", valorEmprestimo=" + valorEmprestimo + ", prazoEmprestimo=" + prazoEmprestimo + ", valorParcelas=" + valorParcelas + ", jurosMensais=" + jurosMensais + ", valorTotal=" + valorTotal + ", jurosAnuais=" + jurosAnuais + ", jurosEfetivos=" + jurosEfetivos + ", dataVencimento=" + dataVencimento + ", simulado=" + simulado + '}';
     }
 
-    
 }

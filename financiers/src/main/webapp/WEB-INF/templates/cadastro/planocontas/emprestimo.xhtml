@@ -19,7 +19,8 @@
 
         <h:panelGrid id="iddataemprestimo" columns="2">
             <p:outputLabel for="dtdataemprestimo" value="#{msgs['ln.texto.data']}"/>
-            <p:calendar id="dtdataemprestimo" showOn="button" pattern="dd/MM/yyyy" value="#{emprestimoView.dataEmprestimo}"/>
+            <p:calendar id="dtdataemprestimo" showOn="button" pattern="dd/MM/yyyy" value="#{emprestimoView.dataEmprestimo}"
+                        size="8"/>
         </h:panelGrid>
 
         <p:panel>
@@ -28,23 +29,42 @@
             </h:panelGrid>
             <h:panelGrid id="iddetalhevalores" columns="10">
                 <p:outputLabel value="#{msgs['ln.texto.valor']}"/>
-                <p:inputText size="6" style="margin-left: 40px;" value="#{emprestimoView.valorEmprestimo}"/>
+                <p:inputText id="idvaloremprestimo" size="6" style="margin-left: 40px;" value="#{emprestimoView.valorEmprestimo}">
+                    <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
+                    <p:ajax update="idvaloremprestimo" process="idvaloremprestimo" event="change"/>
+                </p:inputText>
                 <p:outputLabel value="#{msgs['ln.texto.prazo']}"/>
                 <p:inputText size="1" style="margin-left: 35px;" value="#{emprestimoView.prazoEmprestimo}"/>
                 <p:outputLabel value="#{msgs['ln.texto.valorparcelas']}" style="margin-left: 30px;"/>
-                <p:inputText size="6" value="#{emprestimoView.valorParcelas}"/>
+                <p:inputText id="idvalorparcelaemprestimo" size="6" value="#{emprestimoView.valorParcelas}">
+                    <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
+                    <p:ajax update="idvalorparcelaemprestimo" process="idvalorparcelaemprestimo" event="change"/>
+                </p:inputText>
                 <p:outputLabel value="#{msgs['ln.texto.jurosmensais']}"/>
-                <p:inputText size="6" value="#{emprestimoView.jurosMensais}" />
+                <p:inputText id="idjurosmensal" size="6" value="#{emprestimoView.jurosMensais}">
+                    <f:convertNumber pattern="##0.00" type="percent"/>
+                    <p:ajax update="idjurosmensal" process="idjurosmensal" event="change"/>
+                </p:inputText>
                 <p:outputLabel value="#{msgs['ln.texto.valortotal']}"/>
-                <p:inputText size="6" value="#{emprestimoView.valorTotal}"/>
+                <p:inputText id="idvalortotalemprestimo" size="6" value="#{emprestimoView.valorTotal}">
+                    <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
+                    <p:ajax update="idvalortotalemprestimo" process="idvalortotalemprestimo" event="change"/>
+                </p:inputText>
             </h:panelGrid>      
             <h:panelGrid id="iddetalhejuros" columns="6">
                 <p:outputLabel value="#{msgs['ln.texto.jurosanuais']}" />
-                <p:inputText size="6" value="#{emprestimoView.jurosAnuais}"/>
+                <p:inputText id="idjurosanuaisemprestimo" size="6" value="#{emprestimoView.jurosAnuais}">
+                    <f:convertNumber pattern="##0.00" type="percent"/>
+                    <p:ajax update="idjurosanuaisemprestimo" process="idjurosanuaisemprestimo" event="change"/>
+                </p:inputText>
                 <p:outputLabel value="#{msgs['ln.texto.jurosefetivo']}"/>
-                <p:inputText size="6" value="#{emprestimoView.jurosEfetivos}"/>
+                <p:inputText id="idjurosefetivosemprestimo" size="6" value="#{emprestimoView.jurosEfetivos}">
+                    <f:convertNumber pattern="##0.00" type="percent"/>
+                    <p:ajax update="idjurosefetivosemprestimo" process="idjurosefetivosemprestimo" event="change"/>
+                </p:inputText>
                 <p:outputLabel value="#{msgs['ln.texto.datavencimento']}"/>
-                <p:inputText size="6" style="margin-left: 10px;" value="#{emprestimoView.diaVencimento}"/>
+                <p:calendar id="dtdatavencimento" showOn="button" pattern="dd/MM/yyyy" value="#{emprestimoView.dataVencimento}" size="8"
+                            style="margin-left: 10px;"/>
             </h:panelGrid>      
 
         </p:panel>

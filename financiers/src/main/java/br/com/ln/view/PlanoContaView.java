@@ -264,16 +264,17 @@ public class PlanoContaView implements Serializable {
     }
 
     public void btSalvarContaLista() {
+        System.out.println("Teste------------------------------------->");
         conta = new Conta();
         defineConfiguracaoConta(conta);
-        
+
         System.out.println("Conta : " + conta.toString());
     }
 
     private Conta defineConfiguracaoConta(Conta conta) {
-        
+
         Integer idTipoCategoria = planoContaFuncoes.tipoConta(idCategoria);
-        
+
         switch (idTipoCategoria) {
             case 1: //Ativo
                 AtivoView ativoView = (AtivoView) JsfHelper.getSessionAttribute("ativoInfo");
@@ -293,6 +294,8 @@ public class PlanoContaView implements Serializable {
 //            case 5: //Dinheiro
 //                break;
             case 6: //Empréstimo
+                EmprestimoView emprestimoView = (EmprestimoView) JsfHelper.getSessionAttribute("emprestimoView");
+                conta.setEmprestimo(emprestimoView.grabEmprestimo());
                 break;
             case 7: //Financiamento
                 break;
@@ -428,6 +431,5 @@ public class PlanoContaView implements Serializable {
             telaFinanciamento = "escolhebem.xhtml";
         }
     }
-    
-    
+
 }

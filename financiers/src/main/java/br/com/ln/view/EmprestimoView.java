@@ -6,7 +6,6 @@
 package br.com.ln.view;
 
 import br.com.ln.entity.LnFavorecido;
-import br.com.ln.entity.LnPlanoconta;
 import br.com.ln.funcao.FavorecidoFuncoes;
 import br.com.ln.funcao.PlanoContaFuncoes;
 import br.com.ln.objeto.Conta;
@@ -37,7 +36,7 @@ public class EmprestimoView implements Serializable {
     private Double valorTotal;
     private Double jurosAnuais;
     private Double jurosEfetivos;
-    private Integer diaVencimento;
+    private Date dataVencimento;
     private boolean simulado;
     
     private List<LnFavorecido> listaFavorecido;
@@ -143,13 +142,14 @@ public class EmprestimoView implements Serializable {
         this.jurosEfetivos = jurosEfetivos;
     }
 
-    public Integer getDiaVencimento() {
-        return diaVencimento;
+    public Date getDataVencimento() {
+        return dataVencimento;
     }
 
-    public void setDiaVencimento(Integer diaVencimento) {
-        this.diaVencimento = diaVencimento;
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
+
 
     public boolean isSimulado() {
         return simulado;
@@ -191,11 +191,12 @@ public class EmprestimoView implements Serializable {
         this.favorecidoFuncoes = favorecidoFuncoes;
     }
 
-
     @Override
     public String toString() {
-        return "EmprestimoView{" + " dataEmprestimo=" + dataEmprestimo + ", favorecido=" + favorecido + ", contaPagamento=" + contaPagamento + ", contaDestino=" + contaDestino + ", valorEmprestimo=" + valorEmprestimo + ", prazoEmprestimo=" + prazoEmprestimo + ", valorParcelas=" + valorParcelas + ", jurosMensais=" + jurosMensais + ", valorTotal=" + valorTotal + ", jurosAnuais=" + jurosAnuais + ", jurosEfetivos=" + jurosEfetivos + ", diaVencimento=" + diaVencimento + ", simulado=" + simulado + '}';
+        return "EmprestimoView{" + "dataEmprestimo=" + dataEmprestimo + ", favorecido=" + favorecido + ", contaPagamento=" + contaPagamento + ", contaDestino=" + contaDestino + ", valorEmprestimo=" + valorEmprestimo + ", prazoEmprestimo=" + prazoEmprestimo + ", valorParcelas=" + valorParcelas + ", jurosMensais=" + jurosMensais + ", valorTotal=" + valorTotal + ", jurosAnuais=" + jurosAnuais + ", jurosEfetivos=" + jurosEfetivos + ", dataVencimento=" + dataVencimento + ", simulado=" + simulado + ", listaFavorecido=" + listaFavorecido + ", listaContaDestino=" + listaContaDestino + ", listaContaOrigem=" + listaContaOrigem + ", favorecidoFuncoes=" + favorecidoFuncoes + ", planoContaFuncoes=" + planoContaFuncoes + '}';
     }
+
+
 
     public Emprestimo grabEmprestimo(){
         
@@ -204,7 +205,7 @@ public class EmprestimoView implements Serializable {
         emprestimo.setContaDestino(contaDestino);
         emprestimo.setContaPagamento(contaPagamento);
         emprestimo.setDataEmprestimo(dataEmprestimo);
-        emprestimo.setDiaVencimento(diaVencimento);
+        emprestimo.setDataVencimento(dataVencimento);
         emprestimo.setFavorecido(favorecido);
         emprestimo.setJurosAnuais(jurosAnuais);
         emprestimo.setJurosEfetivos(jurosEfetivos);
