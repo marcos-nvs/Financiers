@@ -6,6 +6,10 @@
 package br.com.ln.view;
 
 import br.com.ln.entity.LnFavorecido;
+import br.com.ln.entity.LnPlanoconta;
+import br.com.ln.funcao.FavorecidoFuncoes;
+import br.com.ln.funcao.PlanoContaFuncoes;
+import br.com.ln.objeto.Conta;
 import br.com.ln.objeto.Emprestimo;
 import java.io.Serializable;
 import java.util.Date;
@@ -37,9 +41,18 @@ public class EmprestimoView implements Serializable {
     private boolean simulado;
     
     private List<LnFavorecido> listaFavorecido;
-//    private List<Ln
+    private List<Conta> listaContaDestino;
+    private List<Conta> listaContaOrigem;
+
+    private FavorecidoFuncoes favorecidoFuncoes;
+    private PlanoContaFuncoes planoContaFuncoes;
 
     public EmprestimoView() {
+        favorecidoFuncoes = new FavorecidoFuncoes();
+        planoContaFuncoes = new PlanoContaFuncoes();
+        listaFavorecido = favorecidoFuncoes.grabListaFavorecido();
+        listaContaDestino = planoContaFuncoes.montaConta();
+        listaContaOrigem = planoContaFuncoes.montaConta();
     }
 
     public Date getDataEmprestimo() {
@@ -145,6 +158,39 @@ public class EmprestimoView implements Serializable {
     public void setSimulado(boolean simulado) {
         this.simulado = simulado;
     }
+
+    public List<LnFavorecido> getListaFavorecido() {
+        return listaFavorecido;
+    }
+
+    public void setListaFavorecido(List<LnFavorecido> listaFavorecido) {
+        this.listaFavorecido = listaFavorecido;
+    }
+
+    public List<Conta> getListaContaDestino() {
+        return listaContaDestino;
+    }
+
+    public void setListaContaDestino(List<Conta> listaContaDestino) {
+        this.listaContaDestino = listaContaDestino;
+    }
+
+    public List<Conta> getListaContaOrigem() {
+        return listaContaOrigem;
+    }
+
+    public void setListaContaOrigem(List<Conta> listaContaOrigem) {
+        this.listaContaOrigem = listaContaOrigem;
+    }
+
+    public FavorecidoFuncoes getFavorecidoFuncoes() {
+        return favorecidoFuncoes;
+    }
+
+    public void setFavorecidoFuncoes(FavorecidoFuncoes favorecidoFuncoes) {
+        this.favorecidoFuncoes = favorecidoFuncoes;
+    }
+
 
     @Override
     public String toString() {

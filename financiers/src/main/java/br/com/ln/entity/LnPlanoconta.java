@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Marcos Naves
+ * @author f12684146896
  */
 @Entity
 @Table(name = "ln_planoconta")

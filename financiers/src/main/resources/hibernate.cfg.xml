@@ -34,5 +34,6 @@
     <mapping class="br.com.ln.entity.LnTelefone"/>
     <mapping class="br.com.ln.entity.LnUsuario"/>
     <mapping class="br.com.ln.entity.LnCliente"/>
+    <mapping class="br.com.ln.entity.LnPlanoconta"/>
   </session-factory>
 </hibernate-configuration>

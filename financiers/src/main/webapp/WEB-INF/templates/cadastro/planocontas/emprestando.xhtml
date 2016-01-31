@@ -7,16 +7,21 @@
 
         <h:panelGrid id="ididentificafavorecido" columns="4">
             <p:outputLabel value="#{msgs['ln.texto.receberde']}"/>
-            <p:selectOneMenu id="idfavorecidoemprestimo" style="width: 250px;">
-                <f:selectItem />
+            <p:selectOneMenu id="idfavorecidoemprestimo" style="width: 250px;" value="#{emprestimoView.favorecido}" effect="fade">
+                <f:selectItems var="varFavorecidoEmprestando" value="#{emprestimoView.listaFavorecido}" itemLabel="#{varFavorecido.favStDescricao}"
+                               itemValue="#{varFavorecido.favInCodigo}"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.receberconta']}"/>
-            <p:selectOneMenu id="idcontaemprestimopagar" style="width: 250px;">
-                <f:selectItems/>
+            <p:selectOneMenu id="idcontaemprestimopagar" style="width: 250px;" value="#{emprestimoView.contaDestino}" effect="fade">
+                <f:selectItems var="varContaDestinoEmprestando" value="#{emprestimoView.listaContaDestino}" 
+                               itemLabel="#{varContaDestinoEmprestando.descricaoConta}"
+                               itemValue="#{varContaDestinoEmprestando.codigoConta}"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.contaorigem']}"/>
-            <p:selectOneMenu id="idcontaorigememprestimo" style="width: 250px;">
-                <f:selectItems/>
+            <p:selectOneMenu id="idcontaorigememprestimo" style="width: 250px;" effect="fade" value="#{emprestimoView.contaPagamento}">
+                <f:selectItems var="varContaOrigemEmprestando" value="#{emprestimoView.listaContaOrigem}"
+                               itemLabel="#{varContaOrigemEmprestando.descricaoConta}"
+                               itemValue="#{varContaOrigemEmprestando.codigoConta}"/>
             </p:selectOneMenu>
         </h:panelGrid>      
 </ui:composition>

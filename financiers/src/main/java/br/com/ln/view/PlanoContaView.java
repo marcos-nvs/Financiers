@@ -428,4 +428,6 @@ public class PlanoContaView implements Serializable {
             telaFinanciamento = "escolhebem.xhtml";
         }
     }
+    
+    
 }

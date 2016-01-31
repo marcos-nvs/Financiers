@@ -7,18 +7,20 @@
 
         <h:panelGrid id="ididentificafavorecido" columns="4">
             <p:outputLabel value="#{msgs['ln.texto.pagarpara']}"/>
-            <p:selectOneMenu id="idfavorecidoemprestimo" style="width: 250px;">
-                <f:selectItem/>
+            <p:selectOneMenu id="idfavorecidoemprestimo" style="width: 250px;" value="#{emprestimoView.favorecido}" effect="fade">
+                <f:selectItems var="varFavorecidoInfoTomando" value="#{emprestimoView.listaFavorecido}" 
+                               itemLabel="#{varFavorecidoInfoTomando.favStDescricao}" itemValue="#{varFavorecidoInfoTomando.favInCodigo}"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.pagarcomconta']}"/>
-            <p:selectOneMenu id="idcontaemprestimopagar" style="width: 250px;">
-                <f:selectItems/>
+            <p:selectOneMenu id="idcontaemprestimopagar" style="width: 250px;" value="#{emprestimoView.contaPagamento}" effect="fade">
+                <f:selectItems var="varContaPagamentoInfoTomando" value="#{emprestimoView.listaContaOrigem}" itemLabel="#{varContaPagamento.descricaoConta}"
+                               itemValue="#{varContaPagamento.codigoConta}"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.contadestino']}"/>
-            <p:selectOneMenu id="idcontadestinoemprestimo" style="width: 250px;">
-                <f:selectItems/>
+            <p:selectOneMenu id="idcontadestinoemprestimo" style="width: 250px;" value="#{emprestimoView.contaDestino}" effect="fade">
+                <f:selectItems var="varContaDestinoInfoTomando" value="#{emprestimoView.listaContaDestino}" itemLabel="#{varContaDestino.descricaoConta}"
+                               itemValue="#{varContaDestino.codigoConta}"/>
             </p:selectOneMenu>
         </h:panelGrid>      
-
 </ui:composition>
 
