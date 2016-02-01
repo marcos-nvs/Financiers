@@ -42,7 +42,7 @@ public class FavorecidoDao extends GenericDao implements Serializable {
         return listaFavorecido;
     }
 
-    public static LnFavorecido grabFavorecidoBanco(Integer favInCodigo) {
+    public static LnFavorecido grabFavorecidoCodigo(Integer idFavorecido) {
 
         Session session = null;
         Transaction tx;
@@ -53,7 +53,7 @@ public class FavorecidoDao extends GenericDao implements Serializable {
             tx = session.beginTransaction();
 
             Query query = session.getNamedQuery("LnFavorecido.findByFavInCodigo");
-            query.setInteger("favInCodigo", favInCodigo);
+            query.setInteger("favInCodigo", idFavorecido);
             List l = query.list();
             tx.commit();
 
@@ -113,4 +113,5 @@ public class FavorecidoDao extends GenericDao implements Serializable {
         
         return listaFavorecido;
     }
+    
 }

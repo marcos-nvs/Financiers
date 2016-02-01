@@ -106,4 +106,8 @@ public class FavorecidoFuncoes implements Serializable {
             return true;
     }
 
+    public LnFavorecido grabFavorecido(Integer idFavorecido) {
+        return FavorecidoDao.grabFavorecidoCodigo(idFavorecido);
+    }
+
 }

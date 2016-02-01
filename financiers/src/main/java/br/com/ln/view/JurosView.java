@@ -386,7 +386,7 @@ public class JurosView implements Serializable {
     }
     
     public String descricaoBanco(String banco){
-        return FavorecidoDao.grabFavorecidoBanco(new Integer(banco)).getFavStDescricao();
+        return FavorecidoDao.grabFavorecidoCodigo(new Integer(banco)).getFavStDescricao();
     } 
     
     public void btVoltar(){
