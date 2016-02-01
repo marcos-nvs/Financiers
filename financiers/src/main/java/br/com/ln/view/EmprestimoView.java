@@ -26,6 +26,7 @@ import javax.faces.bean.SessionScoped;
 public class EmprestimoView implements Serializable {
     
     private Date dataEmprestimo;
+    private Integer idFavorecido;
     private LnFavorecido favorecido;
     private Integer contaPagamento;
     private Integer contaDestino;
@@ -44,14 +45,21 @@ public class EmprestimoView implements Serializable {
     private List<Conta> listaContaOrigem;
 
     private FavorecidoFuncoes favorecidoFuncoes;
-    private PlanoContaFuncoes planoContaFuncoes;
+    private final PlanoContaFuncoes planoContaFuncoes;
 
     public EmprestimoView() {
         favorecidoFuncoes = new FavorecidoFuncoes();
         planoContaFuncoes = new PlanoContaFuncoes();
-        listaFavorecido = favorecidoFuncoes.grabListaFavorecido();
+
+        listaFavorecido = favorecidoFuncoes.grabListaFavorecidoAtivo();
+        
+        System.out.println("Lista Favorecido " + listaFavorecido.toString());
+        
+        
         listaContaDestino = planoContaFuncoes.montaConta();
         listaContaOrigem = planoContaFuncoes.montaConta();
+        
+        favorecido = new LnFavorecido();
     }
 
     public Date getDataEmprestimo() {
@@ -62,6 +70,14 @@ public class EmprestimoView implements Serializable {
         this.dataEmprestimo = dataEmprestimo;
     }
 
+    public Integer getIdFavorecido() {
+        return idFavorecido;
+    }
+
+    public void setIdFavorecido(Integer idFavorecido) {
+        this.idFavorecido = idFavorecido;
+    }
+    
     public LnFavorecido getFavorecido() {
         return favorecido;
     }

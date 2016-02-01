@@ -85,6 +85,10 @@ public class FavorecidoFuncoes implements Serializable {
     public List<LnFavorecido> grabListaFavorecido() {
         return FavorecidoDao.grabListaFavorecido();
     }
+    
+    public List<LnFavorecido> grabListaFavorecidoAtivo(){
+        return FavorecidoDao.grabListaFavorecidoAtivo();
+    }
 
     public boolean verificaInformacoes(LnFavorecido lnFavorecido) {
         boolean validado = true;

@@ -7,19 +7,22 @@
 
         <h:panelGrid id="ididentificafavorecido" columns="4">
             <p:outputLabel value="#{msgs['ln.texto.pagarpara']}"/>
-            <p:selectOneMenu id="idfavorecidoemprestimo" style="width: 250px;" value="#{emprestimoView.favorecido}" effect="fade">
-                <f:selectItems var="varFavorecidoInfoTomando" value="#{emprestimoView.listaFavorecido}" 
-                               itemLabel="#{varFavorecidoInfoTomando.favStDescricao}" itemValue="#{varFavorecidoInfoTomando.favInCodigo}"/>
+            <p:selectOneMenu id="idfavorecidoemprestimoInfoTomando" style="width: 250px;" value="#{emprestimoView.idFavorecido}" effect="fade">
+                <f:selectItems var="varfavorecidoempretimoinfotomando" value="#{emprestimoView.listaFavorecido}"
+                               itemLabel="#{varfavorecidoempretimoinfotomando.favStDescricao}"
+                               itemValue="#{varfavorecidoempretimoinfotomando.favInCodigo}"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.pagarcomconta']}"/>
             <p:selectOneMenu id="idcontaemprestimopagar" style="width: 250px;" value="#{emprestimoView.contaPagamento}" effect="fade">
-                <f:selectItems var="varContaPagamentoInfoTomando" value="#{emprestimoView.listaContaOrigem}" itemLabel="#{varContaPagamento.descricaoConta}"
-                               itemValue="#{varContaPagamento.codigoConta}"/>
+                <f:selectItems var="varContaPagamentoInfoTomando" value="#{emprestimoView.listaContaOrigem}" 
+                               itemLabel="#{varContaPagamentoInfoTomando.descricaoConta}"
+                               itemValue="#{varContaPagamentoInfoTomando.codigoConta}"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.contadestino']}"/>
             <p:selectOneMenu id="idcontadestinoemprestimo" style="width: 250px;" value="#{emprestimoView.contaDestino}" effect="fade">
-                <f:selectItems var="varContaDestinoInfoTomando" value="#{emprestimoView.listaContaDestino}" itemLabel="#{varContaDestino.descricaoConta}"
-                               itemValue="#{varContaDestino.codigoConta}"/>
+                <f:selectItems var="varContaDestinoInfoTomando" value="#{emprestimoView.listaContaDestino}" 
+                               itemLabel="#{varContaDestinoInfoTomando.descricaoConta}"
+                               itemValue="#{varContaDestinoInfoTomando.codigoConta}"/>
             </p:selectOneMenu>
         </h:panelGrid>      
 </ui:composition>

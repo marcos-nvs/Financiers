@@ -90,4 +90,27 @@ public class FavorecidoDao extends GenericDao implements Serializable {
         }
         return listaFavorecido;
     }
+    
+    public static List<LnFavorecido> grabListaFavorecidoAtivo(){
+        
+        Session session = null;
+        Transaction tx;
+        List<LnFavorecido> listaFavorecido = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnFavorecido.findByFavChAtivo");
+            query.setCharacter("favChAtivo", 'S');
+            listaFavorecido = query.list();
+            tx.commit();
+        } finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return listaFavorecido;
+    }
 }
