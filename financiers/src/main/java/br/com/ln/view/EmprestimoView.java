@@ -222,6 +222,9 @@ public class EmprestimoView implements Serializable {
         emprestimo.setContaPagamento(contaPagamento);
         emprestimo.setDataEmprestimo(dataEmprestimo);
         emprestimo.setDataVencimento(dataVencimento);
+        
+        favorecido = favorecidoFuncoes.grabFavorecido(idFavorecido);
+        
         emprestimo.setFavorecido(favorecido);
         emprestimo.setJurosAnuais(jurosAnuais);
         emprestimo.setJurosEfetivos(jurosEfetivos);
