@@ -3,17 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.ln.objeto;
+package br.com.ln.view;
 
+import br.com.ln.objeto.Conta;
+import br.com.ln.objeto.ReceitaDespesa;
+import br.com.ln.objeto.Tabela;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Marcos Naves
  */
-public class ReceitaDespesa implements Serializable{
-    
+@SessionScoped
+@ManagedBean(name = "recdespView")
+public class ReceitaDespesaView implements Serializable {
+
     private boolean bCalculada;
     private Integer contaBaseCalculo;
     private boolean bImposto;
@@ -33,7 +41,13 @@ public class ReceitaDespesa implements Serializable{
     private boolean bNovembro;
     private boolean bDezembro;
 
-    public ReceitaDespesa() {
+    private List<Conta> listaContaBase;
+    private List<Tabela> listaTabela;
+
+    private boolean bCalculadaLibera = true;
+    private boolean bImpostoLibera = true;
+     
+    public ReceitaDespesaView() {
     }
 
     public boolean isbCalculada() {
@@ -180,27 +194,60 @@ public class ReceitaDespesa implements Serializable{
         this.bDezembro = bDezembro;
     }
 
+    public List<Conta> getListaContaBase() {
+        return listaContaBase;
+    }
+
+    public void setListaContaBase(List<Conta> listaContaBase) {
+        this.listaContaBase = listaContaBase;
+    }
+
+    public List<Tabela> getListaTabela() {
+        return listaTabela;
+    }
+
+    public void setListaTabela(List<Tabela> listaTabela) {
+        this.listaTabela = listaTabela;
+    }
+
+    public boolean isbCalculadaLibera() {
+        return bCalculadaLibera;
+    }
+
+    public void setbCalculadaLibera(boolean bCalculadaLibera) {
+        this.bCalculadaLibera = bCalculadaLibera;
+    }
+
+    public boolean isbImpostoLibera() {
+        return bImpostoLibera;
+    }
+
+    public void setbImpostoLibera(boolean bImpostoLibera) {
+        this.bImpostoLibera = bImpostoLibera;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + (this.bCalculada ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.contaBaseCalculo);
-        hash = 97 * hash + (this.bImposto ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.codigoTabelaImposto);
-        hash = 97 * hash + Objects.hashCode(this.qtdeOcorrencia);
-        hash = 97 * hash + Objects.hashCode(this.diaOcorrencia);
-        hash = 97 * hash + (this.bJaneiro ? 1 : 0);
-        hash = 97 * hash + (this.bFevereiro ? 1 : 0);
-        hash = 97 * hash + (this.bMarco ? 1 : 0);
-        hash = 97 * hash + (this.bAbril ? 1 : 0);
-        hash = 97 * hash + (this.bMaio ? 1 : 0);
-        hash = 97 * hash + (this.bJunho ? 1 : 0);
-        hash = 97 * hash + (this.bJulho ? 1 : 0);
-        hash = 97 * hash + (this.bAgosto ? 1 : 0);
-        hash = 97 * hash + (this.bSetembro ? 1 : 0);
-        hash = 97 * hash + (this.bOutubro ? 1 : 0);
-        hash = 97 * hash + (this.bNovembro ? 1 : 0);
-        hash = 97 * hash + (this.bDezembro ? 1 : 0);
+        hash = 37 * hash + (this.bCalculada ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.contaBaseCalculo);
+        hash = 37 * hash + (this.bImposto ? 1 : 0);
+        hash = 37 * hash + Objects.hashCode(this.codigoTabelaImposto);
+        hash = 37 * hash + Objects.hashCode(this.qtdeOcorrencia);
+        hash = 37 * hash + Objects.hashCode(this.diaOcorrencia);
+        hash = 37 * hash + (this.bJaneiro ? 1 : 0);
+        hash = 37 * hash + (this.bFevereiro ? 1 : 0);
+        hash = 37 * hash + (this.bMarco ? 1 : 0);
+        hash = 37 * hash + (this.bAbril ? 1 : 0);
+        hash = 37 * hash + (this.bMaio ? 1 : 0);
+        hash = 37 * hash + (this.bJunho ? 1 : 0);
+        hash = 37 * hash + (this.bJulho ? 1 : 0);
+        hash = 37 * hash + (this.bAgosto ? 1 : 0);
+        hash = 37 * hash + (this.bSetembro ? 1 : 0);
+        hash = 37 * hash + (this.bOutubro ? 1 : 0);
+        hash = 37 * hash + (this.bNovembro ? 1 : 0);
+        hash = 37 * hash + (this.bDezembro ? 1 : 0);
         return hash;
     }
 
@@ -215,7 +262,7 @@ public class ReceitaDespesa implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final ReceitaDespesa other = (ReceitaDespesa) obj;
+        final ReceitaDespesaView other = (ReceitaDespesaView) obj;
         if (this.bCalculada != other.bCalculada) {
             return false;
         }
@@ -275,8 +322,51 @@ public class ReceitaDespesa implements Serializable{
 
     @Override
     public String toString() {
-        return "ReceitaDespesa{" + "bCalculada=" + bCalculada + ", contaBaseCalculo=" + contaBaseCalculo + ", bImposto=" + bImposto + ", codigoTabelaImposto=" + codigoTabelaImposto + ", qtdeOcorrencia=" + qtdeOcorrencia + ", diaOcorrencia=" + diaOcorrencia + ", bJaneiro=" + bJaneiro + ", bFevereiro=" + bFevereiro + ", bMarco=" + bMarco + ", bAbril=" + bAbril + ", bMaio=" + bMaio + ", bJunho=" + bJunho + ", bJulho=" + bJulho + ", bAgosto=" + bAgosto + ", bSetembro=" + bSetembro + ", bOutubro=" + bOutubro + ", bNovembro=" + bNovembro + ", bDezembro=" + bDezembro + '}';
+        return "ReceitaDespesaView{" + "bCalculada=" + bCalculada + ", contaBaseCalculo=" + contaBaseCalculo + ", bImposto=" + bImposto + ", codigoTabelaImposto=" + codigoTabelaImposto + ", qtdeOcorrencia=" + qtdeOcorrencia + ", diaOcorrencia=" + diaOcorrencia + ", bJaneiro=" + bJaneiro + ", bFevereiro=" + bFevereiro + ", bMarco=" + bMarco + ", bAbril=" + bAbril + ", bMaio=" + bMaio + ", bJunho=" + bJunho + ", bJulho=" + bJulho + ", bAgosto=" + bAgosto + ", bSetembro=" + bSetembro + ", bOutubro=" + bOutubro + ", bNovembro=" + bNovembro + ", bDezembro=" + bDezembro + '}';
     }
 
     
+    public void liberaCalculada(){
+        if (bCalculada){
+            bCalculadaLibera = false;
+        } else {
+            bCalculadaLibera = true;
+        }
+    }
+    
+    public void liberaImposto(){
+        
+        if (bImposto){
+            bImpostoLibera = false;
+        } else {
+            bImpostoLibera = true;
+        }
+    }
+    
+    public ReceitaDespesa grabReceitaDespesa(){
+        
+        ReceitaDespesa receitaDespesa = new ReceitaDespesa();
+        
+        receitaDespesa.setCodigoTabelaImposto(codigoTabelaImposto);
+        receitaDespesa.setContaBaseCalculo(contaBaseCalculo);
+        receitaDespesa.setDiaOcorrencia(diaOcorrencia);
+        receitaDespesa.setQtdeOcorrencia(qtdeOcorrencia);
+        receitaDespesa.setbAbril(bAbril);
+        receitaDespesa.setbAgosto(bAgosto);
+        receitaDespesa.setbCalculada(bCalculada);
+        receitaDespesa.setbDezembro(bDezembro);
+        receitaDespesa.setbFevereiro(bFevereiro);
+        receitaDespesa.setbImposto(bImposto);
+        receitaDespesa.setbJaneiro(bJaneiro);
+        receitaDespesa.setbJulho(bJulho);
+        receitaDespesa.setbJunho(bJunho);
+        receitaDespesa.setbMaio(bMaio);
+        receitaDespesa.setbMarco(bMarco);
+        receitaDespesa.setbNovembro(bNovembro);
+        receitaDespesa.setbOutubro(bOutubro);
+        receitaDespesa.setbSetembro(bSetembro);
+        
+        return receitaDespesa;
+        
+    }
 }

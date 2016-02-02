@@ -61,6 +61,8 @@ public class PlanoContaView implements Serializable {
     private String telaEmprestimo;
     private String telaFinanciamento;
 
+    ReceitaDespesaView receitaDespesaView;
+
     public PlanoContaView() {
         planoContaFuncoes = new PlanoContaFuncoes();
         listaCategoria = CategoriaDao.grabCategoria('S');
@@ -274,7 +276,7 @@ public class PlanoContaView implements Serializable {
 
         Integer idTipoCategoria = planoContaFuncoes.tipoConta(idCategoria);
         AtivoView ativoView;
-        
+
         switch (idTipoCategoria) {
             case 1: //Ativo
                 ativoView = (AtivoView) JsfHelper.getSessionAttribute("ativoInfo");
@@ -302,14 +304,21 @@ public class PlanoContaView implements Serializable {
                 FinanciamentoView financiamentoView = (FinanciamentoView) JsfHelper.getSessionAttribute("finView");
                 ativoView = (AtivoView) JsfHelper.getSessionAttribute("ativoInfo");
                 conta.setFinancimento(financiamentoView.grabFinanciamento());
+                conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
+                conta.getAtivo().setTipoAtivo(tipoAtivo);
+                conta.getAtivo().setValorAtivo(conta.getFinancimento().getValorAtivo());
                 conta.getFinancimento().setTipoFinancimanto(tipoFinanciamento);
                 conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
                 break;
             case 8: //Outros Passivos
                 break;
             case 9: //Receitas
+                receitaDespesaView = (ReceitaDespesaView) JsfHelper.getSessionAttribute("recdespView");
+                conta.setReceitaDespesa(receitaDespesaView.grabReceitaDespesa());
                 break;
             case 10: //Despesas
+                receitaDespesaView = (ReceitaDespesaView) JsfHelper.getSessionAttribute("recdespView");
+                conta.setReceitaDespesa(receitaDespesaView.grabReceitaDespesa());
                 break;
             case 11: //Contas à Receber
                 break;
