@@ -60,6 +60,7 @@ public class PlanoContaView implements Serializable {
     private String tipoFinanciamento;
     private String telaEmprestimo;
     private String telaFinanciamento;
+    private boolean bMostraSaldoInicial = false;
 
     ReceitaDespesaView receitaDespesaView;
 
@@ -230,6 +231,14 @@ public class PlanoContaView implements Serializable {
         this.telaFinanciamento = telaFinanciamento;
     }
 
+    public boolean isbMostraSaldoInicial() {
+        return bMostraSaldoInicial;
+    }
+
+    public void setbMostraSaldoInicial(boolean bMostraSaldoInicial) {
+        this.bMostraSaldoInicial = bMostraSaldoInicial;
+    }
+    
     public void btIncluirConta() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             clearVarConta();
@@ -268,8 +277,7 @@ public class PlanoContaView implements Serializable {
     public void btSalvarContaLista() {
         conta = new Conta();
         defineConfiguracaoConta(conta);
-
-        System.out.println("Conta : " + conta.toString());
+        
     }
 
     private Conta defineConfiguracaoConta(Conta conta) {
@@ -310,8 +318,8 @@ public class PlanoContaView implements Serializable {
                 conta.getFinancimento().setTipoFinancimanto(tipoFinanciamento);
                 conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
                 break;
-            case 8: //Outros Passivos
-                break;
+//            case 8: //Outros Passivos
+//                break;
             case 9: //Receitas
                 receitaDespesaView = (ReceitaDespesaView) JsfHelper.getSessionAttribute("recdespView");
                 conta.setReceitaDespesa(receitaDespesaView.grabReceitaDespesa());
@@ -320,10 +328,10 @@ public class PlanoContaView implements Serializable {
                 receitaDespesaView = (ReceitaDespesaView) JsfHelper.getSessionAttribute("recdespView");
                 conta.setReceitaDespesa(receitaDespesaView.grabReceitaDespesa());
                 break;
-            case 11: //Contas à Receber
-                break;
-            case 12: //Contas à Pagar
-                break;
+//            case 11: //Contas à Receber
+//                break;
+//            case 12: //Contas à Pagar
+//                break;
         }
 
         conta.setbContaAtiva(bContaAtiva);
@@ -361,41 +369,53 @@ public class PlanoContaView implements Serializable {
                 telaConta = "../cadastro/planocontas/ativo.xhtml";
                 bItemAtivoAplicacao = false;
                 bItemAtivoMovel = false;
+                bMostraSaldoInicial = false;
                 break;
             case 2:
                 telaConta = "../cadastro/planocontas/vazia.xhtml";
+                bMostraSaldoInicial = true;
                 break;
             case 3:
                 telaConta = "../cadastro/planocontas/banco.xhtml";
+                bMostraSaldoInicial = true;
                 break;
             case 4:
                 telaConta = "../cadastro/planocontas/cartaocredito.xhtml";
+                bMostraSaldoInicial = true;
                 break;
             case 5:
                 telaConta = "../cadastro/planocontas/vazia.xhtml";
+                bMostraSaldoInicial = true;
                 break;
             case 6:
                 telaConta = "../cadastro/planocontas/emprestimo.xhtml";
+                bMostraSaldoInicial = false;
                 break;
             case 7:
                 telaConta = "../cadastro/planocontas/financiamento.xhtml";
                 bItemAtivoAplicacao = true;
                 bItemAtivoMovel = true;
+                bMostraSaldoInicial = false;
                 break;
             case 8:
                 telaConta = "../cadastro/planocontas/vazia.xhtml";
+                bMostraSaldoInicial = true;
                 break;
             case 9:
                 telaConta = "../cadastro/planocontas/receitas.xhtml";
+                bMostraSaldoInicial = true;
                 break;
             case 10:
                 telaConta = "../cadastro/planocontas/despesas.xhtml";
+                bMostraSaldoInicial = true;
                 break;
             case 11:
                 telaConta = "../cadastro/planocontas/vazia.xhtml";
+                bMostraSaldoInicial = true;
                 break;
             case 12:
                 telaConta = "../cadastro/planocontas/vazia.xhtml";
+                bMostraSaldoInicial = true;
                 break;
         }
 

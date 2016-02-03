@@ -5,6 +5,7 @@
  */
 package br.com.ln.funcao;
 
+import br.com.ln.comum.Historico;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.dao.PlanoContaDao;
 import br.com.ln.entity.LnPlanoconta;
@@ -19,12 +20,20 @@ import br.com.ln.objeto.ReceitaDespesa;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author Marcos Naves
  */
 public class PlanoContaFuncoes implements Serializable {
+
+    public String mensagem;
+    private Historico historico;
+
+    private final FacesContext context = FacesContext.getCurrentInstance();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
 
     public Integer tipoConta(Integer categoria) {
         return CategoriaDao.grabTipoContaPorCategoria(categoria);
@@ -83,9 +92,25 @@ public class PlanoContaFuncoes implements Serializable {
 
                 listaConta.add(conta);
             }
-
         }
 
         return listaConta;
     }
+    
+    public boolean verificaInformacao(Conta conta){
+        
+        boolean validado = true;
+        
+        mensagem = bundle.getString("ln.mb.frase.preenchercampos") + " ";
+        
+        if (conta.getDescricaoConta().equals("")){
+            mensagem = mensagem + bundle.getString("");
+            validado = false;
+        }
+        
+        
+        return validado;
+    }
+    
+    
 }
