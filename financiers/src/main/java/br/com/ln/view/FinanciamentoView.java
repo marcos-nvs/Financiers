@@ -5,7 +5,6 @@
  */
 package br.com.ln.view;
 
-import br.com.ln.comum.JsfHelper;
 import br.com.ln.entity.LnFavorecido;
 import br.com.ln.funcao.FavorecidoFuncoes;
 import br.com.ln.objeto.Ativo;
@@ -37,7 +36,7 @@ public class FinanciamentoView implements Serializable {
     private Double valorParcelas;
     private Integer prazoFinanciamento;
     private Double jurosMensais;
-    private Integer diaVencimento;
+    private Date dataVencimento;
 
     private LnFavorecido favorecido;
 
@@ -140,13 +139,6 @@ public class FinanciamentoView implements Serializable {
         this.jurosMensais = jurosMensais;
     }
 
-    public Integer getDiaVencimento() {
-        return diaVencimento;
-    }
-
-    public void setDiaVencimento(Integer diaVencimento) {
-        this.diaVencimento = diaVencimento;
-    }
 
     public List<LnFavorecido> getListaFavorecido() {
         return listaFavorecido;
@@ -172,21 +164,21 @@ public class FinanciamentoView implements Serializable {
         this.listaContaAtivo = listaContaAtivo;
     }
 
+    public Date getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 29 * hash + Objects.hashCode(this.dataFinancimento);
-        hash = 29 * hash + (this.simulado ? 1 : 0);
-        hash = 29 * hash + Objects.hashCode(this.ativoFinanciado);
-        hash = 29 * hash + Objects.hashCode(this.idFavorecido);
-        hash = 29 * hash + Objects.hashCode(this.contaPagamento);
-        hash = 29 * hash + Objects.hashCode(this.valorAtivo);
-        hash = 29 * hash + Objects.hashCode(this.valorEntrada);
-        hash = 29 * hash + Objects.hashCode(this.valorFinanciado);
-        hash = 29 * hash + Objects.hashCode(this.valorParcelas);
-        hash = 29 * hash + Objects.hashCode(this.prazoFinanciamento);
-        hash = 29 * hash + Objects.hashCode(this.jurosMensais);
-        hash = 29 * hash + Objects.hashCode(this.diaVencimento);
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.dataFinancimento);
+        hash = 23 * hash + (this.simulado ? 1 : 0);
+        hash = 23 * hash + Objects.hashCode(this.ativoFinanciado);
+        hash = 23 * hash + Objects.hashCode(this.idFavorecido);
         return hash;
     }
 
@@ -214,37 +206,14 @@ public class FinanciamentoView implements Serializable {
         if (!Objects.equals(this.idFavorecido, other.idFavorecido)) {
             return false;
         }
-        if (!Objects.equals(this.contaPagamento, other.contaPagamento)) {
-            return false;
-        }
-        if (!Objects.equals(this.valorAtivo, other.valorAtivo)) {
-            return false;
-        }
-        if (!Objects.equals(this.valorEntrada, other.valorEntrada)) {
-            return false;
-        }
-        if (!Objects.equals(this.valorFinanciado, other.valorFinanciado)) {
-            return false;
-        }
-        if (!Objects.equals(this.valorParcelas, other.valorParcelas)) {
-            return false;
-        }
-        if (!Objects.equals(this.prazoFinanciamento, other.prazoFinanciamento)) {
-            return false;
-        }
-        if (!Objects.equals(this.jurosMensais, other.jurosMensais)) {
-            return false;
-        }
-        if (!Objects.equals(this.diaVencimento, other.diaVencimento)) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "FinanciamentoView{" + "dataFinancimento=" + dataFinancimento + ", simulado=" + simulado + ", ativoFinanciado=" + ativoFinanciado + ", idFavorecido=" + idFavorecido + ", contaPagamento=" + contaPagamento + ", valorAtivo=" + valorAtivo + ", valorEntrada=" + valorEntrada + ", valorFinanciado=" + valorFinanciado + ", valorParcelas=" + valorParcelas + ", prazoFinanciamento=" + prazoFinanciamento + ", jurosMensais=" + jurosMensais + ", diaVencimento=" + diaVencimento + ", listaFavorecido=" + listaFavorecido + ", listaContaPagamento=" + listaContaPagamento + ", listaContaAtivo=" + listaContaAtivo + '}';
+        return "FinanciamentoView{" + "dataFinancimento=" + dataFinancimento + ", simulado=" + simulado + ", ativoFinanciado=" + ativoFinanciado + ", idFavorecido=" + idFavorecido + ", contaPagamento=" + contaPagamento + ", valorAtivo=" + valorAtivo + ", valorEntrada=" + valorEntrada + ", valorFinanciado=" + valorFinanciado + ", valorParcelas=" + valorParcelas + ", prazoFinanciamento=" + prazoFinanciamento + ", jurosMensais=" + jurosMensais + ", dataVencimento=" + dataVencimento + ", favorecido=" + favorecido + ", listaFavorecido=" + listaFavorecido + ", listaContaPagamento=" + listaContaPagamento + ", listaContaAtivo=" + listaContaAtivo + ", favorecidoFuncoes=" + favorecidoFuncoes + '}';
     }
+
 
     public Financiamento grabFinanciamento() {
 
@@ -266,6 +235,7 @@ public class FinanciamentoView implements Serializable {
         financiamento.setValorEntrada(valorEntrada);
         financiamento.setValorFinanciado(valorFinanciado);
         financiamento.setValorParcelas(valorParcelas);
+        financiamento.setDataVencimento(dataVencimento);
         
         return financiamento;
     }

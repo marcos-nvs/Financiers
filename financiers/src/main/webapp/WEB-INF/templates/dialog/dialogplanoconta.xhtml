@@ -9,7 +9,7 @@
         <p:outputLabel value="#{msgs['ln.texto.categoria']}"/>
         <p:selectOneMenu id="idcontacategoria" value="#{contaView.idCategoria}" effect="fade" style="margin-left: 18px; width: 250px;">
             <p:ajax listener="#{contaView.identificaTipoConta}" process="idcontacategoria" 
-                    update="idgridtipoconta"/>
+                    update="idgridtipoconta, idinputContaSaldo"/>
             <f:selectItems var="itemCatConta" value="#{contaView.listaCategoria}" itemLabel="#{itemCatConta.catStDescricao}"
                            itemValue="#{itemCatConta.catInCodigo}"/>
         </p:selectOneMenu>

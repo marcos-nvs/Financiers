@@ -28,6 +28,7 @@ public class Financiamento implements Serializable{
     private Double valorParcelas;
     private Integer prazoFinanciamento;
     private Double jurosMensais;
+    private Date dataVencimento;
 
     public Financiamento() {
     }
@@ -128,10 +129,20 @@ public class Financiamento implements Serializable{
         this.jurosMensais = jurosMensais;
     }
 
+    public Date getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(Date dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.tipoFinancimanto);
+        hash = 53 * hash + Objects.hashCode(this.tipoFinancimanto);
+        hash = 53 * hash + Objects.hashCode(this.dataFinancimento);
+        hash = 53 * hash + (this.simulado ? 1 : 0);
         return hash;
     }
 
@@ -147,7 +158,13 @@ public class Financiamento implements Serializable{
             return false;
         }
         final Financiamento other = (Financiamento) obj;
+        if (this.simulado != other.simulado) {
+            return false;
+        }
         if (!Objects.equals(this.tipoFinancimanto, other.tipoFinancimanto)) {
+            return false;
+        }
+        if (!Objects.equals(this.dataFinancimento, other.dataFinancimento)) {
             return false;
         }
         return true;
@@ -155,7 +172,7 @@ public class Financiamento implements Serializable{
 
     @Override
     public String toString() {
-        return "Financiamento{" + "tipoFinancimanto=" + tipoFinancimanto + ", dataFinancimento=" + dataFinancimento + ", simulado=" + simulado + ", ativoFinanciado=" + ativoFinanciado + ", favorecido=" + favorecido + ", contaPagamento=" + contaPagamento + ", valorAtivo=" + valorAtivo + ", valorEntrada=" + valorEntrada + ", valorFinanciado=" + valorFinanciado + ", valorParcelas=" + valorParcelas + ", prazoFinanciamento=" + prazoFinanciamento + ", jurosMensais=" + jurosMensais + '}';
+        return "Financiamento{" + "tipoFinancimanto=" + tipoFinancimanto + ", dataFinancimento=" + dataFinancimento + ", simulado=" + simulado + ", ativoFinanciado=" + ativoFinanciado + ", favorecido=" + favorecido + ", contaPagamento=" + contaPagamento + ", valorAtivo=" + valorAtivo + ", valorEntrada=" + valorEntrada + ", valorFinanciado=" + valorFinanciado + ", valorParcelas=" + valorParcelas + ", prazoFinanciamento=" + prazoFinanciamento + ", jurosMensais=" + jurosMensais + ", dataVencimento=" + dataVencimento + '}';
     }
 
 }
