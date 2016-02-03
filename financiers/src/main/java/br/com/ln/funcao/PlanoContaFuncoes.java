@@ -107,8 +107,7 @@ public class PlanoContaFuncoes implements Serializable {
             mensagem = mensagem + bundle.getString("");
             validado = false;
         }
-        
-        
+
         return validado;
     }
     

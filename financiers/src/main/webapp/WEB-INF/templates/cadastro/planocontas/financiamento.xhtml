@@ -61,7 +61,7 @@
                 </p:inputText>
                 <p:outputLabel value="#{msgs['ln.texto.prazo']}"/>
                 <p:inputText size="5" style="margin-left: 25px;" value="#{finView.prazoFinanciamento}"/>
-                <p:outputLabel value="#{msgs['ln.texto.jurosmensais']}"/>
+                <p:outputLabel value="#{msgs['ln.texto.jurosmensais']} %"/>
                 <p:inputText id="idjurosmenalfin" size="10" value="#{finView.jurosMensais}">
                     <f:convertNumber pattern="##0.00" type="percent"/>
                     <p:ajax update="idjurosmenalfin" process="idjurosmenalfin" event="change"/>
