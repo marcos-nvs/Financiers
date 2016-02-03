@@ -18,6 +18,7 @@ import br.com.ln.objeto.Emprestimo;
 import br.com.ln.objeto.Financiamento;
 import br.com.ln.objeto.ReceitaDespesa;
 import br.com.ln.tipos.TipoFuncao;
+import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,39 +59,36 @@ public class PlanoContaFuncoes implements Serializable {
                     conta.setDescricaoConta(planoconta.getCtaStDescricao());
                     conta.setSaldoConta(planoconta.getCtaFlSaldoinicial());
 
-                    Object obj = planoconta.getCtaStConfiguracao();
+                    Gson gson = new Gson();
+                    Integer tipoConta = tipoConta(planoconta.getCatInCodigo());
 
-                    if (obj instanceof Ativo) {
-                        conta.setAtivo((Ativo) obj);
+                    switch (tipoConta) {
+                        case 1:
+                            conta.setAtivo(gson.fromJson(planoconta.getCtaStConfiguracao(), Ativo.class));
+                            break;
+                        case 3:
+                            conta.setBanco(gson.fromJson(planoconta.getCtaStConfiguracao(), Banco.class));
+                            break;
+                        case 4:
+                            conta.setCartaoCredito(gson.fromJson(planoconta.getCtaStConfiguracao(), CartaoCredito.class));
+                            break;
+                        case 6:
+                            conta.setEmprestimo(gson.fromJson(planoconta.getCtaStConfiguracao(), Emprestimo.class));
+                            break;
+                        case 7:
+                            conta.setFinancimento(gson.fromJson(planoconta.getCtaStConfiguracao(), Financiamento.class));
+                            break;
+                        case 9:
+                            conta.setReceitaDespesa(gson.fromJson(planoconta.getCtaStConfiguracao(), ReceitaDespesa.class));
+                            break;
+                        case 10:
+                            conta.setReceitaDespesa(gson.fromJson(planoconta.getCtaStConfiguracao(), ReceitaDespesa.class));
+                            break;
                     }
 
-                    if (obj instanceof Banco) {
-                        conta.setBanco((Banco) obj);
-                    }
+                    conta.setConfiguracaoAlerta(gson.fromJson(planoconta.getCtaStConfiguracao(), ConfiguracaoAlerta.class));
 
-                    if (obj instanceof CartaoCredito) {
-                        conta.setCartaoCredito((CartaoCredito) obj);
-                    }
-
-                    if (obj instanceof Emprestimo) {
-                        conta.setEmprestimo((Emprestimo) obj);
-                    }
-
-                    if (obj instanceof Financiamento) {
-                        conta.setFinancimento((Financiamento) obj);
-                    }
-
-                    if (obj instanceof ReceitaDespesa) {
-                        conta.setReceitaDespesa((ReceitaDespesa) obj);
-                    }
-
-                    obj = planoconta.getCtaStAlerta();
-
-                    if (obj instanceof ConfiguracaoAlerta) {
-                        conta.setConfiguracaoAlerta((ConfiguracaoAlerta) obj);
-                    }
                 }
-
                 listaConta.add(conta);
             }
         }
@@ -99,8 +97,6 @@ public class PlanoContaFuncoes implements Serializable {
     }
 
     public boolean verificaInformacao(Conta conta) {
-
-        System.out.println("Conta : ----> " + conta.toString());
 
         boolean validado = true;
 
@@ -112,7 +108,7 @@ public class PlanoContaFuncoes implements Serializable {
         }
 
         if (conta.getEmprestimo() != null) {
-
+            
         }
 
         if (conta.getFinancimento() != null) {
@@ -130,7 +126,7 @@ public class PlanoContaFuncoes implements Serializable {
 
         historico = new Historico();
         LnPlanoconta lnPlanoconta = montaPlanoConta(conta);
-        
+
         switch (lnPlanoconta.getTipoFuncao()) {
             case Incluir:
                 return incluirConta(lnPlanoconta);
@@ -147,11 +143,11 @@ public class PlanoContaFuncoes implements Serializable {
     private LnPlanoconta montaPlanoConta(Conta conta) {
 
         LnPlanoconta lnPlanoconta = new LnPlanoconta();
-        
-        if (conta.getTipoFuncao() != TipoFuncao.Incluir){
+
+        if (conta.getTipoFuncao() != TipoFuncao.Incluir) {
             lnPlanoconta.setCtaInCodigo(conta.getCodigoConta());
         }
-        
+
         lnPlanoconta.setCatInCodigo(conta.getCodigoCategoria());
 
         if (conta.isbContaAtiva()) {
@@ -164,24 +160,26 @@ public class PlanoContaFuncoes implements Serializable {
         lnPlanoconta.setCtaInCodigo(Integer.MIN_VALUE);
         lnPlanoconta.setCtaStAlerta(conta.getConfiguracaoAlerta().toString());
 
-        if (conta.getAtivo() != null) {
-            lnPlanoconta.setCtaStConfiguracao(conta.getAtivo().toString());
-        }
+        Gson gson = new Gson();
         
-        if (conta.getBanco()!= null) {
-            lnPlanoconta.setCtaStConfiguracao(conta.getBanco().toString());
+        if (conta.getAtivo() != null) {
+            lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getAtivo()));
         }
-        if (conta.getCartaoCredito()!= null) {
-            lnPlanoconta.setCtaStConfiguracao(conta.getCartaoCredito().toString());
+
+        if (conta.getBanco() != null) {
+            lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getBanco()));
         }
-        if (conta.getEmprestimo()!= null) {
-            lnPlanoconta.setCtaStConfiguracao(conta.getEmprestimo().toString());
+        if (conta.getCartaoCredito() != null) {
+            lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getCartaoCredito()));
         }
-        if (conta.getFinancimento()!= null) {
-            lnPlanoconta.setCtaStConfiguracao(conta.getFinancimento().toString());
+        if (conta.getEmprestimo() != null) {
+            lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getEmprestimo()));
+        }
+        if (conta.getFinancimento() != null) {
+            lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getFinancimento()));
         }
         if (conta.getReceitaDespesa() != null) {
-            lnPlanoconta.setCtaStConfiguracao(conta.getReceitaDespesa().toString());
+            lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getReceitaDespesa()));
         }
 
         return lnPlanoconta;

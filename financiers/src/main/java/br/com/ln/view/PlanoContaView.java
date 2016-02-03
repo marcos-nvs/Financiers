@@ -10,9 +10,23 @@ import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
+import br.com.ln.entity.LnPlanoconta;
 import br.com.ln.funcao.PlanoContaFuncoes;
+import br.com.ln.objeto.Ativo;
+import br.com.ln.objeto.Banco;
+import br.com.ln.objeto.CartaoCredito;
+import br.com.ln.objeto.ConfiguracaoAlerta;
 import br.com.ln.objeto.Conta;
+import br.com.ln.objeto.Emprestimo;
+import br.com.ln.objeto.Financiamento;
+import br.com.ln.objeto.ReceitaDespesa;
 import br.com.ln.tipos.TipoFuncao;
+import com.google.gson.Gson;
+import com.thoughtworks.xstream.core.util.CustomObjectOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,7 +34,9 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.json.Json;
 import org.primefaces.context.RequestContext;
+import org.primefaces.json.JSONObject;
 
 /**
  *
@@ -36,7 +52,7 @@ public class PlanoContaView implements Serializable {
     private boolean bContaAtiva;
     private Double saldoInicial;
     private TipoFuncao tipoFuncao;
-    
+
     private Conta conta;
     private LnCategoria categoria;
 
@@ -241,7 +257,7 @@ public class PlanoContaView implements Serializable {
     public void setbMostraSaldoInicial(boolean bMostraSaldoInicial) {
         this.bMostraSaldoInicial = bMostraSaldoInicial;
     }
-    
+
     public void btIncluirConta() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             clearVarConta();
@@ -287,8 +303,6 @@ public class PlanoContaView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     bundle.getString("ln.mb.titulo.conta"), mensagem));
         }
-        
-        
 
     }
 
@@ -350,8 +364,8 @@ public class PlanoContaView implements Serializable {
             if (conta.getEmprestimo() != null) {
                 conta.setSaldoConta(conta.getEmprestimo().getValorTotal());
             }
-            
-            if (conta.getFinancimento() != null){
+
+            if (conta.getFinancimento() != null) {
                 conta.setSaldoConta(conta.getFinancimento().getValorTotalFinanciamento());
             }
         } else {
