@@ -5,6 +5,7 @@
  */
 package br.com.ln.objeto;
 
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -26,6 +27,7 @@ public class Conta implements Serializable {
     private Emprestimo emprestimo;
     private Financiamento financimento;
     private ReceitaDespesa receitaDespesa;
+    private TipoFuncao tipoFuncao;
     
     private ConfiguracaoAlerta configuracaoAlerta;
 
@@ -128,6 +130,16 @@ public class Conta implements Serializable {
         this.configuracaoAlerta = configuracaoAlerta;
     }
 
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -155,7 +167,7 @@ public class Conta implements Serializable {
 
     @Override
     public String toString() {
-        return "Conta{" + "codigoConta=" + codigoConta + ", codigoCategoria=" + codigoCategoria + ", descricaoConta=" + descricaoConta + ", bContaAtiva=" + bContaAtiva + ", saldoConta=" + saldoConta + ", ativo=" + ativo + ", banco=" + banco + ", cartaoCredito=" + cartaoCredito + ", emprestimo=" + emprestimo + ", financimento=" + financimento + ", receitaDespesa=" + receitaDespesa + ", configuracaoAlerta=" + configuracaoAlerta + '}';
+        return "Conta{" + "codigoConta=" + codigoConta + ", codigoCategoria=" + codigoCategoria + ", descricaoConta=" + descricaoConta + ", bContaAtiva=" + bContaAtiva + ", saldoConta=" + saldoConta + ", ativo=" + ativo + ", banco=" + banco + ", cartaoCredito=" + cartaoCredito + ", emprestimo=" + emprestimo + ", financimento=" + financimento + ", receitaDespesa=" + receitaDespesa + ", tipoFuncao=" + tipoFuncao + ", configuracaoAlerta=" + configuracaoAlerta + '}';
     }
- 
+
 }

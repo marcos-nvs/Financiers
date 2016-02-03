@@ -37,6 +37,7 @@ public class FinanciamentoView implements Serializable {
     private Integer prazoFinanciamento;
     private Double jurosMensais;
     private Date dataVencimento;
+    private Double valorTotalFinanciamento;
 
     private LnFavorecido favorecido;
 
@@ -172,6 +173,16 @@ public class FinanciamentoView implements Serializable {
         this.dataVencimento = dataVencimento;
     }
 
+    public Double getValorTotalFinanciamento() {
+        return valorTotalFinanciamento;
+    }
+
+    public void setValorTotalFinanciamento(Double valorTotalFinanciamento) {
+        this.valorTotalFinanciamento = valorTotalFinanciamento;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -211,7 +222,7 @@ public class FinanciamentoView implements Serializable {
 
     @Override
     public String toString() {
-        return "FinanciamentoView{" + "dataFinancimento=" + dataFinancimento + ", simulado=" + simulado + ", ativoFinanciado=" + ativoFinanciado + ", idFavorecido=" + idFavorecido + ", contaPagamento=" + contaPagamento + ", valorAtivo=" + valorAtivo + ", valorEntrada=" + valorEntrada + ", valorFinanciado=" + valorFinanciado + ", valorParcelas=" + valorParcelas + ", prazoFinanciamento=" + prazoFinanciamento + ", jurosMensais=" + jurosMensais + ", dataVencimento=" + dataVencimento + ", favorecido=" + favorecido + ", listaFavorecido=" + listaFavorecido + ", listaContaPagamento=" + listaContaPagamento + ", listaContaAtivo=" + listaContaAtivo + ", favorecidoFuncoes=" + favorecidoFuncoes + '}';
+        return "FinanciamentoView{" + "dataFinancimento=" + dataFinancimento + ", simulado=" + simulado + ", ativoFinanciado=" + ativoFinanciado + ", idFavorecido=" + idFavorecido + ", contaPagamento=" + contaPagamento + ", valorAtivo=" + valorAtivo + ", valorEntrada=" + valorEntrada + ", valorFinanciado=" + valorFinanciado + ", valorParcelas=" + valorParcelas + ", prazoFinanciamento=" + prazoFinanciamento + ", jurosMensais=" + jurosMensais + ", dataVencimento=" + dataVencimento + ", valorTotalFinanciamento=" + valorTotalFinanciamento + ", favorecido=" + favorecido + ", listaFavorecido=" + listaFavorecido + ", listaContaPagamento=" + listaContaPagamento + ", listaContaAtivo=" + listaContaAtivo + ", favorecidoFuncoes=" + favorecidoFuncoes + '}';
     }
 
 
@@ -236,6 +247,7 @@ public class FinanciamentoView implements Serializable {
         financiamento.setValorFinanciado(valorFinanciado);
         financiamento.setValorParcelas(valorParcelas);
         financiamento.setDataVencimento(dataVencimento);
+        financiamento.setValorTotalFinanciamento(valorTotalFinanciamento);
         
         return financiamento;
     }

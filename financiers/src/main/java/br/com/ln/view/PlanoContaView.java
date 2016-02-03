@@ -12,6 +12,7 @@ import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.funcao.PlanoContaFuncoes;
 import br.com.ln.objeto.Conta;
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,6 +35,8 @@ public class PlanoContaView implements Serializable {
     private String nomeConta;
     private boolean bContaAtiva;
     private Double saldoInicial;
+    private TipoFuncao tipoFuncao;
+    
     private Conta conta;
     private LnCategoria categoria;
 
@@ -247,6 +250,7 @@ public class PlanoContaView implements Serializable {
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogplanoconta.xhtml");
             beanVar.setTituloDialog("ln.texto.cadastroconta");
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
+            tipoFuncao = TipoFuncao.Incluir;
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -277,7 +281,15 @@ public class PlanoContaView implements Serializable {
     public void btSalvarContaLista() {
         conta = new Conta();
         defineConfiguracaoConta(conta);
+
+        if (!planoContaFuncoes.verificaInformacao(conta)) {
+            mensagem = planoContaFuncoes.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    bundle.getString("ln.mb.titulo.conta"), mensagem));
+        }
         
+        
+
     }
 
     private Conta defineConfiguracaoConta(Conta conta) {
@@ -334,10 +346,23 @@ public class PlanoContaView implements Serializable {
 //                break;
         }
 
+        if (conta.getSaldoConta() == null) {
+            if (conta.getEmprestimo() != null) {
+                conta.setSaldoConta(conta.getEmprestimo().getValorTotal());
+            }
+            
+            if (conta.getFinancimento() != null){
+                conta.setSaldoConta(conta.getFinancimento().getValorTotalFinanciamento());
+            }
+        } else {
+            conta.setSaldoConta(0d);
+        }
+
         conta.setbContaAtiva(bContaAtiva);
         conta.setCodigoCategoria(idCategoria);
         conta.setDescricaoConta(nomeConta);
         conta.setSaldoConta(saldoInicial);
+        conta.setTipoFuncao(tipoFuncao);
 
         return conta;
     }

@@ -5,6 +5,7 @@
  */
 package br.com.ln.entity;
 
+import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -54,6 +56,9 @@ public class LnPlanoconta implements Serializable {
     private String ctaStConfiguracao;
     @Column(name = "cta_st_alerta")
     private String ctaStAlerta;
+
+    @Transient
+    private TipoFuncao tipoFuncao;
 
     public LnPlanoconta() {
     }
@@ -126,6 +131,14 @@ public class LnPlanoconta implements Serializable {
         this.ctaStAlerta = ctaStAlerta;
     }
 
+    public TipoFuncao getTipoFuncao() {
+        return tipoFuncao;
+    }
+
+    public void setTipoFuncao(TipoFuncao tipoFuncao) {
+        this.tipoFuncao = tipoFuncao;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

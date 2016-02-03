@@ -29,6 +29,7 @@ public class Financiamento implements Serializable{
     private Integer prazoFinanciamento;
     private Double jurosMensais;
     private Date dataVencimento;
+    private Double valorTotalFinanciamento;
 
     public Financiamento() {
     }
@@ -137,6 +138,16 @@ public class Financiamento implements Serializable{
         this.dataVencimento = dataVencimento;
     }
 
+    public Double getValorTotalFinanciamento() {
+        return valorTotalFinanciamento;
+    }
+
+    public void setValorTotalFinanciamento(Double valorTotalFinanciamento) {
+        this.valorTotalFinanciamento = valorTotalFinanciamento;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -172,7 +183,8 @@ public class Financiamento implements Serializable{
 
     @Override
     public String toString() {
-        return "Financiamento{" + "tipoFinancimanto=" + tipoFinancimanto + ", dataFinancimento=" + dataFinancimento + ", simulado=" + simulado + ", ativoFinanciado=" + ativoFinanciado + ", favorecido=" + favorecido + ", contaPagamento=" + contaPagamento + ", valorAtivo=" + valorAtivo + ", valorEntrada=" + valorEntrada + ", valorFinanciado=" + valorFinanciado + ", valorParcelas=" + valorParcelas + ", prazoFinanciamento=" + prazoFinanciamento + ", jurosMensais=" + jurosMensais + ", dataVencimento=" + dataVencimento + '}';
+        return "Financiamento{" + "tipoFinancimanto=" + tipoFinancimanto + ", dataFinancimento=" + dataFinancimento + ", simulado=" + simulado + ", ativoFinanciado=" + ativoFinanciado + ", favorecido=" + favorecido + ", contaPagamento=" + contaPagamento + ", valorAtivo=" + valorAtivo + ", valorEntrada=" + valorEntrada + ", valorFinanciado=" + valorFinanciado + ", valorParcelas=" + valorParcelas + ", prazoFinanciamento=" + prazoFinanciamento + ", jurosMensais=" + jurosMensais + ", dataVencimento=" + dataVencimento + ", valorTotalFinanciamento=" + valorTotalFinanciamento + '}';
     }
+
 
 }

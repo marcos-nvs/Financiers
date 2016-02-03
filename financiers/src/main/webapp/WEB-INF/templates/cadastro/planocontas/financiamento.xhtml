@@ -39,7 +39,7 @@
                 <p:calendar id="dtdatavencimentoFinanciamento" showOn="button" pattern="dd/MM/yyyy" value="#{finView.dataVencimento}" size="8"
                             style="margin-left: 15px;"/>
             </h:panelGrid>
-            <h:panelGrid id="iddetalhefinaciamento" columns="8">
+            <h:panelGrid id="iddetalhefinaciamento" columns="10">
                 <p:outputLabel value="#{msgs['ln.texto.valor']}"/>
                 <p:inputText id="idvalorativofinanciado" size="10" style="margin-left: 20px;" value="#{finView.valorAtivo}">
                     <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
@@ -59,6 +59,11 @@
                 <p:inputText id="idvalorparcelafin" size="10" value="#{finView.valorParcelas}">
                     <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
                     <p:ajax update="idvalorparcelafin" process="idvalorparcelafin" event="change"/>
+                </p:inputText>
+                <p:outputLabel value="#{msgs['ln.texto.valortotal']}"/>
+                <p:inputText id="idvalortotalfin" size="10" value="#{finView.valorTotalFinanciamento}" style="margin-left: 35px;">
+                    <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
+                    <p:ajax update="idvalortotalfin" process="idvalortotalfin" event="change"/>
                 </p:inputText>
                 <p:outputLabel value="#{msgs['ln.texto.prazo']}"/>
                 <p:inputText size="5" style="margin-left: 20px;" value="#{finView.prazoFinanciamento}"/>
