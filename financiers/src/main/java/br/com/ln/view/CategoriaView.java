@@ -219,7 +219,7 @@ public class CategoriaView implements Serializable {
                 lnCategoria.setTipoFuncao(TipoFuncao.Excluir);
 
                 if (categoriaFuncoes.categoria(lnCategoria)) {
-                    listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
+                    listCategoria = CategoriaDao.grabListaCategoria();
                     mensagem = categoriaFuncoes.mensagem;
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                             bundle.getString("ln.mb.titulo.categoria"), mensagem));
@@ -245,9 +245,8 @@ public class CategoriaView implements Serializable {
             }
 
             if (categoriaFuncoes.categoria(lnCategoria)) {
-                listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
+                listCategoria = CategoriaDao.grabListaCategoria();
                 RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
-                listCategoria = CategoriaDao.grabListObject(LnCategoria.class);
                 mensagem = categoriaFuncoes.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.categoria"), mensagem));
