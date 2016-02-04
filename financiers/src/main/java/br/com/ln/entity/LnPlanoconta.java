@@ -19,7 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author f12684146896
+ * @author Marcos Naves
  */
 @Entity
 @Table(name = "ln_planoconta")
@@ -161,7 +161,7 @@ public class LnPlanoconta implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.ln.entity.LnPlanoconta[ ctaInCodigo=" + ctaInCodigo + " ]";
+        return "LnPlanoconta{" + "ctaInCodigo=" + ctaInCodigo + ", catInCodigo=" + catInCodigo + ", ctaStDescricao=" + ctaStDescricao + ", ctaChAtivo=" + ctaChAtivo + ", ctaFlSaldoinicial=" + ctaFlSaldoinicial + '}';
     }
-    
+
 }

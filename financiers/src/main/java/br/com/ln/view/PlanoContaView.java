@@ -10,23 +10,9 @@ import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
-import br.com.ln.entity.LnPlanoconta;
 import br.com.ln.funcao.PlanoContaFuncoes;
-import br.com.ln.objeto.Ativo;
-import br.com.ln.objeto.Banco;
-import br.com.ln.objeto.CartaoCredito;
-import br.com.ln.objeto.ConfiguracaoAlerta;
 import br.com.ln.objeto.Conta;
-import br.com.ln.objeto.Emprestimo;
-import br.com.ln.objeto.Financiamento;
-import br.com.ln.objeto.ReceitaDespesa;
 import br.com.ln.tipos.TipoFuncao;
-import com.google.gson.Gson;
-import com.thoughtworks.xstream.core.util.CustomObjectOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,9 +20,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.json.Json;
 import org.primefaces.context.RequestContext;
-import org.primefaces.json.JSONObject;
 
 /**
  *
@@ -302,9 +286,19 @@ public class PlanoContaView implements Serializable {
             mensagem = planoContaFuncoes.mensagem;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     bundle.getString("ln.mb.titulo.conta"), mensagem));
+        } else if (planoContaFuncoes.planoConta(conta)) {
+            mensagem = planoContaFuncoes.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.conta"), mensagem));
+            RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
+        } else {
+            mensagem = planoContaFuncoes.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.conta"), mensagem));
         }
-
     }
+
+    
 
     private Conta defineConfiguracaoConta(Conta conta) {
 
@@ -316,6 +310,7 @@ public class PlanoContaView implements Serializable {
                 ativoView = (AtivoView) JsfHelper.getSessionAttribute("ativoInfo");
                 conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
                 conta.getAtivo().setTipoAtivo(tipoAtivo);
+                conta.setSaldoConta(conta.getAtivo().getValorAtivo());
                 break;
 //            case 2: //Passivo.
 //                break;
@@ -333,6 +328,7 @@ public class PlanoContaView implements Serializable {
                 EmprestimoView emprestimoView = (EmprestimoView) JsfHelper.getSessionAttribute("emprestimoView");
                 conta.setEmprestimo(emprestimoView.grabEmprestimo());
                 conta.getEmprestimo().setTipoEmprestimo(tipoEmprestimo);
+                conta.setSaldoConta(conta.getEmprestimo().getValorTotal());
                 break;
             case 7: //Financiamento
                 FinanciamentoView financiamentoView = (FinanciamentoView) JsfHelper.getSessionAttribute("finView");
@@ -340,6 +336,7 @@ public class PlanoContaView implements Serializable {
                 conta.setFinancimento(financiamentoView.grabFinanciamento());
                 conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
                 conta.getAtivo().setTipoAtivo(tipoAtivo);
+                conta.setSaldoConta(conta.getFinancimento().getValorTotalFinanciamento());
                 conta.getAtivo().setValorAtivo(conta.getFinancimento().getValorAtivo());
                 conta.getFinancimento().setTipoFinancimanto(tipoFinanciamento);
                 conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
@@ -360,22 +357,15 @@ public class PlanoContaView implements Serializable {
 //                break;
         }
 
-        if (conta.getSaldoConta() == null) {
-            if (conta.getEmprestimo() != null) {
-                conta.setSaldoConta(conta.getEmprestimo().getValorTotal());
-            }
-
-            if (conta.getFinancimento() != null) {
-                conta.setSaldoConta(conta.getFinancimento().getValorTotalFinanciamento());
-            }
-        } else {
+        if (conta.getSaldoConta() == null && saldoInicial != null) {
+            conta.setSaldoConta(saldoInicial);
+        } else if (conta.getSaldoConta() == null) {
             conta.setSaldoConta(0d);
         }
 
         conta.setbContaAtiva(bContaAtiva);
         conta.setCodigoCategoria(idCategoria);
         conta.setDescricaoConta(nomeConta);
-        conta.setSaldoConta(saldoInicial);
         conta.setTipoFuncao(tipoFuncao);
 
         return conta;

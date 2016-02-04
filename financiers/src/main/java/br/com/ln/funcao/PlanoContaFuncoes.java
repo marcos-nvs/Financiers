@@ -141,11 +141,13 @@ public class PlanoContaFuncoes implements Serializable {
 
         LnPlanoconta lnPlanoconta = new LnPlanoconta();
 
-        if (conta.getTipoFuncao() != TipoFuncao.Incluir) {
+        if (!conta.getTipoFuncao().equals(TipoFuncao.Incluir)) {
             lnPlanoconta.setCtaInCodigo(conta.getCodigoConta());
         }
 
         lnPlanoconta.setCatInCodigo(conta.getCodigoCategoria());
+        lnPlanoconta.setTipoFuncao(conta.getTipoFuncao());
+        lnPlanoconta.setCtaStDescricao(conta.getDescricaoConta());
 
         if (conta.isbContaAtiva()) {
             lnPlanoconta.setCtaChAtivo('S');
@@ -154,11 +156,13 @@ public class PlanoContaFuncoes implements Serializable {
         }
 
         lnPlanoconta.setCtaFlSaldoinicial(conta.getSaldoConta());
-        lnPlanoconta.setCtaInCodigo(Integer.MIN_VALUE);
-        lnPlanoconta.setCtaStAlerta(conta.getConfiguracaoAlerta().toString());
+
+        if (conta.getConfiguracaoAlerta() != null) {
+            lnPlanoconta.setCtaStAlerta(conta.getConfiguracaoAlerta().toString());
+        }
 
         Gson gson = new Gson();
-        
+
         if (conta.getAtivo() != null) {
             lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getAtivo()));
         }
@@ -183,11 +187,23 @@ public class PlanoContaFuncoes implements Serializable {
     }
 
     private boolean incluirConta(LnPlanoconta lnPlanoconta) {
-        boolean bGravado = false;
-        
-        
-        
-        return bGravado;
+
+        if (lnPlanoconta != null) {
+            lnPlanoconta.setCtaInCodigo(PlanoContaDao.grabLnPlanoContaNextId());
+
+            try {
+                PlanoContaDao.saveObject(lnPlanoconta);
+                historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaoconta") + " " + lnPlanoconta.getCtaStDescricao());
+                mensagem = bundle.getString("ln.mb.texto.sucesso");
+                return true;
+            } catch (Exception ex) {
+                mensagem = bundle.getString("ln.mb.frase.problema");
+                return false;
+            }
+        } else {
+            mensagem = bundle.getString("ln.mb.frase.problema");
+            return false;
+        }
     }
 
     private boolean alterarConta(LnPlanoconta lnPlanoconta) {
