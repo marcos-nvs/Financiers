@@ -39,4 +39,9 @@ public class PlanoContaDao extends GenericDao{
         }
         return listaPlanoconta;
     }
+    
+    public static Integer grabLnPlanoContaNextId() {
+        return new Integer(grabIdByNextValueStringSQL("select nextval('seq_planoconta');"));
+    }
+    
 }

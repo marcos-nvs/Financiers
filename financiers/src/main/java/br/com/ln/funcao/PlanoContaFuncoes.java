@@ -108,15 +108,12 @@ public class PlanoContaFuncoes implements Serializable {
         }
 
         if (conta.getEmprestimo() != null) {
-            
         }
 
         if (conta.getFinancimento() != null) {
-
         }
 
         if (conta.getReceitaDespesa() != null) {
-
         }
 
         return validado;
@@ -186,7 +183,11 @@ public class PlanoContaFuncoes implements Serializable {
     }
 
     private boolean incluirConta(LnPlanoconta lnPlanoconta) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        boolean bGravado = false;
+        
+        
+        
+        return bGravado;
     }
 
     private boolean alterarConta(LnPlanoconta lnPlanoconta) {
