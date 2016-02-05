@@ -25,7 +25,7 @@
         <p:column headerText="#{msgs['ln.texto.ativo']}">
             <p:outputLabel value="#{contaView.textoContaAtiva(varconta.isbContaAtiva())}"/>
         </p:column>
-        <p:rowExpansion>
+        <p:rowExpansion >
             <h:panelGrid id="idgriddetalheconta" columns="1">
                 <ui:include src="../consulta/consultaativo.xhtml"/>
             </h:panelGrid>

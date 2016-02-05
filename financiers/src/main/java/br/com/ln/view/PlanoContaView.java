@@ -387,6 +387,8 @@ public class PlanoContaView implements Serializable {
         conta.setCodigoCategoria(idCategoria);
         conta.setDescricaoConta(nomeConta);
         conta.setTipoFuncao(tipoFuncao);
+        conta.setDtCriacao(planoContaFuncoes.getDataDb());
+        conta.setUsuStCodigo(planoContaFuncoes.getUsuarioLogado());
 
         return conta;
     }

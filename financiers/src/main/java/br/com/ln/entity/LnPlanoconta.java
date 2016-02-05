@@ -7,6 +7,7 @@ package br.com.ln.entity;
 
 import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,6 +34,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnPlanoconta.findByCtaStDescricao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStDescricao = :ctaStDescricao"),
     @NamedQuery(name = "LnPlanoconta.findByCtaChAtivo", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaChAtivo = :ctaChAtivo"),
     @NamedQuery(name = "LnPlanoconta.findByCtaFlSaldoinicial", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaFlSaldoinicial = :ctaFlSaldoinicial"),
+    @NamedQuery(name = "LnPlanoconta.findByCtaDtCriacao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaDtCriacao = :ctaDtCriacao"),
+    @NamedQuery(name = "LnPlanoconta.findByUsuStCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.usuStCodigo = :usuStCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCtaStConfiguracao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStConfiguracao = :ctaStConfiguracao"),
     @NamedQuery(name = "LnPlanoconta.findByCtaStAlerta", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStAlerta = :ctaStAlerta")})
 public class LnPlanoconta implements Serializable {
@@ -52,11 +57,18 @@ public class LnPlanoconta implements Serializable {
     @Basic(optional = false)
     @Column(name = "cta_fl_saldoinicial")
     private double ctaFlSaldoinicial;
+    @Basic(optional = false)
+    @Column(name = "cta_dt_criacao")
+    @Temporal(TemporalType.DATE)
+    private Date ctaDtCriacao;
+    @Basic(optional = false)
+    @Column(name = "usu_st_codigo")
+    private String usuStCodigo;
     @Column(name = "cta_st_configuracao")
     private String ctaStConfiguracao;
     @Column(name = "cta_st_alerta")
     private String ctaStAlerta;
-
+    
     @Transient
     private TipoFuncao tipoFuncao;
 
@@ -67,12 +79,14 @@ public class LnPlanoconta implements Serializable {
         this.ctaInCodigo = ctaInCodigo;
     }
 
-    public LnPlanoconta(Integer ctaInCodigo, int catInCodigo, String ctaStDescricao, Character ctaChAtivo, double ctaFlSaldoinicial) {
+    public LnPlanoconta(Integer ctaInCodigo, int catInCodigo, String ctaStDescricao, Character ctaChAtivo, double ctaFlSaldoinicial, Date ctaDtCriacao, String usuStCodigo) {
         this.ctaInCodigo = ctaInCodigo;
         this.catInCodigo = catInCodigo;
         this.ctaStDescricao = ctaStDescricao;
         this.ctaChAtivo = ctaChAtivo;
         this.ctaFlSaldoinicial = ctaFlSaldoinicial;
+        this.ctaDtCriacao = ctaDtCriacao;
+        this.usuStCodigo = usuStCodigo;
     }
 
     public Integer getCtaInCodigo() {
@@ -115,6 +129,22 @@ public class LnPlanoconta implements Serializable {
         this.ctaFlSaldoinicial = ctaFlSaldoinicial;
     }
 
+    public Date getCtaDtCriacao() {
+        return ctaDtCriacao;
+    }
+
+    public void setCtaDtCriacao(Date ctaDtCriacao) {
+        this.ctaDtCriacao = ctaDtCriacao;
+    }
+
+    public String getUsuStCodigo() {
+        return usuStCodigo;
+    }
+
+    public void setUsuStCodigo(String usuStCodigo) {
+        this.usuStCodigo = usuStCodigo;
+    }
+
     public String getCtaStConfiguracao() {
         return ctaStConfiguracao;
     }
@@ -138,7 +168,7 @@ public class LnPlanoconta implements Serializable {
     public void setTipoFuncao(TipoFuncao tipoFuncao) {
         this.tipoFuncao = tipoFuncao;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -161,7 +191,7 @@ public class LnPlanoconta implements Serializable {
 
     @Override
     public String toString() {
-        return "LnPlanoconta{" + "ctaInCodigo=" + ctaInCodigo + ", catInCodigo=" + catInCodigo + ", ctaStDescricao=" + ctaStDescricao + ", ctaChAtivo=" + ctaChAtivo + ", ctaFlSaldoinicial=" + ctaFlSaldoinicial + '}';
+        return "br.com.ln.entity.LnPlanoconta[ ctaInCodigo=" + ctaInCodigo + " ]";
     }
-
+    
 }

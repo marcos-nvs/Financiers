@@ -31,6 +31,7 @@
     <mapping class="br.com.ln.entity.LnTabela"/>
     <mapping class="br.com.ln.entity.LnTabelaItem"/>
     <mapping class="br.com.ln.entity.LnPlanoconta"/>
+    <mapping class="br.com.ln.entity.LnSaldoconta"/>
 
 
     <mapping class="br.com.ln.entity.LnEndereco"/>

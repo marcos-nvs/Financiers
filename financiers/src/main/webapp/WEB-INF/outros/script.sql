@@ -786,6 +786,26 @@ CREATE SEQUENCE seq_planoconta
 ALTER TABLE seq_planoconta
   OWNER TO postgres;
 
+-- Table: ln_saldoconta
+
+-- DROP TABLE ln_saldoconta;
+
+CREATE TABLE ln_saldoconta
+(
+  cta_in_codigo integer NOT NULL,
+  sac_dt_data date NOT NULL,
+  sac_fl_debito double precision,
+  sac_fl_credito double precision,
+  sac_fl_saldo double precision,
+  CONSTRAINT ln_saldoconta_pkey PRIMARY KEY (cta_in_codigo, sac_dt_data)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_saldoconta
+  OWNER TO postgres;
+
+
 -------------------------------------------------------------------------------------------------------------------------
 
 -- insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")

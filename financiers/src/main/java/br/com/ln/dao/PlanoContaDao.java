@@ -7,7 +7,9 @@ package br.com.ln.dao;
 
 import br.com.ln.comum.VarComuns;
 import br.com.ln.entity.LnPlanoconta;
+import br.com.ln.entity.LnSaldoconta;
 import br.com.ln.hibernate.SessionFactoryDbName;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -62,5 +64,38 @@ public class PlanoContaDao extends GenericDao{
             }
         }
         return listaPlanoconta;
+    }
+    
+    public static List<LnSaldoconta> grabListSaldo(Integer ctaInCodigo){
+        return null;
+    }
+    
+    public static LnSaldoconta grabSaldoAtualConta(Integer ctaInCodigo, Date sacDtData){
+        
+        Session session = null;
+        Transaction tx;
+        LnSaldoconta lnSaldoconta = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.getNamedQuery("LnSaldoconta.findByCtaInCodigoSacDtData");
+            query.setInteger("ctaInCodigo", ctaInCodigo);
+            query.setDate("sacDtData", sacDtData);
+            List list = query.list();
+            tx.commit();
+            
+            if (list != null && list.size() >0){
+                lnSaldoconta = (LnSaldoconta) list.get(0);
+            }
+            
+        } finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        
+        return lnSaldoconta;
     }
 }

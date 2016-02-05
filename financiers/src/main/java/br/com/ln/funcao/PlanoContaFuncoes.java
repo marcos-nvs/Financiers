@@ -6,9 +6,12 @@
 package br.com.ln.funcao;
 
 import br.com.ln.comum.Historico;
+import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.dao.PlanoContaDao;
 import br.com.ln.entity.LnPlanoconta;
+import br.com.ln.entity.LnSaldoconta;
+import br.com.ln.entity.LnSaldocontaPK;
 import br.com.ln.objeto.Ativo;
 import br.com.ln.objeto.Banco;
 import br.com.ln.objeto.CartaoCredito;
@@ -21,6 +24,7 @@ import br.com.ln.tipos.TipoFuncao;
 import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.faces.context.FacesContext;
@@ -107,14 +111,29 @@ public class PlanoContaFuncoes implements Serializable {
         mensagem = bundle.getString("ln.mb.frase.preenchercampos") + " ";
 
         if (conta.getDescricaoConta().equals("") || conta.getDescricaoConta() == null) {
-            mensagem = mensagem + bundle.getString("ln.texto.descricao");
+            mensagem = mensagem + bundle.getString("ln.mb.frase.descricao");
             validado = false;
+        }
+        
+        if (conta.getAtivo() != null){
+            if (conta.getAtivo().getValorAtivo() == null || conta.getAtivo().getValorAtivo() == 0){
+                mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valorativo");
+                validado = false;
+            }
         }
 
         if (conta.getEmprestimo() != null) {
+            if (conta.getEmprestimo().getValorTotal() == null || conta.getEmprestimo().getValorTotal() == 0) {
+                mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valortotal");
+                validado = false;
+            }
         }
 
         if (conta.getFinancimento() != null) {
+            if (conta.getFinancimento().getValorTotalFinanciamento() == null || conta.getFinancimento().getValorTotalFinanciamento() == 0) {
+                mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valortotal");
+                validado = false;
+            }
         }
 
         if (conta.getReceitaDespesa() != null) {
@@ -186,6 +205,9 @@ public class PlanoContaFuncoes implements Serializable {
         if (conta.getReceitaDespesa() != null) {
             lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getReceitaDespesa()));
         }
+        
+        lnPlanoconta.setCtaDtCriacao(conta.getDtCriacao());
+        lnPlanoconta.setUsuStCodigo(conta.getUsuStCodigo());
 
         return lnPlanoconta;
     }
@@ -197,10 +219,12 @@ public class PlanoContaFuncoes implements Serializable {
 
             try {
                 PlanoContaDao.saveObject(lnPlanoconta);
+                criacaoSaldoConta(lnPlanoconta);
                 historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaoconta") + " " + lnPlanoconta.getCtaStDescricao());
                 mensagem = bundle.getString("ln.mb.texto.sucesso");
                 return true;
             } catch (Exception ex) {
+                ex.printStackTrace();
                 mensagem = bundle.getString("ln.mb.frase.problema");
                 return false;
             }
@@ -221,6 +245,28 @@ public class PlanoContaFuncoes implements Serializable {
     public List<Conta> grabListaConta() {
         List<LnPlanoconta> listaPlanoconta = PlanoContaDao.grabListaConta();
         return montaConta(listaPlanoconta);
+    }
+    
+    private boolean criacaoSaldoConta(LnPlanoconta lnPlanoconta){
+        
+        LnSaldoconta saldoConta = PlanoContaDao.grabSaldoAtualConta(lnPlanoconta.getCtaInCodigo(), lnPlanoconta.getCtaDtCriacao());
+        
+        if (saldoConta == null){
+            LnSaldocontaPK lnSaldocontaPK = new LnSaldocontaPK(lnPlanoconta.getCtaInCodigo(), lnPlanoconta.getCtaDtCriacao());
+            saldoConta = new LnSaldoconta(lnSaldocontaPK, 0d, 0d, lnPlanoconta.getCtaFlSaldoinicial());
+            PlanoContaDao.saveObject(saldoConta);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Date getDataDb() {
+        return PlanoContaDao.grabDateFromDB();
+    }
+
+    public String getUsuarioLogado() {
+        return VarComuns.lnUsusario.getUsuStCodigo();
     }
 
 }

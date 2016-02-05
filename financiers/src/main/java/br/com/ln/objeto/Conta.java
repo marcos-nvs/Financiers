@@ -7,6 +7,7 @@ package br.com.ln.objeto;
 
 import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -20,6 +21,8 @@ public class Conta implements Serializable {
     private String descricaoConta;
     private boolean bContaAtiva;
     private Double saldoConta;
+    private Date dtCriacao;
+    private String usuStCodigo;
     
     private Ativo ativo;
     private Banco banco;
@@ -137,9 +140,23 @@ public class Conta implements Serializable {
     public void setTipoFuncao(TipoFuncao tipoFuncao) {
         this.tipoFuncao = tipoFuncao;
     }
-    
-    
 
+    public Date getDtCriacao() {
+        return dtCriacao;
+    }
+
+    public void setDtCriacao(Date dtCriacao) {
+        this.dtCriacao = dtCriacao;
+    }
+
+    public String getUsuStCodigo() {
+        return usuStCodigo;
+    }
+
+    public void setUsuStCodigo(String usuStCodigo) {
+        this.usuStCodigo = usuStCodigo;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -167,7 +184,7 @@ public class Conta implements Serializable {
 
     @Override
     public String toString() {
-        return "Conta{" + "codigoConta=" + codigoConta + ", codigoCategoria=" + codigoCategoria + ", descricaoConta=" + descricaoConta + ", bContaAtiva=" + bContaAtiva + ", saldoConta=" + saldoConta + ", ativo=" + ativo + ", banco=" + banco + ", cartaoCredito=" + cartaoCredito + ", emprestimo=" + emprestimo + ", financimento=" + financimento + ", receitaDespesa=" + receitaDespesa + ", tipoFuncao=" + tipoFuncao + ", configuracaoAlerta=" + configuracaoAlerta + '}';
+        return "Conta{" + "codigoConta=" + codigoConta + ", codigoCategoria=" + codigoCategoria + ", descricaoConta=" + descricaoConta + ", bContaAtiva=" + bContaAtiva + ", saldoConta=" + saldoConta + ", dtCriacao=" + dtCriacao + ", usuStCodigo=" + usuStCodigo + ", ativo=" + ativo + ", banco=" + banco + ", cartaoCredito=" + cartaoCredito + ", emprestimo=" + emprestimo + ", financimento=" + financimento + ", receitaDespesa=" + receitaDespesa + ", tipoFuncao=" + tipoFuncao + ", configuracaoAlerta=" + configuracaoAlerta + '}';
     }
 
 }
