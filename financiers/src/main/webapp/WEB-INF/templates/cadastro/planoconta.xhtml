@@ -5,8 +5,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
-    <p:dataTable id="iddtcontas" var="conta" 
-                 paginator="true" paginatorPosition="bottom" rows="20" >
+    <p:dataTable id="iddtcontas" var="varconta" value="#{contaView.listaConta}" selection="#{contaView.conta}" selectionMode="single"
+                 rowKey="#{varconta.codigoConta}"  paginator="true" paginatorPosition="bottom" rows="20" >
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.mb.titulo.planoconta']}"/>
         </f:facet>
@@ -14,25 +14,22 @@
             <p:rowToggler />
         </p:column>
         <p:column headerText="#{msgs['ln.texto.codigo']}" style="width: 100px;">
-            <p:outputLabel />
+            <p:outputLabel value="#{varconta.codigoConta}"/>
         </p:column>
-        <p:column headerText="#{msgs['ln.texto.descricao']}" style="width: 900px;">
-            <p:outputLabel />
+        <p:column headerText="#{msgs['ln.texto.descricao']}" style="width: 250px;">
+            <p:outputLabel value="#{contaView.textoCategoria(varconta.codigoCategoria)}"/>
+        </p:column>
+        <p:column headerText="#{msgs['ln.texto.descricao']}" style="width: 650px;">
+            <p:outputLabel value="#{varconta.descricaoConta}"/>
         </p:column>
         <p:column headerText="#{msgs['ln.texto.ativo']}">
-            <p:outputLabel />
+            <p:outputLabel value="#{contaView.textoContaAtiva(varconta.isbContaAtiva())}"/>
         </p:column>
-<!--        <p:rowExpansion>
-            <p:dataTable id="iddtcontasdetalhe" var="contaDetalhe" value="#{conta.listaContaDependente}"
-                         paginator="true" paginatorPosition="bottom" rows="20">
-                <f:facet name="header">
-                    <p:outputLabel value="#{msgs['ln.mb.titulo.planoconta']}"/>
-                </f:facet>
-                <p:column>
-                    <p:outputLabel />
-                </p:column>
-            </p:dataTable>
-        </p:rowExpansion>-->
+        <p:rowExpansion>
+            <h:panelGrid id="idgriddetalheconta" columns="1">
+                <ui:include src="../consulta/consultaativo.xhtml"/>
+            </h:panelGrid>
+        </p:rowExpansion>
         <f:facet name="footer">
             <p:commandButton id="idbtIncluirConta" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document" 
                              action="#{contaView.btIncluirConta}" process="idbtIncluirConta" 

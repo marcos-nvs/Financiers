@@ -36,11 +36,13 @@ public class PlanoContaView implements Serializable {
     private boolean bContaAtiva;
     private Double saldoInicial;
     private TipoFuncao tipoFuncao;
+    private String contaAtiva;
 
     private Conta conta;
     private LnCategoria categoria;
 
     private List<LnCategoria> listaCategoria;
+    private List<Conta> listaConta;
 
     private String mensagem;
     private final FacesContext context = FacesContext.getCurrentInstance();
@@ -70,6 +72,7 @@ public class PlanoContaView implements Serializable {
     public PlanoContaView() {
         planoContaFuncoes = new PlanoContaFuncoes();
         listaCategoria = CategoriaDao.grabCategoria('S');
+        listaConta = planoContaFuncoes.grabListaConta();
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tipoEmprestimo = "1";
         tipoFinanciamento = "1";
@@ -125,6 +128,22 @@ public class PlanoContaView implements Serializable {
         this.conta = conta;
     }
 
+    public List<Conta> getListaConta() {
+        return listaConta;
+    }
+
+    public void setListaConta(List<Conta> listaConta) {
+        this.listaConta = listaConta;
+    }
+
+    public String getContaAtiva() {
+        return contaAtiva;
+    }
+
+    public void setContaAtiva(String contaAtiva) {
+        this.contaAtiva = contaAtiva;
+    }
+    
     //Tela
     public Integer getIdCategoria() {
         return idCategoria;
@@ -290,6 +309,7 @@ public class PlanoContaView implements Serializable {
             mensagem = planoContaFuncoes.mensagem;
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     bundle.getString("ln.mb.titulo.conta"), mensagem));
+            listaConta = planoContaFuncoes.grabListaConta();
             RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
         } else {
             mensagem = planoContaFuncoes.mensagem;
@@ -496,4 +516,17 @@ public class PlanoContaView implements Serializable {
         }
     }
 
+    public String textoContaAtiva(boolean contaAtiva){
+        
+        if (contaAtiva){
+            return this.contaAtiva = bundle.getString("ln.bt.sim"); 
+        } else {
+            return this.contaAtiva = bundle.getString("ln.bt.nao");
+        }
+    }
+    
+    public String textoCategoria(Integer idCategoria){
+        categoria = CategoriaDao.grabCategoria(idCategoria);
+        return categoria.getCatStDescricao();
+    }
 }

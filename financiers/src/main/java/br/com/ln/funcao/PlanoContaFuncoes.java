@@ -41,9 +41,13 @@ public class PlanoContaFuncoes implements Serializable {
         return CategoriaDao.grabTipoContaPorCategoria(categoria);
     }
 
-    public List<Conta> montaConta() {
-
+    public List<Conta> buscaPlanoContasAtivo() {
         List<LnPlanoconta> listaPlanoconta = PlanoContaDao.grabContaAtivo();
+        return montaConta(listaPlanoconta);
+    }
+
+    private List<Conta> montaConta(List<LnPlanoconta> listaPlanoconta) {
+
         List<Conta> listaConta = new ArrayList<>();
 
         if (listaPlanoconta != null) {
@@ -212,6 +216,11 @@ public class PlanoContaFuncoes implements Serializable {
 
     private boolean excluirConta(LnPlanoconta lnPlanoconta) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public List<Conta> grabListaConta() {
+        List<LnPlanoconta> listaPlanoconta = PlanoContaDao.grabListaConta();
+        return montaConta(listaPlanoconta);
     }
 
 }

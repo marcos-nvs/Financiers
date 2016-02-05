@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+    
+    <h:panelGrid id="iddetalhecontaativo" columns="10" style="border-color: #FFFFFF">
+        <p:outputLabel value="Tipo de ativo"/>
+        <p:outputLabel value="#{contaView.conta.ativo.tipoAtivo}"/>
+        <p:outputLabel value="Valor do Ativo"/>
+        <p:outputLabel value="#{contaView.conta.saldoConta}"/>
+        <p:outputLabel value="Endereço"/>
+        <p:outputLabel value="#{contaView.conta.ativo.endereco.endereco}"/>
+        <p:outputLabel value="Cidade"/>
+        <p:outputLabel value="#{contaView.conta.ativo.endereco.cidade}"/>
+        <p:outputLabel value="Estado"/>
+        <p:outputLabel value="#{contaView.conta.ativo.endereco.estado}"/>
+        
+    </h:panelGrid>
+</ui:composition>

@@ -56,8 +56,8 @@ public class EmprestimoView implements Serializable {
         System.out.println("Lista Favorecido " + listaFavorecido.toString());
         
         
-        listaContaDestino = planoContaFuncoes.montaConta();
-        listaContaOrigem = planoContaFuncoes.montaConta();
+        listaContaDestino = planoContaFuncoes.buscaPlanoContasAtivo();
+        listaContaOrigem = planoContaFuncoes.buscaPlanoContasAtivo();
         
         favorecido = new LnFavorecido();
     }

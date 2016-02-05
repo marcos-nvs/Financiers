@@ -44,4 +44,23 @@ public class PlanoContaDao extends GenericDao{
         return new Integer(grabIdByNextValueStringSQL("select nextval('seq_planoconta');"));
     }
     
+    public static List<LnPlanoconta> grabListaConta(){
+        
+        Session session = null;
+        Transaction tx;
+        List<LnPlanoconta> listaPlanoconta = null;
+        
+        try{
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            Query query = session.getNamedQuery("LnPlanoconta.findAll");
+            listaPlanoconta = query.list();
+            tx.commit();
+        } finally {
+            if (session != null && session.isOpen()){
+                session.close();
+            }
+        }
+        return listaPlanoconta;
+    }
 }
