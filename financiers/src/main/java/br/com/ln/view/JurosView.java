@@ -44,7 +44,7 @@ public class JurosView implements Serializable {
     private Integer codigoTabItem;
     private Double percentual;
     private String banco;
-    private final Integer TIPOTABELA = 4;
+    private final Integer TIPOTABELA = 5    ;
 
     private LnTabela lnTabela;
     private Tabela tabela;
@@ -167,7 +167,6 @@ public class JurosView implements Serializable {
         this.tabela = tabela;
     }
 
-
     public TabelaItem getTabelaItem() {
         return tabelaItem;
     }
@@ -175,7 +174,7 @@ public class JurosView implements Serializable {
     public void setTabelaItem(TabelaItem tabelaItem) {
         this.tabelaItem = tabelaItem;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -306,9 +305,7 @@ public class JurosView implements Serializable {
 
     public void btSalvar() {
         boolean bGravar;
-//        if (tabela != null && tabela.getTipoFuncao().equals(TipoFuncao.Alterar)) {
-            loadVarTabela();
-//        }
+        loadVarTabela();
         lnTabela = loadLnTabela();
         if (lnTabela != null) {
             bGravar = tabelaFuncao.tabela(lnTabela);
@@ -384,12 +381,12 @@ public class JurosView implements Serializable {
         }
         return lnTabela;
     }
-    
-    public String descricaoBanco(String banco){
+
+    public String descricaoBanco(String banco) {
         return FavorecidoDao.grabFavorecidoCodigo(new Integer(banco)).getFavStDescricao();
-    } 
-    
-    public void btVoltar(){
+    }
+
+    public void btVoltar() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
 }

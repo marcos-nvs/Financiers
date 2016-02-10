@@ -200,8 +200,8 @@ public class IofView implements Serializable {
     }
 
     public void btIncluir() {
-        
-        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')){
+
+        if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             clearVarTabela();
             clearVarTabelaItem();
             tabela = new Tabela();
@@ -234,11 +234,38 @@ public class IofView implements Serializable {
     }
 
     public void btSalvar() {
+        loadVarTabela();
+        loadVarTabelaItem();
+        lnTabela = loadLnTabela();
+        if (iofFuncao.verificaInformacoes(tabela, tabelaItem)) {
+            boolean bGravar;
+            if (lnTabela != null) {
+                bGravar = tabelaFuncao.tabela(lnTabela);
+                mensagem = tabelaFuncao.mensagem;
+                if (bGravar) {
+                    clearVarTabela();
+                    clearVarTabelaItem();
+                    listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
+                    RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
+                    mensagem = bundle.getString("ln.mb.texto.sucesso");
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.mb.titulo.tabela"), mensagem));
+                } else {
+                    mensagem = iofFuncao.mensagem;
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                            bundle.getString("ln.mb.titulo.tabela"), mensagem));
+                }
+            }
+        } else {
+            mensagem = iofFuncao.mensagem;
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
+        }
 
     }
 
     public void btFechar() {
-
+        RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 
     private void loadVarTabela() {
@@ -249,6 +276,7 @@ public class IofView implements Serializable {
 
     private void loadVarTabelaItem() {
         tabelaItem.setPercentual(percentual);
+        listTabelaItem.add(tabelaItem);
     }
 
     private void clearVarTabela() {
