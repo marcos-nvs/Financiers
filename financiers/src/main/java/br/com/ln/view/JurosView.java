@@ -204,7 +204,7 @@ public class JurosView implements Serializable {
             clearVarTabelaItem();
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
-                beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelajuros.xhtml");
+            beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelajuros.xhtml");
             beanVar.setTituloDialog("ln.frase.inclusaotabela");
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
         } else {

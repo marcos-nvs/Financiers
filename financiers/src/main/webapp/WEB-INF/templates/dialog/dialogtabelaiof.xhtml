@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:panelGrid id="idgridDataIOF" columns="2" >
+        <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
+        <p:inputText id="idIofDescricao" value="#{iofView.nomeTabela}" size="50"/>
+        <p:outputLabel for="dtIofInicio" value="#{msgs['ln.texto.datainicio']}"/>
+        <p:calendar id="dtIofInicio" showOn="button" value="#{iofView.dataInicial}" pattern="dd/MM/yyyy" size="8"/>
+        <p:outputLabel for="dtIofFinal" value="#{msgs['ln.texto.datafinal']}"/>
+        <p:calendar id="dtIofFinal" showOn="button" value="#{iofView.dataFinal}" pattern="dd/MM/yyyy" size="8"/>
+        <p:outputLabel value="#{msgs['ln.texto.taxaiof']}"/>
+        <p:inputText id="idpercIof" value="#{iofView.percentual}" style="width: 80px;" size="20">
+            <f:convertNumber pattern="##0.000000" type="percent"/>
+            <p:ajax update="idpercIof" process="idpercIof" event="change"/>
+        </p:inputText>
+    </h:panelGrid>
+    <f:facet name="footer">
+        <p:commandButton id="idbtsalvariof" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"/>
+        <p:commandButton id="idbtfechariof" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"/>
+    </f:facet>
+    
+</ui:composition>

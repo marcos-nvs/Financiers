@@ -38,9 +38,7 @@
             </h:outputText>
         </p:column>
         <p:column style="width: 20px; text-align: center">
-            <p:commandButton id='idBtEditaJuros' icon="ui-icon-trash" >
-                <!--<f:setPropertyActionListener value="#{incluiTabelaIR}" target="#{irrfView.tabelaItem}"/>-->
-            </p:commandButton>
+            <p:commandButton id='idBtEditaJuros' icon="ui-icon-trash" />
         </p:column>
     </p:dataTable>
     <f:facet name="footer">
@@ -54,7 +52,6 @@
                          update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaJuros, idgridDataJuros"/>
         <p:commandButton id="idbtfecharjuros" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
                          action="#{jurosView.btFechar}" process="idbtfecharjuros" update="idbtfecharjuros"/>
-        <!--<p:commandButton id="idusuarioclose" value="" icon="" action="" process="" update=""-->
     </f:facet>
 
 </ui:composition>
