@@ -198,7 +198,6 @@ public class IofView implements Serializable {
     }
 
     public void btIncluir() {
-
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             clearVarTabela();
             clearVarTabelaItem();
@@ -217,18 +216,59 @@ public class IofView implements Serializable {
     }
 
     public void btAlterar() {
-
+        if (VarComuns.lnPerfilacesso.getPacChAlterar().equals('S')) {
+            if (tabela != null) {
+                tabela.setTipoFuncao(TipoFuncao.Alterar);
+                listTabelaItem = tabela.getListTabelaItem();
+                percentual = listTabelaItem.get(0).getPercentual();
+                loadTabelaVarDesc();
+                beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelaiof.xhtml");
+                beanVar.setTituloDialog("ln.frase.inclusaotabela");
+                RequestContext.getCurrentInstance().execute("PF('dialog').show()");
+            } else {
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
+            }
+        } else {
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
+        }
     }
 
     public void btExcluir() {
-
-    }
-
-    public void btIncluirDetalhe() {
-
-    }
-
-    public void btExcluirDetalhe() {
+        if (VarComuns.lnPerfilacesso.getPacChExcluir().equals('S')) {
+            if (tabela != null) {
+                tabela.setTipoFuncao(TipoFuncao.Excluir);
+                listTabelaItem = tabela.getListTabelaItem();
+                boolean bExcluir;
+                lnTabela = loadLnTabela();
+                if (lnTabela != null) {
+                    bExcluir = tabelaFuncao.tabela(lnTabela);
+                    if (bExcluir) {
+                        clearVarTabela();
+                        clearVarTabelaItem();
+                        mensagem = bundle.getString("ln.mb.texto.sucesso");
+                        listTabela = tabelaFuncao.montaTabela(TIPOTABELA);
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.tabela"), mensagem));
+                    } else {
+                        mensagem = tabelaFuncao.mensagem;
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                bundle.getString("ln.mb.titulo.tabela"), mensagem));
+                    }
+                }
+            } else {
+                mensagem = bundle.getString("ln.mb.frase.selecionaregistro");
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        bundle.getString("ln.mb.titulo.tabela"), mensagem));
+            }
+        } else {
+            mensagem = bundle.getString("ln.mb.frase.permissao");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    bundle.getString("ln.mb.titulo.tabela"), mensagem));
+        }
 
     }
 
@@ -296,6 +336,7 @@ public class IofView implements Serializable {
         nomeTabela = tabela.getNomeTabela();
         dataInicial = tabela.getDataInicial();
         dataFinal = tabela.getDataFinal();
+        
     }
 
     private LnTabela loadLnTabela() {

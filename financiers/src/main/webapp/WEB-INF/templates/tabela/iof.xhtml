@@ -5,7 +5,8 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
     
-    <p:dataTable id="idTabelaIof" var="iof" value="#{iofView.listTabela}">
+    <p:dataTable id="idTabelaIof" var="iof" value="#{iofView.listTabela}" selection = "#{iofView.tabela}" selectionMode="single"
+                 rowKey="#{iof.codigoTabela}" paginator="true" rows="20" paginatorPosition="bottom">
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.texto.tabelaiof']}" />
         </f:facet>
@@ -37,8 +38,12 @@
         <f:facet name="footer">
             <p:commandButton id="idbtincluiriof" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document" action="#{iofView.btIncluir()}"
                              process="idbtincluiriof" update=":idFormCenter:idtabelas:idTabelaIof, :idFormTop:growl, :idformdialog:iddialog"/>
-            <p:commandButton value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"/>
-            <p:commandButton value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash">
+            <p:commandButton id="idbtalterariof" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"
+                             action="#{iofView.btAlterar()}" process="idbtalterariof,idTabelaIof" 
+                             update=":idFormCenter:idtabelas:idTabelaIof, :idFormTop:growl, :idformdialog:iddialog"/>
+            <p:commandButton id="idbtexcluiriof" value="#{msgs['ln.bt.excluir']}" icon="ui-icon-trash"
+                             action="#{iofView.btExcluir()}" process="idbtexcluiriof,idTabelaIof" 
+                             update=":idFormCenter:idtabelas:idTabelaIof, :idFormTop:growl, :idformdialog:iddialog">
                 <p:confirm header="#{msgs['ln.texto.confirmacao']}" message="#{msgs['ln.frase.confirmaexclusao']}" icon="ui-icon-alert"/>
             </p:commandButton>
             <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">
@@ -47,7 +52,8 @@
             </p:confirmDialog>
             <p:commandButton id="idiofbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
                              onclick="PF('historico').show()"/>
-            <p:commandButton value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close"/>
+            <p:commandButton id="idbtvoltariof" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close"
+                             action="#{iofView.btVoltar}" process="idbtvoltariof" update="idbtvoltariof, :idFormCenter"/>
         </f:facet>
     </p:dataTable>
 </ui:composition>
