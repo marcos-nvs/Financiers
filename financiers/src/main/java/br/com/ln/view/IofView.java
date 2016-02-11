@@ -8,10 +8,8 @@ package br.com.ln.view;
 import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
-import br.com.ln.dao.FavorecidoDao;
 import br.com.ln.entity.LnTabela;
 import br.com.ln.funcao.IofFuncoes;
-import br.com.ln.funcao.JurosFuncoes;
 import br.com.ln.funcao.TabelaFuncoes;
 import br.com.ln.objeto.Tabela;
 import br.com.ln.objeto.TabelaItem;
@@ -206,6 +204,7 @@ public class IofView implements Serializable {
             clearVarTabelaItem();
             tabela = new Tabela();
             tabela.setTipoFuncao(TipoFuncao.Incluir);
+            tabelaItem.setTipoFuncao(TipoFuncao.Incluir);
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogtabelaiof.xhtml");
             beanVar.setTituloDialog("ln.frase.inclusaotabela");
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
@@ -277,6 +276,7 @@ public class IofView implements Serializable {
     private void loadVarTabelaItem() {
         tabelaItem.setPercentual(percentual);
         listTabelaItem.add(tabelaItem);
+        tabela.setListTabelaItem(listTabelaItem);
     }
 
     private void clearVarTabela() {

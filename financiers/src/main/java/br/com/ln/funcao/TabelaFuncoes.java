@@ -97,6 +97,10 @@ public class TabelaFuncoes implements Serializable {
             mensagem = bundle.getString("ln.mb.frase.problema");
             logger.error(mensagem);
             return false;
+        } catch (Exception ex) {
+            mensagem = bundle.getString("ln.mb.frase.problema");
+            logger.error(mensagem);
+            return false;
         }
     }
 
@@ -135,6 +139,7 @@ public class TabelaFuncoes implements Serializable {
     private boolean incluirTabelaItem(LnTabelaItem lnTabelaItem) {
 
         try {
+            System.out.println("lnTabelaItem --> "  + lnTabelaItem.toString());
             TabelaDao.saveObject(lnTabelaItem);
             return true;
         } catch (HibernateException ex) {

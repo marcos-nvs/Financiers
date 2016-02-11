@@ -26,10 +26,10 @@
             </h:outputText>
         </p:column>
         <p:rowExpansion>
-            <p:dataTable id="idiofdetalhe" var="iofdetalhe" value="#{iofView.listTabelaItem}">
-                <p:column headerText="#{msgs['ln.texto.valoriIOF']}">
+            <p:dataTable id="idiofdetalhe" var="iofdetalhe" value="#{iof.listTabelaItem}">
+                <p:column headerText="#{msgs['ln.texto.taxaiof']}">
                     <h:outputText value="#{iofdetalhe.percentual}">
-                        <f:convertNumber pattern="#{msgs['ln.texto.cifrao']} ###,##0.00" type="currency"/>
+                        <f:convertNumber pattern="0.000000" type="Percentual"/>
                     </h:outputText>
                 </p:column>
             </p:dataTable>
