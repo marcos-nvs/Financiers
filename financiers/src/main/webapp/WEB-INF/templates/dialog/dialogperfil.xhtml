@@ -28,26 +28,27 @@
         <p:selectBooleanCheckbox value="#{perfilView.bPesquisarAcesso}"/>
         <p:outputLabel value="#{msgs['ln.texto.pesquisar']}"/>
     </h:panelGrid>
-    <p:dataTable id="idDtAcesso" var="incluiAcesso" value="#{perfilView.listPerfilacesso}" paginator="true" rows="10" paginatorPosition="bottom">
+    <p:dataTable id="idDtAcesso" var="incluiAcesso" value="#{perfilView.listPerfilacesso}" paginator="true" rows="10" paginatorPosition="bottom"
+                 style="width: 700px">
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.texto.listaperfil']}"/>
         </f:facet>
         <p:column headerText="#{msgs['ln.texto.codigo']}" style="width: 40px">
             <h:outputText value="#{incluiAcesso.lnPerfilacessoPK.modInCodigo}"/>
         </p:column>
-        <p:column headerText="#{msgs['ln.texto.modulo']}" style="width: 40px">
+        <p:column headerText="#{msgs['ln.texto.modulo']}" style="width: 20px">
             <h:outputText value="#{perfilView.buscaDescModulo(incluiAcesso.lnPerfilacessoPK.modInCodigo)}"/>
         </p:column>
-        <p:column headerText="#{msgs['ln.texto.incluir']}" style="width: 40px">
+        <p:column headerText="#{msgs['ln.texto.incluir']}" style="width: 20px">
             <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChIncluir)}"/>
         </p:column>
-        <p:column headerText="#{msgs['ln.texto.alterar']}" style="width: 40px">
+        <p:column headerText="#{msgs['ln.texto.alterar']}" style="width: 20px">
             <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChAlterar)}"/>
         </p:column>
-        <p:column headerText="#{msgs['ln.texto.excluir']}" style="width: 40px">
+        <p:column headerText="#{msgs['ln.texto.excluir']}" style="width: 20px">
             <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChExcluir)}"/>
         </p:column>
-        <p:column headerText="#{msgs['ln.texto.pesquisar']}" style="width: 40px">
+        <p:column headerText="#{msgs['ln.texto.pesquisar']}" style="width: 20px">
             <h:outputText value="#{tratativa.tratamentoTextoString(incluiAcesso.pacChPesquisar)}"/>
         </p:column>
         <p:column style="width: 20px; text-align: center">

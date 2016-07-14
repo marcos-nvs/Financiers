@@ -765,25 +765,14 @@ CREATE TABLE ln_planoconta
   cta_fl_saldoinicial double precision NOT NULL,
   cta_st_configuracao character varying(1000),
   cta_st_alerta character varying(1000),
+  cta_dt_criacao date,
+  usu_st_codigo character varying(30)[],
   CONSTRAINT pk_conta PRIMARY KEY (cta_in_codigo)
 )
 WITH (
   OIDS=FALSE
 );
 ALTER TABLE ln_planoconta
-  OWNER TO postgres;
-
--- Sequence: seq_planoconta
-
--- DROP SEQUENCE seq_planoconta;
-
-CREATE SEQUENCE seq_planoconta
-  INCREMENT 1
-  MINVALUE 1
-  MAXVALUE 9223372036854775807
-  START 1
-  CACHE 1;
-ALTER TABLE seq_planoconta
   OWNER TO postgres;
 
 -- Table: ln_saldoconta
