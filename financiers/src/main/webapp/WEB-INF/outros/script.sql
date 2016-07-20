@@ -775,6 +775,19 @@ WITH (
 ALTER TABLE ln_planoconta
   OWNER TO postgres;
 
+-- Sequence: seq_planoconta
+
+-- DROP SEQUENCE seq_planoconta;
+
+CREATE SEQUENCE seq_planoconta
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_planoconta
+  OWNER TO postgres;
+
 -- Table: ln_saldoconta
 
 -- DROP TABLE ln_saldoconta;

@@ -57,6 +57,7 @@ public class PlanoContaView implements Serializable {
     private boolean bItemAtivoAplicacao;
     private boolean bItemAtivoMovel;
     private String tipoAtivo;
+    private String tipoImovel;
     private String telaAtivo = "imovel.xhtml";
     private String telaConta = "../cadastro/planocontas/ativo.xhtml";
     private String telaCalculada;
@@ -143,7 +144,7 @@ public class PlanoContaView implements Serializable {
     public void setContaAtiva(String contaAtiva) {
         this.contaAtiva = contaAtiva;
     }
-    
+
     //Tela
     public Integer getIdCategoria() {
         return idCategoria;
@@ -199,6 +200,14 @@ public class PlanoContaView implements Serializable {
 
     public String getTelaAtivo() {
         return telaAtivo;
+    }
+
+    public String getTipoImovel() {
+        return tipoImovel;
+    }
+
+    public void setTipoImovel(String tipoImovel) {
+        this.tipoImovel = tipoImovel;
     }
 
     public void setTelaAtivo(String telaAtivo) {
@@ -318,8 +327,6 @@ public class PlanoContaView implements Serializable {
         }
     }
 
-    
-
     private Conta defineConfiguracaoConta(Conta conta) {
 
         Integer idTipoCategoria = planoContaFuncoes.tipoConta(idCategoria);
@@ -330,6 +337,7 @@ public class PlanoContaView implements Serializable {
                 ativoView = (AtivoView) JsfHelper.getSessionAttribute("ativoInfo");
                 conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
                 conta.getAtivo().setTipoAtivo(tipoAtivo);
+                conta.getAtivo().setTipoImovel(tipoImovel);
                 conta.setSaldoConta(conta.getAtivo().getValorAtivo());
                 break;
 //            case 2: //Passivo.
@@ -398,6 +406,40 @@ public class PlanoContaView implements Serializable {
     }
 
     private void clearVarConta() {
+
+        idConta = null;
+        nomeConta = null;
+        bContaAtiva = false;
+        saldoInicial = null;
+        tipoFuncao = null;
+        contaAtiva = null;
+        conta = null;
+        categoria = null;
+
+        idCategoria = null;
+        idTipoConta = null;
+        bAtivoConta = false;
+        bItemAtivoAplicacao = false;
+        bItemAtivoMovel = false;
+        tipoAtivo = null;
+        tipoImovel = null;
+        telaCalculada = null;
+        bCalculada = false;
+        tipoEmprestimo = null;
+        tipoFinanciamento = null;
+        telaEmprestimo = null;
+        telaFinanciamento = null;
+        bMostraSaldoInicial = false;
+
+        if (conta != null) {
+            conta.getAtivo().getEndereco().setBairro(null);
+            conta.getAtivo().getEndereco().setCep(null);
+            conta.getAtivo().getEndereco().setCidade(null);
+            conta.getAtivo().getEndereco().setComplemento(null);
+            conta.getAtivo().getEndereco().setEndereco(null);
+            conta.getAtivo().getEndereco().setEstado(null);
+            conta.getAtivo().getEndereco().setTipoEndereco(null);
+        }
     }
 
     private void clearVarContaDepdente() {
@@ -518,16 +560,16 @@ public class PlanoContaView implements Serializable {
         }
     }
 
-    public String textoContaAtiva(boolean contaAtiva){
-        
-        if (contaAtiva){
-            return this.contaAtiva = bundle.getString("ln.bt.sim"); 
+    public String textoContaAtiva(boolean contaAtiva) {
+
+        if (contaAtiva) {
+            return this.contaAtiva = bundle.getString("ln.bt.sim");
         } else {
             return this.contaAtiva = bundle.getString("ln.bt.nao");
         }
     }
-    
-    public String textoCategoria(Integer idCategoria){
+
+    public String textoCategoria(Integer idCategoria) {
         categoria = CategoriaDao.grabCategoria(idCategoria);
         return categoria.getCatStDescricao();
     }

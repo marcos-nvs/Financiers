@@ -114,12 +114,22 @@ public class PlanoContaFuncoes implements Serializable {
             mensagem = mensagem + bundle.getString("ln.mb.frase.descricao");
             validado = false;
         }
-        
-        if (conta.getAtivo() != null){
-            if (conta.getAtivo().getValorAtivo() == null || conta.getAtivo().getValorAtivo() == 0){
-                mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valorativo");
-                validado = false;
+
+        if (conta.getAtivo() != null) {
+            
+            switch (conta.getAtivo().getTipoImovel()) {
+                case "Próprio":
+                    if (conta.getAtivo().getValorAtivo() == null || conta.getAtivo().getValorAtivo() == 0) {
+                        mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valorativo");
+                        validado = false;
+                    }
+                    break;
+                case "Aluguel":
+                    break;
+                case "Pais":
+                    break;
             }
+
         }
 
         if (conta.getEmprestimo() != null) {
@@ -205,7 +215,7 @@ public class PlanoContaFuncoes implements Serializable {
         if (conta.getReceitaDespesa() != null) {
             lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getReceitaDespesa()));
         }
-        
+
         lnPlanoconta.setCtaDtCriacao(conta.getDtCriacao());
         lnPlanoconta.setUsuStCodigo(conta.getUsuStCodigo());
 
@@ -246,12 +256,12 @@ public class PlanoContaFuncoes implements Serializable {
         List<LnPlanoconta> listaPlanoconta = PlanoContaDao.grabListaConta();
         return montaConta(listaPlanoconta);
     }
-    
-    private boolean criacaoSaldoConta(LnPlanoconta lnPlanoconta){
-        
+
+    private boolean criacaoSaldoConta(LnPlanoconta lnPlanoconta) {
+
         LnSaldoconta saldoConta = PlanoContaDao.grabSaldoAtualConta(lnPlanoconta.getCtaInCodigo(), lnPlanoconta.getCtaDtCriacao());
-        
-        if (saldoConta == null){
+
+        if (saldoConta == null) {
             LnSaldocontaPK lnSaldocontaPK = new LnSaldocontaPK(lnPlanoconta.getCtaInCodigo(), lnPlanoconta.getCtaDtCriacao());
             saldoConta = new LnSaldoconta(lnSaldocontaPK, 0d, 0d, lnPlanoconta.getCtaFlSaldoinicial());
             PlanoContaDao.saveObject(saldoConta);

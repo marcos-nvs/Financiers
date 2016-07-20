@@ -15,6 +15,7 @@ import java.util.Objects;
 public class Ativo implements Serializable{
     
     private String tipoAtivo;
+    private String tipoImovel;
     private Double valorAtivo;
     private Endereco endereco;
     private String placa;
@@ -30,6 +31,14 @@ public class Ativo implements Serializable{
 
     public void setTipoAtivo(String tipoAtivo) {
         this.tipoAtivo = tipoAtivo;
+    }
+
+    public String getTipoImovel() {
+        return tipoImovel;
+    }
+
+    public void setTipoImovel(String tipoImovel) {
+        this.tipoImovel = tipoImovel;
     }
 
     public Double getValorAtivo() {
@@ -75,12 +84,13 @@ public class Ativo implements Serializable{
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.tipoAtivo);
-        hash = 23 * hash + Objects.hashCode(this.valorAtivo);
-        hash = 23 * hash + Objects.hashCode(this.endereco);
-        hash = 23 * hash + Objects.hashCode(this.placa);
-        hash = 23 * hash + Objects.hashCode(this.anoFabricacao);
-        hash = 23 * hash + Objects.hashCode(this.anoModelo);
+        hash = 47 * hash + Objects.hashCode(this.tipoAtivo);
+        hash = 47 * hash + Objects.hashCode(this.tipoImovel);
+        hash = 47 * hash + Objects.hashCode(this.valorAtivo);
+        hash = 47 * hash + Objects.hashCode(this.endereco);
+        hash = 47 * hash + Objects.hashCode(this.placa);
+        hash = 47 * hash + Objects.hashCode(this.anoFabricacao);
+        hash = 47 * hash + Objects.hashCode(this.anoModelo);
         return hash;
     }
 
@@ -97,6 +107,9 @@ public class Ativo implements Serializable{
         }
         final Ativo other = (Ativo) obj;
         if (!Objects.equals(this.tipoAtivo, other.tipoAtivo)) {
+            return false;
+        }
+        if (!Objects.equals(this.tipoImovel, other.tipoImovel)) {
             return false;
         }
         if (!Objects.equals(this.placa, other.placa)) {
@@ -119,7 +132,6 @@ public class Ativo implements Serializable{
 
     @Override
     public String toString() {
-        return "Ativo{" + "tipoAtivo=" + tipoAtivo + ", valorAtivo=" + valorAtivo + ", endereco=" + endereco + ", placa=" + placa + ", anoFabricacao=" + anoFabricacao + ", anoModelo=" + anoModelo + '}';
+        return "Ativo{" + "tipoAtivo=" + tipoAtivo + ", tipoImovel=" + tipoImovel + ", valorAtivo=" + valorAtivo + ", endereco=" + endereco + ", placa=" + placa + ", anoFabricacao=" + anoFabricacao + ", anoModelo=" + anoModelo + '}';
     }
-
 }
