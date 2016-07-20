@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:panelGrid id="idgridtextofrequencia" columns="1">
+        <p:outputLabel value="Escolha a frequência"/>
+    </h:panelGrid>
+    <h:panelGrid id="idgridcontafrequencia" columns="12">
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.janeiro}" />
+        <p:outputLabel value="#{msgs['ln.texto.janeiro']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.fevereiro}"/>
+        <p:outputLabel value="#{msgs['ln.texto.fevereiro']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.marco}"/>
+        <p:outputLabel value="#{msgs['ln.texto.marco']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.abril}"/>
+        <p:outputLabel value="#{msgs['ln.texto.abril']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.maio}"/>
+        <p:outputLabel value="#{msgs['ln.texto.maio']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.junho}"/>
+        <p:outputLabel value="#{msgs['ln.texto.junho']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.julho}"/>
+        <p:outputLabel value="#{msgs['ln.texto.julho']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.agosto}"/>
+        <p:outputLabel value="#{msgs['ln.texto.agosto']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.setembro}"/>
+        <p:outputLabel value="#{msgs['ln.texto.setembro']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.janeiro}"/>
+        <p:outputLabel value="#{msgs['ln.texto.outubro']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.outubro}"/>
+        <p:outputLabel value="#{msgs['ln.texto.novembro']}"/>
+        <p:selectBooleanCheckbox value="#{contaView.mesFrequencia.novembro}"/>
+        <p:outputLabel value="#{msgs['ln.texto.dezembro']}"/>
+    </h:panelGrid>
+
+</ui:composition>

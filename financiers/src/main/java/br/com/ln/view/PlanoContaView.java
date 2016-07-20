@@ -11,7 +11,10 @@ import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
 import br.com.ln.entity.LnCategoria;
 import br.com.ln.funcao.PlanoContaFuncoes;
+import br.com.ln.funcao.TabelaFuncoes;
 import br.com.ln.objeto.Conta;
+import br.com.ln.objeto.MesFrequencia;
+import br.com.ln.objeto.Tabela;
 import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
 import java.util.List;
@@ -37,9 +40,12 @@ public class PlanoContaView implements Serializable {
     private Double saldoInicial;
     private TipoFuncao tipoFuncao;
     private String contaAtiva;
+    private Integer idTabela;
 
     private Conta conta;
     private LnCategoria categoria;
+    private MesFrequencia mesFrequencia;
+    private Tabela tabela;
 
     private List<LnCategoria> listaCategoria;
     private List<Conta> listaConta;
@@ -48,6 +54,7 @@ public class PlanoContaView implements Serializable {
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
     private final PlanoContaFuncoes planoContaFuncoes;
+    private final TabelaFuncoes tabelaFuncoes;
     private final BeanVar beanVar;
 
     //Variavéis de Tela
@@ -75,6 +82,8 @@ public class PlanoContaView implements Serializable {
         listaCategoria = CategoriaDao.grabCategoria('S');
         listaConta = planoContaFuncoes.grabListaConta();
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        tabelaFuncoes = new TabelaFuncoes();
+        tabela = tabelaFuncoes.buscaTabela(3);
         tipoEmprestimo = "1";
         tipoFinanciamento = "1";
         telaEmprestimo = "infotomando.xhtml";
@@ -268,6 +277,30 @@ public class PlanoContaView implements Serializable {
 
     public void setbMostraSaldoInicial(boolean bMostraSaldoInicial) {
         this.bMostraSaldoInicial = bMostraSaldoInicial;
+    }
+
+    public MesFrequencia getMesFrequencia() {
+        return mesFrequencia;
+    }
+
+    public void setMesFrequencia(MesFrequencia mesFrequencia) {
+        this.mesFrequencia = mesFrequencia;
+    }
+
+    public Integer getIdTabela() {
+        return idTabela;
+    }
+
+    public void setIdTabela(Integer idTabela) {
+        this.idTabela = idTabela;
+    }
+
+    public Tabela getTabela() {
+        return tabela;
+    }
+
+    public void setTabela(Tabela tabela) {
+        this.tabela = tabela;
     }
 
     public void btIncluirConta() {

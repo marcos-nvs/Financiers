@@ -139,7 +139,7 @@ public class TabelaFuncoes implements Serializable {
     private boolean incluirTabelaItem(LnTabelaItem lnTabelaItem) {
 
         try {
-            System.out.println("lnTabelaItem --> "  + lnTabelaItem.toString());
+            System.out.println("lnTabelaItem --> " + lnTabelaItem.toString());
             TabelaDao.saveObject(lnTabelaItem);
             return true;
         } catch (HibernateException ex) {
@@ -161,7 +161,7 @@ public class TabelaFuncoes implements Serializable {
         }
     }
 
-    public List<Tabela> buscaTabela(Integer ttbInCodigo) {
+    public List<Tabela> buscaListaTabela(Integer ttbInCodigo) {
         Tabela tabela;
 
         List<Tabela> listaTabela = new ArrayList<>();
@@ -182,6 +182,27 @@ public class TabelaFuncoes implements Serializable {
         }
 
         return listaTabela;
+    }
+
+    public Tabela buscaTabela(Integer ttbInCodigo) {
+        Tabela tabela = null;
+
+        List<LnTabela> listTabelaDao = TabelaDao.grabTabela(ttbInCodigo);
+
+        for (LnTabela lnTabela : listTabelaDao) {
+            lnTabela.setListLnTabelaItem(TabelaDao.grabTabelaItem(lnTabela.getTabInCodigo()));
+
+            tabela = new Tabela();
+            tabela.setCodigoTabela(lnTabela.getTabInCodigo());
+            tabela.setNomeTabela(lnTabela.getTabStDescricao());
+            tabela.setDataInicial(lnTabela.getTabDtInicio());
+            tabela.setDataFinal(lnTabela.getTabDtFinal());
+
+            tabela.setListTabelaItem(buscaTabelaItem(lnTabela.getListLnTabelaItem()));
+
+        }
+
+        return tabela;
     }
 
     private List<TabelaItem> buscaTabelaItem(List<LnTabelaItem> listTabelaItemDao) {
@@ -210,7 +231,7 @@ public class TabelaFuncoes implements Serializable {
 
     public List<Tabela> montaTabela(Integer tipoTabela) {
         TabelaFuncoes tabelaFuncao = new TabelaFuncoes();
-        return tabelaFuncao.buscaTabela(tipoTabela);
+        return tabelaFuncao.buscaListaTabela(tipoTabela);
     }
 
     public Integer calcIdTabela() {
