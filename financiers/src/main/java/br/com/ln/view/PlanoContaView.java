@@ -463,6 +463,8 @@ public class PlanoContaView implements Serializable {
         telaEmprestimo = null;
         telaFinanciamento = null;
         bMostraSaldoInicial = false;
+        
+        telaConta = "../cadastro/planocontas/ativo.xhtml";
 
         if (conta != null) {
             conta.getAtivo().getEndereco().setBairro(null);
@@ -572,6 +574,9 @@ public class PlanoContaView implements Serializable {
                 telaAtivo = "vazia.xhtml";
                 break;
             case "Aplicação":
+                telaAtivo = "vazia.xhtml";
+                break;
+            case "Empresa":
                 telaAtivo = "vazia.xhtml";
                 break;
         }

@@ -6,8 +6,11 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <p:panel header="#{msgs['ln.texto.informacaoemprestimo']}">
-        <h3>#{msgs['ln.texto.tipoemprestimo']}</h3>
-        <h:panelGrid id="ididentificatipoemprestimo" columns="6">
+        <!--<h3>#{msgs['ln.texto.tipoemprestimo']}</h3>-->
+        <h:panelGrid id="ididentificatipoemprestimo" columns="8">
+            <p:outputLabel for="dtdataemprestimo" value="#{msgs['ln.texto.data']}"/>
+            <p:calendar id="dtdataemprestimo" showOn="button" pattern="dd/MM/yyyy" value="#{emprestimoView.dataEmprestimo}"
+                        size="8"/>
             <p:selectOneRadio value="#{contaView.tipoEmprestimo}" >
                 <f:selectItem itemLabel="#{msgs['ln.texto.tomandoemprestado']}" itemValue="1"/>
                 <f:selectItem itemLabel="#{msgs['ln.texto.emprestando']}" itemValue="2"/>
@@ -16,13 +19,6 @@
             <p:selectBooleanCheckbox value="#{emprestimoView.simulado}" />
             <p:outputLabel value="#{msgs['ln.texto.simulado']}"/>
         </h:panelGrid> 
-
-        <h:panelGrid id="iddataemprestimo" columns="2">
-            <p:outputLabel for="dtdataemprestimo" value="#{msgs['ln.texto.data']}"/>
-            <p:calendar id="dtdataemprestimo" showOn="button" pattern="dd/MM/yyyy" value="#{emprestimoView.dataEmprestimo}"
-                        size="8"/>
-        </h:panelGrid>
-
         <p:panel>
             <h:panelGrid id="idtipoemprestimo" columns="1">
                 <ui:include src="#{contaView.telaEmprestimo}"/>
