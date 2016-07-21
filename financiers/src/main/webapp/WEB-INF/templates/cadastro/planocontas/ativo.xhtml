@@ -13,6 +13,7 @@
                 <f:selectItem itemLabel="#{msgs['ln.texto.automovel']}" itemValue="Automóvel"/>
                 <f:selectItem itemLabel="#{msgs['ln.texto.movel']}" itemValue="Móvel" itemDisabled="#{contaView.bItemAtivoMovel}"/>
                 <f:selectItem itemLabel="#{msgs['ln.texto.aplicacao']}" itemValue="Aplicação" itemDisabled="#{contaView.bItemAtivoAplicacao}"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.empresa']}" itemValue="Empresa" itemDisabled="#{contaView.bItemAtivoAplicacao}"/>
                 <p:ajax listener="#{contaView.mostraAtivo}" process="idtipoativoseleciona" update="idtipoativoselecionado, idtipoativoseleciona"/>
             </p:selectOneMenu>
             <p:outputLabel value="#{msgs['ln.texto.valorativo']}"/>
