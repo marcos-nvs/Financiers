@@ -15,11 +15,11 @@
     </h:panelGrid>
     <h:panelGrid id="idPerfilAcessoDialog" columns="10">
         <p:outputLabel value="#{msgs['ln.texto.modulo']}"/>
-        <p:selectOneMenu id="idListModulo" value="#{perfilView.modInCodigo}" style="margin-left: 60px">
+        <p:selectOneMenu id="idListModulo" value="#{perfilView.modInCodigo}" style="width: 250px;margin-left: 12px;">
             <f:selectItems value="#{perfilView.listModulo}" var="perfilAcesso" itemLabel="#{perfilAcesso.modStDescricao}"
                            itemValue="#{perfilAcesso.modInCodigo}"/>
         </p:selectOneMenu>
-        <p:selectBooleanCheckbox value="#{perfilView.bIncluirAcesso}" style="margin-left: 83px"/>
+        <p:selectBooleanCheckbox value="#{perfilView.bIncluirAcesso}" style="margin-left: 63px"/>
         <p:outputLabel value="#{msgs['ln.texto.incluir']}"/>
         <p:selectBooleanCheckbox value="#{perfilView.bAlterarAcesso}"/>
         <p:outputLabel value="#{msgs['ln.texto.alterar']}"/>

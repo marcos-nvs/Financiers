@@ -7,13 +7,13 @@
 
     <h:panelGrid id="idgridDataIrrf" columns="6" >
         <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-        <p:inputText id="idIrrfDescricao" value="#{irrfView.nomeTabela}" size="50"/>
+        <p:inputText id="idIrrfDescricao" value="#{irrfView.nomeTabela}" size="50" style="margin-left: 27px;"/>
         <p:outputLabel for="dtirrfInicio" value="#{msgs['ln.texto.datainicio']}"/>
         <p:calendar id="dtirrfInicio" showOn="button" value="#{irrfView.dataInicial}" pattern="dd/MM/yyyy"/>
         <p:outputLabel for="dtirrfFinal" value="#{msgs['ln.texto.datafinal']}"/>
         <p:calendar id="dtirrfFinal" showOn="button" value="#{irrfView.dataFinal}" pattern="dd/MM/yyyy"/>
     </h:panelGrid>
-    <h:panelGrid id="idgridValorIrrf" columns="6" style="margin-left: 35px;">
+    <h:panelGrid id="idgridValorIrrf" columns="6">
         <p:outputLabel value="#{msgs['ln.texto.valorinicial']}"/>
         <p:inputText id="idinputvlrinicial" value="#{irrfView.valorInicial}" style="width: 80px;" size="20">
             <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>

@@ -7,13 +7,13 @@
 
     <h:panelGrid id="idgridDataInss" columns="6" >
         <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-        <p:inputText id="idinssDescricao" value="#{inssView.nomeTabela}" size="50"/>
+        <p:inputText id="idinssDescricao" value="#{inssView.nomeTabela}" size="50" style="margin-left: 25px"/>
         <p:outputLabel for="dtinssInicio" value="#{msgs['ln.texto.datainicio']}"/>
         <p:calendar id="dtinssInicio" value="#{inssView.dataInicial}" showOn="button"  pattern="dd/MM/yyyy"/>
         <p:outputLabel for="dtinssFinal" value="#{msgs['ln.texto.datafinal']}"/>
         <p:calendar id="dtinssFinal" value="#{inssView.dataFinal}" showOn="button" pattern="dd/MM/yyyy"/>
     </h:panelGrid>
-    <h:panelGrid id="idgridValorInss" columns="8" style="margin-left: 20px;">
+    <h:panelGrid id="idgridValorInss" columns="8">
         <p:outputLabel value="#{msgs['ln.texto.valorinicial']}"/>
         <p:inputText id="idinssvlrinicial"  value="#{inssView.valorInicial}" style="width: 80px;" size="20">
             <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
