@@ -53,7 +53,8 @@
         </p:rowExpansion>
         <f:facet name="footer">
             <p:commandButton id="btIncluirInss" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document"
-                             action="#{inssView.btIncluir}" process="btIncluirInss" update="btIncluirInss"/>
+                             action="#{inssView.btIncluir}" process="btIncluirInss" 
+                             update=":idFormCenter:idtabelas:idTabelaInss, :idFormTop:growl, :idformdialog:iddialog"/>
             <p:commandButton id="btAlterarInss" value="#{msgs['ln.bt.alterar']}" icon="ui-icon-pencil"
                              action="#{inssView.btAlterar()}" process="btAlterarInss,:idFormCenter:idtabelas:idTabelaInss"
                              update=":idFormTop:growl, :idformdialog:iddialog"/>

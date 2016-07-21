@@ -15,7 +15,7 @@
     </h:panelGrid>
     <h:panelGrid id="idgridValorJuros" columns="6" style="margin-left: 18px;">
         <p:outputLabel value="#{msgs['ln.texto.banco']}"/>
-        <p:selectOneMenu id="idListBanco" value="#{jurosView.banco}">
+        <p:selectOneMenu id="idListBanco" value="#{jurosView.banco}" style="width: 250px;">
             <f:selectItems value="#{jurosView.listaBanco}" var="banco" itemLabel="#{banco.favStDescricao}"
                            itemValue="#{banco.favInCodigo}"/>
         </p:selectOneMenu>

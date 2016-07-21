@@ -7,13 +7,13 @@
 
     <h:panelGrid id="idgridDataIpva" columns="6" >
         <p:outputLabel value="#{msgs['ln.texto.descricao']}"/>
-        <p:inputText id="idipvaDescricao" value="#{ipvaView.nomeTabela}" size="50"/>
+        <p:inputText id="idipvaDescricao" value="#{ipvaView.nomeTabela}" size="50" style="margin-left: 20px;"/>
         <p:outputLabel for="dtipvaInicio" value="#{msgs['ln.texto.datainicio']}"/>
         <p:calendar id="dtipvaInicio" value="#{ipvaView.dataInicial}" showOn="button"  pattern="dd/MM/yyyy"/>
         <p:outputLabel for="dtipvaFinal" value="#{msgs['ln.texto.datafinal']}"/>
         <p:calendar id="dtipvaFinal" value="#{ipvaView.dataFinal}" showOn="button" pattern="dd/MM/yyyy"/>
     </h:panelGrid>
-    <h:panelGrid id="idgridValorIpva" columns="8" style="margin-left: 25px;">
+    <h:panelGrid id="idgridValorIpva" columns="8">
         <p:outputLabel value="#{msgs['ln.texto.origemcarro']}"/>
         <p:selectOneMenu id="idipvaordem" value="#{ipvaView.origemCarro}" style="width: 200px;" effect="fade">
             <f:selectItem itemLabel="#{msgs['ln.texto.nacional']}" itemValue="Nacional"/>
