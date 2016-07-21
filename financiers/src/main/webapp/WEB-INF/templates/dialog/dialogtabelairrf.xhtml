@@ -19,7 +19,7 @@
             <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
             <p:ajax update="idinputvlrinicial" process="idinputvlrinicial" event="change"/>
         </p:inputText>
-        <p:outputLabel value="#{msgs['ln.texto.datafinal']}"/>
+        <p:outputLabel value="#{msgs['ln.texto.valorfinal']}"/>
         <p:inputText id="idvlrFinal" value="#{irrfView.valorFinal}" style="width: 80px;" size="20">
             <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
             <p:ajax update="idvlrFinal" process="idvlrFinal" event="change"/>
