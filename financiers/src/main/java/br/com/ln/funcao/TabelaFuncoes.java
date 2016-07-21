@@ -139,7 +139,6 @@ public class TabelaFuncoes implements Serializable {
     private boolean incluirTabelaItem(LnTabelaItem lnTabelaItem) {
 
         try {
-            System.out.println("lnTabelaItem --> " + lnTabelaItem.toString());
             TabelaDao.saveObject(lnTabelaItem);
             return true;
         } catch (HibernateException ex) {

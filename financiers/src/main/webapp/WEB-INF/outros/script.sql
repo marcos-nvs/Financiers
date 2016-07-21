@@ -766,7 +766,7 @@ CREATE TABLE ln_planoconta
   cta_st_configuracao character varying(1000),
   cta_st_alerta character varying(1000),
   cta_dt_criacao date,
-  usu_st_codigo character varying(30)[],
+  usu_st_codigo character varying(30),
   CONSTRAINT pk_conta PRIMARY KEY (cta_in_codigo)
 )
 WITH (
