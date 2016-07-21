@@ -116,20 +116,24 @@ public class PlanoContaFuncoes implements Serializable {
         }
 
         if (conta.getAtivo() != null) {
-            
-            switch (conta.getAtivo().getTipoImovel()) {
-                case "Próprio":
-                    if (conta.getAtivo().getValorAtivo() == null || conta.getAtivo().getValorAtivo() == 0) {
-                        mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valorativo");
-                        validado = false;
-                    }
-                    break;
-                case "Aluguel":
-                    break;
-                case "Pais":
-                    break;
-            }
 
+            if (conta.getAtivo().getTipoImovel() != null) {
+                switch (conta.getAtivo().getTipoImovel()) {
+                    case "Próprio":
+                        if (conta.getAtivo().getValorAtivo() == null || conta.getAtivo().getValorAtivo() == 0) {
+                            mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valorativo");
+                            validado = false;
+                        }
+                        break;
+                    case "Aluguel":
+                        break;
+                    case "Pais":
+                        break;
+                }
+            } else if (conta.getAtivo().getValorAtivo() == null) {
+                mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valorativo");
+                validado = false;
+            }
         }
 
         if (conta.getEmprestimo() != null) {

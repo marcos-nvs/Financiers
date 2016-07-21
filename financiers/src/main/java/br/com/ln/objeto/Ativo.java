@@ -21,6 +21,9 @@ public class Ativo implements Serializable{
     private String placa;
     private Integer anoFabricacao;
     private Integer anoModelo;
+    
+    private Tabela tabela;//TODO analisar como pegar a melhor a tabela.
+    private MesFrequencia mesFrequencia;
 
     public Ativo() {
     }

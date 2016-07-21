@@ -8,22 +8,11 @@
     <p:panel>
         <h:panelGrid id="idgridtipoautomovel" columns="10">
             <p:outputLabel value="#{msgs['ln.texto.placa']}"/>
-            <p:inputText size="6" value="#{ativoInfo.placaVeiculo}" style="margin-left: 50px;"/>
+            <p:inputText size="6" value="#{ativoInfo.placaVeiculo}"/>
             <p:outputLabel value="#{msgs['ln.texto.anofabricacao']}"/>
             <p:inputText size="2" value="#{ativoInfo.anoFabricacao}" />
             <p:outputLabel value="#{msgs['ln.texto.anomodelo']}"/>
             <p:inputText size="2" value="#{ativoInfo.anoModelo}" />
         </h:panelGrid>
-        <h:panelGrid id="idgridipva" columns="2">
-            <p:outputLabel value="Escolha o IPVA"/>
-            <p:selectOneMenu id="idescolhaipva" value="#{contaView.idTabela}" effect="fade" style="width: 250px;">
-                <f:selectItems var="itemipva" value="#{contaView.tabela.listTabelaItem}" itemLabel="#{itemipva.origem}"
-                               itemValue="#{itemipva.codigoTabItem}"/>
-            </p:selectOneMenu>
-        </h:panelGrid>
-        <h:panelGrid id="idGridIpva">
-            <ui:include src="meses.xhtml"/>
-        </h:panelGrid>
-        
     </p:panel>
 </ui:composition>
