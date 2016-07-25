@@ -84,12 +84,15 @@ public class CalculosFinanceiros implements Serializable {
         Double parcela = 288.48d;
         Double juros = 3.80d;
         Double montante = 15577.92d;
+        Double iof = 211.92d;
+        
         
         System.out.println("Valor Principal : " + principal);
         System.out.println("Periodo: " + periodo);
         System.out.println("Valor Parcela : " + parcela);
         System.out.println("Juros  : " + juros);
         System.out.println("Montante : " + montante);
+        System.out.println("IOF : " + iof);
 
         System.out.println("=============================================================================================================");
         
