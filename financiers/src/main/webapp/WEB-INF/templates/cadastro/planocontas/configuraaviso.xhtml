@@ -7,12 +7,11 @@
     
     <p:panel header="#{msgs['ln.texto.configuracaoaviso']}">
         <h:panelGrid id="idconfiguraaviso" columns="5">
-            <p:selectBooleanCheckbox />
+            <p:selectBooleanCheckbox value="#{alertaView.configuracaoAlerta.aleta}" />
             <p:outputLabel value="#{msgs['ln.texto.alerta']}"/>
-            <p:selectBooleanCheckbox/>
+            <p:selectBooleanCheckbox value="#{alertaView.configuracaoAlerta.email}"/>
             <p:outputLabel value="#{msgs['ln.texto.enviaremail']}"/>
-            <p:inputText size="60"/>
-            
+            <p:inputText size="60" value="#{alertaView.configuracaoAlerta.emailDescricao}"/>
         </h:panelGrid>
     </p:panel>
     

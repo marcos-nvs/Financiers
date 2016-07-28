@@ -365,6 +365,7 @@ public class PlanoContaView implements Serializable {
 
         Integer idTipoCategoria = planoContaFuncoes.tipoConta(idCategoria);
         AtivoView ativoView;
+        AlertaView alertaView;
 
         switch (idTipoCategoria) {
             case 1: //Ativo
@@ -378,12 +379,15 @@ public class PlanoContaView implements Serializable {
 //                break;
             case 3: //banco
                 BancoView bancoView = (BancoView) JsfHelper.getSessionAttribute("bancoInfo");
+                alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
                 conta.setBanco(bancoView.grabBanco());
-                conta.setConfiguracaoAlerta(conta.getConfiguracaoAlerta());
+                conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
             case 4: //Cartão de Crédito
                 CartaoCreditoView ccView = (CartaoCreditoView) JsfHelper.getSessionAttribute("ccView");
                 conta.setCartaoCredito(ccView.grabCartaoCredito());
+                alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
 //            case 5: //Dinheiro
 //                break;
@@ -392,6 +396,8 @@ public class PlanoContaView implements Serializable {
                 conta.setEmprestimo(emprestimoView.grabEmprestimo());
                 conta.getEmprestimo().setTipoEmprestimo(tipoEmprestimo);
                 conta.setSaldoConta(conta.getEmprestimo().getValorTotal());
+                alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
             case 7: //Financiamento
                 FinanciamentoView financiamentoView = (FinanciamentoView) JsfHelper.getSessionAttribute("finView");
@@ -403,21 +409,31 @@ public class PlanoContaView implements Serializable {
                 conta.getAtivo().setValorAtivo(conta.getFinancimento().getValorAtivo());
                 conta.getFinancimento().setTipoFinancimanto(tipoFinanciamento);
                 conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
+                alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
 //            case 8: //Outros Passivos
 //                break;
             case 9: //Receitas
                 receitaDespesaView = (ReceitaDespesaView) JsfHelper.getSessionAttribute("recdespView");
                 conta.setReceitaDespesa(receitaDespesaView.grabReceitaDespesa());
+                alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
             case 10: //Despesas
                 receitaDespesaView = (ReceitaDespesaView) JsfHelper.getSessionAttribute("recdespView");
                 conta.setReceitaDespesa(receitaDespesaView.grabReceitaDespesa());
+                alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
-//            case 11: //Contas à Receber
-//                break;
-//            case 12: //Contas à Pagar
-//                break;
+            case 11: //Contas à Receber
+                alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
+                break;
+            case 12: //Contas à Pagar
+                alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
+                break;
         }
 
         if (conta.getSaldoConta() == null && saldoInicial != null) {
