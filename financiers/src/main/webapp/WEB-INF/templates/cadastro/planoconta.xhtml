@@ -19,6 +19,9 @@
         <p:column headerText="#{msgs['ln.texto.descricao']}" style="width: 650px;">
             <p:outputLabel value="#{varconta.descricaoConta}"/>
         </p:column>
+        <p:column headerText="#{msgs['ln.texto.valor']}" style="text-align: right">
+            <p:outputLabel value="#{contaView.mostraSaldoAtual(varconta.codigoConta)}"/>
+        </p:column>
         <p:column headerText="#{msgs['ln.texto.ativo']}">
             <p:outputLabel value="#{contaView.textoContaAtiva(varconta.isbContaAtiva())}"/>
         </p:column>

@@ -17,6 +17,7 @@ import br.com.ln.objeto.MesFrequencia;
 import br.com.ln.objeto.Tabela;
 import br.com.ln.tipos.TipoFuncao;
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
@@ -378,6 +379,7 @@ public class PlanoContaView implements Serializable {
             case 3: //banco
                 BancoView bancoView = (BancoView) JsfHelper.getSessionAttribute("bancoInfo");
                 conta.setBanco(bancoView.grabBanco());
+                conta.setConfiguracaoAlerta(conta.getConfiguracaoAlerta());
                 break;
             case 4: //Cartão de Crédito
                 CartaoCreditoView ccView = (CartaoCreditoView) JsfHelper.getSessionAttribute("ccView");
@@ -606,5 +608,9 @@ public class PlanoContaView implements Serializable {
     public String textoCategoria(Integer idCategoria) {
         categoria = CategoriaDao.grabCategoria(idCategoria);
         return categoria.getCatStDescricao();
+    }
+    
+    public String mostraSaldoAtual(Integer idConta) {
+        return NumberFormat.getCurrencyInstance().format(planoContaFuncoes.saldoAtualConta(idConta));
     }
 }

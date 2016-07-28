@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "ln_planoconta")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LnPlanoconta.findAll", query = "SELECT l FROM LnPlanoconta l"),
+    @NamedQuery(name = "LnPlanoconta.findAll", query = "SELECT l FROM LnPlanoconta l order by l.catInCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCtaInCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaInCodigo = :ctaInCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCatInCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.catInCodigo = :catInCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCtaStDescricao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStDescricao = :ctaStDescricao"),
@@ -39,8 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnPlanoconta.findByCtaStConfiguracao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStConfiguracao = :ctaStConfiguracao"),
     @NamedQuery(name = "LnPlanoconta.findByCtaStAlerta", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStAlerta = :ctaStAlerta"),
     @NamedQuery(name = "LnPlanoconta.findByCtaDtCriacao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaDtCriacao = :ctaDtCriacao"),
-    @NamedQuery(name = "LnPlanoconta.findByUsuStCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.usuStCodigo = :usuStCodigo"),
-    @NamedQuery(name = "LnPlanoconta.findByAgeInCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.ageInCodigo = :ageInCodigo")})
+    @NamedQuery(name = "LnPlanoconta.findByUsuStCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.usuStCodigo = :usuStCodigo")})
 public class LnPlanoconta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -78,8 +77,6 @@ public class LnPlanoconta implements Serializable {
     @Size(max = 30)
     @Column(name = "usu_st_codigo")
     private String usuStCodigo;
-    @Column(name = "age_in_codigo")
-    private Integer ageInCodigo;
     
     @Transient
     private TipoFuncao tipoFuncao;    
@@ -169,14 +166,6 @@ public class LnPlanoconta implements Serializable {
 
     public void setUsuStCodigo(String usuStCodigo) {
         this.usuStCodigo = usuStCodigo;
-    }
-
-    public Integer getAgeInCodigo() {
-        return ageInCodigo;
-    }
-
-    public void setAgeInCodigo(Integer ageInCodigo) {
-        this.ageInCodigo = ageInCodigo;
     }
 
     public TipoFuncao getTipoFuncao() {

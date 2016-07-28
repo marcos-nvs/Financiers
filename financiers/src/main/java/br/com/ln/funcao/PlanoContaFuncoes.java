@@ -206,6 +206,10 @@ public class PlanoContaFuncoes implements Serializable {
 
         if (conta.getBanco() != null) {
             lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getBanco()));
+            
+            if (conta.getConfiguracaoAlerta() != null){
+                lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getConfiguracaoAlerta()));
+            }
         }
         if (conta.getCartaoCredito() != null) {
             lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getCartaoCredito()));
@@ -281,6 +285,13 @@ public class PlanoContaFuncoes implements Serializable {
 
     public String getUsuarioLogado() {
         return VarComuns.lnUsusario.getUsuStCodigo();
+    }
+    
+    public Double saldoAtualConta(Integer idConta){
+        
+        LnSaldoconta lnSaldoconta = PlanoContaDao.grabSaldoAtualConta(idConta, PlanoContaDao.grabDateFromDB());
+        
+        return lnSaldoconta.getSacFlSaldo();
     }
 
 }
