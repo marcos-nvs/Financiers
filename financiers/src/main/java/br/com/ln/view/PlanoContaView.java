@@ -458,10 +458,6 @@ public class PlanoContaView implements Serializable {
         tipoImovel = null;
         telaCalculada = null;
         bCalculada = false;
-        tipoEmprestimo = null;
-        tipoFinanciamento = null;
-        telaEmprestimo = null;
-        telaFinanciamento = null;
         bMostraSaldoInicial = false;
         
         telaConta = "../cadastro/planocontas/ativo.xhtml";

@@ -4,13 +4,11 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:panelGrid id="idgridcep" columns="3" style="margin-left: 50px;">
+    <h:panelGrid id="idgridcep" columns="7" style="margin-left: 50px;">
         <p:outputLabel value="#{msgs['ln.texto.cep']}"/>
         <p:inputText id="idinputcep" value="#{enderecoView.cep}" size="10" />
         <p:commandButton id="idbtbuscacep" icon="ui-icon-search" action="#{enderecoView.btPesquisaCEP()}"
-                         process="idbtbuscacep, idinputcep" update="idgridendereco,idgriddetalhe, idgridcep,:idFormTop:growl"/>
-    </h:panelGrid>
-    <h:panelGrid id="idgridendereco" columns="4" style="margin-left: 50px;">
+                         process="idbtbuscacep, idinputcep" update="idgriddetalhe, idgridcep,:idFormTop:growl"/>
         <p:outputLabel value="#{msgs['ln.texto.tipo']}"/>
         <p:selectOneMenu id="idtipoendereco" value="#{enderecoView.tipoEndereco}" >
             <f:selectItem itemLabel="#{msgs['ln.texto.residencia']}" itemValue="Residêncial"/>
@@ -20,6 +18,8 @@
         <p:outputLabel value="#{msgs['ln.texto.endereco']}"/>
         <p:inputText value="#{enderecoView.endereco}" size="50" />
     </h:panelGrid>
+<!--    <h:panelGrid id="idgridendereco" columns="4" style="margin-left: 50px;">
+    </h:panelGrid>-->
     <h:panelGrid id="idgridcomplemento" columns="2" style="margin-left: 4px;">
         <p:outputLabel value="Complemento"/>
         <p:inputText value="#{enderecoView.complemento}" size="50" />
