@@ -767,6 +767,7 @@ CREATE TABLE ln_planoconta
   cta_st_alerta character varying(1000),
   cta_dt_criacao date,
   usu_st_codigo character varying(30),
+  age_in_codigo integer,
   CONSTRAINT pk_conta PRIMARY KEY (cta_in_codigo)
 )
 WITH (
@@ -807,6 +808,46 @@ WITH (
 ALTER TABLE ln_saldoconta
   OWNER TO postgres;
 
+-- Table: ln_agendaalerta
+
+-- DROP TABLE ln_agendaalerta;
+
+CREATE TABLE ln_agendaalerta
+(
+  age_in_codigo integer NOT NULL, -- Código único da agenda
+  age_dt_criacao date, -- Data da criação da agenda
+  age_dt_aviso date, -- Data do aviso
+  age_ch_alertar character(1), -- Define se realiza o aviso ou não
+  age_ch_email character(1), -- Define se alerta por e-mail
+  age_st_email character varying(50), -- Define o e-mail se age_ch_email for igual a "s"
+  CONSTRAINT agenda_id_codigo PRIMARY KEY (age_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_agendaalerta
+  OWNER TO postgres;
+COMMENT ON TABLE ln_agendaalerta
+  IS 'Tabela de geração de agenda para alerta.';
+COMMENT ON COLUMN ln_agendaalerta.age_in_codigo IS 'Código único da agenda';
+COMMENT ON COLUMN ln_agendaalerta.age_dt_criacao IS 'Data da criação da agenda';
+COMMENT ON COLUMN ln_agendaalerta.age_dt_aviso IS 'Data do aviso';
+COMMENT ON COLUMN ln_agendaalerta.age_ch_alertar IS 'Define se realiza o aviso ou não';
+COMMENT ON COLUMN ln_agendaalerta.age_ch_email IS 'Define se alerta por e-mail';
+COMMENT ON COLUMN ln_agendaalerta.age_st_email IS 'Define o e-mail se age_ch_email for igual a "s"';
+
+-- Sequence: seq_agendaalerta
+
+-- DROP SEQUENCE seq_agendaalerta;
+
+CREATE SEQUENCE seq_agendaalerta
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_agendaalerta
+  OWNER TO postgres;
 
 -------------------------------------------------------------------------------------------------------------------------
 

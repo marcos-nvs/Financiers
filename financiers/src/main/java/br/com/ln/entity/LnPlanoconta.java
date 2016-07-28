@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -28,49 +30,59 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "ln_planoconta")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LnPlanoconta.findAll", query = "SELECT l FROM LnPlanoconta l order by l.catInCodigo"),
+    @NamedQuery(name = "LnPlanoconta.findAll", query = "SELECT l FROM LnPlanoconta l"),
     @NamedQuery(name = "LnPlanoconta.findByCtaInCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaInCodigo = :ctaInCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCatInCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.catInCodigo = :catInCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCtaStDescricao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStDescricao = :ctaStDescricao"),
     @NamedQuery(name = "LnPlanoconta.findByCtaChAtivo", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaChAtivo = :ctaChAtivo"),
     @NamedQuery(name = "LnPlanoconta.findByCtaFlSaldoinicial", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaFlSaldoinicial = :ctaFlSaldoinicial"),
+    @NamedQuery(name = "LnPlanoconta.findByCtaStConfiguracao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStConfiguracao = :ctaStConfiguracao"),
+    @NamedQuery(name = "LnPlanoconta.findByCtaStAlerta", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStAlerta = :ctaStAlerta"),
     @NamedQuery(name = "LnPlanoconta.findByCtaDtCriacao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaDtCriacao = :ctaDtCriacao"),
     @NamedQuery(name = "LnPlanoconta.findByUsuStCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.usuStCodigo = :usuStCodigo"),
-    @NamedQuery(name = "LnPlanoconta.findByCtaStConfiguracao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStConfiguracao = :ctaStConfiguracao"),
-    @NamedQuery(name = "LnPlanoconta.findByCtaStAlerta", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStAlerta = :ctaStAlerta")})
+    @NamedQuery(name = "LnPlanoconta.findByAgeInCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.ageInCodigo = :ageInCodigo")})
 public class LnPlanoconta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "cta_in_codigo")
     private Integer ctaInCodigo;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "cat_in_codigo")
     private int catInCodigo;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "cta_st_descricao")
     private String ctaStDescricao;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "cta_ch_ativo")
     private Character ctaChAtivo;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "cta_fl_saldoinicial")
     private double ctaFlSaldoinicial;
-    @Basic(optional = false)
+    @Size(max = 1000)
+    @Column(name = "cta_st_configuracao")
+    private String ctaStConfiguracao;
+    @Size(max = 1000)
+    @Column(name = "cta_st_alerta")
+    private String ctaStAlerta;
     @Column(name = "cta_dt_criacao")
     @Temporal(TemporalType.DATE)
     private Date ctaDtCriacao;
-    @Basic(optional = false)
+    @Size(max = 30)
     @Column(name = "usu_st_codigo")
     private String usuStCodigo;
-    @Column(name = "cta_st_configuracao")
-    private String ctaStConfiguracao;
-    @Column(name = "cta_st_alerta")
-    private String ctaStAlerta;
+    @Column(name = "age_in_codigo")
+    private Integer ageInCodigo;
     
     @Transient
-    private TipoFuncao tipoFuncao;
+    private TipoFuncao tipoFuncao;    
 
     public LnPlanoconta() {
     }
@@ -79,14 +91,12 @@ public class LnPlanoconta implements Serializable {
         this.ctaInCodigo = ctaInCodigo;
     }
 
-    public LnPlanoconta(Integer ctaInCodigo, int catInCodigo, String ctaStDescricao, Character ctaChAtivo, double ctaFlSaldoinicial, Date ctaDtCriacao, String usuStCodigo) {
+    public LnPlanoconta(Integer ctaInCodigo, int catInCodigo, String ctaStDescricao, Character ctaChAtivo, double ctaFlSaldoinicial) {
         this.ctaInCodigo = ctaInCodigo;
         this.catInCodigo = catInCodigo;
         this.ctaStDescricao = ctaStDescricao;
         this.ctaChAtivo = ctaChAtivo;
         this.ctaFlSaldoinicial = ctaFlSaldoinicial;
-        this.ctaDtCriacao = ctaDtCriacao;
-        this.usuStCodigo = usuStCodigo;
     }
 
     public Integer getCtaInCodigo() {
@@ -129,6 +139,22 @@ public class LnPlanoconta implements Serializable {
         this.ctaFlSaldoinicial = ctaFlSaldoinicial;
     }
 
+    public String getCtaStConfiguracao() {
+        return ctaStConfiguracao;
+    }
+
+    public void setCtaStConfiguracao(String ctaStConfiguracao) {
+        this.ctaStConfiguracao = ctaStConfiguracao;
+    }
+
+    public String getCtaStAlerta() {
+        return ctaStAlerta;
+    }
+
+    public void setCtaStAlerta(String ctaStAlerta) {
+        this.ctaStAlerta = ctaStAlerta;
+    }
+
     public Date getCtaDtCriacao() {
         return ctaDtCriacao;
     }
@@ -145,20 +171,12 @@ public class LnPlanoconta implements Serializable {
         this.usuStCodigo = usuStCodigo;
     }
 
-    public String getCtaStConfiguracao() {
-        return ctaStConfiguracao;
+    public Integer getAgeInCodigo() {
+        return ageInCodigo;
     }
 
-    public void setCtaStConfiguracao(String ctaStConfiguracao) {
-        this.ctaStConfiguracao = ctaStConfiguracao;
-    }
-
-    public String getCtaStAlerta() {
-        return ctaStAlerta;
-    }
-
-    public void setCtaStAlerta(String ctaStAlerta) {
-        this.ctaStAlerta = ctaStAlerta;
+    public void setAgeInCodigo(Integer ageInCodigo) {
+        this.ageInCodigo = ageInCodigo;
     }
 
     public TipoFuncao getTipoFuncao() {
