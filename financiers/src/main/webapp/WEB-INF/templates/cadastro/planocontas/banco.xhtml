@@ -19,6 +19,9 @@
             <p:outputLabel value="#{msgs['ln.texto.datavencimento']}"/>
             <p:inputText value="#{bancoInfo.diaVencimento}" size="4"/>
         </h:panelGrid>
+        <h:panelGrid id="idmensagemavisobanco" columns="1">
+            <ui:include src="configuraaviso.xhtml"/>
+        </h:panelGrid>
     </p:panel>
     
 </ui:composition>

@@ -10,13 +10,10 @@
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.mb.titulo.planoconta']}"/>
         </f:facet>
-        <p:column style="width: 16px">
-            <p:rowToggler />
-        </p:column>
-        <p:column headerText="#{msgs['ln.texto.codigo']}" style="width: 100px;">
+<!--        <p:column headerText="#{msgs['ln.texto.codigo']}" style="width: 100px;">
             <p:outputLabel value="#{varconta.codigoConta}"/>
-        </p:column>
-        <p:column headerText="#{msgs['ln.texto.descricao']}" style="width: 250px;">
+        </p:column>-->
+        <p:column headerText="#{msgs['ln.texto.tipo']}" style="width: 250px;">
             <p:outputLabel value="#{contaView.textoCategoria(varconta.codigoCategoria)}"/>
         </p:column>
         <p:column headerText="#{msgs['ln.texto.descricao']}" style="width: 650px;">
@@ -25,11 +22,6 @@
         <p:column headerText="#{msgs['ln.texto.ativo']}">
             <p:outputLabel value="#{contaView.textoContaAtiva(varconta.isbContaAtiva())}"/>
         </p:column>
-        <p:rowExpansion >
-            <h:panelGrid id="idgriddetalheconta" columns="1">
-                <ui:include src="../consulta/consultaativo.xhtml"/>
-            </h:panelGrid>
-        </p:rowExpansion>
         <f:facet name="footer">
             <p:commandButton id="idbtIncluirConta" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document" 
                              action="#{contaView.btIncluirConta}" process="idbtIncluirConta" 

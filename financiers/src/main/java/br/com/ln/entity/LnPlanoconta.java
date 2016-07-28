@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "ln_planoconta")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "LnPlanoconta.findAll", query = "SELECT l FROM LnPlanoconta l"),
+    @NamedQuery(name = "LnPlanoconta.findAll", query = "SELECT l FROM LnPlanoconta l order by l.catInCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCtaInCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaInCodigo = :ctaInCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCatInCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.catInCodigo = :catInCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCtaStDescricao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStDescricao = :ctaStDescricao"),

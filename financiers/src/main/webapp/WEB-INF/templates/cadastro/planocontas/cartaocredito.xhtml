@@ -14,6 +14,9 @@
             <p:outputLabel value="#{msgs['ln.texto.diavencimento']}"/>
             <p:inputText value="#{ccView.diaVencimento}" size="4"/>
         </h:panelGrid>
+        <h:panelGrid id="idmensagemavisocartao" columns="1">
+            <ui:include src="configuraaviso.xhtml"/>
+        </h:panelGrid>
     </p:panel>
     
 </ui:composition>
