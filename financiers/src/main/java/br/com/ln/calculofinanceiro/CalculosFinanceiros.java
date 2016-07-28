@@ -35,10 +35,6 @@ public class CalculosFinanceiros implements Serializable {
         return (parcela * (Math.pow(1 + (taxa / 100), periodo) - 1)) / (taxa / 100);
     }
 
-//    public Double calculoValorMontante(Double principal, Double taxa, int periodo) {
-//        return principal * (Math.pow((1 + (taxa / 100)), periodo));
-//    }
-
     public Double calculoValorJuros(Double principal, Double taxa, int periodo) {
 
         Double montante = calculoParcelaValorMontante(principal, taxa, periodo);
