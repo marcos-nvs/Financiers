@@ -386,6 +386,7 @@ public class PlanoContaView implements Serializable {
                 conta.setCartaoCredito(ccView.grabCartaoCredito());
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
                 conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
+                alertaView.setConfiguracaoAlerta(null);
                 break;
 //            case 5: //Dinheiro
 //                break;

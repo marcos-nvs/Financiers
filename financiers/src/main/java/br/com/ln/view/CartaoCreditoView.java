@@ -87,6 +87,10 @@ public class CartaoCreditoView implements Serializable{
         cartaoCredito.setDiaVencimentoCartao(diaVencimento);
         cartaoCredito.setLimiteCartao(limiteCartao);
         cartaoCredito.setNumeroCartao(numCartao);
+        
+        diaVencimento = null;
+        limiteCartao = null;
+        numCartao = null;
 
         return cartaoCredito;
     }
