@@ -235,6 +235,21 @@ public class EmprestimoView implements Serializable {
         emprestimo.setValorParcelas(valorParcelas);
         emprestimo.setValorTotal(valorTotal);
         
+        
+        contaDestino = null;
+        contaPagamento = null;
+        dataEmprestimo = null;
+        dataVencimento = null;
+        favorecido = null;
+        jurosAnuais = null;
+        jurosEfetivos = null;
+        jurosMensais = null;
+        prazoEmprestimo = null;
+        simulado = false;
+        valorEmprestimo = null;
+        valorParcelas = null;
+        valorTotal = null;
+        
         return emprestimo;
     }
     
