@@ -336,10 +336,6 @@ public class PlanoContaView implements Serializable {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
 
-    public void btIncluirContaLista() {
-
-    }
-
     public void btSalvarContaLista() {
         conta = new Conta();
         defineConfiguracaoConta(conta);
@@ -374,6 +370,7 @@ public class PlanoContaView implements Serializable {
                 conta.getAtivo().setTipoAtivo(tipoAtivo);
                 conta.getAtivo().setTipoImovel(tipoImovel);
                 conta.setSaldoConta(conta.getAtivo().getValorAtivo());
+                ativoView.setValorInicial(null);
                 break;
 //            case 2: //Passivo.
 //                break;
@@ -472,7 +469,7 @@ public class PlanoContaView implements Serializable {
         bAtivoConta = false;
         bItemAtivoAplicacao = false;
         bItemAtivoMovel = false;
-        tipoAtivo = null;
+//        tipoAtivo = null;
         tipoImovel = null;
         telaCalculada = null;
         bCalculada = false;
@@ -488,6 +485,7 @@ public class PlanoContaView implements Serializable {
             conta.getAtivo().getEndereco().setEndereco(null);
             conta.getAtivo().getEndereco().setEstado(null);
             conta.getAtivo().getEndereco().setTipoEndereco(null);
+            conta.getAtivo().setValorAtivo(null);
         }
     }
 

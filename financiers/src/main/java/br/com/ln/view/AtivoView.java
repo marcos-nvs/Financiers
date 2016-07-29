@@ -8,6 +8,7 @@ package br.com.ln.view;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.objeto.Ativo;
 import br.com.ln.objeto.Endereco;
+import br.com.ln.tipos.TipoEndereco;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.faces.bean.ManagedBean;
@@ -118,6 +119,13 @@ public class AtivoView implements Serializable {
                 if (enderecoView != null) {
                     endereco = enderecoView.grabEnderecoObj();
                     ativo.setEndereco(endereco);
+                    enderecoView.setEndereco(null);
+                    enderecoView.setBairro(null);
+                    enderecoView.setCep(null);
+                    enderecoView.setCidade(null);
+                    enderecoView.setComplemento(null);
+                    enderecoView.setEstado(null);
+                    enderecoView.setTipoEndereco(TipoEndereco.Residêncial);
                 }
                 ativo.setEndereco(endereco);
                 break;
@@ -126,13 +134,17 @@ public class AtivoView implements Serializable {
                 ativo.setAnoModelo(anoModelo);
                 ativo.setPlaca(placaVeiculo);
                 ativo.setEndereco(null);
+                
+                anoFabricacao = null;
+                anoModelo = null;
+                placaVeiculo = null;
+
                 break;
             default:
                 ativo.setAnoModelo(null);
                 ativo.setAnoFabricacao(null);
                 ativo.setEndereco(null);
                 ativo.setPlaca(null);
-                
         }
         ativo.setValorAtivo(valorInicial);
 
