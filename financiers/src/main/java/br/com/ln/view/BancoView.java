@@ -104,6 +104,11 @@ public class BancoView implements Serializable{
         banco.setDiaVencimento(diaVencimento);
         banco.setLimiteConta(limiteConta);
         
+        agencia = null;
+        contaCorrente = null;
+        diaVencimento  = null;
+        limiteConta = null;
+        
         return banco;
     }
     
