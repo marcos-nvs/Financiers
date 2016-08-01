@@ -288,8 +288,8 @@ public class PlanoContaFuncoes implements Serializable {
     }
     
     public Double saldoAtualConta(Integer idConta){
-        
-        LnSaldoconta lnSaldoconta = PlanoContaDao.grabSaldoAtualConta(idConta, PlanoContaDao.grabDateFromDB());
+
+        LnSaldoconta lnSaldoconta = PlanoContaDao.grabSaldoAtualConta(idConta);
         
         return lnSaldoconta.getSacFlSaldo();
     }

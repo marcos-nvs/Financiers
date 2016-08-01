@@ -19,15 +19,15 @@ import org.hibernate.Transaction;
  *
  * @author Marcos Naves
  */
-public class PlanoContaDao extends GenericDao{
+public class PlanoContaDao extends GenericDao {
     
-    public static List<LnPlanoconta> grabContaAtivo(){
+    public static List<LnPlanoconta> grabContaAtivo() {
         
         Session session = null;
         Transaction tx;
         List<LnPlanoconta> listaPlanoconta = null;
         
-        try{
+        try {
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             Query query = session.getNamedQuery("LnPlanoconta.findByCtaChAtivo");
@@ -35,7 +35,7 @@ public class PlanoContaDao extends GenericDao{
             listaPlanoconta = query.list();
             tx.commit();
         } finally {
-            if (session != null && session.isOpen()){
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
@@ -46,37 +46,68 @@ public class PlanoContaDao extends GenericDao{
         return new Integer(grabIdByNextValueStringSQL("select nextval('seq_planoconta');"));
     }
     
-    public static List<LnPlanoconta> grabListaConta(){
+    public static List<LnPlanoconta> grabListaConta() {
         
         Session session = null;
         Transaction tx;
         List<LnPlanoconta> listaPlanoconta = null;
         
-        try{
+        try {
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             Query query = session.getNamedQuery("LnPlanoconta.findAll");
             listaPlanoconta = query.list();
             tx.commit();
         } finally {
-            if (session != null && session.isOpen()){
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
         return listaPlanoconta;
     }
     
-    public static List<LnSaldoconta> grabListSaldo(Integer ctaInCodigo){
+    public static List<LnSaldoconta> grabListSaldo(Integer ctaInCodigo) {
         return null;
     }
     
-    public static LnSaldoconta grabSaldoAtualConta(Integer ctaInCodigo, Date sacDtData){
+    public static LnSaldoconta grabSaldoAtualConta(Integer ctaInCodigo) {
         
         Session session = null;
         Transaction tx;
         LnSaldoconta lnSaldoconta = null;
         
-        try{
+        try {
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Date sacDtData = grabBuscaUltimoSaldo(ctaInCodigo);
+            
+            Query query = session.getNamedQuery("LnSaldoconta.findByCtaInCodigoSacDtData");
+            query.setInteger("ctaInCodigo", ctaInCodigo);
+            query.setDate("sacDtData", sacDtData);
+            List list = query.list();
+            tx.commit();
+            
+            if (list != null && list.size() > 0) {
+                lnSaldoconta = (LnSaldoconta) list.get(0);
+            }
+            
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        
+        return lnSaldoconta;
+    }
+
+    public static LnSaldoconta grabSaldoAtualConta(Integer ctaInCodigo, Date sacDtData) {
+        
+        Session session = null;
+        Transaction tx;
+        LnSaldoconta lnSaldoconta = null;
+        
+        try {
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
@@ -86,16 +117,45 @@ public class PlanoContaDao extends GenericDao{
             List list = query.list();
             tx.commit();
             
-            if (list != null && list.size() >0){
+            if (list != null && list.size() > 0) {
                 lnSaldoconta = (LnSaldoconta) list.get(0);
             }
             
         } finally {
-            if (session != null && session.isOpen()){
+            if (session != null && session.isOpen()) {
                 session.close();
             }
         }
         
         return lnSaldoconta;
+    }
+
+    private static Date grabBuscaUltimoSaldo(Integer ctaInCodigo) {
+        
+        Session session = null;
+        Transaction tx;
+        Date dataSaldo = null;
+        
+        try {
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.createSQLQuery("select max(sac_dt_data) sac_dt_data from ln_saldoconta\n"
+                    + "where cta_in_codigo = :ctaInCodigo\n");
+            
+            query.setInteger("ctaInCodigo", ctaInCodigo);
+            List list = query.list();
+            tx.commit();
+            
+            if (list != null && list.size() > 0) {
+                dataSaldo = (Date) list.get(0);
+            }
+            
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return dataSaldo;
     }
 }
