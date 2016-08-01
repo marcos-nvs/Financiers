@@ -7,23 +7,26 @@
 
     <p:panel header="#{msgs['ln.texto.informacaoemprestimo']}">
 
+        <h:panelGrid id="ididentificaemprestimonovo" columns="2">
+            <p:outputLabel value="#{msgs['ln.texto.emprestimonovo']} "/>
+            <p:selectOneRadio value="#{emprestimoView.novoEmprestimo}" >
+                <f:selectItem itemLabel="#{msgs['ln.texto.sim']}" itemValue="true"/>
+                <f:selectItem itemLabel="#{msgs['ln.texto.nao']}" itemValue="false"/>
+            </p:selectOneRadio>
+        </h:panelGrid> 
         <h:panelGrid id="ididentificatipoemprestimo" columns="8">
-
-            <p:outputLabel for="dtdataemprestimo" value="#{msgs['ln.texto.data']}"/>
-            <p:calendar id="dtdataemprestimo" showOn="button" pattern="dd/MM/yyyy" value="#{emprestimoView.dataEmprestimo}" size="8"/>
-
-            <p:selectOneRadio value="#{contaView.tipoEmprestimo}" >
+            <p:outputLabel value="#{msgs['ln.texto.voceesta']} "/>
+            <p:selectOneRadio value="#{contaView.tipoEmprestimo}" style="margin-left: 10px;" >
                 <f:selectItem itemLabel="#{msgs['ln.texto.tomandoemprestado']}" itemValue="1"/>
                 <f:selectItem itemLabel="#{msgs['ln.texto.emprestando']}" itemValue="2"/>
                 <p:ajax listener="#{contaView.mostraTipoEmpretimo}" process="ididentificatipoemprestimo" update="idtipoemprestimo"/>
             </p:selectOneRadio>
-
-            <p:selectBooleanCheckbox value="#{emprestimoView.simulado}" />
+            <p:outputLabel for="dtdataemprestimo" value="#{msgs['ln.texto.data']}" style="margin-left: 20px;"/>
+            <p:calendar id="dtdataemprestimo" showOn="button" pattern="dd/MM/yyyy" value="#{emprestimoView.dataEmprestimo}" size="8"/>
+            <p:selectBooleanCheckbox value="#{emprestimoView.simulado}" style="margin-left: 20px;" />
             <p:outputLabel value="#{msgs['ln.texto.simulado']}"/>
-
-
-
         </h:panelGrid> 
+
         <p:panel>
             <h:panelGrid id="idtipoemprestimo" columns="1">
                 <ui:include src="#{contaView.telaEmprestimo}"/>

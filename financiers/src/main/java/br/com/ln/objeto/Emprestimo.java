@@ -30,6 +30,7 @@ public class Emprestimo implements Serializable{
     private Double jurosEfetivos;
     private Date dataVencimento;
     private boolean simulado;
+    private boolean novoEmprestimo;
     
     public Emprestimo() {
     }
@@ -145,6 +146,14 @@ public class Emprestimo implements Serializable{
 
     public void setSimulado(boolean simulado) {
         this.simulado = simulado;
+    }
+
+    public boolean isNovoEmprestimo() {
+        return novoEmprestimo;
+    }
+
+    public void setNovoEmprestimo(boolean novoEmprestimo) {
+        this.novoEmprestimo = novoEmprestimo;
     }
 
     @Override

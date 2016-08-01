@@ -39,6 +39,7 @@ public class EmprestimoView implements Serializable {
     private Double jurosEfetivos;
     private Date dataVencimento;
     private boolean simulado;
+    private boolean novoEmprestimo;
     
     private List<LnFavorecido> listaFavorecido;
     private List<Conta> listaContaDestino;
@@ -50,15 +51,9 @@ public class EmprestimoView implements Serializable {
     public EmprestimoView() {
         favorecidoFuncoes = new FavorecidoFuncoes();
         planoContaFuncoes = new PlanoContaFuncoes();
-
         listaFavorecido = favorecidoFuncoes.grabListaFavorecidoAtivo();
-        
-        System.out.println("Lista Favorecido " + listaFavorecido.toString());
-        
-        
         listaContaDestino = planoContaFuncoes.buscaPlanoContasAtivo();
         listaContaOrigem = planoContaFuncoes.buscaPlanoContasAtivo();
-        
         favorecido = new LnFavorecido();
     }
 
@@ -207,6 +202,14 @@ public class EmprestimoView implements Serializable {
         this.favorecidoFuncoes = favorecidoFuncoes;
     }
 
+    public boolean isNovoEmprestimo() {
+        return novoEmprestimo;
+    }
+
+    public void setNovoEmprestimo(boolean novoEmprestimo) {
+        this.novoEmprestimo = novoEmprestimo;
+    }
+    
     @Override
     public String toString() {
         return "EmprestimoView{" + "dataEmprestimo=" + dataEmprestimo + ", favorecido=" + favorecido + ", contaPagamento=" + contaPagamento + ", contaDestino=" + contaDestino + ", valorEmprestimo=" + valorEmprestimo + ", prazoEmprestimo=" + prazoEmprestimo + ", valorParcelas=" + valorParcelas + ", jurosMensais=" + jurosMensais + ", valorTotal=" + valorTotal + ", jurosAnuais=" + jurosAnuais + ", jurosEfetivos=" + jurosEfetivos + ", dataVencimento=" + dataVencimento + ", simulado=" + simulado + ", listaFavorecido=" + listaFavorecido + ", listaContaDestino=" + listaContaDestino + ", listaContaOrigem=" + listaContaOrigem + ", favorecidoFuncoes=" + favorecidoFuncoes + ", planoContaFuncoes=" + planoContaFuncoes + '}';
@@ -234,6 +237,7 @@ public class EmprestimoView implements Serializable {
         emprestimo.setValorEmprestimo(valorEmprestimo);
         emprestimo.setValorParcelas(valorParcelas);
         emprestimo.setValorTotal(valorTotal);
+        emprestimo.setNovoEmprestimo(novoEmprestimo);
         
         
         contaDestino = null;
