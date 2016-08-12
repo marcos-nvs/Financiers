@@ -33,6 +33,9 @@ public class JurosSimples implements Serializable {
         System.out.println("Montante pelo desconto - Principal : " + js.calcularDescontoMontantePeloPrincipal(1921.95d, js.taxaEquivalente(23d, 360, 1), 145));
         System.out.println("Desconto Comercial: " + js.calcularDescontoComercial(5000d, 4d, 2));
         System.out.println("Montante pelo Desconto Comercial: " + js.calcularDescontoComercialMontante(400d, 4d, 2));
+        System.out.println("CET : " + js.calcularCustoEfetivo(4600d, 400d, 2));
+        System.out.println("Valor Nominal : " + js.calcularValorNominal(1921.95d, js.taxaEquivalente(23d, 360, 145)));
+        System.out.println("Desconto Comercial : " + js.calcularDescontoComercial(18000d, js.taxaEquivalente(35d, 12, 1), 3));
         
     }
     
@@ -99,6 +102,15 @@ public class JurosSimples implements Serializable {
     protected Double calcularDescontoComercialMontante(Double desconto, Double taxaJuros, Integer prazo){
         return desconto / ((taxaJuros/100) * prazo);
     }
+    
+    protected Double calcularCustoEfetivo(Double principal, Double desconto, Integer prazo){
+        return ((desconto / principal)/ prazo) * 100;
+    }
+    
+    protected Double calcularValorNominal(Double principal, Double taxaJuros){
+        return principal / (1-(taxaJuros /100));
+    }
+
     
     
 }
