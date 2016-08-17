@@ -5,7 +5,6 @@
  */
 package br.com.ln.calculofinanceiro;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import java.io.Serializable;
 
 /**
@@ -14,7 +13,7 @@ import java.io.Serializable;
  */
 public class JurosSimples implements Serializable {
     
-    public static void main(String[] args) {
+     public static void main(String[] args) {
         
         JurosSimples js = new JurosSimples();
         System.out.println("Juros : " + js.valorJurosPeloPrincipal(1000d, 10d, 5));
