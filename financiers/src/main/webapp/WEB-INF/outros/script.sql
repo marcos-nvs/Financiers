@@ -150,7 +150,7 @@ CREATE TABLE acessocontrol.ln_usuario
   usu_dt_expiracao date, -- Define quando expira a senha do usuário
   usu_dt_cadastro date, -- Define a data do cadastro do usuário
   per_in_codigo integer NOT NULL, -- Define o perfil de acesso do usuario
-  usu_st_cpf character varying(11) NOT NULL, -- Define o cpf do usuário para poder resgatar a senha de acesso
+  usu_st_cpf character varying(20) NOT NULL, -- Define o cpf do usuário para poder resgatar a senha de acesso
   cli_in_codigo integer,
   usu_ch_admin character(1) NOT NULL,
   usu_in_dependente integer,

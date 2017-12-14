@@ -61,18 +61,32 @@ public class ClienteFuncoes {
 
         if (lnCliente != null) {
             if (lnCliente.getCliStDocumento() != null && !lnCliente.getCliStDocumento().isEmpty()) {
-                if (!Utilitarios.calculaCPF(lnCliente.getCliStDocumento())) {
-                    mensagem = mensagem + bundle.getString("ln.mb.frase.invalidocpf") + "; ";
-                    validado = false;
+                
+                if (lnCliente.getCliStDocumento().length() <= 11){
+                    if (!Utilitarios.calculaCPF(lnCliente.getCliStDocumento())) {
+                        mensagem = mensagem + bundle.getString("ln.mb.frase.invalidocpf") + "; ";
+                        validado = false;
+                    } else {
+                        LnCliente lnClienteCpf = ClienteDao.grabClienteCpf(lnCliente.getCliStDocumento());
+                        if (lnClienteCpf != null) {
+                            mensagem = bundle.getString("ln.mb.frase.clientecadastrado");
+                            return false;
+                        }
+                    }
                 } else {
-                    LnCliente lnClienteCpf = ClienteDao.grabClienteCpf(lnCliente.getCliStDocumento());
-                    if (lnClienteCpf != null) {
-                        mensagem = bundle.getString("ln.mb.frase.clientecadastrado");
-                        return false;
+                    if (!Utilitarios.calculaCNPJ(lnCliente.getCliStDocumento())) {
+                        mensagem = mensagem + bundle.getString("ln.mb.frase.invalidocpf") + "; ";
+                        validado = false;
+                    } else {
+                        LnCliente lnClienteCpf = ClienteDao.grabClienteCpf(lnCliente.getCliStDocumento());
+                        if (lnClienteCpf != null) {
+                            mensagem = bundle.getString("ln.mb.frase.clientecadastrado");
+                            return false;
+                        }
                     }
                 }
             } else {
-                mensagem = mensagem + "CPF; ";
+                mensagem = mensagem + "CPF/CNPJ; ";
                 validado = false;
             }
 

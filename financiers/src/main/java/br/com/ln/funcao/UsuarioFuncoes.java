@@ -8,10 +8,12 @@ package br.com.ln.funcao;
 import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.Utilitarios;
+import br.com.ln.dao.ClienteDao;
 import br.com.ln.entity.LnUsuario;
 import br.com.ln.dao.GenericDao;
 import br.com.ln.dao.HistoricoDao;
 import br.com.ln.dao.UsuarioDao;
+import br.com.ln.entity.LnCliente;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -104,9 +106,9 @@ public class UsuarioFuncoes implements Serializable {
 
         } else {
             if (lnUsuario.getTipoFuncao().equals(TipoFuncao.Incluir)) {
-                LnUsuario lnUsuCPF = UsuarioDao.grabUsuarioDocumento(lnUsuario.getUsuStCpf());
+                LnCliente lnCliCPF = ClienteDao.grabClienteCpf(lnUsuario.getUsuStCpf());
 
-                if (lnUsuCPF != null) {
+                if (lnCliCPF != null) {
                     mensagem = mensagem + bundle.getString("ln.mb.frase.usuariocadastrado");
                     validado = false;
                 }

@@ -14,6 +14,10 @@ import java.io.Serializable;
 public class Utilitarios implements Serializable {
 
     public static boolean calculaCPF(String cpfNum) {
+        
+        if (cpfNum.length() < 11) {
+            return false;
+        }
 
         if (cpfNum != null && !cpfNum.isEmpty()) {
             int[] cpf = new int[cpfNum.length()]; //define o valor com o tamanho da string   
