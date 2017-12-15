@@ -208,7 +208,7 @@ public class PlanoContaFuncoes implements Serializable {
             lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getBanco()));
             
             if (conta.getConfiguracaoAlerta() != null){
-                lnPlanoconta.setCtaStConfiguracao(gson.toJson(conta.getConfiguracaoAlerta()));
+                lnPlanoconta.setCtaStAlerta(gson.toJson(conta.getConfiguracaoAlerta()));
             }
         }
         if (conta.getCartaoCredito() != null) {
