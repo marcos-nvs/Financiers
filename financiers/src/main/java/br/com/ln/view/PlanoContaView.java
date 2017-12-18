@@ -376,14 +376,12 @@ public class PlanoContaView implements Serializable {
 //                break;
             case 3: //banco
                 BancoView bancoView = (BancoView) JsfHelper.getSessionAttribute("bancoInfo");
-                System.out.println("Buscando Alerta");
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
-                System.out.println("Alerta View : " + alertaView.toString());
                 conta.setBanco(bancoView.grabBanco());
                 conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
-                alertaView.setConfiguracaoAlerta(null);
-                
-                System.out.println("Alerta View no final : " + alertaView.toString());
+                alertaView.getConfiguracaoAlerta().setEmailDescricao(null);
+                alertaView.getConfiguracaoAlerta().setAleta(false);
+                alertaView.getConfiguracaoAlerta().setEmail(false);
                 break;
             case 4: //Cartão de Crédito
                 CartaoCreditoView ccView = (CartaoCreditoView) JsfHelper.getSessionAttribute("ccView");
