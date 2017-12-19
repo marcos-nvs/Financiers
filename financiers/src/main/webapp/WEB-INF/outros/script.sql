@@ -133,11 +133,27 @@ ALTER TABLE acessocontrol.seq_telefone
 -- insert into acessocontrol.ln_telefone ("tel_in_codigo","cli_in_codigo","tel_ch_tipo","tel_st_pais","tel_st_ddd","tel_st_telefone")
 -- values (nextval('acessocontrol.seq_telefone'), 1, '3', null, '011','995046236');
 
--- Table: acessocontrol.ln_usuario
 
--- DROP TABLE acessocontrol.ln_usuario;
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Schema: public
 
-CREATE TABLE acessocontrol.ln_usuario
+-- DROP SCHEMA public;
+
+-- CREATE SCHEMA public
+--   AUTHORIZATION postgres;
+
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+COMMENT ON SCHEMA public
+  IS 'standard public schema';
+
+
+
+-- Table: public.ln_usuario
+
+-- DROP TABLE publilc.ln_usuario;
+
+CREATE TABLE public.ln_usuario
 (
   usu_st_codigo character varying(30) NOT NULL, -- Define o código do usuário para acessar o sistema
   usu_st_nome character varying(50) NOT NULL, -- Define o nome do usuário
@@ -159,48 +175,37 @@ CREATE TABLE acessocontrol.ln_usuario
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE acessocontrol.ln_usuario
+ALTER TABLE public.ln_usuario
   OWNER TO postgres;
-GRANT ALL ON TABLE acessocontrol.ln_usuario TO postgres;
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_nome IS 'Define o nome do usuário';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_email IS 'Define o e-mail do usuário';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_ch_ativo IS 'Define se o usuário está ativo ou inativo';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_in_dia IS 'Define o período em dias para a troca da senha';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_ch_alterasenha IS 'Define se o usuário pode ou não trocar a senha';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_ch_expirasenha IS 'Define se a senha do usuário expira';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_dt_expiracao IS 'Define quando expira a senha do usuário';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_dt_cadastro IS 'Define a data do cadastro do usuário';
-COMMENT ON COLUMN acessocontrol.ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usuario';
-COMMENT ON COLUMN acessocontrol.ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
+GRANT ALL ON TABLE public.ln_usuario TO postgres;
+COMMENT ON COLUMN public.ln_usuario.usu_st_codigo IS 'Define o código do usuário para acessar o sistema';
+COMMENT ON COLUMN public.ln_usuario.usu_st_nome IS 'Define o nome do usuário';
+COMMENT ON COLUMN public.ln_usuario.usu_st_senha IS 'Define a senha do usuário para acesso ao sistema';
+COMMENT ON COLUMN public.ln_usuario.usu_st_email IS 'Define o e-mail do usuário';
+COMMENT ON COLUMN public.ln_usuario.usu_ch_ativo IS 'Define se o usuário está ativo ou inativo';
+COMMENT ON COLUMN public.ln_usuario.usu_in_dia IS 'Define o período em dias para a troca da senha';
+COMMENT ON COLUMN public.ln_usuario.usu_ch_alterasenha IS 'Define se o usuário pode ou não trocar a senha';
+COMMENT ON COLUMN public.ln_usuario.usu_ch_expirasenha IS 'Define se a senha do usuário expira';
+COMMENT ON COLUMN public.ln_usuario.usu_dt_expiracao IS 'Define quando expira a senha do usuário';
+COMMENT ON COLUMN public.ln_usuario.usu_dt_cadastro IS 'Define a data do cadastro do usuário';
+COMMENT ON COLUMN public.ln_usuario.per_in_codigo IS 'Define o perfil de acesso do usuario';
+COMMENT ON COLUMN public.ln_usuario.usu_st_cpf IS 'Define o cpf do usuário para poder resgatar a senha de acesso';
 
 
--- Index: acessocontrol.ind_usuariocpf
+-- Index: public.ind_usuariocpf
 
--- DROP INDEX acessocontrol.ind_usuariocpf;
+-- DROP INDEX public.ind_usuariocpf;
 
 CREATE INDEX ind_usuariocpf
-  ON acessocontrol.ln_usuario
+  ON public.ln_usuario
   USING btree
   (usu_st_codigo COLLATE pg_catalog."default", usu_st_cpf COLLATE pg_catalog."default");
 
--- insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
+-- insert into public."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
 --                                  "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "cli_in_codigo", "usu_ch_admin") values 
 --                                 ('Naves', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',1,'S');
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
--- Schema: public
 
--- DROP SCHEMA public;
-
--- CREATE SCHEMA public
---   AUTHORIZATION postgres;
-
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO public;
-COMMENT ON SCHEMA public
-  IS 'standard public schema';
 
 -- Table: ln_perfil
 

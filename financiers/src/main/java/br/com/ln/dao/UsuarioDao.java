@@ -38,7 +38,7 @@ public class UsuarioDao extends GenericDao implements Serializable {
         LnUsuario lnUsuario = null;
         
         try{
-            session = SessionFactoryDbName.getCurrentSessionByName("acessocontrol");
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
             Query query = session.getNamedQuery("LnUsuario.findAllUsuStCodigoUsuChAtivo");

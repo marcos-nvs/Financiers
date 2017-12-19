@@ -78,7 +78,14 @@ public class UsuarioFuncoes implements Serializable {
 
         mensagem = bundle.getString("ln.mb.frase.preenchercampos");
         boolean validado = true;
-
+        
+        LnUsuario lnUsuCod = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
+        
+        if (lnUsuCod != null){
+            validado = false;
+            mensagem = mensagem + bundle.getString("ln.texto.usuexiste") + "; ";
+        }
+        
         if (lnUsuario.getUsuStNome() == null || lnUsuario.getUsuStNome().isEmpty()) {
             validado = false;
             mensagem = mensagem + bundle.getString("ln.texto.usuario") + "; ";
@@ -106,14 +113,16 @@ public class UsuarioFuncoes implements Serializable {
 
         } else {
             if (lnUsuario.getTipoFuncao().equals(TipoFuncao.Incluir)) {
-                LnCliente lnCliCPF = ClienteDao.grabClienteCpf(lnUsuario.getUsuStCpf());
+                LnUsuario lnUsuCPF = UsuarioDao.grabUsuarioDocumento(lnUsuario.getUsuStCpf());
 
-                if (lnCliCPF != null) {
+                if (lnUsuCPF != null) {
                     mensagem = mensagem + bundle.getString("ln.mb.frase.usuariocadastrado");
                     validado = false;
                 }
             }
         }
+        
+        
 
         return validado;
     }
