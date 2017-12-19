@@ -250,7 +250,6 @@ public class UsuarioView implements Serializable {
             dataClean();
             lnUsuario = new LnUsuario();
             lnUsuario.setTipoFuncao(TipoFuncao.Incluir);
-            lnUsuario.setUsuChAdmin('N');
         } else {
             mensagem = bundle.getString("ln.mb.frase.permissao");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,

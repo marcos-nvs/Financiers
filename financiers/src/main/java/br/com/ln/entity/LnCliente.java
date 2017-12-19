@@ -129,7 +129,7 @@ public class LnCliente implements Serializable {
     public void setCliStEmail(String cliStEmail) {
         this.cliStEmail = cliStEmail;
     }
-
+    
     public TipoFuncao getTipoFuncao() {
         return tipoFuncao;
     }
@@ -176,8 +176,7 @@ public class LnCliente implements Serializable {
 
     @Override
     public String toString() {
-        return "LnCliente{" + "cliInCodigo=" + cliInCodigo + ", cliStDocumento=" + cliStDocumento + ", cliStNome=" + cliStNome + ", cliChAtivo=" + cliChAtivo + ", cliStBanco=" + cliStBanco + ", cliStEmail=" + cliStEmail + ", tipoFuncao=" + tipoFuncao + '}';
+        return "LnCliente{" + "cliInCodigo=" + cliInCodigo + ", cliStDocumento=" + cliStDocumento + ", cliStNome=" + cliStNome + ", cliChAtivo=" + cliChAtivo + ", cliStBanco=" + cliStBanco + ", cliStEmail=" + cliStEmail +  ", tipoFuncao=" + tipoFuncao + ", listEndereco=" + listEndereco + ", listTelefone=" + listTelefone + '}';
     }
-
 
 }

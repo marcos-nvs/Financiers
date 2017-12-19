@@ -62,10 +62,10 @@ public class UsuarioFuncoes implements Serializable {
         } else {
             if (lnUsuario.getUsuChExpirasenha().equals('S')) {
                 lnUsuario.setUsuInDia(30);
-                lnUsuario.setUsuChAdmin('N');
                 lnUsuario.setUsuDtExpiracao(GenericDao.grabDateFromDB());
             }
             lnUsuario.setUsuDtCadastro(GenericDao.grabDateFromDB());
+            lnUsuario.setUsuChAdmin('N');
             UsuarioDao.saveObject(lnUsuario);
             historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaousuario") + " " + lnUsuario.getUsuStCodigo()
                     + " - " + lnUsuario.getUsuStNome());
@@ -81,7 +81,7 @@ public class UsuarioFuncoes implements Serializable {
         
         LnUsuario lnUsuCod = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
         
-        if (lnUsuCod != null){
+        if (lnUsuCod != null && lnUsuario.getTipoFuncao().equals(TipoFuncao.Incluir)){
             validado = false;
             mensagem = mensagem + bundle.getString("ln.texto.usuexiste") + "; ";
         }

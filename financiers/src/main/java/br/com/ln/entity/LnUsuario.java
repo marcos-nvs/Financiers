@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Marcos Naves
  */
 @Entity
-@Table(name = "ln_usuario")
+@Table(name = "ln_usuario", schema = "acessocontrol")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "LnUsuario.findAll", query = "SELECT l FROM LnUsuario l"),
@@ -215,14 +215,6 @@ public class LnUsuario implements Serializable {
         this.cliInCodigo = cliInCodigo;
     }
 
-    public Character getUsuChAdmin() {
-        return usuChAdmin;
-    }
-
-    public void setUsuChAdmin(Character usuChAdmin) {
-        this.usuChAdmin = usuChAdmin;
-    }
-    
     public TipoFuncao getTipoFuncao() {
         return tipoFuncao;
     }
@@ -237,6 +229,14 @@ public class LnUsuario implements Serializable {
 
     public void setUsuInDependente(Integer usuInDependente) {
         this.usuInDependente = usuInDependente;
+    }
+
+    public Character getUsuChAdmin() {
+        return usuChAdmin;
+    }
+
+    public void setUsuChAdmin(Character usuChAdmin) {
+        this.usuChAdmin = usuChAdmin;
     }
 
     @Override
@@ -261,8 +261,8 @@ public class LnUsuario implements Serializable {
 
     @Override
     public String toString() {
-        return "LnUsuario{" + "usuStCodigo=" + usuStCodigo + ", usuStNome=" + usuStNome + ", usuStSenha=" + usuStSenha + ", usuStEmail=" + usuStEmail + ", usuChAtivo=" + usuChAtivo + ", usuInDia=" + usuInDia + ", usuChAlterasenha=" + usuChAlterasenha + ", usuChExpirasenha=" + usuChExpirasenha + ", usuDtExpiracao=" + usuDtExpiracao + ", usuDtCadastro=" + usuDtCadastro + ", perInCodigo=" + perInCodigo + ", usuStCpf=" + usuStCpf + ", cliInCodigo=" + cliInCodigo + ", usuChAdmin=" + usuChAdmin + ", tipoFuncao=" + tipoFuncao + '}';
+        return "LnUsuario{" + "usuStCodigo=" + usuStCodigo + ", usuStNome=" + usuStNome + ", usuStSenha=" + usuStSenha + ", usuStEmail=" + usuStEmail + ", usuChAtivo=" + usuChAtivo + ", usuInDia=" + usuInDia + ", usuChAlterasenha=" + usuChAlterasenha + ", usuChExpirasenha=" + usuChExpirasenha + ", usuDtExpiracao=" + usuDtExpiracao + ", usuDtCadastro=" + usuDtCadastro + ", perInCodigo=" + perInCodigo + ", usuStCpf=" + usuStCpf + ", cliInCodigo=" + cliInCodigo + ", usuChAdmin=" + usuChAdmin + ", usuInDependente=" + usuInDependente + ", tipoFuncao=" + tipoFuncao + '}';
     }
-
+  
     
 }
