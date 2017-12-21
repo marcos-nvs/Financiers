@@ -57,7 +57,7 @@ public class UsuarioFuncoes implements Serializable {
         LnUsuario pUsuario = UsuarioDao.grabUsuario(lnUsuario.getUsuStCodigo());
 
         if (pUsuario != null) {
-            mensagem = bundle.getString("ln.mb.frase.usuariocadastrado");
+            mensagem = bundle.getString("ln.mb.frase.usuariocadastrado") + "\n";
             return false;
         } else {
             if (lnUsuario.getUsuChExpirasenha().equals('S')) {
@@ -173,6 +173,15 @@ public class UsuarioFuncoes implements Serializable {
         } else {
             return true;
         }
+    }
+    
+    public LnUsuario UsuarioExiste(LnUsuario lnUsuario) {
+        System.out.println("Buscando Usuario!!!!!!");
+        LnUsuario lnUsuarioPesq = UsuarioDao.grabUsuarioDocumento(lnUsuario.getUsuStCpf());
+        
+        System.out.println("Usuario : " + lnUsuarioPesq.toString());
+        
+        return lnUsuarioPesq;
     }
 
 }

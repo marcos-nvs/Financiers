@@ -50,7 +50,7 @@ public class ClienteFuncoes {
 
     public boolean validacao(LnUsuario lnUsuario, LnCliente lnCliente, List<LnEndereco> listEndereco, List<LnTelefone> listTelefone) {
 
-        mensagem = bundle.getString("ln.mb.frase.preenchercampos") + ": ";
+        mensagem = bundle.getString("ln.mb.frase.preenchercampos") + ": " ;
         validado = true;
         
         if (lnUsuario != null){

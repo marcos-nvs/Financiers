@@ -40,7 +40,7 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 @ManagedBean(name = "clienteView")
 public class ClienteView implements Serializable {
-    
+
     Logger logger = Logger.getLogger(ClienteView.class);
 
     private String documento;
@@ -386,7 +386,7 @@ public class ClienteView implements Serializable {
         lnCliente.setCliStEmail(email);
         lnCliente.setCliChAtivo('N');
         lnCliente.setTipoFuncao(TipoFuncao.Incluir);
-        
+
         lnUsuario.setUsuStCodigo(usuario);
         lnUsuario.setUsuStSenha(senha);
         lnUsuario.setPerInCodigo(1);
@@ -526,9 +526,7 @@ public class ClienteView implements Serializable {
 //        System.setProperty("http.proxySet", "true");
 //        System.setProperty("http.nonProxyHosts", "localhost|127.0.0.1");
 //    }
-    
     //TODO procurar um site para pesquisa mundial;
-
     public void btPesquisaCEP() {
         try {
             if (ApprovalConnection.getConnectionApproval("http://correiosapi.apphb.com")) {
