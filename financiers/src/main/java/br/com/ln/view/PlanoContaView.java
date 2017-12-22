@@ -387,8 +387,10 @@ public class PlanoContaView implements Serializable {
                 CartaoCreditoView ccView = (CartaoCreditoView) JsfHelper.getSessionAttribute("ccView");
                 conta.setCartaoCredito(ccView.grabCartaoCredito());
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                alertaView.getConfiguracaoAlerta().setEmailDescricao(null);
+                alertaView.getConfiguracaoAlerta().setAleta(false);
+                alertaView.getConfiguracaoAlerta().setEmail(false);
                 conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
-                alertaView.setConfiguracaoAlerta(null);
                 break;
 //            case 5: //Dinheiro
 //                break;
@@ -398,6 +400,9 @@ public class PlanoContaView implements Serializable {
                 conta.getEmprestimo().setTipoEmprestimo(tipoEmprestimo);
                 conta.setSaldoConta(conta.getEmprestimo().getValorTotal());
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                alertaView.getConfiguracaoAlerta().setEmailDescricao(null);
+                alertaView.getConfiguracaoAlerta().setAleta(false);
+                alertaView.getConfiguracaoAlerta().setEmail(false);
                 conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
             case 7: //Financiamento
@@ -411,6 +416,9 @@ public class PlanoContaView implements Serializable {
                 conta.getFinancimento().setTipoFinancimanto(tipoFinanciamento);
                 conta.setAtivo(ativoView.grabAtivo(tipoAtivo));
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                alertaView.getConfiguracaoAlerta().setEmailDescricao(null);
+                alertaView.getConfiguracaoAlerta().setAleta(false);
+                alertaView.getConfiguracaoAlerta().setEmail(false);
                 conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
 //            case 8: //Outros Passivos
@@ -419,20 +427,32 @@ public class PlanoContaView implements Serializable {
                 receitaDespesaView = (ReceitaDespesaView) JsfHelper.getSessionAttribute("recdespView");
                 conta.setReceitaDespesa(receitaDespesaView.grabReceitaDespesa());
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                alertaView.getConfiguracaoAlerta().setEmailDescricao(null);
+                alertaView.getConfiguracaoAlerta().setAleta(false);
+                alertaView.getConfiguracaoAlerta().setEmail(false);
                 conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
             case 10: //Despesas
                 receitaDespesaView = (ReceitaDespesaView) JsfHelper.getSessionAttribute("recdespView");
                 conta.setReceitaDespesa(receitaDespesaView.grabReceitaDespesa());
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                alertaView.getConfiguracaoAlerta().setEmailDescricao(null);
+                alertaView.getConfiguracaoAlerta().setAleta(false);
+                alertaView.getConfiguracaoAlerta().setEmail(false);
                 conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
             case 11: //Contas à Receber
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                alertaView.getConfiguracaoAlerta().setEmailDescricao(null);
+                alertaView.getConfiguracaoAlerta().setAleta(false);
+                alertaView.getConfiguracaoAlerta().setEmail(false);
                 conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
             case 12: //Contas à Pagar
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
+                alertaView.getConfiguracaoAlerta().setEmailDescricao(null);
+                alertaView.getConfiguracaoAlerta().setAleta(false);
+                alertaView.getConfiguracaoAlerta().setEmail(false);
                 conta.setConfiguracaoAlerta(alertaView.getConfiguracaoAlerta());
                 break;
         }
