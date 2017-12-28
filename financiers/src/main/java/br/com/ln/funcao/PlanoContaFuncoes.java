@@ -5,6 +5,7 @@
  */
 package br.com.ln.funcao;
 
+import br.com.ln.calculofinanceiro.CalculosFinanceiros;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
@@ -21,6 +22,7 @@ import br.com.ln.objeto.Emprestimo;
 import br.com.ln.objeto.Financiamento;
 import br.com.ln.objeto.ReceitaDespesa;
 import br.com.ln.tipos.TipoFuncao;
+import br.com.ln.tipos.TipoPeriodo;
 import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -137,26 +139,50 @@ public class PlanoContaFuncoes implements Serializable {
         }
 
         if (conta.getEmprestimo() != null) {
+
+            CalculosFinanceiros calc = new CalculosFinanceiros();
+
+            if (conta.getEmprestimo().getValorEmprestimo() != null && conta.getEmprestimo().getPrazoEmprestimo() != null && conta.getEmprestimo().getJurosMensais() != null) {
+                conta.getEmprestimo().setValorParcelas(calc.calculoValorParcela(conta.getEmprestimo().getValorEmprestimo(), conta.getEmprestimo().getJurosMensais(), conta.getEmprestimo().getPrazoEmprestimo()));
+                conta.getEmprestimo().setValorTotal(calc.calculoParcelaValorMontante(conta.getEmprestimo().getValorEmprestimo(), conta.getEmprestimo().getJurosMensais(), conta.getEmprestimo().getPrazoEmprestimo()));
+                conta.getEmprestimo().setJurosEfetivos(calc.calculoJurosEfetivo(conta.getEmprestimo().getJurosMensais(), conta.getEmprestimo().getPrazoEmprestimo()));
+                conta.getEmprestimo().setJurosAnuais(calc.conversaoTxPorPeriodo(conta.getEmprestimo().getJurosMensais(), TipoPeriodo.MENSAL, TipoPeriodo.ANUAL));
+                conta.setSaldoConta(conta.getEmprestimo().getValorTotal());
+
+            } else if (conta.getEmprestimo().getValorEmprestimo() != null && conta.getEmprestimo().getValorParcelas() != null && conta.getEmprestimo().getValorTotal() != null &&
+                       conta.getEmprestimo().getPrazoEmprestimo() != null) {
+                
+                conta.getEmprestimo().setJurosMensais(calc.calculoTaxaJuros(conta.getEmprestimo().getValorEmprestimo(), conta.getEmprestimo().getValorTotal(), conta.getEmprestimo().getPrazoEmprestimo()));
+                
+                conta.getEmprestimo().setJurosEfetivos(calc.calculoJurosEfetivo(conta.getEmprestimo().getJurosMensais(), conta.getEmprestimo().getPrazoEmprestimo()));
+                conta.getEmprestimo().setJurosAnuais(calc.conversaoTxPorPeriodo(conta.getEmprestimo().getJurosMensais(), TipoPeriodo.MENSAL, TipoPeriodo.ANUAL));
+                conta.setSaldoConta(conta.getEmprestimo().getValorTotal());
+
+            }
+
             if (conta.getEmprestimo().getValorTotal() == null || conta.getEmprestimo().getValorTotal() == 0) {
                 mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valortotal");
                 validado = false;
             }
-        }
-
-        if (conta.getFinancimento() != null) {
-            if (conta.getFinancimento().getValorTotalFinanciamento() == null || conta.getFinancimento().getValorTotalFinanciamento() == 0) {
-                mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valortotal");
-                validado = false;
-            }
-        }
-
-        if (conta.getReceitaDespesa() != null) {
-        }
-
-        return validado;
     }
 
-    public boolean planoConta(Conta conta) {
+    if (conta.getFinancimento () 
+        != null) {
+            if (conta.getFinancimento().getValorTotalFinanciamento() == null || conta.getFinancimento().getValorTotalFinanciamento() == 0) {
+            mensagem = mensagem + ": " + bundle.getString("ln.mb.frase.valortotal");
+            validado = false;
+        }
+    }
+
+    if (conta.getReceitaDespesa () 
+    
+    != null) {
+        }
+
+    return validado ;
+}
+
+public boolean planoConta(Conta conta) {
 
         historico = new Historico();
         LnPlanoconta lnPlanoconta = montaPlanoConta(conta);

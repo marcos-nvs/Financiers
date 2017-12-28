@@ -7,6 +7,9 @@ package br.com.ln.calculofinanceiro;
 
 import br.com.ln.tipos.TipoPeriodo;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 /**
  *
@@ -22,39 +25,60 @@ public class CalculosFinanceiros implements Serializable {
     }
 
     public Double calculoValorParcela(Double principal, Double taxa, int periodo) {
-
+       
         Double cf = calculoCoeficienteFinanceiro(taxa, periodo);
-        return principal * cf;
+        BigDecimal bd = new BigDecimal((principal * cf));
+        bd = bd.setScale(4, BigDecimal.ROUND_UP);
+        
+        return bd.doubleValue();
     }
 
+    
+    public Double calculoTaxaJuros(Double principal, Double montante, int periodo) {
+        BigDecimal bd = new BigDecimal((Math.pow((montante / principal), (1d / periodo)) - 1) * 100);
+        bd = bd.setScale(4, BigDecimal.ROUND_UP);
+        
+        return bd.doubleValue();
+    }
+    
+    
     public Double calculoParcelaValorMontante(Double principal, Double taxa, int periodo) {
-        return periodo * calculoValorParcela(principal, taxa, periodo);
+        BigDecimal bd = new BigDecimal(periodo * calculoValorParcela(principal, taxa, periodo));
+        bd = bd.setScale(4, BigDecimal.ROUND_UP);
+        
+        return bd.doubleValue();
     }
 
     public Double calculoValorFuturo(Double parcela, Double taxa, int periodo) {
-        return (parcela * (Math.pow(1 + (taxa / 100), periodo) - 1)) / (taxa / 100);
+        BigDecimal bd = new BigDecimal((parcela * (Math.pow(1 + (taxa / 100), periodo) - 1)) / (taxa / 100));
+        bd = bd.setScale(4, BigDecimal.ROUND_UP);
+        return bd.doubleValue();
     }
 
     public Double calculoValorJuros(Double principal, Double taxa, int periodo) {
 
         Double montante = calculoParcelaValorMontante(principal, taxa, periodo);
         Double juros = montante - principal;
-        return juros;
+
+        BigDecimal bd = new BigDecimal(juros);
+        bd = bd.setScale(4, BigDecimal.ROUND_UP);
+        return bd.doubleValue();
     }
 
-    //TODO testar
+
     public Double calculoJurosEfetivo(Double taxa, int periodo) {
-        return (Math.pow((1 + ((taxa / 100) / periodo)), periodo) - 1) * 100;
+        BigDecimal bd = new BigDecimal((Math.pow((1 + ((taxa / 100) / periodo)), periodo) - 1) * 100);
+        bd = bd.setScale(4, BigDecimal.ROUND_UP);
+        return bd.doubleValue();
     }
+    
+
+    //======================================================== Analisar ==============================================
+
 
     //TODO testar
     public Double calculoCet(Double principal, Double taxa, int periodo) {
         return (((calculoValorFuturo(principal, taxa, periodo) - principal) / principal) * 100);
-    }
-
-    //TODO testar
-    public Double calculoTaxaJuros(Double principal, Double montante, int periodo) {
-        return (Math.pow((montante / principal), (1d / periodo)) - 1) * 100;
     }
 
     //TODO testar
@@ -294,12 +318,12 @@ public class CalculosFinanceiros implements Serializable {
 
         CalculosFinanceiros c = new CalculosFinanceiros();
 
-        Double principal = 6383.66d;
-        int periodo = 54;
-        Double parcela = 288.48d;
-        Double juros = 3.80d;
-        Double montante = 15577.92d;
-        Double iof = 211.92d;
+        Double principal = 10000.00d;
+        int periodo = 12;
+        Double parcela = 945.60d;
+        Double juros = 2d;
+        Double montante = 0d;
+        Double iof = 0d;
 
         System.out.println("Valor Principal : " + principal);
         System.out.println("IOF : " + iof);
@@ -312,11 +336,10 @@ public class CalculosFinanceiros implements Serializable {
         System.out.println("=============================================================================================================");
 
         System.out.println("Valor das Parcelas : " + c.calculoValorParcela(principal, juros, periodo));
+        System.out.println("Juros : " + c.calculoTaxaJuros(principal, c.calculoParcelaValorMontante(principal,juros, periodo), periodo));
         System.out.println("Valor do montante pela parcela : " + c.calculoParcelaValorMontante(principal, juros, periodo));
-//        System.out.println("Valor do montante : " + c.calculoValorMontante(principal, juros, periodo));
         System.out.println("Valor Futuro : " + c.calculoValorFuturo(c.calculoValorParcela(principal, juros, periodo), juros, periodo));
         System.out.println("Valor do juros : " + c.calculoValorJuros(principal, juros, periodo));
-        System.out.println("Taxa Juros : " + c.calculoTaxaJuros(principal, c.calculoParcelaValorMontante(principal, juros, periodo), periodo));
         System.out.println("Taxa de Juros Efetivo : " + c.calculoJurosEfetivo(juros, periodo));
 
         System.out.println("=============================================================================================================");

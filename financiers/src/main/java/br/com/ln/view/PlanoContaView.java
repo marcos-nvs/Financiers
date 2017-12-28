@@ -399,6 +399,7 @@ public class PlanoContaView implements Serializable {
                 conta.setEmprestimo(emprestimoView.grabEmprestimo());
                 conta.getEmprestimo().setTipoEmprestimo(tipoEmprestimo);
                 conta.setSaldoConta(conta.getEmprestimo().getValorTotal());
+                
                 alertaView = (AlertaView) JsfHelper.getSessionAttribute("alertaView");
                 alertaView.getConfiguracaoAlerta().setEmailDescricao(null);
                 alertaView.getConfiguracaoAlerta().setAleta(false);
