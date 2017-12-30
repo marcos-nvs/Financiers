@@ -10,8 +10,8 @@
             <p:outputLabel value="Tipo de Imóvel"/>
             <p:selectOneMenu id="idtipoimovel" value="#{contaView.tipoImovel}" style="width: 150px;margin-left: 5px;">
                 <f:selectItem itemLabel="Próprio" itemValue="Próprio"/>
-                <f:selectItem itemLabel="Aluguel" itemValue="Aluguel"/>
-                <f:selectItem itemLabel="Pais" itemValue="Pais"/>
+                <f:selectItem itemLabel="Aluguel" itemValue="Aluguel" itemDisabled="#{contaView.bItemImovelAluguel}"/>
+                <f:selectItem itemLabel="Pais" itemValue="Pais" itemDisabled="#{contaView.bItemImovelPais}"/>
             </p:selectOneMenu>
         </h:panelGrid>
         <h:panelGrid id="idenderecocontaativo" columns="1" >

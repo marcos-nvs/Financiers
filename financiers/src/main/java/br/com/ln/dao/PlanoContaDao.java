@@ -100,7 +100,7 @@ public class PlanoContaDao extends GenericDao {
         
         return lnSaldoconta;
     }
-
+    
     public static LnSaldoconta grabSaldoAtualConta(Integer ctaInCodigo, Date sacDtData) {
         
         Session session = null;
@@ -129,7 +129,7 @@ public class PlanoContaDao extends GenericDao {
         
         return lnSaldoconta;
     }
-
+    
     private static Date grabBuscaUltimoSaldo(Integer ctaInCodigo) {
         
         Session session = null;
@@ -157,5 +157,32 @@ public class PlanoContaDao extends GenericDao {
             }
         }
         return dataSaldo;
+    }
+    
+    public static List<LnPlanoconta> grabListaBancos() {
+        
+        Session session = null;
+        Transaction tx;
+        List<LnPlanoconta> listaConta;
+        
+        try {
+            session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
+            tx = session.beginTransaction();
+            
+            Query query = session.createSQLQuery("select pct.* \n"
+                    + "  from ln_planoconta pct,\n"
+                    + "       ln_categoria cat\n"
+                    + "where pct.cat_in_codigo = cat.cat_in_codigo\n"
+                    + "  and cat.tip_in_codigo = 3");
+            
+            listaConta = query.list();
+            
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        
+        return listaConta;
     }
 }

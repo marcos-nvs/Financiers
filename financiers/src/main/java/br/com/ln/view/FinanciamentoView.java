@@ -6,7 +6,9 @@
 package br.com.ln.view;
 
 import br.com.ln.entity.LnFavorecido;
+import br.com.ln.entity.LnPlanoconta;
 import br.com.ln.funcao.FavorecidoFuncoes;
+import br.com.ln.funcao.PlanoContaFuncoes;
 import br.com.ln.objeto.Ativo;
 import br.com.ln.objeto.Conta;
 import br.com.ln.objeto.Financiamento;
@@ -46,11 +48,14 @@ public class FinanciamentoView implements Serializable {
     private List<Conta> listaContaAtivo;
 
     private final FavorecidoFuncoes favorecidoFuncoes;
+    private final PlanoContaFuncoes planoContaFuncoes;
 
     public FinanciamentoView() {
         favorecidoFuncoes = new FavorecidoFuncoes();
+        planoContaFuncoes = new PlanoContaFuncoes();
         listaFavorecido = favorecidoFuncoes.grabListaFavorecidoAtivo();
-    }
+        listaContaPagamento = planoContaFuncoes.grabListaConta();
+    }    
 
     public Date getDataFinancimento() {
         return dataFinancimento;

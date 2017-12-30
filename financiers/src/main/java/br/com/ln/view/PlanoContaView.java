@@ -9,7 +9,9 @@ import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;
+import br.com.ln.dao.PlanoContaDao;
 import br.com.ln.entity.LnCategoria;
+import br.com.ln.entity.LnPlanoconta;
 import br.com.ln.funcao.PlanoContaFuncoes;
 import br.com.ln.funcao.TabelaFuncoes;
 import br.com.ln.objeto.Conta;
@@ -50,6 +52,7 @@ public class PlanoContaView implements Serializable {
 
     private List<LnCategoria> listaCategoria;
     private List<Conta> listaConta;
+    private List<LnPlanoconta> listaBancos;
 
     private String mensagem;
     private final FacesContext context = FacesContext.getCurrentInstance();
@@ -63,6 +66,8 @@ public class PlanoContaView implements Serializable {
     private Integer idTipoConta;
     private boolean bAtivoConta;
     private boolean bItemAtivoAplicacao;
+    private boolean bItemImovelAluguel;
+    private boolean bItemImovelPais;
     private boolean bItemAtivoMovel;
     private String tipoAtivo;
     private String tipoImovel;
@@ -82,6 +87,7 @@ public class PlanoContaView implements Serializable {
         planoContaFuncoes = new PlanoContaFuncoes();
         listaCategoria = CategoriaDao.grabCategoria('S');
         listaConta = planoContaFuncoes.grabListaConta();
+//        listaBancos = PlanoContaDao.grabListaBancos();
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         tabelaFuncoes = new TabelaFuncoes();
         tabela = tabelaFuncoes.buscaTabela(3);
@@ -304,6 +310,31 @@ public class PlanoContaView implements Serializable {
         this.tabela = tabela;
     }
 
+    public boolean isbItemImovelAluguel() {
+        return bItemImovelAluguel;
+    }
+
+    public void setbItemImovelAluguel(boolean bItemImovelAluguel) {
+        this.bItemImovelAluguel = bItemImovelAluguel;
+    }
+
+    public boolean isbItemImovelPais() {
+        return bItemImovelPais;
+    }
+
+    public void setbItemImovelPais(boolean bItemImovelPais) {
+        this.bItemImovelPais = bItemImovelPais;
+    }
+
+    public List<LnPlanoconta> getListaBancos() {
+        return listaBancos;
+    }
+
+    public void setListaBancos(List<LnPlanoconta> listaBancos) {
+        this.listaBancos = listaBancos;
+    }
+  
+       
     public void btIncluirConta() {
         if (VarComuns.lnPerfilacesso.getPacChIncluir().equals('S')) {
             clearVarConta();
@@ -493,6 +524,8 @@ public class PlanoContaView implements Serializable {
         idTipoConta = null;
         bAtivoConta = false;
         bItemAtivoAplicacao = false;
+        bItemImovelAluguel = false;
+        bItemImovelPais = false;
         bItemAtivoMovel = false;
 //        tipoAtivo = null;
         tipoImovel = null;
@@ -561,6 +594,8 @@ public class PlanoContaView implements Serializable {
                 bItemAtivoAplicacao = true;
                 bItemAtivoMovel = true;
                 bMostraSaldoInicial = false;
+                bItemImovelAluguel = true;
+                bItemImovelPais = true;
                 break;
             case 8:
                 telaConta = "../cadastro/planocontas/vazia.xhtml";
