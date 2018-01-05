@@ -54,7 +54,7 @@ public class FinanciamentoView implements Serializable {
         favorecidoFuncoes = new FavorecidoFuncoes();
         planoContaFuncoes = new PlanoContaFuncoes();
         listaFavorecido = favorecidoFuncoes.grabListaFavorecidoAtivo();
-        listaContaPagamento = planoContaFuncoes.grabListaConta();
+        listaContaPagamento = planoContaFuncoes.buscaPlanoContasAtivo();
     }    
 
     public Date getDataFinancimento() {

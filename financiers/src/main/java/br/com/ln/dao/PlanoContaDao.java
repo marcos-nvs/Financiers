@@ -30,7 +30,7 @@ public class PlanoContaDao extends GenericDao {
         try {
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
-            Query query = session.getNamedQuery("LnPlanoconta.findByCtaChAtivo");
+            Query query = session.getNamedQuery("LnPlanoconta.findByCtaFinanceiro");
             query.setCharacter("ctaChAtivo", 'S');
             listaPlanoconta = query.list();
             tx.commit();

@@ -35,6 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnPlanoconta.findByCatInCodigo", query = "SELECT l FROM LnPlanoconta l WHERE l.catInCodigo = :catInCodigo"),
     @NamedQuery(name = "LnPlanoconta.findByCtaStDescricao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStDescricao = :ctaStDescricao"),
     @NamedQuery(name = "LnPlanoconta.findByCtaChAtivo", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaChAtivo = :ctaChAtivo"),
+    @NamedQuery(name = "LnPlanoconta.findByCtaFinanceiro", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaChAtivo = :ctaChAtivo and l.catInCodigo in (2,3,4)"),
     @NamedQuery(name = "LnPlanoconta.findByCtaFlSaldoinicial", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaFlSaldoinicial = :ctaFlSaldoinicial"),
     @NamedQuery(name = "LnPlanoconta.findByCtaStConfiguracao", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStConfiguracao = :ctaStConfiguracao"),
     @NamedQuery(name = "LnPlanoconta.findByCtaStAlerta", query = "SELECT l FROM LnPlanoconta l WHERE l.ctaStAlerta = :ctaStAlerta"),
