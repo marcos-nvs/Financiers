@@ -8,7 +8,9 @@
     <h:panelGrid id="idfinanciamentobem" columns="4">
         <p:outputLabel value="Bem Financiado"/>
         <p:selectOneMenu id="idcontafinanciada" style="margin-left: 10px;width: 250px;">
-            <f:selectItems/>
+            <f:selectItems var="itembemfinanciado" value="#{finView.listaContaAtivo}"
+                           itemLabel="#{itembemfinanciado.descricaoConta}"
+                           itemValue="#{itembemfinanciado.codigoConta}"/>
         </p:selectOneMenu>
     </h:panelGrid>
 

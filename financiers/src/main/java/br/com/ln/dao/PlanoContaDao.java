@@ -159,7 +159,7 @@ public class PlanoContaDao extends GenericDao {
         return dataSaldo;
     }
     
-    public static List<LnPlanoconta> grabListaBancos() {
+    public static List<LnPlanoconta> grabListaAtivos() {
         
         Session session = null;
         Transaction tx;
@@ -169,12 +169,8 @@ public class PlanoContaDao extends GenericDao {
             session = SessionFactoryDbName.getCurrentSessionByName(VarComuns.strDbName);
             tx = session.beginTransaction();
             
-            Query query = session.createSQLQuery("select pct.* \n"
-                    + "  from ln_planoconta pct,\n"
-                    + "       ln_categoria cat\n"
-                    + "where pct.cat_in_codigo = cat.cat_in_codigo\n"
-                    + "  and cat.tip_in_codigo = 3");
-            
+            Query query = session.getNamedQuery("LnPlanoconta.findByAtivo");
+            query.setCharacter("ctaChAtivo", 'S');
             listaConta = query.list();
             
         } finally {

@@ -51,6 +51,11 @@ public class PlanoContaFuncoes implements Serializable {
         List<LnPlanoconta> listaPlanoconta = PlanoContaDao.grabContaAtivo();
         return montaConta(listaPlanoconta);
     }
+    
+    public List<Conta> buscaAtivos(){
+        List<LnPlanoconta> listaPlanoConta = PlanoContaDao.grabListaAtivos();
+        return montaConta(listaPlanoConta);
+    }
 
     private List<Conta> montaConta(List<LnPlanoconta> listaPlanoconta) {
 
