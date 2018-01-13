@@ -241,6 +241,7 @@ public class FavorecidoView implements Serializable {
                 mensagem = favorecidoFuncoes.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         bundle.getString("ln.mb.titulo.favorecido"), mensagem));
+                cleardataVar();
             } else {
                 mensagem = favorecidoFuncoes.mensagem;
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
@@ -279,5 +280,14 @@ public class FavorecidoView implements Serializable {
     public void btVoltar(){
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
+    
+    private void cleardataVar(){
+        tipoFavorecido = null;
+        nomeFavorecido = null;
+        bAtivo = false;
+        documento = null;
+        lnFavorecido = null;
+    } 
+   
 
 }
