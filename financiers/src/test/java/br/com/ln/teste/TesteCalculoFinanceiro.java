@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author TMDesen
+ * @author Marcos Naves
  */
 public class TesteCalculoFinanceiro {
     

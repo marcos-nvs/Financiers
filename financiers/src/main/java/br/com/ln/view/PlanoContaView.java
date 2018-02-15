@@ -342,6 +342,11 @@ public class PlanoContaView implements Serializable {
             clearVarAgendaConta();
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogplanoconta.xhtml");
             beanVar.setTituloDialog("ln.texto.cadastroconta");
+            
+            if (listaCategoria == null){
+                listaCategoria = CategoriaDao.grabCategoria('S');
+            }
+            
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
             tipoFuncao = TipoFuncao.Incluir;
         } else {
@@ -506,6 +511,7 @@ public class PlanoContaView implements Serializable {
     }
 
     public void btFecharContaLista() {
+        listaCategoria = null;
         RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 
