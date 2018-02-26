@@ -10,7 +10,10 @@
             <p:outputLabel value="#{msgs['ln.texto.numerocartao']}"/>
             <p:inputText  size="30" value="#{ccView.numCartao}"/>
             <p:outputLabel value="#{msgs['ln.texto.limitecredito']}"/>
-            <p:inputText value="#{ccView.limiteCartao}" size="10"/>
+            <p:inputText value="#{ccView.limiteCartao}" size="10" id="idlimite">
+                <f:convertNumber pattern="#,##0.00" currencySymbol="#{msgs['ln.texto.cifrao']}" type="currency"/>
+                <p:ajax update="idlimite" process="idlimite" event="change"/>
+            </p:inputText>
             <p:outputLabel value="#{msgs['ln.texto.diavencimento']}"/>
             <p:inputText value="#{ccView.diaVencimento}" size="4"/>
         </h:panelGrid>
@@ -18,5 +21,5 @@
             <ui:include src="configuraaviso.xhtml"/>
         </h:panelGrid>
     </p:panel>
-    
+
 </ui:composition>
