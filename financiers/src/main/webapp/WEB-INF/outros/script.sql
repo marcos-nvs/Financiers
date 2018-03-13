@@ -579,12 +579,11 @@ insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (
 insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (6,'ISS');
 insert into public."ln_tipotabela" ("ttb_in_codigo","ttb_st_descricao") values (7,'COFINS');
 
-
 -- Table: ln_tabela
 
 -- DROP TABLE ln_tabela;
 
-CREATE TABLE ln_tabela
+CREATE TABLE public.ln_tabela
 (
   tab_in_codigo integer NOT NULL,
   ttb_in_codigo integer NOT NULL, -- Tipo de Impostos, Taxas...
@@ -596,22 +595,22 @@ CREATE TABLE ln_tabela
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_tabela
+ALTER TABLE public.ln_tabela
   OWNER TO postgres;
-COMMENT ON TABLE ln_tabela
-  IS 'Tabela de impostos, juros e taxas para cálculos de IR, INS, IOF, Juros, entre outor
-';
-COMMENT ON COLUMN ln_tabela.ttb_in_codigo IS 'Tipo de Impostos, Taxas...';
-COMMENT ON COLUMN ln_tabela.tab_st_descricao IS 'Descrição para identificação da tabela para o usuario';
-COMMENT ON COLUMN ln_tabela.tab_dt_inicio IS 'Data inicial';
-COMMENT ON COLUMN ln_tabela.tab_dt_final IS 'Data Final';
+COMMENT ON TABLE public.ln_tabela
+  IS 'Tabela de impostos, juros e taxas para cálculos de IR, INS, IOF, Juros, entre outor';
+COMMENT ON COLUMN public.ln_tabela.ttb_in_codigo IS 'Tipo de Impostos, Taxas...';
+COMMENT ON COLUMN public.ln_tabela.tab_st_descricao IS 'Descrição para identificação da tabela para o usuario';
+COMMENT ON COLUMN public.ln_tabela.tab_dt_inicio IS 'Data inicial';
+COMMENT ON COLUMN public.ln_tabela.tab_dt_final IS 'Data Final';
+
 
 -- Index: ln_tabela_ttb_in_codigo_tab_in_codigo_idx
 
 -- DROP INDEX ln_tabela_ttb_in_codigo_tab_in_codigo_idx;
 
 CREATE INDEX ln_tabela_ttb_in_codigo_tab_in_codigo_idx
-  ON ln_tabela
+  ON public.ln_tabela
   USING btree
   (ttb_in_codigo, tab_in_codigo);
 
@@ -619,20 +618,21 @@ CREATE INDEX ln_tabela_ttb_in_codigo_tab_in_codigo_idx
 
 -- DROP SEQUENCE seq_tabela;
 
-CREATE SEQUENCE seq_tabela
+CREATE SEQUENCE public.seq_tabela
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_tabela
+ALTER TABLE public.seq_tabela
   OWNER TO postgres;
+
 
 -- Table: ln_tabelaitem
 
 -- DROP TABLE ln_tabelaitem;
 
-CREATE TABLE ln_tabelaitem
+CREATE TABLE public.ln_tabelaitem
 (
   tai_in_codigo integer NOT NULL,
   tab_in_codigo integer NOT NULL,
@@ -648,9 +648,9 @@ CREATE TABLE ln_tabelaitem
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_tabelaitem
+ALTER TABLE public.ln_tabelaitem
   OWNER TO postgres;
-COMMENT ON TABLE ln_tabelaitem
+COMMENT ON TABLE public.ln_tabelaitem
   IS 'Item da tabela de impostos, taxas, juros entre outros';
 
 -- Index: ln_tabelaitem_tab_in_codigo_tai_in_codigo_idx
@@ -658,24 +658,28 @@ COMMENT ON TABLE ln_tabelaitem
 -- DROP INDEX ln_tabelaitem_tab_in_codigo_tai_in_codigo_idx;
 
 CREATE INDEX ln_tabelaitem_tab_in_codigo_tai_in_codigo_idx
-  ON ln_tabelaitem
+  ON public.ln_tabelaitem
   USING btree
   (tab_in_codigo, tai_in_codigo);
 
-CREATE SEQUENCE seq_tabelaitem
+-- Sequence: seq_tabelaitem
+
+-- DROP SEQUENCE seq_tabelaitem;
+
+CREATE SEQUENCE public.seq_tabelaitem
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_tabelaitem
+ALTER TABLE public.seq_tabelaitem
   OWNER TO postgres;
 
 -- Table: ln_tipofavorecido
 
 -- DROP TABLE ln_tipofavorecido;
 
-CREATE TABLE ln_tipofavorecido
+CREATE TABLE public.ln_tipofavorecido
 (
   tfa_in_codigo integer NOT NULL,
   tfa_st_descricao character varying(50) NOT NULL,
@@ -685,48 +689,48 @@ CREATE TABLE ln_tipofavorecido
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_tipofavorecido
+ALTER TABLE public.ln_tipofavorecido
   OWNER TO postgres;
-COMMENT ON TABLE ln_tipofavorecido
+COMMENT ON TABLE public.ln_tipofavorecido
   IS 'Tabela que define o tipo de pessoas, lojas, bancos';
 
 -- Sequence: seq_tipofavorecido
 
 -- DROP SEQUENCE seq_tipofavorecido;
 
-CREATE SEQUENCE seq_tipofavorecido
+CREATE SEQUENCE public.seq_tipofavorecido
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_tipofavorecido
+ALTER TABLE public.seq_tipofavorecido
   OWNER TO postgres;
 
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Amigo', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Banco', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Cartório', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Chaveiro', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Contabilidade', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Construção', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Empresa', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Farmácia', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Governo', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Lazer', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Loja', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Mecânico', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Médico/Dentista', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Outro', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Parente', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Posto de Combustível', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Restaurantes', 'S');
-insert into "ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Supermercado', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Amigo', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Banco', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Cartório', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Chaveiro', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Contabilidade', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Construção', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Empresa', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Farmácia', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Governo', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Lazer', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Loja', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Mecânico', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Médico/Dentista', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Outro', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Parente', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Posto de Combustível', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Restaurantes', 'S');
+insert into public."ln_tipofavorecido" ("tfa_in_codigo", "tfa_st_descricao", "tfa_ch_ativo") values (nextval('seq_tipofavorecido'), 'Supermercado', 'S');
 
 -- Table: ln_favorecido
 
 -- DROP TABLE ln_favorecido;
 
-CREATE TABLE ln_favorecido
+CREATE TABLE public.ln_favorecido
 (
   fav_in_codigo integer NOT NULL,
   fav_st_descricao character varying(50) NOT NULL,
@@ -738,28 +742,28 @@ CREATE TABLE ln_favorecido
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_favorecido
+ALTER TABLE public.ln_favorecido
   OWNER TO postgres;
-COMMENT ON COLUMN ln_favorecido.fav_st_documento IS 'CPF/CNPJ';
+COMMENT ON COLUMN public.ln_favorecido.fav_st_documento IS 'CPF/CNPJ';
 
 -- Sequence: seq_favorecido
 
 -- DROP SEQUENCE seq_favorecido;
 
-CREATE SEQUENCE seq_favorecido
+CREATE SEQUENCE public.seq_favorecido
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_favorecido
+ALTER TABLE public.seq_favorecido
   OWNER TO postgres;
 
 -- Table: ln_planoconta
 
 -- DROP TABLE ln_planoconta;
 
-CREATE TABLE ln_planoconta
+CREATE TABLE public.ln_planoconta
 (
   cta_in_codigo integer NOT NULL,
   cat_in_codigo integer NOT NULL,
@@ -775,27 +779,27 @@ CREATE TABLE ln_planoconta
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_planoconta
+ALTER TABLE public.ln_planoconta
   OWNER TO postgres;
 
 -- Sequence: seq_planoconta
 
 -- DROP SEQUENCE seq_planoconta;
 
-CREATE SEQUENCE seq_planoconta
+CREATE SEQUENCE public.seq_planoconta
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-ALTER TABLE seq_planoconta
+ALTER TABLE public.seq_planoconta
   OWNER TO postgres;
 
 -- Table: ln_saldoconta
 
 -- DROP TABLE ln_saldoconta;
 
-CREATE TABLE ln_saldoconta
+CREATE TABLE public.ln_saldoconta
 (
   cta_in_codigo integer NOT NULL,
   sac_dt_data date NOT NULL,
@@ -807,7 +811,7 @@ CREATE TABLE ln_saldoconta
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE ln_saldoconta
+ALTER TABLE public.ln_saldoconta
   OWNER TO postgres;
 
 ------------------------------------------------------------------------------------------------------------------------

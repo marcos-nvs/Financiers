@@ -6,7 +6,7 @@
                 xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <p:dataTable id="iddtcontas" var="varconta" value="#{contaView.listaConta}" selection="#{contaView.conta}" selectionMode="single"
-                 rowKey="#{varconta.codigoConta}"  paginator="true" paginatorPosition="bottom" rows="20" >
+                 rowKey="#{varconta.codigoConta}"  paginator="true" paginatorPosition="bottom" rows="18" >
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.mb.titulo.planoconta']}"/>
         </f:facet>

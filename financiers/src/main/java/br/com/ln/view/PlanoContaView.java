@@ -60,6 +60,7 @@ public class PlanoContaView implements Serializable {
     private final PlanoContaFuncoes planoContaFuncoes;
     private final TabelaFuncoes tabelaFuncoes;
     private final BeanVar beanVar;
+    private final EmprestimoView emprestimoView;
 
     //Variavéis de Tela
     private Integer idCategoria;
@@ -89,6 +90,7 @@ public class PlanoContaView implements Serializable {
         listaConta = planoContaFuncoes.grabListaConta();
 //        listaBancos = PlanoContaDao.grabListaBancos();
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        emprestimoView = (EmprestimoView) JsfHelper.getSessionAttribute("emprestimoView");
         tabelaFuncoes = new TabelaFuncoes();
         tabela = tabelaFuncoes.buscaTabela(3);
         tipoEmprestimo = "1";
@@ -342,6 +344,11 @@ public class PlanoContaView implements Serializable {
             clearVarAgendaConta();
             beanVar.setTelaDialog("WEB-INF/templates/dialog/dialogplanoconta.xhtml");
             beanVar.setTituloDialog("ln.texto.cadastroconta");
+            
+            if (listaCategoria == null){
+                listaCategoria = CategoriaDao.grabCategoria('S');
+            }
+            
             RequestContext.getCurrentInstance().execute("PF('dialog').show()");
             tipoFuncao = TipoFuncao.Incluir;
         } else {
@@ -506,6 +513,8 @@ public class PlanoContaView implements Serializable {
     }
 
     public void btFecharContaLista() {
+        listaCategoria = null;
+//        emprestimoView.setListaFavorecido(null);
         RequestContext.getCurrentInstance().execute("PF('dialog').hide()");
     }
 

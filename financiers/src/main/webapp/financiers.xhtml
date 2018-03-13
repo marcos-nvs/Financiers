@@ -36,7 +36,7 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="west" size="200" header="Menu" resizable="true" closable="false" collapsible="true" 
-                              style="border-color: transparent;" visible="#{not empty financiersView.lnUsuario}">
+                              style="border-color: transparent;" visible="#{not empty financiersView.model}">
                     <h:form id='idformmenu'>
                         <p:panelMenu model="#{financiersView.model}"/>
                     </h:form>

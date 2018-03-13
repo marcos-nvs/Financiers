@@ -296,7 +296,6 @@ public class ClienteView implements Serializable {
 
     public void btSalvarEndereco() {
         dataLoadEndereco();
-
         if (enderecoFuncoes.validacao(lnEndereco)) {
             listEndereco.add(lnEndereco);
             clearVarEndereco();
@@ -367,6 +366,7 @@ public class ClienteView implements Serializable {
             lnUsuario.setCliInCodigo(lnCliente.getCliInCodigo());
             UsuarioFuncoes usuarioFuncao = new UsuarioFuncoes();
             usuarioFuncao.gravaUsuario(lnUsuario);
+            clearTela();
             btFecharCliente();
         } else {
             mensagem = clienteFuncoes.mensagem;
@@ -434,6 +434,18 @@ public class ClienteView implements Serializable {
         codigoPais = "";
         ddd = "";
         telefone = "";
+    }
+    
+    private void clearTela(){
+        clearVarEndereco();
+        clearVarTelefone();
+        usuario = null;
+        senha = null;
+        documento = null;
+        nome = null;
+        email = null;
+        listEndereco.clear();
+        listTelefone.clear();
     }
 
     private void varLoadEndereco() {
