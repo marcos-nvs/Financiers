@@ -54,8 +54,10 @@
                 <p:commandButton value="#{msgs['ln.bt.sim']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                 <p:commandButton value="#{msgs['ln.bt.nao']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
+<!--            <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
+                             onclick="PF('historico').show()"/>-->
             <p:commandButton id="idperfilbtHistorico" value="#{msgs['ln.bt.historico']}" icon="ui-icon-notice" 
-                             onclick="PF('historico').show()"/>
+                             action="#{perfilView.btHistorico}" process="idperfilbtHistorico"/>
             <p:commandButton id="idperfilclose" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-circlesmall-close" 
                              action="#{usuarioView.btVoltar()}" process="idperfilclose" update="idperfilclose, :idFormCenter"/>
         </f:facet>

@@ -6,6 +6,7 @@
 package br.com.ln.view;
 
 import br.com.ln.comum.BeanVar;
+import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.PerfilDao;
@@ -53,6 +54,7 @@ public class PerfilView implements Serializable {
     private final PerfilFuncoes perfilFuncoes;
     private final TratamentoEspecial tratativa;
     private final BeanVar beanVar;
+    private final HistoricoView historico;
 
     private final FacesContext context = FacesContext.getCurrentInstance();
     private final ResourceBundle bundle = ResourceBundle.getBundle("messages", context.getViewRoot().getLocale());
@@ -66,6 +68,7 @@ public class PerfilView implements Serializable {
         tratativa = new TratamentoEspecial();
         listPerfilacesso = new ArrayList<>();
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
+        historico = (HistoricoView) JsfHelper.getSessionAttribute("historicoView");
     }
 
     public List<LnPerfil> getListPerfil() {
@@ -359,6 +362,12 @@ public class PerfilView implements Serializable {
 
     public void btVoltar() {
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
+    }
+
+    public void btHistorico() {
+
+        historico.getListHistorico();
+        RequestContext.getCurrentInstance().execute("PF('historico').show()");
     }
 
 }

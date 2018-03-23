@@ -33,10 +33,10 @@
         <f:facet name="header">
             <p:outputLabel value="#{msgs['ln.texto.listaperfil']}"/>
         </f:facet>
-        <p:column headerText="#{msgs['ln.texto.codigo']}" style="width: 40px">
+        <p:column headerText="#{msgs['ln.texto.codigo']}" style="width: 10px">
             <h:outputText value="#{incluiAcesso.lnPerfilacessoPK.modInCodigo}"/>
         </p:column>
-        <p:column headerText="#{msgs['ln.texto.modulo']}" style="width: 20px">
+        <p:column headerText="#{msgs['ln.texto.modulo']}" style="width: 200px">
             <h:outputText value="#{perfilView.buscaDescModulo(incluiAcesso.lnPerfilacessoPK.modInCodigo)}"/>
         </p:column>
         <p:column headerText="#{msgs['ln.texto.incluir']}" style="width: 20px">
