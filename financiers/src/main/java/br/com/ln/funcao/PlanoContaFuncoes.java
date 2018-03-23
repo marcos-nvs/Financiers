@@ -5,7 +5,7 @@
  */
 package br.com.ln.funcao;
 
-import br.com.ln.calculofinanceiro.CalculosFinanceiros;
+import br.com.ln.financeiro.CalculosFinanceiros;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.VarComuns;
 import br.com.ln.dao.CategoriaDao;

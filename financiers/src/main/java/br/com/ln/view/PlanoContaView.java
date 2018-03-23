@@ -88,7 +88,6 @@ public class PlanoContaView implements Serializable {
         planoContaFuncoes = new PlanoContaFuncoes();
         listaCategoria = CategoriaDao.grabCategoria('S');
         listaConta = planoContaFuncoes.grabListaConta();
-//        listaBancos = PlanoContaDao.grabListaBancos();
         beanVar = (BeanVar) JsfHelper.getSessionAttribute("beanVar");
         emprestimoView = (EmprestimoView) JsfHelper.getSessionAttribute("emprestimoView");
         tabelaFuncoes = new TabelaFuncoes();

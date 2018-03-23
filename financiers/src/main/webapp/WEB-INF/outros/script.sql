@@ -814,6 +814,49 @@ WITH (
 ALTER TABLE public.ln_saldoconta
   OWNER TO postgres;
 
+-- Table: ln_lancamento
+
+-- DROP TABLE ln_lancamento;
+
+CREATE TABLE ln_lancamento
+(
+  lan_in_codigo integer NOT NULL, -- Id de lançamento
+  lan_dt_data date NOT NULL, -- Data de lançamento
+  lan_in_contadebito integer NOT NULL,
+  lan_in_contacredito integer NOT NULL,
+  lan_fl_vlrdebito numeric(15,2),
+  lan_fl_vlrcredito numeric(15,2),
+  lan_fl_saldoconta numeric(15,2),
+  lan_fl_valor numeric(15,2) NOT NULL,
+  usu_st_codigo character varying(50) NOT NULL,
+  fav_in_codigo integer NOT NULL,
+  lan_st_descricao character varying(50),
+  lan_ch_situacao character(1) NOT NULL,
+  lan_dt_vencimento date,
+  lan_in_tipo integer NOT NULL,
+  CONSTRAINT pk_lancamento PRIMARY KEY (lan_in_codigo)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE ln_lancamento
+  OWNER TO postgres;
+COMMENT ON COLUMN ln_lancamento.lan_in_codigo IS 'Id de lançamento';
+COMMENT ON COLUMN ln_lancamento.lan_dt_data IS 'Data de lançamento';
+
+-- Sequence: seq_lancamento
+
+-- DROP SEQUENCE seq_lancamento;
+
+CREATE SEQUENCE seq_lancamento
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_lancamento
+  OWNER TO postgres;
+
 ------------------------------------------------------------------------------------------------------------------------
 
 -- insert into acessocontrol.ln_cliente("cli_in_codigo","cli_st_documento","cli_st_nome","cli_ch_ativo","cli_st_banco","cli_st_email")

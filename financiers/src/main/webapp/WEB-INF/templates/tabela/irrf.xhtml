@@ -8,7 +8,7 @@
     <p:dataTable id="idTabelaIrrf" var="irrf" value="#{irrfView.listTabela}" selection="#{irrfView.tabela}" selectionMode="single"
                  rowKey="#{irrf.codigoTabela}" paginator="true" rows="20" paginatorPosition="bottom">
         <f:facet name="header">
-            <p:outputLabel value="#{msgs['ln.texto.tabelairrf']}"/>
+            <p:outputLabel value="#{msgs['ln.texto.tabelairrf']}" style="font-family: Arial;"/>
         </f:facet>
         <p:column style="width: 16px">
             <p:rowToggler />

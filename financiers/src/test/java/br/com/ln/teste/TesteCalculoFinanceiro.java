@@ -5,7 +5,7 @@
  */
 package br.com.ln.teste;
 
-import br.com.ln.calculofinanceiro.CalculosFinanceiros;
+import br.com.ln.financeiro.CalculosFinanceiros;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
