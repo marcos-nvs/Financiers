@@ -9,6 +9,7 @@ import br.com.ln.comum.BeanVar;
 import br.com.ln.comum.Historico;
 import br.com.ln.comum.JsfHelper;
 import br.com.ln.comum.VarComuns;
+import br.com.ln.dao.HistoricoDao;
 import br.com.ln.dao.PerfilDao;
 import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
@@ -18,6 +19,7 @@ import br.com.ln.funcao.PerfilFuncoes;
 import br.com.ln.tipos.TipoFuncao;
 import br.com.ln.financiers.TratamentoEspecial;
 import br.com.ln.dao.ModuloDao;
+import br.com.ln.entity.LnHistorico;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -365,8 +367,8 @@ public class PerfilView implements Serializable {
     }
 
     public void btHistorico() {
-
-        historico.getListHistorico();
+        List<LnHistorico> listaHistorico = HistoricoDao.grabListHistorico(VarComuns.lnPerfil.getPerInCodigo());
+        historico.setListHistorico(listaHistorico);
         RequestContext.getCurrentInstance().execute("PF('historico').show()");
     }
 

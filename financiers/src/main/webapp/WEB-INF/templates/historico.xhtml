@@ -8,16 +8,16 @@
               closable="false" style="background-color: #FFFFFF" width="1200" >
         <p:dataTable id="idDtHistorico" var="idHistorico" value="#{historicoView.listHistorico}" paginator="true" rows="20" paginatorPosition="bottom">
             <f:facet name="header">
-                <p:outputLabel value="#{msgs['ln.texto.historico']}"/>
+                <p:outputLabel value="#{msgs['ln.texto.historico']}" style="width: 20px;"/>
             </f:facet>
             <p:column headerText="#{msgs['ln.texto.modulo']}">
-                <p:outputLabel value="#{historicoView.buscaDescModulo(idHistorico.modInCodigo)}"/>
+                <p:outputLabel value="#{historicoView.buscaDescModulo(idHistorico.modInCodigo)}" style="width: 160px;"/>
             </p:column>
             <p:column headerText="#{msgs['ln.texto.usuario']}">
-                <p:outputLabel value="#{idHistorico.usuStCodigo}"/>
+                <p:outputLabel value="#{idHistorico.usuStCodigo}" style="width: 50px;"/>
             </p:column>
             <p:column headerText="#{msgs['ln.texto.datatransacao']}">
-                <p:outputLabel value="#{idHistorico.hisDtData}"/>
+                <p:outputLabel value="#{idHistorico.hisDtData}" style="width: 40px;"/>
             </p:column>
             <p:column headerText="#{msgs['ln.texto.descricao']}">
                 <p:outputLabel value="#{idHistorico.hisStDescricao}"/>
