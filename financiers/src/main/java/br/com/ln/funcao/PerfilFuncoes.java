@@ -6,8 +6,10 @@
 package br.com.ln.funcao;
 
 import br.com.ln.comum.Historico;
+import br.com.ln.dao.ModuloDao;
 import br.com.ln.dao.PerfilDao;
 import br.com.ln.dao.UsuarioDao;
+import br.com.ln.entity.LnModulo;
 import br.com.ln.entity.LnPerfil;
 import br.com.ln.entity.LnPerfilacesso;
 import br.com.ln.entity.LnUsuario;
@@ -135,14 +137,16 @@ public class PerfilFuncoes {
 
     private boolean inclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
         PerfilDao.saveObject(lnPerfilacesso);
-        historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaoperfilacesso"));
+        LnModulo lnModulo = ModuloDao.getModulo(lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo());
+        historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.inclusaoperfilacesso") + " " + lnModulo.getModStDescricao());
         mensagem = bundle.getString("ln.mb.texto.sucesso");
         return true;
     }
 
     private boolean exclusaoPerfilAcesso(LnPerfilacesso lnPerfilacesso) {
         PerfilDao.deleteObject(lnPerfilacesso);
-        historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaoperfilacesso"));
+        LnModulo lnModulo = ModuloDao.getModulo(lnPerfilacesso.getLnPerfilacessoPK().getModInCodigo());
+        historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.exclusaoperfilacesso") + " " + lnModulo.getModStDescricao());
         mensagem = bundle.getString("ln.mb.texto.sucesso");
         return true;
     }
