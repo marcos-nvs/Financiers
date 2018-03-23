@@ -21,7 +21,7 @@ public class Correios {
     private Client client;
     Logger logger = Logger.getLogger(Correios.class);
 
-    private static final String URL = "http://correiosapi.apphb.com/cep/";
+    private static final String URL = "http://api.postmon.com.br/v1/cep/";
 
     public Correios() {
         try {

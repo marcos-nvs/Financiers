@@ -136,7 +136,7 @@ public class EnderecoView implements Serializable {
                     enderecoCep = correio.entregaEndereco(cep.replaceAll("-", ""));
                     correio.close();
                     if (enderecoCep != null) {
-                        endereco = enderecoCep.getTipoDeLogradouro() + " " + enderecoCep.getLogradouro();
+                        endereco = enderecoCep.getLogradouro();
                         bairro = enderecoCep.getBairro();
                         cidade = enderecoCep.getCidade();
                         estado = enderecoCep.getEstado();

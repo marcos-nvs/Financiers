@@ -13,35 +13,14 @@ import java.io.Serializable;
  */
 public class EnderecoCep implements Serializable{
     
-    private String cep;
-    private String tipoDeLogradouro;
-    private String logradouro;
     private String bairro;
     private String cidade;
+    private String logradouro;
+    private EstadoInfo estadoInfo;
+    private CidadeInfo cidadeInfo;
     private String estado;
 
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
-    public String getTipoDeLogradouro() {
-        return tipoDeLogradouro;
-    }
-
-    public void setTipoDeLogradouro(String tipoDeLogradouro) {
-        this.tipoDeLogradouro = tipoDeLogradouro;
-    }
-
-    public String getLogradouro() {
-        return logradouro;
-    }
-
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public EnderecoCep() {
     }
 
     public String getBairro() {
@@ -60,6 +39,30 @@ public class EnderecoCep implements Serializable{
         this.cidade = cidade;
     }
 
+    public String getLogradouro() {
+        return logradouro;
+    }
+
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
+    }
+
+    public EstadoInfo getEstadoInfo() {
+        return estadoInfo;
+    }
+
+    public void setEstadoInfo(EstadoInfo estadoInfo) {
+        this.estadoInfo = estadoInfo;
+    }
+
+    public CidadeInfo getCidadeInfo() {
+        return cidadeInfo;
+    }
+
+    public void setCidadeInfo(CidadeInfo cidadeInfo) {
+        this.cidadeInfo = cidadeInfo;
+    }
+
     public String getEstado() {
         return estado;
     }
@@ -70,6 +73,6 @@ public class EnderecoCep implements Serializable{
 
     @Override
     public String toString() {
-        return "EnderecoCep{" + "cep=" + cep + ", tipoDeLogradouro=" + tipoDeLogradouro + ", logradouro=" + logradouro + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado + '}';
+        return "EnderecoCep{" + "bairro=" + bairro + ", cidade=" + cidade + ", logradouro=" + logradouro + ", estadoInfo=" + estadoInfo + ", cidadeInfo=" + cidadeInfo + ", estado=" + estado + '}';
     }
 }
