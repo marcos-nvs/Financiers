@@ -38,9 +38,9 @@
     <h:panelGrid id="cadUsuarioButton" columns="2">
         <p:commandButton id="btSalvar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk" 
                          disabled="#{not beanVar.apresenta}" action="#{usuarioView.btSalvar}" 
-                         process="btSalvar, cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3" 
+                         process="btSalvar, cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, :idFormDialog" 
                          update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
-                         btAlteraSenha, idusuariobtHistorico, cadUsuarioButton, :idFormTop:growl"/>
+                         btAlteraSenha, idusuariobtHistorico, cadUsuarioButton, :idFormTop:growl, :idFormDialog"/>
         <p:commandButton id="btCancelar" value="#{msgs['ln.bt.cancelar']}" icon="ui-icon-cancel" disabled="#{not beanVar.apresenta}" 
                          process="btCancelar" action="#{usuarioView.btCancelar}"
                          update="cadUsuarioDados1,cadUsuarioDados2,cadUsuarioDados3, cadUsuarioGrid, btIncluir, btAlterar, btDeletar,
