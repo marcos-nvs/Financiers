@@ -62,8 +62,8 @@
         <p:commandButton id="idbtsalvaripva" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                          action="#{ipvaView.btSalvar}" 
                          process="idbtsalvaripva, idipvaDescricao, dtipvaInicio, dtipvaFinal, idipvaordem, idipvatipo, idipvapercImposto,
-                         idDTIpva" 
-                         update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaIpva"/>
+                         idDTIpva, :idFormDialog" 
+                         update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaIpva, :idFormDialog"/>
         <p:commandButton id="idbtfecharipva" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
                          action="#{ipvaView.btFechar()}" process="idbtfecharipva" update="idbtfecharipva"/>
     </f:facet>

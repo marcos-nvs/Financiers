@@ -20,8 +20,9 @@
     </h:panelGrid>
     <f:facet name="footer">
         <p:commandButton id="idbtsalvariof" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
-                         action="#{iofView.btSalvar}" process="idbtsalvariof, idgridDataIof, idIofDescricao, dtIofInicio, dtIofFinal, idpercIof" 
-                         update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaIof, idgridDataIof"/>
+                         action="#{iofView.btSalvar}" process="idbtsalvariof, idgridDataIof, idIofDescricao, dtIofInicio, dtIofFinal, idpercIof,
+                         :idFormDialog" 
+                         update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaIof, idgridDataIof, :idFormDialog"/>
         <p:commandButton id="idbtfechariof" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
                          action="#{iofView.btFechar()}" process="idbtfechariof" update="idbtfechariof"/>
     </f:facet>

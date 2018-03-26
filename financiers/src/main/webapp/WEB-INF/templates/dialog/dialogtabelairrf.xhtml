@@ -85,8 +85,9 @@
                          dtirrfInicio, dtirrfFinal, idinputvlrinicial, idvlrFinal, idpercImposto, idvlrDesconto, idvlrDependente"
                          update="idDTIRRF, :idFormTop:growl"/>
         <p:commandButton id="idbtsalvarirrf" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
-                         action="#{irrfView.btSalvar}" process="idbtsalvarirrf, idgridDataIrrf, idIrrfDescricao, dtirrfInicio, dtirrfFinal, idDTIRRF" 
-                         update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaIrrf, idgridDataIrrf"/>
+                         action="#{irrfView.btSalvar}" process="idbtsalvarirrf, idgridDataIrrf, idIrrfDescricao, dtirrfInicio, dtirrfFinal, idDTIRRF,
+                         :idFormDialog" 
+                         update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaIrrf, idgridDataIrrf, :idFormDialog"/>
         <p:commandButton id="idbtfecharirrf" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
                          action="#{irrfView.btFechar()}" process="idbtfecharirrf" update="idbtfecharirrf"/>
     </f:facet>

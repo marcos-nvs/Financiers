@@ -48,8 +48,8 @@
                          update="idDTJuros, :idFormTop:growl"/>
         <p:commandButton id="idbtsalvarjuros" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                          action="#{jurosView.btSalvar}" process="idbtsalvarjuros, idgridDataJuros, idJurosDescricao, dtJurosInicio, 
-                         dtJurosFinal, idgridValorJuros, idListBanco, idpercJuros "
-                         update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaJuros, idgridDataJuros"/>
+                         dtJurosFinal, idgridValorJuros, idListBanco, idpercJuros, :idFormDialog "
+                         update=":idFormTop:growl, :idFormCenter:idtabelas:idTabelaJuros, idgridDataJuros, :idFormDialog"/>
         <p:commandButton id="idbtfecharjuros" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
                          action="#{jurosView.btFechar}" process="idbtfecharjuros" update="idbtfecharjuros"/>
     </f:facet>
