@@ -558,10 +558,10 @@ INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Empréstimos'
 INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Financiamentos', 7, 'S');
 INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Receitas', 9, 'S');
 INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Automóveis', 5, 'S');
-INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Contas de Consumo', 10, 'N');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Contas de Consumo', 10, 'S');
 INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Folha de Pagto', 10, 'S');
 INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas Gerais', 10, 'S');
-INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas Bancárias', 10, 'N');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas Bancárias', 10, 'S');
 INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Filhos', 10, 'S');
 INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Saúde', 10, 'S');
 INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Informática', 10, 'S');

@@ -23,7 +23,8 @@
 
         <p:commandButton id="idbtsalvarfavorecido" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                          action="#{favorecidoView.btSalvarFavorecido()}" process="idbtsalvarfavorecido, idListTipoFavorecido, idinputdocumentofavorecido,
-                         idinputativofavorecido, idinputnomefavorecido" update=":idFormCenter:iddtfavorecido, :idFormTop:growl"/>
+                         idinputativofavorecido, idinputnomefavorecido, :idFormDialog" 
+                         update=":idFormCenter:iddtfavorecido, :idFormTop:growl, :idFormDialog"/>
         <p:commandButton id="idbtfecharfavorecido" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel"
                          action="#{favorecidoView.btFecharFavorecido()}" process="idbtfecharfavorecido" update="idbtfecharfavorecido"/>
     </f:facet>
