@@ -76,7 +76,7 @@
     </p:dataTable>
     <f:facet id="idCadButton" name="footer">
         <p:commandButton id="btIncluir" value="#{msgs['ln.bt.incluir']}" icon="ui-icon-document" disabled="#{beanVar.apresenta}" 
-                         process="cadUsuarioGrid, btIncluir" 
+                         process="cadUsuarioGrid, btIncluir, cadUsuarioDados1" 
                          action="#{usuarioView.btIncluir}"
                          update="cadUsuarioDados1, cadUsuarioDados2, cadUsuarioDados3, cadUsuarioButton, btIncluir, btAlterar, btDeletar,
                          btAlteraSenha, idusuariobtHistorico, :idFormTop:growl"/>

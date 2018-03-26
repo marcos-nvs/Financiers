@@ -362,6 +362,7 @@ public class UsuarioView implements Serializable {
     }
     
     public void btVoltar() {
+        btCancelar();
         beanVar.setNovaTela("WEB-INF/templates/principal.xhtml");
     }
     
