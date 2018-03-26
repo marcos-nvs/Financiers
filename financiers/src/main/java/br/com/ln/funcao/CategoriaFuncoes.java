@@ -53,7 +53,7 @@ public class CategoriaFuncoes {
     private boolean alterarCategoria(LnCategoria lnCategoria) {
         if (lnCategoria != null){
             CategoriaDao.saveOrUpdateObject(lnCategoria);
-            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaousuario") + " " + lnCategoria.getCatStDescricao());
+            historico.gravaHistoricoModulo(bundle.getString("ln.mb.historico.alteracaocategoria") + " " + lnCategoria.getCatStDescricao());
             mensagem = bundle.getString("ln.mb.texto.sucesso");
             return true;
         } else {

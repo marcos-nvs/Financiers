@@ -868,3 +868,20 @@ ALTER TABLE seq_lancamento
 -- insert into acessocontrol."ln_usuario" ("usu_st_codigo","usu_st_nome","usu_st_senha","usu_st_email","usu_ch_ativo","usu_in_dia","usu_ch_alterasenha","usu_ch_expirasenha",
 --                                  "usu_dt_expiracao", "usu_dt_cadastro", "per_in_codigo", "usu_st_cpf", "cli_in_codigo", "usu_st_admin") values 
 --                                 ('Marcos', 'Marcos Naves','Kareta448','m-nvs@uol.com.br','S','0','S','N',CURRENT_DATE,CURRENT_DATE, 1, '12684146896',2,'N');
+-- private void realizaBackup(String caminhoDoPg, String caminhoSalvar, String nomeArquivo) {
+--         try {
+--             ProcessBuilder pb;
+--             Process p;
+--             pb = new ProcessBuilder(caminhoDoPg + "pg_dump.exe", "-i", "-h", "localhost", "-p", "5432", "-U", "postgres", "-F", "c", "-b", "-v", "-f", caminhoSalvar + "" + nomeArquivo + ".backup", "ParceirosTst");
+--             pb.environment().put("PGPASSWORD", "tux@2pg");
+--             pb.redirectErrorStream(true);
+--             p = pb.start();
+--             labelStatus.setText("Concluído");
+--             Mensagem.mensagemSucesso(this, "O backup está sendo criado em segundo plano.");
+--             this.dispose();
+--         } catch (IOException ioe) {
+--             Mensagem.mensagemErro(null, "Erro ao realizar backup!");
+--             labelStatus.setText("Erro");
+--             ioe.printStackTrace();
+--         }
+--     }

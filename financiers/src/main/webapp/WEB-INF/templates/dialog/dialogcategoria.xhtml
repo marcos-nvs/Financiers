@@ -19,8 +19,8 @@
     <f:facet name="footer">
         <p:commandButton id="idCategoriaGravar" value="#{msgs['ln.bt.salvar']}" icon="ui-icon-disk"
                          action="#{categoriaView.btSalvarCategoria()}" 
-                         process ="idCategoriaGravar, idPanelCategoria, idListTipoConta, idCategoriaDescricao, idCategoriaAtivo"
-                         update = ":idFormTop:growl, :idFormCenter:idTbCategoria "/>
+                         process ="idCategoriaGravar, idPanelCategoria, idListTipoConta, idCategoriaDescricao, idCategoriaAtivo, :idFormDialog"
+                         update = ":idFormTop:growl, :idFormCenter:idTbCategoria, :idFormDialog "/>
         <p:commandButton id="idCategoriaCancelar" value="#{msgs['ln.bt.fechar']}" icon="ui-icon-cancel" 
                          action="#{categoriaView.btCancelarCategoria()}"
                          process ="idCategoriaCancelar"
