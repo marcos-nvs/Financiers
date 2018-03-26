@@ -1,4 +1,3 @@
--- http://stackoverflow.com/questions/17825782/how-to-convert-html-to-pdf-using-itext
 
 -- Schema: acessocontrol
 
@@ -550,6 +549,26 @@ CREATE SEQUENCE public.seq_categoria
   CACHE 1;
 ALTER TABLE public.seq_categoria
   OWNER TO postgres;
+
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Ativo', 1, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Bancos', 3, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Cartões de Créditos', 4, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Dinheiro', 5, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Empréstimos', 6, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Financiamentos', 7, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Receitas', 9, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Automóveis', 5, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Contas de Consumo', 10, 'N');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Folha de Pagto', 10, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas Gerais', 10, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas Bancárias', 10, 'N');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Filhos', 10, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Saúde', 10, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Informática', 10, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Construção', 10, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Despesas com Profissionais', 10, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Contas à Receber', 11, 'S');
+INSERT INTO ln_categoria VALUES (nextval('public.seq_categoria'), 'Contas á Pagar', 12, 'S');
 
 -- Table: ln_tipotabela
 
