@@ -66,8 +66,8 @@
         <p:commandButton id="idGravarPerfilAcesso" value="#{msgs['ln.bt.salvar']}"
                          action="#{perfilView.btGravarPerfilAcesso()}"  icon="ui-icon-disk"
                          process="idGravarPerfilAcesso, :idformdialog:idPerfilDescricao,:idformdialog:idPerfilAtivo, 
-                         :idformdialog:idPerfilSenha, idPerfilAcessoDialog, :idformdialog:idPerfilSenha" 
-                         update="idDtAcesso, idPerfilAcessoDialog, idPerfilDialog, :idFormTop:growl, :idFormCenter:idTbPerfil "/><!--
+                         :idformdialog:idPerfilSenha, idPerfilAcessoDialog, :idformdialog:idPerfilSenha, :idFormDialog" 
+                         update="idDtAcesso, idPerfilAcessoDialog, idPerfilDialog, :idFormTop:growl, :idFormCenter:idTbPerfil, :idFormDialog"/><!--
 -->        <p:commandButton id="idFecharPerfilAcesso" value="#{msgs['ln.bt.fechar']}" action="#{perfilView.btFecharPerfilAcesso()}"
                          process="idFecharPerfilAcesso" update=":idFormCenter:idTbPerfil" icon="ui-icon-circlesmall-close"/>
     </f:facet>
