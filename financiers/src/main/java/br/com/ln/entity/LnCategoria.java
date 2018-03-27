@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LnCategoria.findByCatInCodigo", query = "SELECT l FROM LnCategoria l WHERE l.catInCodigo = :catInCodigo"),
     @NamedQuery(name = "LnCategoria.findByCatStDescricao", query = "SELECT l FROM LnCategoria l WHERE l.catStDescricao = :catStDescricao"),
     @NamedQuery(name = "LnCategoria.findByTipInCodigo", query = "SELECT l FROM LnCategoria l WHERE l.tipInCodigo = :tipInCodigo"),
-    @NamedQuery(name = "LnCategoria.findByCatChAtivo", query = "SELECT l FROM LnCategoria l WHERE l.catChAtivo = :catChAtivo")})
+    @NamedQuery(name = "LnCategoria.findByCatChAtivo", query = "SELECT l FROM LnCategoria l WHERE l.catChAtivo = :catChAtivo order by cat_in_codigo")})
 public class LnCategoria implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
