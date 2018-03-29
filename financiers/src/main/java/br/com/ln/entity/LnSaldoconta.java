@@ -36,6 +36,8 @@ public class LnSaldoconta implements Serializable {
     @EmbeddedId
     protected LnSaldocontaPK lnSaldocontaPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "sac_fl_inicio")
+    private Double sacFlInicio;
     @Column(name = "sac_fl_debito")
     private Double sacFlDebito;
     @Column(name = "sac_fl_credito")
@@ -54,12 +56,16 @@ public class LnSaldoconta implements Serializable {
         this.lnSaldocontaPK = new LnSaldocontaPK(ctaInCodigo, sacDtData);
     }
 
-    public LnSaldoconta(LnSaldocontaPK lnSaldocontaPK, Double sacFlDebito, Double sacFlCredito, Double sacFlSaldo) {
+    public LnSaldoconta(LnSaldocontaPK lnSaldocontaPK, Double sacFlInicio, Double sacFlDebito, Double sacFlCredito, Double sacFlSaldo) {
         this.lnSaldocontaPK = lnSaldocontaPK;
+        this.sacFlInicio = sacFlInicio;
         this.sacFlDebito = sacFlDebito;
         this.sacFlCredito = sacFlCredito;
         this.sacFlSaldo = sacFlSaldo;
     }
+
+
+
     
     public LnSaldocontaPK getLnSaldocontaPK() {
         return lnSaldocontaPK;

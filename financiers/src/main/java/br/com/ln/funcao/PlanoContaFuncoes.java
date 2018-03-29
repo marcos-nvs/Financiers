@@ -323,7 +323,7 @@ public class PlanoContaFuncoes implements Serializable {
 
         if (saldoConta == null) {
             LnSaldocontaPK lnSaldocontaPK = new LnSaldocontaPK(lnPlanoconta.getCtaInCodigo(), lnPlanoconta.getCtaDtCriacao());
-            saldoConta = new LnSaldoconta(lnSaldocontaPK, 0d, 0d, lnPlanoconta.getCtaFlSaldoinicial());
+            saldoConta = new LnSaldoconta(lnSaldocontaPK, lnPlanoconta.getCtaFlSaldoinicial(), 0d, 0d, lnPlanoconta.getCtaFlSaldoinicial());
             PlanoContaDao.saveObject(saldoConta);
             return true;
         } else {

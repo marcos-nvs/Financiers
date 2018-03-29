@@ -822,6 +822,7 @@ CREATE TABLE public.ln_saldoconta
 (
   cta_in_codigo integer NOT NULL,
   sac_dt_data date NOT NULL,
+  sac_fl_inicio double precision,
   sac_fl_debito double precision,
   sac_fl_credito double precision,
   sac_fl_saldo double precision,
