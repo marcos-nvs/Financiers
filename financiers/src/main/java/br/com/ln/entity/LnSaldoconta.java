@@ -64,9 +64,6 @@ public class LnSaldoconta implements Serializable {
         this.sacFlSaldo = sacFlSaldo;
     }
 
-
-
-    
     public LnSaldocontaPK getLnSaldocontaPK() {
         return lnSaldocontaPK;
     }
