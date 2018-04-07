@@ -31,7 +31,7 @@
                            itemValue="#{itemPerfil.perInCodigo}"/>
         </p:selectOneMenu>
         <p:outputLabel value="#{msgs['ln.texto.documento']}" />
-        <p:inputMask id="idUsuStCPF" mask="999.999.999-99" value="#{usuarioView.cpf}" maxlength="40" size="11" disabled="#{not beanVar.apresenta}"/>
+        <p:inputText id="idUsuStCPF" value="#{usuarioView.cpf}" maxlength="40" size="14" disabled="#{not beanVar.apresenta}"/>
         <p:outputLabel value="#{msgs['ln.texto.dependente']}"/>
         <p:inputText id="idUsuDependente" value="#{usuarioView.dependente}" maxlength="5" size="5" disabled="#{not beanVar.apresenta}"/>
     </h:panelGrid>

@@ -217,7 +217,7 @@ public class UsuarioView implements Serializable {
     public void setDependente(Integer dependente) {
         this.dependente = dependente;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
